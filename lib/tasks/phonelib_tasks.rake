@@ -6,14 +6,18 @@ namespace :phonelib do
     require 'yaml'
     require 'nokogiri'
 
-    #url = 'http://libphonenumber.googlecode.com/svn/trunk/resources/PhoneNumberMetaData.xml'
-    
-    #xml_data = Net::HTTP.get_response(URI.parse(url)).body
-    xml_data = File.read('PhoneNumberMetaData.xml')
-    doc = Nokogiri::XML(xml_data)
-#REXML::Document.new(xml_data)
+    # get metadata from google
+    url = 'http://libphonenumber.googlecode.com/svn/trunk/resources/PhoneNumberMetaData.xml'
+    xml_data = Net::HTTP.get_response(URI.parse(url)).body
 
-    require 'pp'
+    # save in file for backup
+    File.open("data/PhoneNumberMetaData.xml", "w+") do |f|
+      f.write(xml_data)
+    end
+
+    # start parsing 
+    doc = Nokogiri::XML(xml_data)
+
     main = doc.elements.first.elements.first
     countries = []
     main.elements.each do |el|
@@ -65,7 +69,6 @@ namespace :phonelib do
       
       countries.push(country)   
     end
-    pp countries
     target = 'data/phone_data.yml'
     File.open(target, "w+") do |f|
       f.write(countries.to_yaml)
