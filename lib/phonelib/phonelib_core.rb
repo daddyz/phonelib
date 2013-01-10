@@ -36,7 +36,7 @@ module Phonelib
       :generalDesc, :emergency, :shortCode, :fixedLine, :mobile, :fixedOrMobile
     ]
 
-    def valid_and_possible?(number, regexes)
+    def number_valid_and_possible?(number, regexes)
       national_match = number.match(/^(?:#{regexes[:nationalNumberPattern]})$/)
       possible_match = number.match(/^(?:#{regexes[:possibleNumberPattern]})$/)
 
@@ -45,32 +45,47 @@ module Phonelib
           possible_match.to_s.length == number.length
     end
 
-    def get_number_type(number, data)
-      return nil unless data[self::GENERAL].present?
-      return nil unless valid_and_possible?(number, data[self::GENERAL])
+    def number_possible?(number, regexes)
+      possible_match = number.match(/^(?:#{regexes[:possibleNumberPattern]})$/)
+      possible_match && possible_match.to_s.length == number.length
+    end
 
-      self::TYPES.keys.except(self::NOT_FOR_CHECK).each do |type|
+    def get_all_number_types(number, data)
+      response = {valid: [], possible: []}
+
+      return response unless data[Core::GENERAL].present?
+      return response unless number_valid_and_possible?(number,
+                                                        data[Core::GENERAL])
+
+      (Core::TYPES.keys - Core::NOT_FOR_CHECK).each do |type|
         next unless data[type].present?
-        return type if valid_and_possible?(number, data[type])
+
+        response[:valid] << type if number_valid_and_possible?(number,
+                                                               data[type])
+        response[:possible] << type if number_possible?(number, data[type])
       end
 
-      if valid_and_possible?(number, data[self::FIXED_LINE])
-        if data[self::FIXED_LINE] == data[self::MOBILE] ||
-            valid_and_possible?(number, data[self::MOBILE])
-
-          return self::FIXED_OR_MOBILE
+      if number_valid_and_possible?(number, data[Core::FIXED_LINE])
+        if data[Core::FIXED_LINE] == data[Core::MOBILE]
+          response[:valid] << Core::FIXED_OR_MOBILE
         else
-          return self::FIXED_LINE
+          response[:valid] << Core::FIXED_LINE
         end
-      elsif valid_and_possible?(number, data[self::MOBILE])
-        return self::MOBILE
+      elsif number_valid_and_possible?(number, data[Core::MOBILE])
+        response[:valid] << Core::MOBILE
       end
 
-      nil
+      if number_possible?(number, data[Core::FIXED_LINE])
+        if data[Core::FIXED_LINE] == data[Core::MOBILE]
+          response[:possible] << Core::FIXED_OR_MOBILE
+        else
+          response[:possible] << Core::FIXED_LINE
+        end
+      elsif number_possible?(number, data[Core::MOBILE])
+        response[:possible] << Core::MOBILE
+      end
+
+      response
     end
   end
-
-
-
-
 end
