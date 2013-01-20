@@ -1,5 +1,8 @@
 module Phonelib
   module Core
+
+    @@phone_data = nil
+
     GENERAL = :generalDesc
     PREMIUM_RATE = :premiumRate
     TOLL_FREE = :tollFree
@@ -36,56 +39,34 @@ module Phonelib
       :generalDesc, :emergency, :shortCode, :fixedLine, :mobile, :fixedOrMobile
     ]
 
-    def number_valid_and_possible?(number, regexes)
-      national_match = number.match(/^(?:#{regexes[:nationalNumberPattern]})$/)
-      possible_match = number.match(/^(?:#{regexes[:possibleNumberPattern]})$/)
-
-      national_match && possible_match &&
-          national_match.to_s.length == number.length &&
-          possible_match.to_s.length == number.length
+    def parse(phone)
+      @@phone_data ||= YAML.load_file('data/phone_data.yml')
+      Phonelib::Phone.new(phone, @@phone_data)
     end
 
-    def number_possible?(number, regexes)
-      possible_match = number.match(/^(?:#{regexes[:possibleNumberPattern]})$/)
-      possible_match && possible_match.to_s.length == number.length
+
+    def valid?(phone_number)
+      parse(phone_number).valid?
     end
 
-    def get_all_number_types(number, data)
-      response = {valid: [], possible: []}
+    def invalid?(phone_number)
+      parse(phone_number).invalid?
+    end
 
-      return response unless data[Core::GENERAL].present?
-      return response unless number_valid_and_possible?(number,
-                                                        data[Core::GENERAL])
+    def possible?(phone_number)
+      parse(phone_number).possible?
+    end
 
-      (Core::TYPES.keys - Core::NOT_FOR_CHECK).each do |type|
-        next unless data[type].present?
+    def impossible?(phone_number)
+      parse(phone_number).impossible?
+    end
 
-        response[:valid] << type if number_valid_and_possible?(number,
-                                                               data[type])
-        response[:possible] << type if number_possible?(number, data[type])
-      end
+    def valid_for_country?(phone_number, country)
+      parse(phone_number).valid_for_country?(country)
+    end
 
-      if number_valid_and_possible?(number, data[Core::FIXED_LINE])
-        if data[Core::FIXED_LINE] == data[Core::MOBILE]
-          response[:valid] << Core::FIXED_OR_MOBILE
-        else
-          response[:valid] << Core::FIXED_LINE
-        end
-      elsif number_valid_and_possible?(number, data[Core::MOBILE])
-        response[:valid] << Core::MOBILE
-      end
-
-      if number_possible?(number, data[Core::FIXED_LINE])
-        if data[Core::FIXED_LINE] == data[Core::MOBILE]
-          response[:possible] << Core::FIXED_OR_MOBILE
-        else
-          response[:possible] << Core::FIXED_LINE
-        end
-      elsif number_possible?(number, data[Core::MOBILE])
-        response[:possible] << Core::MOBILE
-      end
-
-      response
+    def invalid_for_country?(phone_number, country)
+      parse(phone_number).invalid_for_country?(country)
     end
   end
 end

@@ -5,6 +5,10 @@ class PhonelibTest < ActiveSupport::TestCase
     assert_kind_of Module, Phonelib
   end
 
+  test "returns phone object" do
+    assert Phonelib.parse('972541234567').is_a? Phonelib::Phone
+  end
+
   test "valid? with malformed phone number" do
     assert !Phonelib.valid?('sdffsd')
   end
