@@ -1,11 +1,27 @@
 module Phonelib
   class Phone
-    attr_reader :sanitized, :analyzed_data, :national_number
+    attr_reader :sanitized, :national_number
 
     def initialize(phone, country_data)
       @sanitized = sanitize_phone(phone)
       @analyzed_data = {}
       analyze_phone(country_data) unless @sanitized.empty?
+    end
+
+    def types
+      @analyzed_data.flat_map {|iso2, data| data[:valid]}.uniq
+    end
+
+    def type
+      types.first
+    end
+
+    def countries
+      @analyzed_data.map {|iso2, data| iso2}
+    end
+
+    def country
+      countries.first
     end
 
     def valid?
