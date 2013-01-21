@@ -40,10 +40,10 @@ module Phonelib
     ]
 
     def parse(phone)
-      @@phone_data ||= YAML.load_file('data/phone_data.yml')
+      data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
+      @@phone_data ||= YAML.load_file(data_file)
       Phonelib::Phone.new(phone, @@phone_data)
     end
-
 
     def valid?(phone_number)
       parse(phone_number).valid?
