@@ -1,3 +1,5 @@
 = Phonelib
 
+{<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[undefined]
+
 This project rocks and uses MIT-LICENSE.
