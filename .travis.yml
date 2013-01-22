@@ -1,0 +1,15 @@
+language: ruby
+
+rvm:
+  - "1.9.2"
+  - "1.9.3"
+
+gemfile:
+  - gemfiles/Gemfile.rails-3.1.x
+  - Gemfile
+
+script:
+  - bundle exec rake test
+
+before_script:
+  - bundle install
