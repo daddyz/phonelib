@@ -3,7 +3,7 @@ require 'test_helper'
 class PhonesControllerTest < ActionController::TestCase
 
   setup do
-    @phone = phones(:one)
+    @phone = phones(:valid_and_possible)
   end
 
   test "should get index" do

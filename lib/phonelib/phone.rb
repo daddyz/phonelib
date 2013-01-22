@@ -1,9 +1,10 @@
 module Phonelib
   class Phone
-    attr_reader :sanitized, :national_number
+    attr_reader :original, :sanitized, :national_number
 
     def initialize(phone, country_data)
-      @sanitized = sanitize_phone(phone)
+      @original = phone
+      @sanitized = sanitize_phone(@original)
       @analyzed_data = {}
       analyze_phone(country_data) unless @sanitized.empty?
     end
@@ -119,7 +120,7 @@ module Phonelib
     end
 
     def sanitize_phone(phone)
-      phone.gsub(/[^0-9]+/, '')
+      phone && phone.gsub(/[^0-9]+/, '') || ''
     end
   end
 end

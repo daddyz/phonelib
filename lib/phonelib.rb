@@ -1,7 +1,7 @@
 module Phonelib
-  autoload :Core, 'phonelib/phonelib_core'
+  autoload :Core, 'phonelib/core'
   autoload :Phone, 'phonelib/phone'
-  autoload :Validators, 'phonelib/phone_validator'
+  autoload :Validators, 'phonelib/validators'
 
   extend Module.new {
     include Core

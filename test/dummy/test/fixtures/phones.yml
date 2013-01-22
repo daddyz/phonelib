@@ -1,7 +1,16 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+valid_and_possible:
+  number: '972541234567'
+  possible_number: '972541234567'
 
-one:
+wrong:
+  number: 'wrong'
+
+only_valid:
   number: '972541234567'
 
-two:
-  number: 'wrong'
+only_possible:
+  possible_number: '972541234567'
+
+valid_with_bad_possible:
+  number: '972541234567'
+  possible_number: 'wrong'
