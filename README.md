@@ -1,6 +1,6 @@
 ## Phonelib
 
-{<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
+[![Build Status](https://travis-ci.org/daddyz/phonelib.png?branch=master)](http://travis-ci.org/daddyz/phonelib)
 
 Phonelib is a gem allowing you to validate phone number. All validations are based on [Google libphonenumber](http://code.google.com/p/libphonenumber/).
 Currently it can make only basic validation and still not include all Google's library functions.
