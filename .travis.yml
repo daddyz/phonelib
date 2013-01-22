@@ -13,4 +13,4 @@ script:
 
 before_script:
   - bundle install
-  - rake db:setup
+  - cd test/dummy/ && rake db:setup && cd ../../
