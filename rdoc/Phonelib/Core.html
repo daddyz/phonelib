@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module Phonelib::Core - Phonelib</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/phonelib/core.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-impossible-3F">#impossible?</a>
+    
+    <li><a href="#method-i-invalid-3F">#invalid?</a>
+    
+    <li><a href="#method-i-invalid_for_country-3F">#invalid_for_country?</a>
+    
+    <li><a href="#method-i-parse">#parse</a>
+    
+    <li><a href="#method-i-possible-3F">#possible?</a>
+    
+    <li><a href="#method-i-valid-3F">#valid?</a>
+    
+    <li><a href="#method-i-valid_for_country-3F">#valid_for_country?</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Phonelib.html">Phonelib</a>
+  
+    <li><a href="../Phonelib/Core.html">Phonelib::Core</a>
+  
+    <li><a href="../Phonelib/Phone.html">Phonelib::Phone</a>
+  
+    <li><a href="../Phonelib/Validators.html">Phonelib::Validators</a>
+  
+    <li><a href="../Phonelib/Validators/PhoneValidator.html">Phonelib::Validators::PhoneValidator</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module Phonelib::Core</h1>
+
+  <div id="description" class="description">
+    
+<p>main module that includes all basic data and methods</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="EMERGENCY">EMERGENCY
+        
+        <dd class="description">
+        
+      
+        <dt id="FIXED_LINE">FIXED_LINE
+        
+        <dd class="description">
+        
+      
+        <dt id="FIXED_OR_MOBILE">FIXED_OR_MOBILE
+        
+        <dd class="description">
+        
+      
+        <dt id="GENERAL">GENERAL
+        
+        <dd class="description"><p>gem constants definition constants for phone types</p>
+        
+      
+        <dt id="MOBILE">MOBILE
+        
+        <dd class="description">
+        
+      
+        <dt id="NOT_FOR_CHECK">NOT_FOR_CHECK
+        
+        <dd class="description"><p>array of types not included for validation check in cycle</p>
+        
+      
+        <dt id="PAGER">PAGER
+        
+        <dd class="description">
+        
+      
+        <dt id="PERSONAL_NUMBER">PERSONAL_NUMBER
+        
+        <dd class="description">
+        
+      
+        <dt id="PREMIUM_RATE">PREMIUM_RATE
+        
+        <dd class="description">
+        
+      
+        <dt id="SHARED_COST">SHARED_COST
+        
+        <dd class="description">
+        
+      
+        <dt id="SHORT_CODE">SHORT_CODE
+        
+        <dd class="description">
+        
+      
+        <dt id="TOLL_FREE">TOLL_FREE
+        
+        <dd class="description">
+        
+      
+        <dt id="TYPES">TYPES
+        
+        <dd class="description"><p>hash of all possible types with description</p>
+        
+      
+        <dt id="UAN">UAN
+        
+        <dd class="description">
+        
+      
+        <dt id="VOICEMAIL">VOICEMAIL
+        
+        <dd class="description">
+        
+      
+        <dt id="VOIP">VOIP
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-impossible-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">impossible?</span><span
+            class="method-args">(phone_number)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>method checks if passed phone number is impossible</p>
+          
+
+          
+          <div class="method-source-code" id="impossible-3F-source">
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">impossible?</span>(<span class="ruby-identifier">phone_number</span>)
+  <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">impossible?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- impossible-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- impossible-3F-method -->
+
+    
+      <div id="method-i-invalid-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">invalid?</span><span
+            class="method-args">(phone_number)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>method checks if passed phone number is invalid</p>
+          
+
+          
+          <div class="method-source-code" id="invalid-3F-source">
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 62</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">invalid?</span>(<span class="ruby-identifier">phone_number</span>)
+  <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">invalid?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- invalid-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- invalid-3F-method -->
+
+    
+      <div id="method-i-invalid_for_country-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">invalid_for_country?</span><span
+            class="method-args">(phone_number, country)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>method checks if passed phone number is invalid for provided country</p>
+          
+
+          
+          <div class="method-source-code" id="invalid_for_country-3F-source">
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">invalid_for_country?</span>(<span class="ruby-identifier">phone_number</span>, <span class="ruby-identifier">country</span>)
+  <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">invalid_for_country?</span>(<span class="ruby-identifier">country</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- invalid_for_country-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- invalid_for_country-3F-method -->
+
+    
+      <div id="method-i-parse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse</span><span
+            class="method-args">(phone)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>method for parsing phone number on first run fills @@phone_data with data
+present in yaml file</p>
+          
+
+          
+          <div class="method-source-code" id="parse-source">
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'YAML'</span>
+  <span class="ruby-identifier">data_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>) <span class="ruby-operator">+</span> <span class="ruby-string">'/../../data/phone_data.yml'</span>
+  <span class="ruby-identifier">@@phone_data</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">data_file</span>)
+  <span class="ruby-constant">Phonelib</span><span class="ruby-operator">::</span><span class="ruby-constant">Phone</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">phone</span>, <span class="ruby-identifier">@@phone_data</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse-method -->
+
+    
+      <div id="method-i-possible-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">possible?</span><span
+            class="method-args">(phone_number)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>method checks if passed phone number is possible</p>
+          
+
+          
+          <div class="method-source-code" id="possible-3F-source">
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">possible?</span>(<span class="ruby-identifier">phone_number</span>)
+  <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">possible?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- possible-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- possible-3F-method -->
+
+    
+      <div id="method-i-valid-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">valid?</span><span
+            class="method-args">(phone_number)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>method checks if passed phone number is valid</p>
+          
+
+          
+          <div class="method-source-code" id="valid-3F-source">
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 57</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">phone_number</span>)
+  <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">valid?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- valid-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- valid-3F-method -->
+
+    
+      <div id="method-i-valid_for_country-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">valid_for_country?</span><span
+            class="method-args">(phone_number, country)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>method checks if passed phone number is valid for provided country</p>
+          
+
+          
+          <div class="method-source-code" id="valid_for_country-3F-source">
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">valid_for_country?</span>(<span class="ruby-identifier">phone_number</span>, <span class="ruby-identifier">country</span>)
+  <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">valid_for_country?</span>(<span class="ruby-identifier">country</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- valid_for_country-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- valid_for_country-3F-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>README - Phonelib</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./README_rdoc.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Phonelib.html">Phonelib</a>
+  
+    <li><a href="./Phonelib/Core.html">Phonelib::Core</a>
+  
+    <li><a href="./Phonelib/Phone.html">Phonelib::Phone</a>
+  
+    <li><a href="./Phonelib/Validators.html">Phonelib::Validators</a>
+  
+    <li><a href="./Phonelib/Validators/PhoneValidator.html">Phonelib::Validators::PhoneValidator</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<p>## <a href="Phonelib.html">Phonelib</a></p>
+
+<p><a href="http://travis-ci.org/daddyz/phonelib"><img
+src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build
+Status" /></a></p>
+
+<p><a href="Phonelib.html">Phonelib</a> is a gem allowing you to validate
+phone number. All validations are based on [Google libphonenumber](<a
+href="http://code.google.com/p/libphonenumber/">code.google.com/p/libphonenumber/</a>).
+Currently it can make only basic validation and still not include all
+Google's library functions.</p>
+
+<p>## Information</p>
+
+<p>### RDoc</p>
+
+<p>RDoc documentation can be found here <a
+href="http://rubydoc.info/github/daddyz/phonelib/master/frames">rubydoc.info/github/daddyz/phonelib/master/frames</a></p>
+
+<p>### Bug reports</p>
+
+<p>If you discover a problem with Evercookie gem, let us know about it. <a
+href="https://github.com/daddyz/phonelib/issues">github.com/daddyz/phonelib/issues</a></p>
+
+<p>### Example application</p>
+
+<p>You can see an example of phonelib model validation working in test/dummy
+application of this gem</p>
+
+<p>## Getting started</p>
+
+<p><a href="Phonelib.html">Phonelib</a> was written and tested on Rails &gt;=
+3.1. You can install it by adding in to your Gemfile with:</p>
+
+<p>“`ruby gem ‘phonelib’ “`</p>
+
+<p>Run the bundle command to install it.</p>
+
+<p>### ActiveRecord Integration</p>
+
+<p>This gem adds validator for active record. Basic usage: “`ruby validates
+:attribute, phone: true “` This will enable <a
+href="Phonelib.html">Phonelib</a> validator for field “attribute”. This
+validator checks that passed value is valid phone number. Please note that
+passing blank value also fails.</p>
+
+<p>Additional options: “`ruby validates :attribute, phone: { possible: true,
+allow_blank: true } “` `possible: true` - enables validation to check
+whether the passed number is a possible phone number (not strict check).
+Refer to [Google libphonenumber](<a
+href="http://code.google.com/p/libphonenumber/">code.google.com/p/libphonenumber/</a>)
+for more information on it.</p>
+
+<p>`allow_blank: true` - when no value passed then validation passes</p>
+
+<p>### Basic usage</p>
+
+<p>To check if phone number is valid simply run:</p>
+
+<p>“`ruby <a
+href="Phonelib/Core.html#method-i-valid-3F">Phonelib::Core#valid?</a>(‘123456789’)
+returns true or false “`</p>
+
+<p>Additional methods:</p>
+
+<p>“`ruby <a
+href="Phonelib/Core.html#method-i-valid-3F">Phonelib::Core#valid?</a>
+‘123456789’      # checks if passed value is valid number <a
+href="Phonelib/Core.html#method-i-invalid-3F">Phonelib::Core#invalid?</a>
+‘123456789’    # checks if passed value is invalid number <a
+href="Phonelib/Core.html#method-i-possible-3F">Phonelib::Core#possible?</a>
+‘123456789’   # checks if passed value is possible number <a
+href="Phonelib/Core.html#method-i-impossible-3F">Phonelib::Core#impossible?</a>
+‘123456789’ # checks if passed value is impossible number “`</p>
+
+<p>There is also option to check if provided phone is valid for specified
+country. Country should be specified as two letters country code (like “US”
+for United States).</p>
+
+<p>“`ruby <a
+href="Phonelib/Core.html#method-i-valid_for_country-3F">Phonelib::Core#valid_for_country?</a>
+‘123456789’, ‘XX’   # checks if passed value is valid number for specified
+country <a
+href="Phonelib/Core.html#method-i-invalid_for_country-3F">Phonelib::Core#invalid_for_country?</a>
+‘123456789’, ‘XX’ # checks if passed value is invalid number for specified
+country “`</p>
+
+<p>Additionally you can run:</p>
+
+<p>“`ruby phone = <a
+href="Phonelib/Core.html#method-i-parse">Phonelib::Core#parse</a>(‘123456789’)
+“`</p>
+
+<p>Returned value is object of `Phonelib::Phone` class which have following
+methods:</p>
+
+<p>“`ruby # basic validation methods phone.valid? phone.invalid?
+phone.possible? phone.impossible?</p>
+
+<p># validations for countries phone.valid_for_country? ‘XX’
+phone.invalid_for_country? ‘XX’ “`</p>
+
+<p>You can also fetch matched valid phone types</p>
+
+<p>“`ruby phone.types # returns array of all valid types phone.type  # returns
+first element from array of all valid types “`</p>
+
+<p>Possible types:</p>
+<ul><li>
+<p>`:premiumRate` - Premium Rate</p>
+</li><li>
+<p>`:tollFree` - Toll Free</p>
+</li><li>
+<p>`:sharedCost` - Shared Cost</p>
+</li><li>
+<p>`:voip` - VoIP</p>
+</li><li>
+<p>`:personalNumber` - Personal Number</p>
+</li><li>
+<p>`:pager` - Pager</p>
+</li><li>
+<p>`:uan` - UAN</p>
+</li><li>
+<p>`:voicemail` - VoiceMail</p>
+</li><li>
+<p>`:fixedLine` - Fixed Line</p>
+</li><li>
+<p>`:mobile` - Mobile</p>
+</li><li>
+<p>`:fixedOrMobile` - Fixed Line or Mobile (if both mobile and fixed pattern
+matches)</p>
+</li></ul>
+
+<p>Also you can fetch all matched countries</p>
+
+<p>“`ruby phone.countries # returns array of all matched countries
+phone.country   # returns first element from array of all matched countries
+“`</p>
+
+<p>Phone class has following attributes</p>
+
+<p>“`ruby phone.original        # string that was passed as phone number
+phone.sanitized       # sanitized phone number (only digits left)
+phone.national_number # phone number without country code “`</p>
+
+<p>### How it works</p>
+
+<p>Gem includes data from Google libphonenumber which has regex patterns for
+validations. Valid patterns are more specific to phone type and country.
+Possible patterns as usual are patterns with number of digits in number.</p>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

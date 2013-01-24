@@ -1,6 +1,6 @@
 namespace :phonelib do
 
-  desc "Explaining what the task does"
+  desc "Import and reparse original data file from Google libphonenumber"
   task :import_data do
     require 'net/http'
     require 'yaml'
@@ -24,8 +24,7 @@ namespace :phonelib do
       # each country
       country = {}
       el.attributes.each do |k, v| 
-        #puts k + " " + v
-        country[k.to_sym] = v.to_s 
+        country[k.to_sym] = v.to_s
       end
 
       country[:types] = {}
@@ -36,27 +35,20 @@ namespace :phonelib do
            
           if phone_type.name != 'availableFormats'
             country[:types][phone_type_sym] = {}
-            #puts "  " + phone_type.name 
-            phone_type.elements.each do |pattern| 
-              #puts "    " + pattern.name + " = " + pattern.children.first.to_s.tr(" \n", "")
+            phone_type.elements.each do |pattern|
               country[:types][phone_type_sym][pattern.name.to_sym] = pattern.children.first.to_s.tr(" \n", "")
             end
           else
             country[:formats] = []
-            #puts "  " + phone_type.name
             phone_type.children.each do |format|
               
               if format.name != 'text' && format.name != 'comment'
                 current_format = { regex: format.first[1].to_s.tr(" \n", "") }
 
-                #puts "    " + format.name + " = " + format.first[1]
                 format.children.each do |f|
                   if f.name != 'text'
-                    
                     current_format[f.name.to_sym] = f.children.first.to_s.tr(" \n", "")
-                    #puts "      " + f.name + " = " + f.children.first
-
-                  end  
+                  end
                 end
 
                 country[:formats].push(current_format) 
@@ -73,13 +65,5 @@ namespace :phonelib do
     File.open(target, "w+") do |f|
       f.write(countries.to_yaml)
     end
-    
-    #main.children.each do | c |
-    #  pp c
-    #end
-    #doc.elements.each do | el |
-    #  pp el
-    #  exit
-    #end
   end
 end  
