@@ -47,7 +47,7 @@ module Phonelib
     # method for parsing phone number
     # on first run fills @@phone_data with data present in yaml file
     def parse(phone)
-      require 'YAML'
+      require 'yaml'
       data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
       @@phone_data ||= YAML.load_file(data_file)
       Phonelib::Phone.new(phone, @@phone_data)
