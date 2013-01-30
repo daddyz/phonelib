@@ -1,6 +1,7 @@
 ## Phonelib
 
 [![Build Status](https://travis-ci.org/daddyz/phonelib.png?branch=master)](http://travis-ci.org/daddyz/phonelib)
+[![Gem Version](https://badge.fury.io/rb/phonelib.png)](http://badge.fury.io/rb/phonelib)
 
 Phonelib is a gem allowing you to validate phone number. All validations are based on [Google libphonenumber](http://code.google.com/p/libphonenumber/).
 Currently it can make only basic validation and still not include all Google's library functions.

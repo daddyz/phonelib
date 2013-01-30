@@ -4,6 +4,7 @@ module Phonelib
     # variable will include hash with data for validation
     @@phone_data = nil
 
+    # :stopdoc:
     # gem constants definition
     # constants for phone types
     GENERAL = :generalDesc
@@ -43,6 +44,7 @@ module Phonelib
     NOT_FOR_CHECK = [
       :generalDesc, :emergency, :shortCode, :fixedLine, :mobile, :fixedOrMobile
     ]
+    # :startdoc:
 
     # method for parsing phone number
     # on first run fills @@phone_data with data present in yaml file

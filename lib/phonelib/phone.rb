@@ -101,7 +101,6 @@ module Phonelib
 
     # Returns all valid and possible phone number types for currently parsed
     # phone for provided data hash.
-    # Forked from original Google libphonenumber library.
     def get_all_number_types(number, data)
       response = {valid: [], possible: []}
 
@@ -109,32 +108,27 @@ module Phonelib
       return response unless number_valid_and_possible?(number,
                                                         data[Core::GENERAL])
 
-      (Core::TYPES.keys - Core::NOT_FOR_CHECK).each do |type|
+      if data[Core::FIXED_LINE] == data[Core::MOBILE]
+        same_fixed_and_mobile = true
+        additional_check = [ Core::FIXED_LINE ]
+      else
+        same_fixed_and_mobile = false
+        additional_check = [ Core::FIXED_LINE, Core::MOBILE ]
+      end
+
+      (Core::TYPES.keys - Core::NOT_FOR_CHECK + additional_check).each do |type|
         next if data[type].nil? || data[type].empty?
 
-        response[:valid] << type if number_valid_and_possible?(number,
-                                                               data[type])
-        response[:possible] << type if number_possible?(number, data[type])
-      end
-
-      if number_valid_and_possible?(number, data[Core::FIXED_LINE])
-        if data[Core::FIXED_LINE] == data[Core::MOBILE]
-          response[:valid] << Core::FIXED_OR_MOBILE
-        else
-          response[:valid] << Core::FIXED_LINE
+        if number_possible?(number, data[type])
+          if same_fixed_and_mobile && same_types.include?(type)
+            put_type = Core::FIXED_OR_MOBILE
+          else
+            put_type = type
+          end
+          response[:possible] << put_type
+          response[:valid] << put_type if number_valid_and_possible?(number,
+                                                                     data[type])
         end
-      elsif number_valid_and_possible?(number, data[Core::MOBILE])
-        response[:valid] << Core::MOBILE
-      end
-
-      if number_possible?(number, data[Core::FIXED_LINE])
-        if data[Core::FIXED_LINE] == data[Core::MOBILE]
-          response[:possible] << Core::FIXED_OR_MOBILE
-        else
-          response[:possible] << Core::FIXED_LINE
-        end
-      elsif number_possible?(number, data[Core::MOBILE])
-        response[:possible] << Core::MOBILE
       end
 
       response

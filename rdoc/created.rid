@@ -1,7 +1,7 @@
-Thu, 24 Jan 2013 09:32:25 +0200
-README.rdoc	Tue, 22 Jan 2013 21:29:40 +0200
+Wed, 30 Jan 2013 09:22:22 +0200
+README.rdoc	Sat, 26 Jan 2013 20:45:45 +0200
 lib/phonelib.rb	Wed, 23 Jan 2013 19:36:56 +0200
-lib/phonelib/core.rb	Thu, 24 Jan 2013 09:19:12 +0200
-lib/phonelib/phone.rb	Thu, 24 Jan 2013 09:29:20 +0200
+lib/phonelib/core.rb	Wed, 30 Jan 2013 09:21:23 +0200
+lib/phonelib/phone.rb	Tue, 29 Jan 2013 20:16:48 +0200
 lib/phonelib/validators.rb	Wed, 23 Jan 2013 19:42:44 +0200
-lib/phonelib/version.rb	Wed, 23 Jan 2013 19:33:50 +0200
+lib/phonelib/version.rb	Wed, 30 Jan 2013 09:22:19 +0200

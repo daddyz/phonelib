@@ -77,152 +77,149 @@
 
 <div id="documentation" class="description">
   
-<p>## <a href="Phonelib.html">Phonelib</a></p>
+<p>begin</p>
+
+<h2 id="label-Phonelib"><a href="Phonelib.html">Phonelib</a></h2>
 
 <p><a href="http://travis-ci.org/daddyz/phonelib"><img
 src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build
-Status" /></a></p>
+Status" /></a> <a href="http://badge.fury.io/rb/phonelib"><img
+src="https://badge.fury.io/rb/phonelib.png" alt="Gem Version" /></a></p>
 
 <p><a href="Phonelib.html">Phonelib</a> is a gem allowing you to validate
-phone number. All validations are based on [Google libphonenumber](<a
-href="http://code.google.com/p/libphonenumber/">code.google.com/p/libphonenumber/</a>).
+phone number. All validations are based on <a
+href="http://code.google.com/p/libphonenumber/">Google libphonenumber</a>.
 Currently it can make only basic validation and still not include all
 Google's library functions.</p>
 
-<p>## Information</p>
+<h2 id="label-Information">Information</h2>
 
-<p>### RDoc</p>
+<h3 id="label-RDoc">RDoc</h3>
 
 <p>RDoc documentation can be found here <a
-href="http://rubydoc.info/github/daddyz/phonelib/master/frames">rubydoc.info/github/daddyz/phonelib/master/frames</a></p>
+href="http://rubydoc.info/gems/phonelib/frames">rubydoc.info/gems/phonelib/frames</a></p>
 
-<p>### Bug reports</p>
+<h3 id="label-Bug+reports">Bug reports</h3>
 
 <p>If you discover a problem with Evercookie gem, let us know about it. <a
 href="https://github.com/daddyz/phonelib/issues">github.com/daddyz/phonelib/issues</a></p>
 
-<p>### Example application</p>
+<h3 id="label-Example+application">Example application</h3>
 
 <p>You can see an example of phonelib model validation working in test/dummy
 application of this gem</p>
 
-<p>## Getting started</p>
+<h2 id="label-Getting+started">Getting started</h2>
 
 <p><a href="Phonelib.html">Phonelib</a> was written and tested on Rails &gt;=
 3.1. You can install it by adding in to your Gemfile with:</p>
 
-<p>“`ruby gem ‘phonelib’ “`</p>
+<pre>gem 'phonelib'</pre>
 
 <p>Run the bundle command to install it.</p>
 
-<p>### ActiveRecord Integration</p>
+<h3 id="label-ActiveRecord+Integration">ActiveRecord Integration</h3>
 
-<p>This gem adds validator for active record. Basic usage: “`ruby validates
-:attribute, phone: true “` This will enable <a
-href="Phonelib.html">Phonelib</a> validator for field “attribute”. This
-validator checks that passed value is valid phone number. Please note that
-passing blank value also fails.</p>
+<p>This gem adds validator for active record. Basic usage:</p>
 
-<p>Additional options: “`ruby validates :attribute, phone: { possible: true,
-allow_blank: true } “` `possible: true` - enables validation to check
-whether the passed number is a possible phone number (not strict check).
-Refer to [Google libphonenumber](<a
-href="http://code.google.com/p/libphonenumber/">code.google.com/p/libphonenumber/</a>)
+<pre>validates :attribute, phone: true</pre>
+
+<p>This will enable <a href="Phonelib.html">Phonelib</a> validator for field
+“attribute”. This validator checks that passed value is valid phone number.
+Please note that passing blank value also fails.</p>
+
+<p>Additional options:</p>
+
+<pre>validates :attribute, phone: { possible: true, allow_blank: true }</pre>
+
+<p><code>possible: true</code> - enables validation to check whether the
+passed number is a possible phone number (not strict check). Refer to <a
+href="http://code.google.com/p/libphonenumber/">Google libphonenumber</a>
 for more information on it.</p>
 
-<p>`allow_blank: true` - when no value passed then validation passes</p>
+<p><code>allow_blank: true</code> - when no value passed then validation
+passes</p>
 
-<p>### Basic usage</p>
+<h3 id="label-Basic+usage">Basic usage</h3>
 
 <p>To check if phone number is valid simply run:</p>
 
-<p>“`ruby <a
-href="Phonelib/Core.html#method-i-valid-3F">Phonelib::Core#valid?</a>(‘123456789’)
-returns true or false “`</p>
+<pre>Phonelib.valid?('123456789') # returns true or false</pre>
 
 <p>Additional methods:</p>
 
-<p>“`ruby <a
-href="Phonelib/Core.html#method-i-valid-3F">Phonelib::Core#valid?</a>
-‘123456789’      # checks if passed value is valid number <a
-href="Phonelib/Core.html#method-i-invalid-3F">Phonelib::Core#invalid?</a>
-‘123456789’    # checks if passed value is invalid number <a
-href="Phonelib/Core.html#method-i-possible-3F">Phonelib::Core#possible?</a>
-‘123456789’   # checks if passed value is possible number <a
-href="Phonelib/Core.html#method-i-impossible-3F">Phonelib::Core#impossible?</a>
-‘123456789’ # checks if passed value is impossible number “`</p>
+<pre>Phonelib.valid? '123456789'      # checks if passed value is valid number
+Phonelib.invalid? '123456789'    # checks if passed value is invalid number
+Phonelib.possible? '123456789'   # checks if passed value is possible number
+Phonelib.impossible? '123456789' # checks if passed value is impossible number</pre>
 
 <p>There is also option to check if provided phone is valid for specified
 country. Country should be specified as two letters country code (like “US”
 for United States).</p>
 
-<p>“`ruby <a
-href="Phonelib/Core.html#method-i-valid_for_country-3F">Phonelib::Core#valid_for_country?</a>
-‘123456789’, ‘XX’   # checks if passed value is valid number for specified
-country <a
-href="Phonelib/Core.html#method-i-invalid_for_country-3F">Phonelib::Core#invalid_for_country?</a>
-‘123456789’, ‘XX’ # checks if passed value is invalid number for specified
-country “`</p>
+<pre>Phonelib.valid_for_country? '123456789', 'XX'   # checks if passed value is valid number for specified country
+Phonelib.invalid_for_country? '123456789', 'XX' # checks if passed value is invalid number for specified country</pre>
 
 <p>Additionally you can run:</p>
 
-<p>“`ruby phone = <a
-href="Phonelib/Core.html#method-i-parse">Phonelib::Core#parse</a>(‘123456789’)
-“`</p>
+<pre>phone = Phonelib.parse('123456789')</pre>
 
-<p>Returned value is object of `Phonelib::Phone` class which have following
-methods:</p>
+<p>Returned value is object of <code>Phonelib::Phone</code> class which have
+following methods:</p>
 
-<p>“`ruby # basic validation methods phone.valid? phone.invalid?
-phone.possible? phone.impossible?</p>
+<pre># basic validation methods
+phone.valid?
+phone.invalid?
+phone.possible?
+phone.impossible?
 
-<p># validations for countries phone.valid_for_country? ‘XX’
-phone.invalid_for_country? ‘XX’ “`</p>
+# validations for countries
+phone.valid_for_country? 'XX'
+phone.invalid_for_country? 'XX'</pre>
 
 <p>You can also fetch matched valid phone types</p>
 
-<p>“`ruby phone.types # returns array of all valid types phone.type  # returns
-first element from array of all valid types “`</p>
+<pre>phone.types # returns array of all valid types
+phone.type  # returns first element from array of all valid types</pre>
 
 <p>Possible types:</p>
 <ul><li>
-<p>`:premiumRate` - Premium Rate</p>
+<p><code>:premiumRate</code> - Premium Rate</p>
 </li><li>
-<p>`:tollFree` - Toll Free</p>
+<p><code>:tollFree</code> - Toll Free</p>
 </li><li>
-<p>`:sharedCost` - Shared Cost</p>
+<p><code>:sharedCost</code> - Shared Cost</p>
 </li><li>
-<p>`:voip` - VoIP</p>
+<p><code>:voip</code> - VoIP</p>
 </li><li>
-<p>`:personalNumber` - Personal Number</p>
+<p><code>:personalNumber</code> - Personal Number</p>
 </li><li>
-<p>`:pager` - Pager</p>
+<p><code>:pager</code> - Pager</p>
 </li><li>
-<p>`:uan` - UAN</p>
+<p><code>:uan</code> - UAN</p>
 </li><li>
-<p>`:voicemail` - VoiceMail</p>
+<p><code>:voicemail</code> - VoiceMail</p>
 </li><li>
-<p>`:fixedLine` - Fixed Line</p>
+<p><code>:fixedLine</code> - Fixed Line</p>
 </li><li>
-<p>`:mobile` - Mobile</p>
+<p><code>:mobile</code> - Mobile</p>
 </li><li>
-<p>`:fixedOrMobile` - Fixed Line or Mobile (if both mobile and fixed pattern
-matches)</p>
+<p><code>:fixedOrMobile</code> - Fixed Line or Mobile (if both mobile and
+fixed pattern matches)</p>
 </li></ul>
 
 <p>Also you can fetch all matched countries</p>
 
-<p>“`ruby phone.countries # returns array of all matched countries
-phone.country   # returns first element from array of all matched countries
-“`</p>
+<pre>phone.countries # returns array of all matched countries
+phone.country   # returns first element from array of all matched countries</pre>
 
 <p>Phone class has following attributes</p>
 
-<p>“`ruby phone.original        # string that was passed as phone number
+<pre>phone.original        # string that was passed as phone number
 phone.sanitized       # sanitized phone number (only digits left)
-phone.national_number # phone number without country code “`</p>
+phone.national_number # phone number without country code</pre>
 
-<p>### How it works</p>
+<h3 id="label-How+it+works">How it works</h3>
 
 <p>Gem includes data from Google libphonenumber which has regex patterns for
 validations. Valid patterns are more specific to phone type and country.

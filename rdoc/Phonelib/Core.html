@@ -133,94 +133,6 @@
     
 
     
-    <!-- Constants -->
-    <section id="constants-list" class="section">
-      <h3 class="section-header">Constants</h3>
-      <dl>
-      
-        <dt id="EMERGENCY">EMERGENCY
-        
-        <dd class="description">
-        
-      
-        <dt id="FIXED_LINE">FIXED_LINE
-        
-        <dd class="description">
-        
-      
-        <dt id="FIXED_OR_MOBILE">FIXED_OR_MOBILE
-        
-        <dd class="description">
-        
-      
-        <dt id="GENERAL">GENERAL
-        
-        <dd class="description"><p>gem constants definition constants for phone types</p>
-        
-      
-        <dt id="MOBILE">MOBILE
-        
-        <dd class="description">
-        
-      
-        <dt id="NOT_FOR_CHECK">NOT_FOR_CHECK
-        
-        <dd class="description"><p>array of types not included for validation check in cycle</p>
-        
-      
-        <dt id="PAGER">PAGER
-        
-        <dd class="description">
-        
-      
-        <dt id="PERSONAL_NUMBER">PERSONAL_NUMBER
-        
-        <dd class="description">
-        
-      
-        <dt id="PREMIUM_RATE">PREMIUM_RATE
-        
-        <dd class="description">
-        
-      
-        <dt id="SHARED_COST">SHARED_COST
-        
-        <dd class="description">
-        
-      
-        <dt id="SHORT_CODE">SHORT_CODE
-        
-        <dd class="description">
-        
-      
-        <dt id="TOLL_FREE">TOLL_FREE
-        
-        <dd class="description">
-        
-      
-        <dt id="TYPES">TYPES
-        
-        <dd class="description"><p>hash of all possible types with description</p>
-        
-      
-        <dt id="UAN">UAN
-        
-        <dd class="description">
-        
-      
-        <dt id="VOICEMAIL">VOICEMAIL
-        
-        <dd class="description">
-        
-      
-        <dt id="VOIP">VOIP
-        
-        <dd class="description">
-        
-      
-      </dl>
-    </section>
-    
 
     
 
@@ -246,7 +158,7 @@
 
           
           <div class="method-source-code" id="impossible-3F-source">
-            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 72</span>
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 74</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">impossible?</span>(<span class="ruby-identifier">phone_number</span>)
   <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">impossible?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -276,7 +188,7 @@
 
           
           <div class="method-source-code" id="invalid-3F-source">
-            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 62</span>
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">invalid?</span>(<span class="ruby-identifier">phone_number</span>)
   <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">invalid?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -306,7 +218,7 @@
 
           
           <div class="method-source-code" id="invalid_for_country-3F-source">
-            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 82</span>
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 84</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">invalid_for_country?</span>(<span class="ruby-identifier">phone_number</span>, <span class="ruby-identifier">country</span>)
   <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">invalid_for_country?</span>(<span class="ruby-identifier">country</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -337,9 +249,9 @@ present in yaml file</p>
 
           
           <div class="method-source-code" id="parse-source">
-            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 51</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone</span>)
-  <span class="ruby-identifier">require</span> <span class="ruby-string">'YAML'</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-string">'yaml'</span>
   <span class="ruby-identifier">data_file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword">__FILE__</span>) <span class="ruby-operator">+</span> <span class="ruby-string">'/../../data/phone_data.yml'</span>
   <span class="ruby-identifier">@@phone_data</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load_file</span>(<span class="ruby-identifier">data_file</span>)
   <span class="ruby-constant">Phonelib</span><span class="ruby-operator">::</span><span class="ruby-constant">Phone</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">phone</span>, <span class="ruby-identifier">@@phone_data</span>)
@@ -370,7 +282,7 @@ present in yaml file</p>
 
           
           <div class="method-source-code" id="possible-3F-source">
-            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 67</span>
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 69</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">possible?</span>(<span class="ruby-identifier">phone_number</span>)
   <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">possible?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -400,7 +312,7 @@ present in yaml file</p>
 
           
           <div class="method-source-code" id="valid-3F-source">
-            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">phone_number</span>)
   <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">valid?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -430,7 +342,7 @@ present in yaml file</p>
 
           
           <div class="method-source-code" id="valid_for_country-3F-source">
-            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 77</span>
+            <pre><span class="ruby-comment"># File lib/phonelib/core.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">valid_for_country?</span>(<span class="ruby-identifier">phone_number</span>, <span class="ruby-identifier">country</span>)
   <span class="ruby-identifier">parse</span>(<span class="ruby-identifier">phone_number</span>).<span class="ruby-identifier">valid_for_country?</span>(<span class="ruby-identifier">country</span>)
 <span class="ruby-keyword">end</span></pre>
