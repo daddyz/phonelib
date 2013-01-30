@@ -1,5 +1,6 @@
 .bundle/
 .idea/
+rdoc/
 log/*.log
 pkg/
 test/dummy/db/*.sqlite3
