@@ -1,4 +1,3 @@
-begin
 == Phonelib
 
 {<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
