@@ -48,11 +48,20 @@ module Phonelib
 
     # method for parsing phone number
     # on first run fills @@phone_data with data present in yaml file
-    def parse(phone)
+    def parse(phone, country = nil)
       require 'yaml'
       data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
       @@phone_data ||= YAML.load_file(data_file)
-      Phonelib::Phone.new(phone, @@phone_data)
+      if country.nil?
+        Phonelib::Phone.new(phone, @@phone_data)
+      else
+        selected_country = @@phone_data.detect { |data| data[:id] == country }
+        if selected_country.present?
+          prefix = selected_country[:countryCode]
+          phone = prefix + phone unless phone.starts_with? prefix
+        end
+        Phonelib::Phone.new(phone, [selected_country])
+      end
     end
 
     # method checks if passed phone number is valid
@@ -77,12 +86,12 @@ module Phonelib
 
     # method checks if passed phone number is valid for provided country
     def valid_for_country?(phone_number, country)
-      parse(phone_number).valid_for_country?(country)
+      parse(phone_number, country).valid_for_country?(country)
     end
 
     # method checks if passed phone number is invalid for provided country
     def invalid_for_country?(phone_number, country)
-      parse(phone_number).invalid_for_country?(country)
+      parse(phone_number, country).invalid_for_country?(country)
     end
   end
 end
