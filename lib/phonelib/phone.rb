@@ -108,30 +108,34 @@ module Phonelib
       return response unless number_valid_and_possible?(number,
                                                         data[Core::GENERAL])
 
-      if data[Core::FIXED_LINE] == data[Core::MOBILE]
-        same_fixed_and_mobile = true
-        additional_check = [ Core::FIXED_LINE ]
-      else
-        same_fixed_and_mobile = false
-        additional_check = [ Core::FIXED_LINE, Core::MOBILE ]
-      end
+      same_fixed_and_mobile, additional_check = 
+          check_same_types(data[Core::FIXED_LINE], data[Core::MOBILE])
 
       (Core::TYPES.keys - Core::NOT_FOR_CHECK + additional_check).each do |type|
         next if data[type].nil? || data[type].empty?
+        patterns = data[type]
 
-        if number_possible?(number, data[type])
-          if same_fixed_and_mobile && same_types.include?(type)
-            put_type = Core::FIXED_OR_MOBILE
-          else
-            put_type = type
-          end
-          response[:possible] << put_type
-          response[:valid] << put_type if number_valid_and_possible?(number,
-                                                                     data[type])
+        if same_fixed_and_mobile && additional_check.include?(type)
+          type = Core::FIXED_OR_MOBILE
+        end
+
+        if number_possible?(number, patterns)
+          response[:possible] << type
+          response[:valid] << type if number_valid_and_possible?(number,
+                                                                 patterns)
         end
       end
 
       response
+    end
+
+    # Checks if fixed line pattern and mobile pattern are the same
+    def check_same_types(fixed, mobile)
+      if fixed == mobile
+        [ true, [ Core::FIXED_LINE ] ]
+      else
+        [ false, [ Core::FIXED_LINE, Core::MOBILE ] ]
+      end
     end
 
     # Checks if passed number matches both valid and possible patterns
