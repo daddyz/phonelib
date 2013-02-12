@@ -53,6 +53,10 @@ class PhonelibTest < ActiveSupport::TestCase
     assert Phonelib.valid_for_country?('972541234567', 'IL')
   end
   
+  test "valid_for_country? with correct data and national number" do
+    assert Phonelib.valid_for_country?('0541234567', 'IL')
+  end
+  
   test "valid_for_country? with correct data and without prefix" do
     assert Phonelib.valid_for_country?('541234567', 'IL')
   end
