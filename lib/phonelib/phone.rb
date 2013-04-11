@@ -104,7 +104,7 @@ module Phonelib
       end
 
       if possible_countries.size > 1
-        possible_countries = possible_countries.select! do |data|
+        possible_countries = possible_countries.select do |data|
           country_code = data[:countryCode]
           general_description = data[:types][Core::GENERAL]
 
