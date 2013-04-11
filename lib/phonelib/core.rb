@@ -6,7 +6,7 @@ module Phonelib
 
     # gem constants definition
     # constants for phone types
-    
+
     # Validation patterns keys constants
     # General pattern for country
     GENERAL = :generalDesc
@@ -73,7 +73,7 @@ module Phonelib
         Phonelib::Phone.new(phone, @@phone_data)
       else
         detected = @@phone_data.detect { |data| data[:id] == country }
-        if detected.present?
+        if !!detected
           phone = convert_phone_to_e164(phone,
                                         detected[:countryCode],
                                         detected[:nationalPrefix])
@@ -111,11 +111,11 @@ module Phonelib
     def invalid_for_country?(phone_number, country)
       parse(phone_number, country).invalid_for_country?(country)
     end
-    
-    private 
+
+    private
     def convert_phone_to_e164(phone, prefix, national_prefix)
       return phone if phone.start_with?(prefix)
-      if national_prefix.present? && phone.start_with?(national_prefix)
+      if !!national_prefix && phone.start_with?(national_prefix)
         phone = phone[1..phone.length]
       end
       prefix + phone

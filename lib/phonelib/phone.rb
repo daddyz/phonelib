@@ -89,6 +89,22 @@ module Phonelib
         @sanitized.start_with?(data[:countryCode])
       end
 
+      if possible_countries.size > 1
+        possible_countries = possible_countries.select! do |data|
+          country_code = data[:countryCode]
+          general_description = data[:types][:generalDesc]
+
+          if general_description
+            pattern = general_description[:nationalNumberPattern]
+            re = Regexp.new(country_code + pattern)
+
+            re === @sanitized
+          else
+            false
+          end
+        end
+      end
+
       possible_countries.each do |country_data|
         next if country_data[:types].empty?
 
@@ -108,7 +124,7 @@ module Phonelib
       return response unless number_valid_and_possible?(number,
                                                         data[Core::GENERAL])
 
-      same_fixed_and_mobile, additional_check = 
+      same_fixed_and_mobile, additional_check =
           check_same_types(data[Core::FIXED_LINE], data[Core::MOBILE])
 
       (Core::TYPES.keys - Core::NOT_FOR_CHECK + additional_check).each do |type|
