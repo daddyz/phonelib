@@ -58,6 +58,20 @@ module Phonelib
       !possible?
     end
 
+    def international
+      format = @analyzed_data[country][:format]
+      country_code = @analyzed_data[country][:countryCode]
+      regexp = Regexp.new(format[:regex])
+      format_string = format[:format].gsub(/(\d)\$/, "\\1 $")
+
+      md = regexp.match(@national_number)
+
+      national_part = format_string.gsub(/\$(\d)/){||md[$~[1].to_i]}
+
+      "+" + country_code + " " +
+        national_part.gsub(/^(\d{3,})\s+/, "(\\1) ")
+    end
+
     # Returns whether a current parsed phone number is valid for specified
     # country
     #
@@ -112,6 +126,11 @@ module Phonelib
         @national_number = @sanitized[prefix_length..@sanitized.length]
         @analyzed_data[country_data[:id]] =
             get_all_number_types(@national_number, country_data[:types])
+
+        @analyzed_data[country_data[:id]][:countryCode] = country_data[:countryCode]
+
+        @analyzed_data[country_data[:id]][:format] =
+          get_number_format(@national_number, country_data[:formats])
       end
     end
 
@@ -147,6 +166,19 @@ module Phonelib
       end
 
       response
+    end
+
+    def get_number_format(number, format_data)
+      if format_data
+        format_data.find { |f|
+          Regexp.new("^" + f[:regex] + "$") === @national_number
+        }
+      else
+        {
+          :regex  => "(\\d+)(\\d{3})(\\d\\d)(\\d\\d)",
+          :format => "$1 $2-$3-$3"
+        }
+      end
     end
 
     # Checks if fixed line pattern and mobile pattern are the same
