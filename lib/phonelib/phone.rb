@@ -66,10 +66,8 @@ module Phonelib
 
       md = regexp.match(@national_number)
 
-      national_part = format_string.gsub(/\$(\d)/){||md[$~[1].to_i]}
-
       "+" + country_code + " " +
-        national_part.gsub(/^(\d{3,})\s+/, "(\\1) ")
+        format_string.gsub(/\$(\d)/){||md[$~[1].to_i]}
     end
 
     # Returns whether a current parsed phone number is valid for specified
