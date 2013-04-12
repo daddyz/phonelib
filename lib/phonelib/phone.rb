@@ -35,7 +35,9 @@ module Phonelib
 
     # Returns first country that matched valid patterns
     def country
-      countries.first
+      @country ||= countries.detect do |iso2|
+        !@analyzed_data[iso2][:valid].empty?
+      end
     end
 
     # Returns whether a current parsed phone number is valid
@@ -98,12 +100,16 @@ module Phonelib
     # Analyze current phone with provided data hash
     def analyze_phone(country_data)
       possible_countries = country_data.select do |data|
-        @sanitized.start_with?(data[:countryCode])
+        country_code = data[:countryCode]
+        leading_digits = data[:leadingDigits] || ""
+
+        @sanitized.start_with?(country_code + leading_digits)
       end
 
       if possible_countries.size > 1
         possible_countries = possible_countries.select do |data|
           country_code = data[:countryCode]
+
           general_description = data[:types][Core::GENERAL]
 
           if general_description
