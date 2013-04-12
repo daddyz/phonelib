@@ -166,16 +166,18 @@ module Phonelib
       response
     end
 
+    DEFAULT_NUMBER_FORMAT = {
+      :regex => "(\\d+)(\\d{3})(\\d{4})",
+      :format => "$1 $2 $3"
+    }
+
     def get_number_format(number, format_data)
       if format_data
         format_data.find { |f|
           Regexp.new("^" + f[:regex] + "$") === @national_number
         }
       else
-        {
-          :regex  => "(\\d+)(\\d{3})(\\d\\d)(\\d\\d)",
-          :format => "$1 $2-$3-$3"
-        }
+        DEFAULT_NUMBER_FORMAT
       end
     end
 
