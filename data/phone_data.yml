@@ -756,7 +756,7 @@
       :nationalNumberPattern: ! '[2-79]\d{5,9}|1\d{9}|8[0-7]\d{4,8}'
       :possibleNumberPattern: \d{6,10}
     :fixedLine:
-      :nationalNumberPattern: 2(?:7(?:1[0-267]|2[0-289]|3[0-29]|[46][01]|5[1-3]|7[017]|91)|8(?:0[125]|[139][1-6]|2[0157-9]|6[1-35]|7[1-5]|8[1-8])|9(?:0[0-2]|1[1-4]|2[568]|3[3-6]|5[5-7]|6[0167]|7[15]|8[016-8]))\d{4}|3(?:[6-8]1|(?:0[23]|[25][12]|82|416)\d|(?:31|12?[5-7])\d{2})\d{3}|4(?:(?:02|[49]6|[68]1)|(?:0[13]|21\d?|[23]2|[457][12]|6[28])\d|(?:23|[39]1)\d{2}|1\d{3})\d{3}|5(?:(?:[457-9]1|62)|(?:1\d?|2[12]|3[1-3]|52)\d|61{2})|6(?:[45]1|(?:11|2[15]|[39]1)\d|(?:[06-8]1|62)\d{2})|7(?:(?:32|91)|(?:02|31|[67][12])\d|[458]1\d{2}|21\d{3})\d{3}|8(?:(?:4[12]|[5-7]2|1\d?)|(?:0|3[12]|[5-7]1|217)\d)\d{4}|9(?:[35]1|(?:[024]2|81)\d|(?:1|[24]1)\d{2})\d{3}
+      :nationalNumberPattern: 2(?:7(?:1[0-267]|2[0-289]|3[0-29]|[46][01]|5[1-3]|7[017]|91)|8(?:0[125]|[139][1-6]|2[0157-9]|6[1-35]|7[1-5]|8[1-8])|9(?:0[0-2]|1[1-4]|2[568]|3[3-6]|5[5-7]|6[0167]|7[15]|8[016-8]))\d{4}|3(?:12?[5-7]\d{2}|0(?:2(?:[025-79]\d|[348]\d{1,2})|3(?:[2-4]\d|[56]\d?))|2(?:1\d{2}|2(?:[12]\d|[35]\d{1,2}|4\d?))|3(?:1\d{2}|2(?:[2356]\d|4\d{1,2}))|4(?:1\d{2}|2(?:2\d{1,2}|[47]|5\d{2}))|5(?:1\d{2}|29)|[67]1\d{2}|8(?:1\d{2}|2(?:2\d{2}|3|4\d))|)\d{3}|4(?:0(?:2(?:[09]\d|7)|33\d{2})|1\d{3}|2(?:1\d{2}|2(?:[25]\d?|[348]\d|[67]\d{1,2}))|3(?:1\d{2}(?:\d{2})?|2(?:[045]\d|[236-9]\d{1,2})|32\d{2})|4(?:[18]\d{2}|2(?:[2-46]\d{2}|3)|5[25]\d{2})|5(?:1\d{2}|2(?:3\d|5))|6(?:[18]\d{2}|2(?:3(?:\d{2})?|[46]\d{1,2}|5\d{2}|7\d)|5(?:3\d?|4\d|[57]\d{1,2}|6\d{2}|8))|71\d{2}|8(?:[18]\d{2}|23\d{2}|54\d{2})|9(?:[18]\d{2}|2[2-5]\d{2}|53\d{1,2}))\d{3}|5(?:02[03489]\d{2}|1\d{2}|2(?:1\d{2}|2(?:2(?:\d{2})?|[457]\d{2}))|3(?:1\d{2}|2(?:[37](?:\d{2})?|[569]\d{2}))|4(?:1\d{2}|2[46]\d{2})|5(?:1\d{2}|26\d{1,2})|6(?:[18]\d{2}|2|53\d{2})|7(?:1|24)\d{2}|8(?:1|26)\d{2}|91\d{2})\d{3}|6(?:0(?:1\d{2}|2(?:3\d{2}|4\d{1,2}))|2(?:2[2-5]\d{2}|5(?:[3-5]\d{2}|7)|8\d{2})|3(?:1|2[3478])\d{2}|4(?:1|2[34])\d{2}|5(?:1|2[47])\d{2}|6(?:[18]\d{2}|6(?:2(?:2\d|[34]\d{2})|5(?:[24]\d{2}|3\d|5\d{1,2})))|72[2-5]\d{2}|8(?:1\d{2}|2[2-5]\d{2})|9(?:1\d{2}|2[2-6]\d{2}))\d{3}|7(?:(?:02|[3-589]1|6[12]|72[24])\d{2}|21\d{3}|32)\d{3}|8(?:(?:4[12]|[5-7]2|1\d?)|(?:0|3[12]|[5-7]1|217)\d)\d{4}|9(?:[35]1|(?:[024]2|81)\d|(?:1|[24]1)\d{2})\d{3}
       :possibleNumberPattern: \d{6,9}
       :exampleNumber: '27111234'
     :mobile:
@@ -767,6 +767,10 @@
       :nationalNumberPattern: 80[03]\d{7}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '8001234567'
+    :voip:
+      :nationalNumberPattern: 96(?:0[49]|1[0-4]|6[69])\d{6}
+      :possibleNumberPattern: \d{10}
+      :exampleNumber: '9604123456'
     :shortCode:
       :nationalNumberPattern: 1(?:0(?:[39]|5(?:0\d|[1-4])|6\d{2}|7[0-4]|8[0-29])|1[6-9]|2(?:2[0-5]|[34])|3(?:1\d?|3\d|6[3-6])|4(?:0\d|1\d{2})|5[2-9])
       :possibleNumberPattern: \d{3,5}
@@ -778,16 +782,16 @@
   :formats:
   - :regex: (2)(\d{7})
     :leadingDigits: '2'
-    :format: $1$2
+    :format: $1-$2
   - :regex: (\d{2})(\d{4,6})
     :leadingDigits: ! '[3-79]1'
-    :format: $1$2
+    :format: $1-$2
+  - :regex: (\d{4})(\d{3,6})
+    :leadingDigits: 1|3(?:0|[2-58]2)|4(?:0|[25]2|3[23]|[4689][25])|5(?:[02-578]2|6[25])|6(?:[0347-9]2|[26][25])|7[02-9]2|8(?:[023][23]|[4-7]2)|9(?:[02][23]|[458]2|6[016])
+    :format: $1-$2
   - :regex: (\d{3})(\d{3,7})
     :leadingDigits: ! '[3-79][2-9]|8'
-    :format: $1$2
-  - :regex: (\d{4})(\d{6})
-    :leadingDigits: '1'
-    :format: $1$2
+    :format: $1-$2
 - :id: BE
   :countryCode: '32'
   :internationalPrefix: '00'
@@ -802,7 +806,7 @@
       :possibleNumberPattern: \d{8}
       :exampleNumber: '12345678'
     :mobile:
-      :nationalNumberPattern: 4(?:[679]\d|8[3-9])\d{6}
+      :nationalNumberPattern: 4(?:[679]\d|8[03-9])\d{6}
       :possibleNumberPattern: \d{9}
       :exampleNumber: '470123456'
     :tollFree:
@@ -845,7 +849,7 @@
       :nationalNumberPattern: (?:20(?:49|5[23]|9[016-9])|40(?:4[56]|5[4-6]|7[0179])|50[34]\d)\d{4}
       :exampleNumber: '20491234'
     :mobile:
-      :nationalNumberPattern: (?:6(?:[056]\d|1[0-3]|8[0-2]|90)|7(?:[02-68]\d|1[0-4689]|7[0-69]|9[0-689]))\d{5}
+      :nationalNumberPattern: (?:6(?:[056]\d|1[0-36-9]|8[0-3]|90)|7(?:[02-68]\d|1[0-4689]|7[0-69]|9[0-689]))\d{5}
       :exampleNumber: '70123456'
     :emergency:
       :nationalNumberPattern: 1[78]
@@ -919,7 +923,7 @@
       :nationalNumberPattern: (?:1(?:3[3-6]|6[0156]|7\d)\d|6(?:1[16]\d|6(?:0\d|3[12]|44)|9(?:69|9[6-9]))|77\d{2})\d{4}
       :exampleNumber: '17001234'
     :mobile:
-      :nationalNumberPattern: (?:3(?:[23469]\d|5[35]|77|8[348])\d|6(?:1[16]\d|6(?:[06]\d|3[03-9]|44)|9(?:69|9[6-9]))|77\d{2})\d{4}
+      :nationalNumberPattern: (?:3(?:[23469]\d|5[35]|77|8[348])\d|6(?:1[16]\d|3(?:00|33|6[16])|6(?:[069]\d|3[03-9]|44)|9(?:69|9[6-9]))|77\d{2})\d{4}
       :exampleNumber: '36001234'
     :tollFree:
       :nationalNumberPattern: 80\d{6}
@@ -1273,7 +1277,7 @@
       :possibleNumberPattern: \d{10,11}
       :exampleNumber: '82012345678'
     :fixedLine:
-      :nationalNumberPattern: (?:1(?:5(?:1[1-5]|2\d|6[1-4]|9[1-7])|6(?:[235]\d|4[1-7])|7\d{2})|2(?:1(?:[246]\d|3[0-35-9]|5[1-9])|2(?:[235]\d|4[0-8])|3(?:2\d|3[02-79]|4[024-7]|5[0-7])))\d{5}
+      :nationalNumberPattern: (?:1(?:5(?:1[1-5]|2\d|6[2-4]|9[1-7])|6(?:[235]\d|4[1-7])|7\d{2})|2(?:1(?:[246]\d|3[0-35-9]|5[1-9])|2(?:[235]\d|4[0-8])|3(?:2\d|3[02-79]|4[024-7]|5[0-7])))\d{5}
       :possibleNumberPattern: \d{7,9}
       :exampleNumber: '152450911'
     :mobile:
@@ -1343,10 +1347,10 @@
       :nationalNumberPattern: ! '[2-9]\d{9}|3\d{6}'
       :possibleNumberPattern: \d{7}(?:\d{3})?
     :fixedLine:
-      :nationalNumberPattern: (?:2(?:04|26|[48]9|50)|3(?:06|43)|4(?:03|1[68]|3[18]|5[06])|5(?:0[06]|1[49]|79|8[17])|6(?:0[04]|13|47)|7(?:0[059]|80|78)|8(?:[06]7|19|73)|90[25])[2-9]\d{6}|310\d{4}
+      :nationalNumberPattern: (?:2(?:04|[23]6|[48]9|50)|3(?:06|43|65)|4(?:03|1[68]|3[178]|5[06])|5(?:0[06]|1[49]|79|8[17])|6(?:0[04]|13|39|47)|7(?:0[059]|80|78)|8(?:[06]7|19|73)|90[25])[2-9]\d{6}|310\d{4}
       :exampleNumber: '2042345678'
     :mobile:
-      :nationalNumberPattern: (?:2(?:04|26|[48]9|50)|3(?:06|43)|4(?:03|1[68]|3[18]|5[06])|5(?:0[06]|1[49]|79|8[17])|6(?:0[04]|13|47)|7(?:0[059]|80|78)|8(?:[06]7|19|73)|90[25])[2-9]\d{6}
+      :nationalNumberPattern: (?:2(?:04|[23]6|[48]9|50)|3(?:06|43|65)|4(?:03|1[68]|3[178]|5[06])|5(?:0[06]|1[49]|79|8[17])|6(?:0[04]|13|39|47)|7(?:0[059]|80|78)|8(?:[06]7|19|73)|90[25])[2-9]\d{6}
       :exampleNumber: '2042345678'
     :tollFree:
       :nationalNumberPattern: 8(?:00|55|66|77|88)[2-9]\d{6}|310\d{4}
@@ -1407,16 +1411,18 @@
   :nationalPrefixFormattingRule: $NP$FG
   :types:
     :generalDesc:
-      :nationalNumberPattern: ! '[1-6]\d{6}|8\d{6,8}|9\d{8}'
+      :nationalNumberPattern: ! '[2-6]\d{6}|[18]\d{6,8}|9\d{8}'
       :possibleNumberPattern: \d{7,9}
     :fixedLine:
-      :nationalNumberPattern: ! '[1-6]\d{6}'
-      :possibleNumberPattern: \d{7}
+      :nationalNumberPattern: 1(?:2\d{7}|\d{6})|[2-6]\d{6}
       :exampleNumber: '1234567'
     :mobile:
       :nationalNumberPattern: 8(?:[0-259]\d{2}|[48])\d{5}|9[7-9]\d{7}
       :exampleNumber: '991234567'
   :formats:
+  - :regex: (\d{2})(\d{3})(\d{4})
+    :leadingDigits: '12'
+    :format: $1$2$3
   - :regex: ([89]\d{2})(\d{3})(\d{3})
     :leadingDigits: 8[0-259]|9
     :format: $1$2$3
@@ -1659,14 +1665,14 @@
   :nationalPrefixForParsing: (1[1279]\d{3})|0
   :types:
     :generalDesc:
-      :nationalNumberPattern: ! '[1-79]\d{7,11}|8[0-357-9]\d{6,9}'
+      :nationalNumberPattern: ! '[1-7]\d{7,11}|8[0-357-9]\d{6,9}|9(?:5\d{3}|\d{9})'
       :possibleNumberPattern: \d{4,12}
     :noInternationalDialling:
-      :nationalNumberPattern: (?:4|(?:10)?8)00\d{7}
-      :possibleNumberPattern: \d{10,12}
+      :nationalNumberPattern: (?:4|(?:10)?8)00\d{7}|95\d{3}
+      :possibleNumberPattern: \d{5,12}
       :exampleNumber: '4001234567'
     :fixedLine:
-      :nationalNumberPattern: 21\d{8,10}|(?:10|2[02-57-9]|3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1\d|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|898)\d{8}|(?:3(?:1[02-9]|35|49|5\d|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|3[3-9]|5[2-9]|6[4789]|7\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[17]\d|2[248]|3[04-9]|4[3-6]|5[0-3689]|6[2368]|9[02-9])|8(?:1[236-8]|2[5-7]|[37]\d|5[1-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]\d|4[13]|5[1-5]))\d{7}|80(?:29|6[03578]|7[018]|81)\d{4}
+      :nationalNumberPattern: 21\d{8,10}|(?:10|2[02-57-9]|3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1\d|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:71|98))\d{8}|(?:3(?:1[02-9]|35|49|5\d|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|3[3-9]|5[2-9]|6[4789]|7\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[17]\d|2[248]|3[04-9]|4[3-6]|5[0-3689]|6[2368]|9[02-9])|8(?:1[236-8]|2[5-7]|3\d|5[1-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]\d|4[13]|5[1-5]))\d{7}|80(?:29|6[03578]|7[018]|81)\d{4}
       :exampleNumber: '1012345678'
     :mobile:
       :nationalNumberPattern: 1(?:3\d|4[57]|[58][0-35-9])\d{8}
@@ -1681,8 +1687,8 @@
       :possibleNumberPattern: \d{8}
       :exampleNumber: '16812345'
     :sharedCost:
-      :nationalNumberPattern: 400\d{7}
-      :possibleNumberPattern: \d{10}
+      :nationalNumberPattern: 400\d{7}|95\d{3}
+      :possibleNumberPattern: \d{5}(?:\d{5})?
       :exampleNumber: '4001234567'
     :emergency:
       :nationalNumberPattern: 1(?:1[09]|20)
@@ -1695,6 +1701,9 @@
   - :regex: ([48]00)(\d{3})(\d{4})
     :leadingDigits: ! '[48]00'
     :format: $1$2$3
+  - :regex: (\d{5})
+    :leadingDigits: '95'
+    :format: $1
   - :regex: (\d{3,4})(\d{4})
     :leadingDigits: ! '[2-9]'
     :format: $1$2
@@ -1707,10 +1716,10 @@
     :comment: ''
     :format: $1$2$3
   - :regex: $NP$FG
-    :leadingDigits: 3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|898
+    :leadingDigits: 3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:71|98)
     :format: $1$2$3
   - :regex: $NP$FG
-    :leadingDigits: 3(?:1[02-9]|35|49|5|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|[35][2-9]|6[4789]|7\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]|2[248]|3[04-9]|4[3-6]|6[2368])|8(?:1[236-8]|2[5-7]|[37]|5[1-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]|4[13]|5[1-5])
+    :leadingDigits: 3(?:1[02-9]|35|49|5|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|[35][2-9]|6[4789]|7\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]|2[248]|3[04-9]|4[3-6]|6[2368])|8(?:1[236-8]|2[5-7]|3|5[1-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]|4[13]|5[1-5])
     :format: $1$2$3
   - :regex: (1[3-58]\d)(\d{4})(\d{4})
     :leadingDigits: 1[3-58]
@@ -1784,11 +1793,11 @@
       :possibleNumberPattern: \d{10}
       :exampleNumber: '9001234567'
     :voip:
-      :nationalNumberPattern: 210[0-6]\d{4}|4(?:0(?:[04]0\d{4}|10[0-3]\d{3}|2(?:00\d|900)\d{2}|3[01]\d{4}|5\d{5}|70[01]\d{3})|1[01]\d{5}|400\d{4})|5100\d{4}
+      :nationalNumberPattern: 210[0-6]\d{4}|4(?:0(?:[04]0\d{4}|10[0-3]\d{3}|2(?:00\d|900)\d{2}|3[01]\d{4}|5\d{5}|70[01]\d{3})|1[01]\d{5}|400\d{4}|70[0-2]\d{4})|5100\d{4}
       :possibleNumberPattern: \d{8}
       :exampleNumber: '40001234'
     :shortCode:
-      :nationalNumberPattern: 1(?:0(?:00|15|2[2-4679])|1(?:1[0-35-9]|37|[46]6|75|8[79]|9[0-379])|2(?:00|[12]2|34|55)|333|400|5(?:15|5[15])|693|7(?:00|1[789]|2[02]|[67]7))
+      :nationalNumberPattern: 1(?:0(?:00|15|2[2-4679])|1(?:1[0-35-9]|37|[46]6|7[57]|8[79]|9[0-379])|2(?:00|[12]2|34|55)|333|400|5(?:15|5[15])|693|7(?:00|1[789]|2[02]|[67]7)|975)
       :possibleNumberPattern: \d{4}
       :exampleNumber: '1022'
     :emergency:
@@ -1989,7 +1998,7 @@
       :nationalNumberPattern: 9[17]0\d{6}
       :exampleNumber: '910123456'
     :uan:
-      :nationalNumberPattern: 9(?:5[056]|7[234])\d{6}
+      :nationalNumberPattern: 9(?:5\d|7[234])\d{6}
       :exampleNumber: '972123456'
     :voicemail:
       :nationalNumberPattern: 9(?:3\d{9}|6\d{7,10})
@@ -2133,10 +2142,10 @@
       :nationalNumberPattern: ! '[2-9]\d{7}'
       :possibleNumberPattern: \d{8}
     :fixedLine:
-      :nationalNumberPattern: (?:[2-7]\d|8[126-9]|9[16-9])\d{6}
+      :nationalNumberPattern: (?:[2-7]\d|8[126-9]|9[126-9])\d{6}
       :exampleNumber: '32123456'
     :mobile:
-      :nationalNumberPattern: (?:[2-7]\d|8[126-9]|9[16-9])\d{6}
+      :nationalNumberPattern: (?:[2-7]\d|8[126-9]|9[126-9])\d{6}
       :exampleNumber: '20123456'
     :tollFree:
       :nationalNumberPattern: 80\d{6}
@@ -2274,7 +2283,7 @@
       :possibleNumberPattern: \d{7,8}
       :exampleNumber: '22123456'
     :mobile:
-      :nationalNumberPattern: 9(?:[2-7]9|[89]\d)\d{6}
+      :nationalNumberPattern: 9(?:39|[4-6][89]|7[7-9]|[89]\d)\d{6}
       :possibleNumberPattern: \d{9}
       :exampleNumber: '991234567'
     :tollFree:
@@ -2409,7 +2418,7 @@
       :nationalNumberPattern: 528[89]\d{5}
       :exampleNumber: '528812345'
     :mobile:
-      :nationalNumberPattern: 6(?:0[0-6]|[14-7]\d|2[2-46-9]|3[03458]|8[01]|99)\d{6}
+      :nationalNumberPattern: 6(?:0[0-6]|[14-7]\d|2[2-46-9]|3[03-8]|8[01]|99)\d{6}
       :exampleNumber: '650123456'
     :tollFree:
       :nationalNumberPattern: 80\d{7}
@@ -3088,7 +3097,7 @@
       :possibleNumberPattern: \d{8}
       :exampleNumber: '30241234'
     :mobile:
-      :nationalNumberPattern: (?:24|55)\d{6}|6(?:0(?:2[0-35-9]|3[3467]|5[2457-9])|2\d{2,3}|[4-9]\d{2}|3(?:[14]0|35))\d{4}
+      :nationalNumberPattern: (?:24|55)\d{6}|6(?:0(?:2[0-35-9]|3[3467]|5[2457-9])|1[0-5]\d|2\d{2}|[4-9]\d{2}|3(?:[14]0|35))\d{4}|6(?:[03]1|2[128]|5[57]|6[2469])\d{6}
       :exampleNumber: '60201234'
     :voip:
       :nationalNumberPattern: 78\d{6}
@@ -3099,7 +3108,7 @@
     :leadingDigits: ! '[23567]'
     :format: $1$2$3$4
   - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
-    :leadingDigits: '62'
+    :leadingDigits: 6[02356]
     :format: $1$2$3$4
 - :id: GP
   :countryCode: '590'
@@ -3158,7 +3167,7 @@
       :nationalNumberPattern: ! '[26-9]\d{9}'
       :possibleNumberPattern: \d{10}
     :fixedLine:
-      :nationalNumberPattern: 2(?:1\d{2}|2(?:3[1-8]|4[1-7]|5[1-4]|6[1-8]|7[1-5]|[289][1-9])|3(?:1\d|2[1-57]|3[1-4]|[45][1-3]|7[1-7]|8[1-6]|9[1-79])|4(?:1\d|2[1-8]|3[1-4]|4[13-5]|6[1-578]|9[1-5])|5(?:1\d|2[1-3]|4[124]|5[1-6]|[39][1-4])|6(?:1\d|3[124]|4[1-7]|5[13-9]|[269][1-6]|7[14]|8[1-5])|7(?:1\d|2[1-5]|3[1-6]|4[1-7]|5[1-57]|6[134]|9[15-7])|8(?:1\d|2[1-5]|[34][1-4]|9[1-7]))\d{6}
+      :nationalNumberPattern: 2(?:1\d{2}|2(?:3[1-8]|4[1-7]|5[1-4]|6[1-8]|7[1-5]|[289][1-9])|3(?:1\d|2[1-57]|3[1-4]|[45][1-3]|7[1-7]|8[1-6]|9[1-79])|4(?:1\d|2[1-8]|3[1-4]|4[13-5]|6[1-578]|9[1-5])|5(?:1\d|[239][1-4]|4[124]|5[1-6])|6(?:1\d|3[124]|4[1-7]|5[13-9]|[269][1-6]|7[14]|8[1-5])|7(?:1\d|2[1-5]|3[1-6]|4[1-7]|5[1-57]|6[134]|9[15-7])|8(?:1\d|2[1-5]|[34][1-4]|9[1-7]))\d{6}
       :exampleNumber: '2123456789'
     :mobile:
       :nationalNumberPattern: 69\d{8}
@@ -3580,19 +3589,19 @@
       :possibleNumberPattern: \d{10}
       :exampleNumber: '1850123456'
     :fixedLine:
-      :nationalNumberPattern: 1\d{7,8}|2(?:1\d{6,7}|[24-9]\d{5}|3\d{5,7})|4(?:0[24]\d{5}|[1269]\d{7}|[34]\d{5,7}|5\d{6}|7\d{5}|8[0-46-9]\d{7})|5(?:0[45]\d{5}|1\d{6}|2\d{5,7}|[3679]\d{7}|8\d{5})|6(?:1\d{6}|4\d{5,7}|[237-9]\d{5}|[56]\d{7})|7[14]\d{7}|9(?:1\d{6}|[04]\d{7}|[3-9]\d{5})
+      :nationalNumberPattern: 1\d{7,8}|2(?:1\d{6,7}|3\d{7}|[24-9]\d{5})|4(?:0[24]\d{5}|[1-469]\d{7}|5\d{6}|7\d{5}|8[0-46-9]\d{7})|5(?:0[45]\d{5}|1\d{6}|[23679]\d{7}|8\d{5})|6(?:1\d{6}|[237-9]\d{5}|[4-6]\d{7})|7[14]\d{7}|9(?:1\d{6}|[04]\d{7}|[35-9]\d{5})
       :possibleNumberPattern: \d{5,10}
       :exampleNumber: '2212345'
     :mobile:
-      :nationalNumberPattern: 8(?:22\d{6}|[35-9]\d{7,8})
-      :possibleNumberPattern: \d{9,10}
+      :nationalNumberPattern: 8(?:22\d{6}|[35-9]\d{7})
+      :possibleNumberPattern: \d{9}
       :exampleNumber: '850123456'
     :tollFree:
       :nationalNumberPattern: 1800\d{6}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '1800123456'
     :premiumRate:
-      :nationalNumberPattern: 15(?:1[2-9]|[2-8]0|59|9[089])\d{6}
+      :nationalNumberPattern: 15(?:1[2-8]|[2-8]0|9[089])\d{6}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '1520123456'
     :sharedCost:
@@ -3611,6 +3620,10 @@
       :nationalNumberPattern: 818\d{6}
       :possibleNumberPattern: \d{9}
       :exampleNumber: '818123456'
+    :voicemail:
+      :nationalNumberPattern: 8[35-9]\d{8}
+      :possibleNumberPattern: \d{10}
+      :exampleNumber: '8501234567'
     :emergency:
       :nationalNumberPattern: 112|999
       :possibleNumberPattern: \d{3}
@@ -3620,7 +3633,7 @@
     :leadingDigits: '1'
     :format: $1$2$3
   - :regex: (\d{2})(\d{5})
-    :leadingDigits: 2[2-9]|4[347]|5[2-58]|6[2-47-9]|9[3-9]
+    :leadingDigits: 2[24-9]|47|58|6[237-9]|9[35-9]
     :format: $1$2
   - :regex: (\d{3})(\d{5})
     :leadingDigits: 40[24]|50[45]
@@ -3793,7 +3806,7 @@
       :possibleNumberPattern: \d{6,10}
       :exampleNumber: '1123456789'
     :mobile:
-      :nationalNumberPattern: (?:7(?:2(?:0[04-9]|5[09]|7[5-8]|9[389])|3(?:0[1-9]|[58]\d|7[3679]|9[689])|4(?:0[1-9]|1[15-9]|[29][89]|39|8[389])|5(?:0\d|[47]9|[25]0|6[6-9]|[89][7-9])|6(?:0[027]|12|20|3[19]|5[45]|6[5-9]|7[679]|9[6-9])|7(?:0[27-9]|[39][5-9]|42|60)|8(?:[03][07-9]|14|2[7-9]|[4-7]\d|9[013-9]))|8(?:0(?:[01589]\d|6[67])|1(?:[02-589]\d|1[0135-9]|7[0-79])|2(?:[236-9]\d|5[1-9])|3(?:[037-9]\d|4[1-9]|5[0-37-9])|[45]\d{2}|6[02457-9]\d|7[1-69]\d|8(?:[0-26-9]\d|44|5[2-9])|9(?:[035-9]\d|2[2-9]|4[0-8]))|9\d{3})\d{6}
+      :nationalNumberPattern: (?:7(?:2(?:0[04-9]|5[09]|7[5-8]|9[389])|3(?:0[1-9]|[58]\d|7[3679]|9[689])|4(?:0[1-9]|1[15-9]|[29][89]|39|8[389])|5(?:0\d|[47]9|[25]0|6[6-9]|[89][7-9])|6(?:0[027]|12|20|3[19]|5[45]|6[5-9]|7[679]|9[6-9])|7(?:0[27-9]|3[5-9]|42|60|7[7-9]|8[1-9]|9[05-9])|8(?:[03][07-9]|14|2[7-9]|[4-7]\d|9[013-9]))|8(?:0(?:[01589]\d|6[67])|1(?:[02-589]\d|1[0135-9]|7[0-79])|2(?:[236-9]\d|5[1-9])|3(?:[037-9]\d|4[1-9]|5[0-37-9])|[45]\d{2}|6[02457-9]\d|7[1-69]\d|8(?:[0-26-9]\d|44|5[2-9])|9(?:[035-9]\d|2[2-9]|4[0-8]))|9\d{3})\d{6}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '9123456789'
     :tollFree:
@@ -3814,7 +3827,7 @@
       :exampleNumber: '108'
   :formats:
   - :regex: (\d{2})(\d{2})(\d{6})
-    :leadingDigits: 7(?:2(?:0[04-9]|5[09]|7[5-8]|9[389])|3(?:0[1-9]|[58]|7[3679]|9[689])|4(?:0[1-9]|1[15-9]|[29][89]|39|8[389])|5(?:0|[47]9|[25]0|6[6-9]|[89][7-9])|6(?:0[027]|12|20|3[19]|5[45]|6[5-9]|7[679]|9[6-9])|7(?:0[27-9]|3[5-9]|42|60|9[5-9])|8(?:[03][07-9]|14|2[7-9]|[4-7]|9[013-9]))|8(?:0(?:[01589]|6[67])|1(?:[02-589]|1[0135-9]|7[0-79])|2(?:[236-9]|5[1-9])|3(?:[037-9]|4[1-9]|5[0-37-9])|[45]|6[02457-9]|7[1-69]|8(?:[0-26-9]|44|5[2-9])|9(?:[035-9]|2[2-9]|4[0-8]))|9
+    :leadingDigits: 7(?:2(?:0[04-9]|5[09]|7[5-8]|9[389])|3(?:0[1-9]|[58]|7[3679]|9[689])|4(?:0[1-9]|1[15-9]|[29][89]|39|8[389])|5(?:0|[47]9|[25]0|6[6-9]|[89][7-9])|6(?:0[027]|12|20|3[19]|5[45]|6[5-9]|7[679]|9[6-9])|7(?:0[27-9]|3[5-9]|42|60|7[7-9]|8[1-9]|9[05-9])|8(?:[03][07-9]|14|2[7-9]|[4-7]|9[013-9]))|8(?:0(?:[01589]|6[67])|1(?:[02-589]|1[0135-9]|7[0-79])|2(?:[236-9]|5[1-9])|3(?:[037-9]|4[1-9]|5[0-37-9])|[45]|6[02457-9]|7[1-69]|8(?:[0-26-9]|44|5[2-9])|9(?:[035-9]|2[2-9]|4[0-8]))|9
     :format: $1$2$3
   - :regex: (\d{2})(\d{4})(\d{4})
     :leadingDigits: 11|2[02]|33|4[04]|79|80[2-46]
@@ -3893,22 +3906,22 @@
   :nationalPrefixFormattingRule: $NP$FG
   :types:
     :generalDesc:
-      :nationalNumberPattern: ! '[2-6]\d{4,9}|9(?:[1-4]\d{8}|9\d{2,8})|[178]\d{9}'
+      :nationalNumberPattern: ! '[14-8]\d{6,9}|[23]\d{5,9}|9(?:[1-4]\d{8}|9\d{2,8})'
       :possibleNumberPattern: \d{4,10}
     :fixedLine:
-      :nationalNumberPattern: 2(?:1[2-9]\d{2,7}|51\d{3,7})|(?:241|3(?:11|51)|441|5[14]1)\d{4,7}|(?:3(?:34|41)|6(?:11|52))\d{6,7}|(?:1(?:[134589][12]|[27][1-4])|2(?:2[189]|[389][12]|42|5[256]|6[1-59]|7[34])|3(?:12|2[1-4]|3[125]|4[24-9]|5[23]|[6-9][12])|4(?:[135-9][12]|2[1-467]|4[2-4])|5(?:12|2[89]|3[1-5]|4[2-8]|[5-7][12]|8[1245])|6(?:12|[347-9][12]|51|6[1-6])|7(?:[13589][12]|2[1289]|4[1-4]|6[1-6]|7[1-3])|8(?:[145][12]|3[124578]|6[1256]|7[1245]))\d{7}
-      :possibleNumberPattern: \d{5,10}
+      :nationalNumberPattern: (?:[145](?:1[1-9]|[2-9]\d)\d{0,3}|[23][1-9]\d{0,4}|6[1-9]\d{1,4}|[78]\d{2,5})\d{4}
+      :possibleNumberPattern: \d{6,10}
       :exampleNumber: '2123456789'
     :mobile:
-      :nationalNumberPattern: 9(?:1(?:[039]\d|[16][1-35-9]|2[1-8]|4[013-9]|[57][1-9]|8[13-9])|2[01]\d|3(?:[035-9]\d|13|2[1-579]|47))\d{6}
+      :nationalNumberPattern: 9[1-3]\d{8}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '9123456789'
     :pager:
-      :nationalNumberPattern: 943[24678]\d{6}
+      :nationalNumberPattern: 943\d{7}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '9432123456'
     :voip:
-      :nationalNumberPattern: 993[12]\d{6}
+      :nationalNumberPattern: (?:[2-6]0\d|993)\d{7}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '9932123456'
     :uan:
@@ -3925,8 +3938,8 @@
   - :regex: (21)(\d{3})(\d{3,4})
     :leadingDigits: '21'
     :format: $1$2$3
-  - :regex: (21)(\d{4})(\d{4})
-    :leadingDigits: '21'
+  - :regex: (2[16])(\d{4})(\d{4})
+    :leadingDigits: 2[16]
     :format: $1$2$3
   - :regex: (\d{3})(\d{3})(\d{3,4})
     :leadingDigits: ! '[13-9]|2[02-9]'
@@ -3939,11 +3952,11 @@
       :nationalNumberPattern: ! '[4-9]\d{6}|38\d{7}'
       :possibleNumberPattern: \d{7,9}
     :fixedLine:
-      :nationalNumberPattern: (?:4(?:1[0-245]|2[0-7]|[37][0-8]|4[0245]|5[0-3568]|6\d|8[0-36-8])|5(?:05|[156]\d|2[02578]|3[013-7]|4[03-7]|7[0-2578]|8[0-25-9]|9[013-689])|87[23])\d{4}
+      :nationalNumberPattern: (?:4(?:[14][0-245]|2[0-7]|[37][0-8]|5[0-3568]|6\d|8[0-36-8])|5(?:05|[156]\d|2[02578]|3[013-7]|4[03-7]|7[0-2578]|8[0-35-9]|9[013-689])|87[23])\d{4}
       :possibleNumberPattern: \d{7}
       :exampleNumber: '4101234'
     :mobile:
-      :nationalNumberPattern: 38[59]\d{6}|(?:6(?:1[0-8]|3[0-27-9]|4[0-27]|5[0-29]|[67][0-69]|9\d)|7(?:5[057]|7\d)|8(?:2[0-5]|[469]\d|5[1-9]))\d{4}
+      :nationalNumberPattern: 38[59]\d{6}|(?:6(?:1[0-8]|3[0-27-9]|4[0-27]|5[0-29]|[67][0-69]|9\d)|7(?:5[057]|7\d|8[0-3])|8(?:2[0-5]|[469]\d|5[1-9]))\d{4}
       :exampleNumber: '6101234'
     :tollFree:
       :nationalNumberPattern: 800\d{4}
@@ -4237,7 +4250,7 @@
       :possibleNumberPattern: \d{9}
       :exampleNumber: '601234567'
     :voip:
-      :nationalNumberPattern: 50\d{8}
+      :nationalNumberPattern: 50[1-9]\d{7}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '5012345678'
     :uan:
@@ -4387,7 +4400,7 @@
       :possibleNumberPattern: \d{6,9}
       :exampleNumber: '23456789'
     :mobile:
-      :nationalNumberPattern: (?:(?:1\d|[67][06-9])[1-9]|8(?:0[89]|[134679]\d|5[2-689]|8\d{2})|9(?:[0-589][1-9]|[67][1-9]\d?))\d{5}
+      :nationalNumberPattern: (?:(?:1\d|6[06-9]|7(?:[07-9]|6\d))[1-9]|8(?:0[89]|[134679]\d|5[2-689]|8\d{2})|9(?:[0-589][1-9]|[67][1-9]\d?))\d{5}
       :possibleNumberPattern: \d{8,9}
       :exampleNumber: '91234567'
     :tollFree:
@@ -4529,13 +4542,17 @@
       :nationalNumberPattern: ! '[1-7]\d{3,9}|8\d{8}'
       :possibleNumberPattern: \d{4,10}
     :fixedLine:
-      :nationalNumberPattern: (?:2|[34][1-3]|5[1-5]|6[1-4])(?:1\d{2,3}|[2-9]\d{6,7})
+      :nationalNumberPattern: (?:2|3[1-3]|[46][1-4]|5[1-5])(?:1\d{2,3}|[2-9]\d{6,7})
       :possibleNumberPattern: \d{4,10}
       :exampleNumber: '22123456'
     :mobile:
-      :nationalNumberPattern: 1[0-25-9]\d{7,8}
+      :nationalNumberPattern: 1[0-26-9]\d{7,8}
       :possibleNumberPattern: \d{9,10}
       :exampleNumber: '1023456789'
+    :pager:
+      :nationalNumberPattern: 15\d{7,8}
+      :possibleNumberPattern: \d{9,10}
+      :exampleNumber: '1523456789'
     :tollFree:
       :nationalNumberPattern: 80\d{7}
       :possibleNumberPattern: \d{9}
@@ -4603,7 +4620,7 @@
       :possibleNumberPattern: \d{7,8}
       :exampleNumber: '22345678'
     :mobile:
-      :nationalNumberPattern: (?:5(?:0[0-35-9]|11|5\d)|6(?:0[034679]|5[015-9]|6\d|7[067]|9[069])|9(?:0[09]|4[049]|6[69]|[79]\d))\d{5}
+      :nationalNumberPattern: (?:5(?:1[0-2]|[05]\d)|6(?:0[034679]|5[015-9]|6\d|7[067]|9[0369])|9(?:0[09]|4[049]|6[069]|[79]\d))\d{5}
       :possibleNumberPattern: \d{8}
       :exampleNumber: '50012345'
     :shortCode:
@@ -4793,23 +4810,22 @@
       :nationalNumberPattern: 6\d{8}|[23789]\d{6}
       :possibleNumberPattern: \d{7,9}
     :fixedLine:
-      :nationalNumberPattern: (?:2(?:01|1[27]|3\d|6[02-578]|96)|3(?:7[0135-7]|8[048]|9[0269])|870)\d{4}
+      :nationalNumberPattern: (?:2(?:01|1[27]|3\d|6[02-578]|96)|3(?:7[0135-7]|8[048]|9[0269]))\d{4}
       :possibleNumberPattern: \d{7}
       :exampleNumber: '2345678'
     :mobile:
-      :nationalNumberPattern: 6(?:51[01]|6(?:[01][0-4]|2[016-9]|88|92)|710)\d{5}|7(?:36|4[25]|56|[7-9]\d)\d{4}
-      :possibleNumberPattern: \d{7,9}
+      :nationalNumberPattern: 6(?:51[01]|6(?:[01][0-4]|2[016-9]|88)|710)\d{5}|7(?:36|4[25]|56|[7-9]\d)\d{4}
       :exampleNumber: '661234567'
     :tollFree:
       :nationalNumberPattern: 80(?:0(?:2[238]|79)|9\d{2})\d{2}
       :possibleNumberPattern: \d{7}
       :exampleNumber: '8002222'
-    :sharedCost:
+    :premiumRate:
       :nationalNumberPattern: 90(?:0(?:2[278]|79)|1(?:23|3[012])|6(?:4\d|6[0126]))\d{2}
       :possibleNumberPattern: \d{7}
       :exampleNumber: '9002222'
     :uan:
-      :nationalNumberPattern: 87(?:0[1289]|70)\d{3}
+      :nationalNumberPattern: 87(?:0[128]|7[0-4])\d{3}
       :possibleNumberPattern: \d{7}
       :exampleNumber: '8770123'
     :voicemail:
@@ -4888,7 +4904,7 @@
       :possibleNumberPattern: \d{8}
       :exampleNumber: '21234567'
     :mobile:
-      :nationalNumberPattern: (?:4[67]|5\d|6[4-8]|7(?:7[67]\d|\d{2})|88\d{2})\d{5}
+      :nationalNumberPattern: (?:4[67]|5\d|6[4-8]|77?\d{2}|88\d{2})\d{5}
       :exampleNumber: '4612345'
     :premiumRate:
       :nationalNumberPattern: 90\d{6}
@@ -5124,7 +5140,7 @@
       :nationalNumberPattern: 5(?:2(?:(?:[015-7]\d|2[2-9]|3[2-57]|4[2-8]|8[235-7])\d|9(?:0\d|[89]0))|3(?:(?:[0-4]\d|[57][2-9]|6[235-8]|9[3-9])\d|8(?:0\d|[89]0)))\d{4}
       :exampleNumber: '520123456'
     :mobile:
-      :nationalNumberPattern: 6(?:0[0-6]|[14-7]\d|2[2-46-9]|3[03458]|8[01]|99)\d{6}
+      :nationalNumberPattern: 6(?:0[0-6]|[14-7]\d|2[2-46-9]|3[03-8]|8[01]|99)\d{6}
       :exampleNumber: '650123456'
     :tollFree:
       :nationalNumberPattern: 80\d{7}
@@ -5295,7 +5311,7 @@
       :nationalNumberPattern: 2(?:0(?:(?:2\d|4[47]|5[3467]|6[279]|8[268]|9[245])\d|7(?:2[29]|[35]\d))|210\d)\d{4}
       :exampleNumber: '202123456'
     :mobile:
-      :nationalNumberPattern: 3[02-4]\d{7}
+      :nationalNumberPattern: 3(?:[02-4]\d|90)\d{6}
       :possibleNumberPattern: \d{9}
       :exampleNumber: '301234567'
     :emergency:
@@ -5658,7 +5674,7 @@
       :nationalNumberPattern: (?:2(?:[034789]\d|1[0-7]|6[1-69])|4(?:[013-8]\d|2[4-7])|[56]\d{2}|8(?:14|3[129]))\d{4}
       :exampleNumber: '2012345'
     :mobile:
-      :nationalNumberPattern: (?:25\d|4(?:2[12389]|9\d)|7\d{2}|87[15-8]|9[1-8]\d)\d{4}
+      :nationalNumberPattern: (?:25\d|4(?:2[12389]|9\d)|7\d{2}|8(?:20|7[15-8])|9[1-8]\d)\d{4}
       :exampleNumber: '2512345'
     :pager:
       :nationalNumberPattern: 2(?:1[89]|2\d)\d{4}
@@ -5808,11 +5824,11 @@
       :nationalNumberPattern: ! '[13-9]\d{7,9}'
       :possibleNumberPattern: \d{6,10}
     :fixedLine:
-      :nationalNumberPattern: (?:3\d{2}|[4-79]\d|8[2-9])\d{6}
+      :nationalNumberPattern: (?:3[2-9]\d|[4-9][2-9])\d{6}
       :possibleNumberPattern: \d{6,9}
-      :exampleNumber: '312345678'
+      :exampleNumber: '323456789'
     :mobile:
-      :nationalNumberPattern: 1(?:[02-46-9][2-9]|1[12]\d)\d{6}
+      :nationalNumberPattern: 1(?:1[1-3]\d{2}|[02-4679][2-9]\d|8(?:1[23]|[2-9]\d))\d{5}
       :possibleNumberPattern: \d{9,10}
       :exampleNumber: '123456789'
     :tollFree:
@@ -5874,9 +5890,9 @@
       :possibleNumberPattern: \d{9}
       :exampleNumber: '800123456'
     :shortCode:
-      :nationalNumberPattern: 1[0234]\d
-      :possibleNumberPattern: \d{3}
-      :exampleNumber: '101'
+      :nationalNumberPattern: 1[02-5]\d{2}
+      :possibleNumberPattern: \d{4}
+      :exampleNumber: '1011'
     :emergency:
       :nationalNumberPattern: 1(?:1[79]|9[78])
       :possibleNumberPattern: \d{3}
@@ -6286,7 +6302,7 @@
       :nationalNumberPattern: 6[235-9]\d{6}|[2-57-9]\d{7,10}
       :possibleNumberPattern: \d{7,11}
     :fixedLine:
-      :nationalNumberPattern: (?:3[2-79]|[49][2-689]|6[235-9]|7[2-589])\d{6}|24099\d{3}
+      :nationalNumberPattern: (?:3[2-79]|[49][2-689]|6[235-9]|7[2-5789])\d{6}|24099\d{3}
       :possibleNumberPattern: \d{7,8}
       :exampleNumber: '32345678'
     :mobile:
@@ -6374,7 +6390,7 @@
       :possibleNumberPattern: \d{7}
       :exampleNumber: '2001234'
     :mobile:
-      :nationalNumberPattern: (?:1[16]1|21[89]|8(?:1[01]|7[23]))\d{4}|6(?:[04-9]\d|1[0-5]|2[0-6]|3[6-9])\d{5}
+      :nationalNumberPattern: (?:1[16]1|21[89]|8(?:1[01]|7[23]))\d{4}|6(?:[04-9]\d|1[0-5]|2[0-7]|3[5-9])\d{5}
       :exampleNumber: '60012345'
     :tollFree:
       :nationalNumberPattern: 80[09]\d{4}
@@ -6455,22 +6471,27 @@
   :internationalPrefix: '00'
   :types:
     :generalDesc:
-      :nationalNumberPattern: ! '[2-9]\d{5}'
-      :possibleNumberPattern: \d{6}
+      :nationalNumberPattern: ! '[2-79]\d{5}|8\d{5,7}'
+      :possibleNumberPattern: \d{6}(?:\d{2})?
     :noInternationalDialling:
       :nationalNumberPattern: 44\d{4}
+      :possibleNumberPattern: \d{6}
       :exampleNumber: '441234'
     :fixedLine:
       :nationalNumberPattern: (?:4(?:[02-9]\d|1[02-9])|[5689]\d{2})\d{3}
+      :possibleNumberPattern: \d{6}
       :exampleNumber: '401234'
     :mobile:
-      :nationalNumberPattern: (?:[27]\d{2}|3[0-79]\d|411)\d{3}
+      :nationalNumberPattern: (?:[27]\d{2}|3[0-79]\d|411|89\d{3})\d{3}
       :exampleNumber: '212345'
     :emergency:
       :nationalNumberPattern: 1[578]
       :possibleNumberPattern: \d{2}
       :exampleNumber: '15'
   :formats:
+  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+    :leadingDigits: '89'
+    :format: $1$2$3$4
   - :regex: (\d{2})(\d{2})(\d{2})
     :format: $1$2$3
 - :id: PG
@@ -6772,22 +6793,25 @@
       :nationalNumberPattern: 2(?:[12]\d|[35][1-689]|4[1-59]|6[1-35689]|7[1-9]|8[1-69]|9[1256])\d{6}
       :exampleNumber: '212345678'
     :mobile:
-      :nationalNumberPattern: 9(?:[136]\d{2}|2[124-79]\d|4(?:80|9\d))\d{5}
+      :nationalNumberPattern: 9(?:[136]\d{2}|2[0-79]\d|480)\d{5}
       :exampleNumber: '912345678'
     :tollFree:
-      :nationalNumberPattern: 4\d{8}|80[02]\d{6}
+      :nationalNumberPattern: 80[02]\d{6}
       :exampleNumber: '800123456'
     :premiumRate:
-      :nationalNumberPattern: 71\d{7}
-      :exampleNumber: '712345678'
+      :nationalNumberPattern: 76(?:0[1-57]|1[2-47]|2[237])\d{5}
+      :exampleNumber: '760123456'
     :sharedCost:
-      :nationalNumberPattern: 808\d{6}
+      :nationalNumberPattern: 80(?:8\d|9[1579])\d{5}
       :exampleNumber: '808123456'
+    :personalNumber:
+      :nationalNumberPattern: 884[128]\d{5}
+      :exampleNumber: '884123456'
     :voip:
       :nationalNumberPattern: 30\d{7}
       :exampleNumber: '301234567'
     :uan:
-      :nationalNumberPattern: 70(?:7\d|8[147])\d{5}
+      :nationalNumberPattern: 70(?:7\d|8[17])\d{5}
       :exampleNumber: '707123456'
     :emergency:
       :nationalNumberPattern: '112'
@@ -7279,13 +7303,17 @@
       :nationalNumberPattern: ! '[1-9]\d{6,9}'
       :possibleNumberPattern: \d{5,10}
     :fixedLine:
-      :nationalNumberPattern: 1(?:0[1-8]\d{6}|[136]\d{5,7}|(?:2[0-35]|4[0-4]|5[0-25-9]|7[13-6]|[89]\d)\d{5,6})|2(?:[136]\d{5,7}|(?:2[0-7]|4[0136-8]|5[0-38]|7[018]|8[01]|9[0-57])\d{5,6})|3(?:[356]\d{5,7}|(?:0[0-4]|1\d|2[0-25]|4[056]|7[0-2]|8[0-3]|9[023])\d{5,6})|4(?:[0246]\d{5,7}|(?:1[0-8]|3[0135]|5[14-79]|7[0-246-9]|8[0156]|9[0-689])\d{5,6})|5(?:0[0-6]|1[0-5]|2[0-68]|3[0-4]|4\d|5[0-5]|6[03-5]|7[013]|8[0-79]|9[01])\d{5,6}|6(?:[03]\d{5,7}|(?:1[1-3]|2[0-4]|4[02-57]|5[0-37]|6[0-3]|7[0-2]|8[0247]|9[0-356])\d{5,6})|8\d{6,8}|9(?:0\d{5,7}|(?:1[0-68]|2\d|3[02-59]|4[0-4]|5[0-4]|6[01]|7[0135-8]|8[01])\d{5,6})
+      :nationalNumberPattern: 1(?:0[1-8]\d{6}|[136]\d{5,7}|(?:2[0-35]|4[0-4]|5[0-25-9]|7[13-6]|[89]\d)\d{5,6})|2(?:[136]\d{5,7}|(?:2[0-7]|4[0136-8]|5[0138]|7[018]|8[01]|9[0-57])\d{5,6})|3(?:[356]\d{5,7}|(?:0[0-4]|1\d|2[0-25]|4[056]|7[0-2]|8[0-3]|9[023])\d{5,6})|4(?:[0246]\d{5,7}|(?:1[0-8]|3[0135]|5[14-79]|7[0-246-9]|8[0156]|9[0-689])\d{5,6})|5(?:0[0-6]|[15][0-5]|2[0-68]|3[0-4]|4\d|6[03-5]|7[013]|8[0-79]|9[01])\d{5,6}|6(?:[03]\d{5,7}|(?:1[1-3]|2[0-4]|4[02-57]|5[0-37]|6[0-3]|7[0-2]|8[0247]|9[0-356])\d{5,6})|8\d{6,8}|9(?:0\d{5,7}|(?:1[0-68]|2\d|3[02-59]|[45][0-4]|[68][01]|7[0135-8])\d{5,6})
       :possibleNumberPattern: \d{5,9}
       :exampleNumber: '8123456'
     :mobile:
-      :nationalNumberPattern: 7[02-46]\d{7}
+      :nationalNumberPattern: 7[0236]\d{7}
       :possibleNumberPattern: \d{9}
       :exampleNumber: '701234567'
+    :pager:
+      :nationalNumberPattern: 74\d{7}
+      :possibleNumberPattern: \d{9}
+      :exampleNumber: '741234567'
     :tollFree:
       :nationalNumberPattern: 20\d{4,7}
       :possibleNumberPattern: \d{6,9}
@@ -7341,7 +7369,7 @@
     :intlFormat: $1$2$3$4
 - :id: SG
   :countryCode: '65'
-  :internationalPrefix: 0[0-3][0-9]
+  :internationalPrefix: 0[0-3]\d
   :types:
     :generalDesc:
       :nationalNumberPattern: ! '[36]\d{7}|[17-9]\d{7,10}'
@@ -7363,7 +7391,7 @@
       :possibleNumberPattern: \d{11}
       :exampleNumber: '19001234567'
     :voip:
-      :nationalNumberPattern: 3[0-2]\d{6}
+      :nationalNumberPattern: 3[12]\d{6}
       :possibleNumberPattern: \d{8}
       :exampleNumber: '31234567'
     :uan:
@@ -7371,11 +7399,11 @@
       :possibleNumberPattern: \d{11}
       :exampleNumber: '70001234567'
     :shortCode:
-      :nationalNumberPattern: 1(?:[0136]\d{2}|41\d|[89](?:[1-9]\d|0[1-9])|[57]\d{2,3})|99[0-46-8]
+      :nationalNumberPattern: 1(?:[0136]\d{2}|[89](?:[1-9]\d|0[1-9])|[57]\d{2,3})|99[0246-8]
       :possibleNumberPattern: \d{3,5}
       :exampleNumber: '1312'
     :emergency:
-      :nationalNumberPattern: 99[59]
+      :nationalNumberPattern: 99[359]
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
@@ -7915,7 +7943,7 @@
       :nationalNumberPattern: 22(?:[3789]0|5[0-5]|6[89])\d{4}
       :exampleNumber: '22501234'
     :mobile:
-      :nationalNumberPattern: (?:6[36]\d|77\d|9(?:5[0-4]|9\d))\d{5}
+      :nationalNumberPattern: (?:6[02368]\d|77\d|9(?:5[0-4]|9\d))\d{5}
       :exampleNumber: '63012345'
     :emergency:
       :nationalNumberPattern: 1[78]
@@ -8055,7 +8083,7 @@
       :possibleNumberPattern: \d{7}
       :exampleNumber: '2112345'
     :mobile:
-      :nationalNumberPattern: 7[78][1-9]\d{5}
+      :nationalNumberPattern: 7[78]\d{6}
       :possibleNumberPattern: \d{8}
       :exampleNumber: '77212345'
     :tollFree:
@@ -8123,13 +8151,13 @@
       :nationalNumberPattern: ! '[2-57-9]\d{7}'
       :possibleNumberPattern: \d{8}
     :fixedLine:
-      :nationalNumberPattern: (?:3[012]|7\d)\d{6}
+      :nationalNumberPattern: (?:3[012]|7\d|81)\d{6}
       :exampleNumber: '71234567'
     :mobile:
       :nationalNumberPattern: (?:[259]\d|4[0-2])\d{6}
       :exampleNumber: '20123456'
     :premiumRate:
-      :nationalNumberPattern: 8[0128]\d{6}
+      :nationalNumberPattern: 8[028]\d{6}
       :exampleNumber: '80123456'
     :emergency:
       :nationalNumberPattern: 19[078]
@@ -8235,7 +8263,7 @@
       :nationalNumberPattern: 868(?:2(?:01|2[1-5])|6(?:07|1[4-6]|2[1-9]|[3-6]\d|7[0-79]|9[0-8])|82[12])\d{4}
       :exampleNumber: '8682211234'
     :mobile:
-      :nationalNumberPattern: 868(?:29\d|3(?:0[1-9]|1[02-9]|[2-9]\d)|4(?:[679]\d|8[0-4])|6(?:20|78|8\d)|7(?:03|1[02-9]|[2-9]\d))\d{4}
+      :nationalNumberPattern: 868(?:2(?:8[59]|9\d)|3(?:0[1-9]|1[02-9]|[2-9]\d)|4(?:[679]\d|8[0-4])|6(?:20|78|8\d)|7(?:03|1[02-9]|[2-9]\d))\d{4}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '8682911234'
     :tollFree:
@@ -8406,11 +8434,11 @@
       :nationalNumberPattern: \d{9}
       :possibleNumberPattern: \d{5,9}
     :fixedLine:
-      :nationalNumberPattern: 20(?:[014]\d{2}|2(?:40|[5-9]\d)|3[23]\d|5[0-4]\d)\d{4}|[34]\d{8}
+      :nationalNumberPattern: 20(?:[0147]\d{2}|2(?:40|[5-9]\d)|3[23]\d|5[0-4]\d|60\d|8[0-2]\d)\d{4}|[34]\d{8}
       :possibleNumberPattern: \d{5,9}
       :exampleNumber: '312345678'
     :mobile:
-      :nationalNumberPattern: 7(?:0[0-7]|[15789]\d|20|[46][0-4])\d{6}
+      :nationalNumberPattern: 7(?:0[0-7]|[15789]\d|[23]0|[46][0-4])\d{6}
       :possibleNumberPattern: \d{9}
       :exampleNumber: '712345678'
     :tollFree:
@@ -8427,7 +8455,7 @@
       :exampleNumber: '999'
   :formats:
   - :regex: (\d{3})(\d{6})
-    :leadingDigits: ! '[7-9]|20(?:[013-5]|2[5-9])|4(?:6[45]|[7-9])'
+    :leadingDigits: ! '[7-9]|20(?:[013-8]|2[5-9])|4(?:6[45]|[7-9])'
     :format: $1$2
   - :regex: (\d{2})(\d{7})
     :leadingDigits: 3|4(?:[1-5]|6[0-36-9])
@@ -8973,17 +9001,21 @@
   :nationalPrefixFormattingRule: $NP$FG
   :types:
     :generalDesc:
-      :nationalNumberPattern: 2(?:[012457-9]\d{3,8}|6\d{3,6})|[13-79]\d{4,8}|86\d{8}
+      :nationalNumberPattern: 2(?:[012457-9]\d{3,8}|6\d{3,6})|[13-79]\d{4,8}|8[06]\d{8}
       :possibleNumberPattern: \d{3,10}
     :fixedLine:
-      :nationalNumberPattern: (?:1[3-9]|2(?:0[45]|[16]|2[28]|[49]8?|58[23]|7[246]|8[1346-9])|3(?:08?|17?|3[78]|[2456]|7[1569]|8[379])|5(?:[07-9]|1[78]|483|5(?:7?|8))|6(?:0|28|37?|[45][68][78]|98?)|848)\d{3,6}|(?:2(?:27|5|7[135789]|8[25])|3[39]|5[1-46]|6[126-8])\d{4,6}|2(?:0|70)\d{5,6}|(?:4\d|9[2-8])\d{4,7}
+      :nationalNumberPattern: (?:1[3-9]|2(?:0[45]|[16]|2[28]|[49]8?|58[23]|7[246]|8[1346-9])|3(?:08?|17?|3[78]|[2456]|7[1569]|8[379])|5(?:[07-9]|1[78]|483|5(?:7?|8))|6(?:0|28|37?|[45][68][78]|98?)|848)\d{3,6}|(?:2(?:27|5|7[135789]|8[25])|3[39]|5[1-46]|6[126-8])\d{4,6}|2(?:(?:0|70)\d{5,6}|2[05]\d{7})|(?:4\d|9[2-8])\d{4,7}
       :exampleNumber: '1312345'
     :mobile:
-      :nationalNumberPattern: 7[137]\d{7}|86(?:22|44)\d{6}
+      :nationalNumberPattern: 7[1378]\d{7}|86(?:22|44)\d{6}
       :possibleNumberPattern: \d{9,10}
       :exampleNumber: '711234567'
+    :tollFree:
+      :nationalNumberPattern: 800\d{7}
+      :possibleNumberPattern: \d{10}
+      :exampleNumber: '8001234567'
     :voip:
-      :nationalNumberPattern: 86(?:1[12]|30|8[367]|99)\d{6}
+      :nationalNumberPattern: 86(?:1[12]|30|55|77|8[367]|99)\d{6}
       :possibleNumberPattern: \d{10}
       :exampleNumber: '8686123456'
     :emergency:
@@ -9000,17 +9032,17 @@
   - :regex: (86\d{2})(\d{3})(\d{3})
     :leadingDigits: 86[24]
     :format: $1$2$3
+  - :regex: ([2356]\d{2})(\d{3,5})
+    :leadingDigits: 2(?:[278]|0[45]|[49]8)|3(?:08|17|3[78]|[78])|5[15][78]|6(?:[29]8|37|[68][78])
+    :format: $1$2
+  - :regex: (\d{3})(\d{3})(\d{3,4})
+    :leadingDigits: 2(?:[278]|0[45]|48)|3(?:08|17|3[78]|[78])|5[15][78]|6(?:[29]8|37|[68][78])|80
+    :format: $1$2$3
   - :regex: ([1-356]\d)(\d{3,5})
     :leadingDigits: 1[3-9]|2(?:[1-469]|0[0-35-9]|[45][0-79])|3(?:0[0-79]|1[0-689]|[24-69]|3[0-69])|5(?:[02-46-9]|[15][0-69])|6(?:[0145]|[29][0-79]|3[0-689]|[68][0-69])
     :format: $1$2
   - :regex: ([1-356]\d)(\d{3})(\d{3})
     :leadingDigits: 1[3-9]|2(?:[1-469]|0[0-35-9]|[45][0-79])|3(?:0[0-79]|1[0-689]|[24-69]|3[0-69])|5(?:[02-46-9]|[15][0-69])|6(?:[0145]|[29][0-79]|3[0-689]|[68][0-69])
-    :format: $1$2$3
-  - :regex: ([2356]\d{2})(\d{3,5})
-    :leadingDigits: 2(?:[278]|0[45]|48)|3(?:08|17|3[78]|[78])|5[15][78]|6(?:[29]8|37|[68][78])
-    :format: $1$2
-  - :regex: ([2356]\d{2})(\d{3})(\d{3})
-    :leadingDigits: 2(?:[278]|0[45]|48)|3(?:08|17|3[78]|[78])|5[15][78]|6(?:[29]8|37|[68][78])
     :format: $1$2$3
   - :regex: ([25]\d{3})(\d{3,5})
     :leadingDigits: 258[23]|5483
@@ -9019,7 +9051,7 @@
     :leadingDigits: 258[23]|5483
     :format: $1$2$3
   - :regex: (8\d{3})(\d{6})
-    :leadingDigits: 86[1389]
+    :leadingDigits: '86'
     :format: $1$2
 - :id: '001'
   :countryCode: '800'
