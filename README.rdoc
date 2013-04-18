@@ -5,7 +5,8 @@
 {<img src="https://codeclimate.com/github/daddyz/phonelib.png" />}[https://codeclimate.com/github/daddyz/phonelib]
 
 Phonelib is a gem allowing you to validate phone number. All validations are based on {Google libphonenumber}[http://code.google.com/p/libphonenumber/].
-Currently it can make only basic validation and still not include all Google's library functions.
+Currently it can make basic validations and formatting to e164 international number format and national number format with prefix.
+But it still doesn't include all Google's library functionality.
 
 == Information
 
@@ -21,7 +22,7 @@ https://github.com/daddyz/phonelib/issues
 
 === Example application
 
-You can see an example of phonelib model validation working in test/dummy application of this gem
+You can see an example of ActiveRecord validation by phonelib working in test/dummy application of this gem
 
 == Getting started
 
@@ -108,11 +109,15 @@ Also you can fetch all matched countries
   phone.countries # returns array of all matched countries
   phone.country   # returns first element from array of all matched countries
 
+Also it is possible to get formatted phone number
+
+  phone.international # returns formatted e164 international phone number
+  phone.national      # returns formatted national number with country prefix
+
 Phone class has following attributes
 
   phone.original        # string that was passed as phone number
   phone.sanitized       # sanitized phone number (only digits left)
-  phone.national_number # phone number without country code
 
 === How it works
 

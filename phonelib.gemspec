@@ -8,7 +8,8 @@ Gem::Specification.new do |s|
   s.email       = ["daddyzgm@gmail.com"]
   s.homepage    = "https://github.com/daddyz/phonelib"
   s.summary     = "Gem validates phone numbers with Google libphonenumber database."
-  s.description = "Google libphonenumber library was taken as a basis for this gem. Gem uses its data file for validations."
+  s.description = "Google libphonenumber library was taken as a basis for this gem."\
+      " Gem uses its data file for validations and number formatting."
 
   s.files = Dir["{data,lib,tasks}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]

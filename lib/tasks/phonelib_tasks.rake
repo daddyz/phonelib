@@ -10,7 +10,7 @@ namespace :phonelib do
     url = 'http://libphonenumber.googlecode.com/svn/trunk/resources/PhoneNumberMetaData.xml'
     xml_data = Net::HTTP.get_response(URI.parse(url)).body
 
-    # save in file for backup
+    # save in file for debug
     File.open("data/PhoneNumberMetaData.xml", "w+") do |f|
       f.write(xml_data)
     end
@@ -30,20 +30,24 @@ namespace :phonelib do
       country[:types] = {}
 
       el.children.each do | phone_type | 
-        if phone_type.name != 'comment' && phone_type.name != 'text'
+        if !%w(comment text).include?(phone_type.name)
           phone_type_sym = phone_type.name.to_sym  
            
           if phone_type.name != 'availableFormats'
             country[:types][phone_type_sym] = {}
             phone_type.elements.each do |pattern|
-              country[:types][phone_type_sym][pattern.name.to_sym] = pattern.children.first.to_s.tr(" \n", "")
+              country[:types][phone_type_sym][pattern.name.to_sym] =
+                  pattern.children.first.to_s.tr(" \n", "")
             end
           else
             country[:formats] = []
             phone_type.children.each do |format|
               
-              if format.name != 'text' && format.name != 'comment'
-                current_format = { regex: format.first[1].to_s.tr(" \n", "") }
+              if !%w(comment text).include?(format.name)
+                current_format = {}
+                format.each do |f|
+                  current_format[f[0].to_sym] = f[1]
+                end
 
                 format.children.each do |f|
                   if f.name != 'text'

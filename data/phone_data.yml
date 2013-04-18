@@ -45,10 +45,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})
     :leadingDigits: ! '[346-9]'
     :format: $1$2
-  - :regex: (180[02])(\d{4})
+  - :pattern: (180[02])(\d{4})
     :leadingDigits: '1'
     :format: $1$2
 - :id: AE
@@ -89,16 +89,18 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([2-4679])(\d{3})(\d{4})
+  - :pattern: ([2-4679])(\d{3})(\d{4})
     :leadingDigits: ! '[2-4679][2-8]'
     :format: $1$2$3
-  - :regex: (5[0256])(\d{3})(\d{4})
+  - :pattern: (5[0256])(\d{3})(\d{4})
     :leadingDigits: '5'
     :format: $1$2$3
-  - :regex: ([479]00)(\d)(\d{5})
+  - :pattern: ([479]00)(\d)(\d{5})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: ! '[479]0'
     :format: $1$2$3
-  - :regex: ([68]00)(\d{2,9})
+  - :pattern: ([68]00)(\d{2,9})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: 60|8
     :format: $1$2
 - :id: AF
@@ -122,7 +124,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '119'
   :formats:
-  - :regex: ([2-7]\d)(\d{3})(\d{4})
+  - :pattern: ([2-7]\d)(\d{3})(\d{4})
     :format: $1$2$3
 - :id: AG
   :countryCode: '1'
@@ -234,16 +236,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '129'
   :formats:
-  - :regex: (4)(\d{3})(\d{4})
+  - :pattern: (4)(\d{3})(\d{4})
     :leadingDigits: 4[0-6]
     :format: $1$2$3
-  - :regex: (6[6-9])(\d{3})(\d{4})
+  - :pattern: (6[6-9])(\d{3})(\d{4})
     :leadingDigits: '6'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: ! '[2358][2-5]|4[7-9]'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3,5})
+  - :pattern: (\d{3})(\d{3,5})
     :leadingDigits: ! '[235][16-9]|8[016-9]|[79]'
     :format: $1$2
 - :id: AM
@@ -287,16 +289,18 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '102'
   :formats:
-  - :regex: (\d{2})(\d{6})
+  - :pattern: (\d{2})(\d{6})
     :leadingDigits: 1|47
     :format: $1$2
-  - :regex: (\d{2})(\d{6})
+  - :pattern: (\d{2})(\d{6})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[5-7]|9[1-9]'
     :format: $1$2
-  - :regex: (\d{3})(\d{5})
+  - :pattern: (\d{3})(\d{5})
     :leadingDigits: ! '[23]'
     :format: $1$2
-  - :regex: (\d{3})(\d{2})(\d{3})
+  - :pattern: (\d{3})(\d{2})(\d{3})
+    :nationalPrefixFormattingRule: $NP $FG
     :leadingDigits: 8|90
     :format: $1$2$3
 - :id: AO
@@ -317,7 +321,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '113'
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :format: $1$2$3
 - :id: AR
   :countryCode: '54'
@@ -363,37 +367,37 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '101'
   :formats:
-  - :regex: ([68]\d{2})(\d{3})(\d{4})
+  - :pattern: ([68]\d{2})(\d{3})(\d{4})
     :leadingDigits: ! '[68]'
     :format: $1-$2-$3
-  - :regex: (9)(11)(\d{4})(\d{4})
+  - :pattern: (9)(11)(\d{4})(\d{4})
     :leadingDigits: '911'
     :format: $215-$3-$4
     :intlFormat: $1$2$3-$4
-  - :regex: (9)(\d{3})(\d{3})(\d{4})
+  - :pattern: (9)(\d{3})(\d{3})(\d{4})
     :comment: ''
     :leadingDigits: 9(?:2(?:2[013]|3[067]|49|6[01346]|80|9(?:[17-9]|4[13479]))|3(?:36|4[12358]|5(?:[18]|3[014-689])|6[24]|7[069]|8(?:[01]|3[013469]|5[0-39]|7[0-2459]|8[0-49])))
     :format: $215-$3-$4
     :intlFormat: $1$2$3-$4
-  - :regex: (9)(\d{4})(\d{3})(\d{3})
+  - :pattern: (9)(\d{4})(\d{3})(\d{3})
     :comment: ''
     :leadingDigits: 9(?:3(?:537|8(?:73|88)))
     :format: $215-$3-$4
-  - :regex: (9)(\d{4})(\d{2})(\d{4})
+  - :pattern: (9)(\d{4})(\d{2})(\d{4})
     :leadingDigits: 9[23]
     :format: $215-$3-$4
     :intlFormat: $1$2$3-$4
-  - :regex: (11)(\d{4})(\d{4})
+  - :pattern: (11)(\d{4})(\d{4})
     :leadingDigits: '1'
     :format: $1$2-$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 2(?:2[013]|3[067]|49|6[01346]|80|9(?:[17-9]|4[13479]))|3(?:36|4[12358]|5(?:[18]|3[0-689])|6[24]|7[069]|8(?:[01]|3[013469]|5[0-39]|7[0-2459]|8[0-49]))
     :comment: ''
     :format: $1$2-$3
-  - :regex: (\d{4})(\d{3})(\d{3})
+  - :pattern: (\d{4})(\d{3})(\d{3})
     :leadingDigits: 3(?:537|8(?:73|88))
     :format: $1$2-$3
-  - :regex: (\d{4})(\d{2})(\d{4})
+  - :pattern: (\d{4})(\d{2})(\d{4})
     :leadingDigits: ! '[23]'
     :format: $1$2-$3
 - :id: AS
@@ -469,22 +473,22 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (1)(\d{3,12})
+  - :pattern: (1)(\d{3,12})
     :leadingDigits: '1'
     :format: $1$2
-  - :regex: (5\d)(\d{3,5})
+  - :pattern: (5\d)(\d{3,5})
     :leadingDigits: 5[079]
     :format: $1$2
-  - :regex: (5\d)(\d{3})(\d{3,4})
+  - :pattern: (5\d)(\d{3})(\d{3,4})
     :leadingDigits: 5[079]
     :format: $1$2$3
-  - :regex: (5\d)(\d{4})(\d{4,7})
+  - :pattern: (5\d)(\d{4})(\d{4,7})
     :leadingDigits: 5[079]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3,10})
+  - :pattern: (\d{3})(\d{3,10})
     :leadingDigits: 316|46|51|732|6(?:44|5[0-3579]|[6-9])|7(?:1|[28]0)|[89]
     :format: $1$2
-  - :regex: (\d{4})(\d{3,9})
+  - :pattern: (\d{4})(\d{3,9})
     :leadingDigits: 2|3(?:1[1-578]|[3-8])|4[2378]|5[2-6]|6(?:[12]|4[1-35-9]|5[468])|7(?:2[1-8]|35|4[1-8]|[57-9])
     :format: $1$2
 - :id: AU
@@ -538,28 +542,36 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: ([2378])(\d{4})(\d{4})
     :leadingDigits: ! '[2378]'
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (\d{3})(\d{3})(\d{3})
     :leadingDigits: ! '[45]|14'
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (16)(\d{3})(\d{2,4})
     :leadingDigits: '16'
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1[389]\d{2})(\d{3})(\d{3})
     :leadingDigits: 1(?:[38]00|90)
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (180)(2\d{3})
     :leadingDigits: '1802'
     :format: $1$2
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (19\d)(\d{3})
     :leadingDigits: 19[13]
     :format: $1$2
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (19\d{2})(\d{4})
     :leadingDigits: 19[67]
     :format: $1$2
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (13)(\d{2})(\d{2})
     :leadingDigits: 13[1-9]
     :format: $1$2$3
 - :id: AW
@@ -589,7 +601,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: AX
   :countryCode: '358'
@@ -657,13 +669,15 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '101'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{3})(\d{2})(\d{2})
     :leadingDigits: (?:1[28]|2(?:[45]2|[0-36])|365)
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{3})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[4-8]'
     :format: $1$2$3$4
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: '9'
     :format: $1$2$3$4
 - :id: BA
@@ -704,13 +718,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '122'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: ! '[3-5]'
     :format: $1$2-$3
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: 6[1-356]|[7-9]
     :format: $1$2$3
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{3})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{3})
     :leadingDigits: 6[047]
     :format: $1$2$3$4
 - :id: BB
@@ -780,16 +794,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (2)(\d{7})
+  - :pattern: (2)(\d{7})
     :leadingDigits: '2'
     :format: $1-$2
-  - :regex: (\d{2})(\d{4,6})
+  - :pattern: (\d{2})(\d{4,6})
     :leadingDigits: ! '[3-79]1'
     :format: $1-$2
-  - :regex: (\d{4})(\d{3,6})
+  - :pattern: (\d{4})(\d{3,6})
     :leadingDigits: 1|3(?:0|[2-58]2)|4(?:0|[25]2|3[23]|[4689][25])|5(?:[02-578]2|6[25])|6(?:[0347-9]2|[26][25])|7[02-9]2|8(?:[023][23]|[4-7]2)|9(?:[02][23]|[458]2|6[016])
     :format: $1-$2
-  - :regex: (\d{3})(\d{3,7})
+  - :pattern: (\d{3})(\d{3,7})
     :leadingDigits: ! '[3-79][2-9]|8'
     :format: $1-$2
 - :id: BE
@@ -826,16 +840,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (4[6-9]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: (4[6-9]\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: 4[6-9]
     :format: $1$2$3$4
-  - :regex: ([2-49])(\d{3})(\d{2})(\d{2})
+  - :pattern: ([2-49])(\d{3})(\d{2})(\d{2})
     :leadingDigits: ! '[23]|[49][23]'
     :format: $1$2$3$4
-  - :regex: ([15-8]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([15-8]\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[156]|7[0178]|8(?:0[1-9]|[1-79])'
     :format: $1$2$3$4
-  - :regex: ([89]\d{2})(\d{2})(\d{3})
+  - :pattern: ([89]\d{2})(\d{2})(\d{3})
     :leadingDigits: (?:80|9)0
     :format: $1$2$3
 - :id: BF
@@ -856,7 +870,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: BG
   :countryCode: '359'
@@ -891,25 +905,25 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (2)(\d{5})
+  - :pattern: (2)(\d{5})
     :leadingDigits: '29'
     :format: $1$2
-  - :regex: (2)(\d{3})(\d{3,4})
+  - :pattern: (2)(\d{3})(\d{3,4})
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: 43[124-7]|70[1-9]
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{2})
+  - :pattern: (\d{3})(\d{3})(\d{2})
     :leadingDigits: 43[124-7]|70[1-9]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{2})(\d{3})
+  - :pattern: (\d{3})(\d{2})(\d{3})
     :leadingDigits: ! '[78]00'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{2,3})
+  - :pattern: (\d{2})(\d{3})(\d{2,3})
     :leadingDigits: ! '[356]|7[1-9]|8[1-6]|9[1-7]'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{3,4})
+  - :pattern: (\d{2})(\d{3})(\d{3,4})
     :leadingDigits: 48|8[7-9]|9[08]
     :format: $1$2$3
 - :id: BH
@@ -939,7 +953,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :format: $1$2
 - :id: BI
   :countryCode: '257'
@@ -959,7 +973,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '117'
   :formats:
-  - :regex: ([27]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([27]\d)(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: BJ
   :countryCode: '229'
@@ -993,7 +1007,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '117'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: BL
   :countryCode: '590'
@@ -1063,7 +1077,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '991'
   :formats:
-  - :regex: ([2-578]\d{2})(\d{4})
+  - :pattern: ([2-578]\d{2})(\d{4})
     :format: $1$2
 - :id: BO
   :countryCode: '591'
@@ -1088,10 +1102,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '110'
   :formats:
-  - :regex: ([234])(\d{7})
+  - :pattern: ([234])(\d{7})
     :leadingDigits: ! '[234]'
     :format: $1$2
-  - :regex: ([67]\d{7})
+  - :pattern: ([67]\d{7})
     :leadingDigits: ! '[67]'
     :format: $1
 - :id: BQ
@@ -1147,24 +1161,31 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '190'
   :formats:
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (\d{4})(\d{4})
     :leadingDigits: ! '[2-9](?:[1-9]|0[1-9])'
     :format: $1-$2
     :intlFormat: NA
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (\d{5})(\d{4})
     :leadingDigits: 9(?:[1-9]|0[1-9])
     :format: $1-$2
     :intlFormat: NA
-  - :regex: ($FG)
+  - :nationalPrefixFormattingRule: ($FG)
+    :pattern: (\d{2})(\d{5})(\d{4})
+    :carrierCodeFormattingRule: $NP $CC ($FG)
     :leadingDigits: '119'
     :format: $1$2-$3
-  - :regex: ($FG)
+  - :nationalPrefixFormattingRule: ($FG)
+    :pattern: (\d{2})(\d{4})(\d{4})
+    :carrierCodeFormattingRule: $NP $CC ($FG)
     :leadingDigits: ! '[1-9][1-9]'
     :format: $1$2-$3
-  - :regex: ([34]00\d)(\d{4})
+  - :pattern: ([34]00\d)(\d{4})
     :leadingDigits: ! '[34]00'
     :format: $1-$2
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: ([3589]00)(\d{2,3})(\d{4})
     :leadingDigits: ! '[3589]00'
     :format: $1$2$3
 - :id: BS
@@ -1219,10 +1240,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '113'
   :formats:
-  - :regex: ([17]7)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([17]7)(\d{2})(\d{2})(\d{2})
     :leadingDigits: 1|77
     :format: $1$2$3$4
-  - :regex: ([2-8])(\d{3})(\d{3})
+  - :pattern: ([2-8])(\d{3})(\d{3})
     :leadingDigits: ! '[2-68]|7[246]'
     :format: $1$2$3
 - :id: BW
@@ -1253,13 +1274,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[2-6]'
     :format: $1$2
-  - :regex: (7\d)(\d{3})(\d{3})
+  - :pattern: (7\d)(\d{3})(\d{3})
     :leadingDigits: '7'
     :format: $1$2$3
-  - :regex: (90)(\d{5})
+  - :pattern: (90)(\d{5})
     :leadingDigits: '9'
     :format: $1$2
 - :id: BY
@@ -1297,13 +1318,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: $NP0$FG
+  - :nationalPrefixFormattingRule: $NP 0$FG
+    :pattern: ([1-4]\d)(\d{3})(\d{4})
     :leadingDigits: ! '[1-4]'
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP $FG
+    :pattern: ([89]\d{2})(\d{3})(\d{4})
     :leadingDigits: 8[01]|9
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP $FG
+    :pattern: (8\d{2})(\d{4})(\d{4})
     :leadingDigits: '82'
     :format: $1$2$3
 - :id: BZ
@@ -1331,11 +1355,11 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[2-8]'
     :comment: ''
     :format: $1-$2
-  - :regex: (0)(800)(\d{4})(\d{3})
+  - :pattern: (0)(800)(\d{4})(\d{3})
     :leadingDigits: '0'
     :format: $1-$2-$3-$4
 - :id: CA
@@ -1420,16 +1444,16 @@
       :nationalNumberPattern: 8(?:[0-259]\d{2}|[48])\d{5}|9[7-9]\d{7}
       :exampleNumber: '991234567'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: '12'
     :format: $1$2$3
-  - :regex: ([89]\d{2})(\d{3})(\d{3})
+  - :pattern: ([89]\d{2})(\d{3})(\d{3})
     :leadingDigits: 8[0-259]|9
     :format: $1$2$3
-  - :regex: (\d{2})(\d{2})(\d{3})
+  - :pattern: (\d{2})(\d{2})(\d{3})
     :leadingDigits: 8[48]
     :format: $1$2$3
-  - :regex: (\d{2})(\d{5})
+  - :pattern: (\d{2})(\d{5})
     :leadingDigits: ! '[1-6]'
     :format: $1$2
 - :id: CF
@@ -1449,7 +1473,7 @@
       :nationalNumberPattern: 8776\d{4}
       :exampleNumber: '87761234'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: CG
   :countryCode: '242'
@@ -1469,10 +1493,10 @@
       :nationalNumberPattern: 800\d{6}
       :exampleNumber: '800123456'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: ! '[02]'
     :format: $1$2$3
-  - :regex: (\d)(\d{4})(\d{4})
+  - :pattern: (\d)(\d{4})(\d{4})
     :leadingDigits: '8'
     :format: $1$2$3
 - :id: CH
@@ -1517,13 +1541,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([2-9]\d)(\d{3})(\d{2})(\d{2})
+  - :pattern: ([2-9]\d)(\d{3})(\d{2})(\d{2})
     :leadingDigits: ! '[2-7]|[89]1'
     :format: $1$2$3$4
-  - :regex: ([89]\d{2})(\d{3})(\d{3})
+  - :pattern: ([89]\d{2})(\d{3})(\d{3})
     :leadingDigits: 8[047]|90
     :format: $1$2$3
-  - :regex: (\d{3})(\d{2})(\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{3})(\d{2})(\d{2})
     :leadingDigits: '860'
     :format: $1$2$3$4$5
 - :id: CI
@@ -1545,7 +1569,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '110'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: CK
   :countryCode: '682'
@@ -1565,7 +1589,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '998'
   :formats:
-  - :regex: (\d{2})(\d{3})
+  - :pattern: (\d{2})(\d{3})
     :format: $1$2
 - :id: CL
   :countryCode: '56'
@@ -1606,25 +1630,32 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '133'
   :formats:
-  - :regex: (2)(\d{3,4})(\d{4})
+  - :pattern: (2)(\d{3,4})(\d{4})
+    :nationalPrefixFormattingRule: ($FG)
+    :carrierCodeFormattingRule: $CC ($FG)
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{2,3})(\d{4})
+  - :pattern: (\d{2})(\d{2,3})(\d{4})
+    :nationalPrefixFormattingRule: ($FG)
+    :carrierCodeFormattingRule: $CC ($FG)
     :leadingDigits: ! '[357]|4[1-35]|6[13-57]'
     :format: $1$2$3
-  - :regex: (9)([5-9]\d{3})(\d{4})
+  - :pattern: (9)([5-9]\d{3})(\d{4})
     :leadingDigits: '9'
     :format: $1$2$3
-  - :regex: (44)(\d{3})(\d{4})
+  - :pattern: (44)(\d{3})(\d{4})
     :leadingDigits: '44'
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: ([68]00)(\d{3})(\d{3,4})
     :leadingDigits: 60|8
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (600)(\d{3})(\d{2})(\d{3})
     :leadingDigits: '60'
     :format: $1$2$3$4
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1230)(\d{3})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
 - :id: CM
@@ -1651,10 +1682,10 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '113'
   :formats:
-  - :regex: ([237-9]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([237-9]\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[2379]|88'
     :format: $1$2$3$4
-  - :regex: (800)(\d{2})(\d{3})
+  - :pattern: (800)(\d{2})(\d{3})
     :leadingDigits: '80'
     :format: $1$2$3
 - :id: CN
@@ -1695,36 +1726,52 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '119'
   :formats:
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (80\d{2})(\d{4})
+    :nationalPrefixOptionalWhenFormatting: 'true'
+    :carrierCodeFormattingRule: $CC $FG
     :leadingDigits: 80[2678]
     :format: $1$2
-  - :regex: ([48]00)(\d{3})(\d{4})
+  - :pattern: ([48]00)(\d{3})(\d{4})
     :leadingDigits: ! '[48]00'
     :format: $1$2$3
-  - :regex: (\d{5})
+  - :pattern: (\d{5})
     :leadingDigits: '95'
     :format: $1
-  - :regex: (\d{3,4})(\d{4})
+  - :pattern: (\d{3,4})(\d{4})
     :leadingDigits: ! '[2-9]'
     :format: $1$2
     :intlFormat: NA
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (21)(\d{4})(\d{4,6})
+    :nationalPrefixOptionalWhenFormatting: 'true'
+    :carrierCodeFormattingRule: $CC $FG
     :leadingDigits: '21'
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: ([12]\d)(\d{4})(\d{4})
+    :nationalPrefixOptionalWhenFormatting: 'true'
+    :carrierCodeFormattingRule: $CC $FG
     :leadingDigits: 10(?:[1-79]|8(?:[1-9]|0[1-9]))|2[02-9]
     :comment: ''
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (\d{3})(\d{4})(\d{4})
+    :nationalPrefixOptionalWhenFormatting: 'true'
+    :carrierCodeFormattingRule: $CC $FG
     :leadingDigits: 3(?:11|7[179])|4(?:[15]1|3[12])|5(?:1|2[37]|3[12]|51|7[13-79]|9[15])|7(?:31|5[457]|6[09]|91)|8(?:71|98)
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (\d{3})(\d{3})(\d{4})
+    :nationalPrefixOptionalWhenFormatting: 'true'
+    :carrierCodeFormattingRule: $CC $FG
     :leadingDigits: 3(?:1[02-9]|35|49|5|7[02-68]|9[1-68])|4(?:1[02-9]|2[179]|[35][2-9]|6[4789]|7\d|8[23])|5(?:3[03-9]|4[36]|5[02-9]|6[1-46]|7[028]|80|9[2-46-9])|6(?:3[1-5]|6[0238]|9[12])|7(?:01|[1579]|2[248]|3[04-9]|4[3-6]|6[2368])|8(?:1[236-8]|2[5-7]|3|5[1-9]|7[02-9]|8[3678]|9[1-7])|9(?:0[1-3689]|1[1-79]|[379]|4[13]|5[1-5])
     :format: $1$2$3
-  - :regex: (1[3-58]\d)(\d{4})(\d{4})
+  - :pattern: (1[3-58]\d)(\d{4})(\d{4})
+    :carrierCodeFormattingRule: $CC $FG
     :leadingDigits: 1[3-58]
     :format: $1$2$3
-  - :regex: (10800)(\d{3})(\d{4})
+  - :pattern: (10800)(\d{3})(\d{4})
     :leadingDigits: '10800'
     :format: $1$2$3
 - :id: CO
@@ -1757,13 +1804,17 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d)(\d{7})
+  - :pattern: (\d)(\d{7})
+    :carrierCodeFormattingRule: $NP$CC $FG
+    :nationalPrefixFormattingRule: ($FG)
     :leadingDigits: 1(?:8[2-9]|9(?:09|[1-3])|[2-7])|[24-8]
     :format: $1$2
-  - :regex: (\d{3})(\d{7})
+  - :pattern: (\d{3})(\d{7})
+    :carrierCodeFormattingRule: $NP$CC $FG
     :leadingDigits: '3'
     :format: $1$2
-  - :regex: (1)(\d{3})(\d{7})
+  - :pattern: (1)(\d{3})(\d{7})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: 1(?:800|9(?:0[01]|4[78]))
     :format: $1-$2-$3
     :intlFormat: $1$2$3
@@ -1805,10 +1856,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: ! '[24-7]|8[3-9]'
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: ! '[89]0'
     :format: $1-$2-$3
 - :id: CU
@@ -1836,13 +1887,14 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '106'
   :formats:
-  - :regex: (\d)(\d{6,7})
+  - :pattern: (\d)(\d{6,7})
     :leadingDigits: '7'
     :format: $1$2
-  - :regex: (\d{2})(\d{4,6})
+  - :pattern: (\d{2})(\d{4,6})
     :leadingDigits: ! '[2-4]'
     :format: $1$2
-  - :regex: (\d)(\d{7})
+  - :pattern: (\d)(\d{7})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: '5'
     :format: $1$2
 - :id: CV
@@ -1863,7 +1915,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '132'
   :formats:
-  - :regex: (\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})
     :format: $1$2$3
 - :id: CW
   :countryCode: '599'
@@ -1891,10 +1943,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[13-7]'
     :format: $1$2
-  - :regex: (9)(\d{3})(\d{4})
+  - :pattern: (9)(\d{3})(\d{4})
     :leadingDigits: '9'
     :format: $1$2$3
 - :id: CY
@@ -1930,7 +1982,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{6})
+  - :pattern: (\d{2})(\d{6})
     :format: $1$2
 - :id: CX
   :countryCode: '61'
@@ -2013,13 +2065,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([2-9]\d{2})(\d{3})(\d{3})
+  - :pattern: ([2-9]\d{2})(\d{3})(\d{3})
     :leadingDigits: ! '[2-8]|9[015-7]'
     :format: $1$2$3
-  - :regex: (96\d)(\d{3})(\d{3})(\d{3})
+  - :pattern: (96\d)(\d{3})(\d{3})(\d{3})
     :leadingDigits: '96'
     :format: $1$2$3$4
-  - :regex: (9\d)(\d{3})(\d{3})(\d{3})
+  - :pattern: (9\d)(\d{3})(\d{3})(\d{3})
     :leadingDigits: 9[36]
     :format: $1$2$3$4
 - :id: DE
@@ -2075,43 +2127,43 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{4,11})
+  - :pattern: (\d{2})(\d{4,11})
     :leadingDigits: 3[02]|40|[68]9
     :format: $1$2
-  - :regex: (\d{3})(\d{3,11})
+  - :pattern: (\d{3})(\d{3,11})
     :leadingDigits: 2(?:\d1|0[2389]|1[24]|28|34)|3(?:[3-9][15]|40)|[4-8][1-9]1|9(?:06|[1-9]1)
     :format: $1$2
-  - :regex: (\d{4})(\d{2,11})
+  - :pattern: (\d{4})(\d{2,11})
     :leadingDigits: ! '[24-6]|[7-9](?:\d[1-9]|[1-9]\d)|3(?:3(?:0[1-467]|2[127-9]|3[124578]|[46][1246]|7[1257-9]|8[1256]|9[145])|4(?:2[135]|3[1357]|4[13578]|6[1246]|7[1356]|9[1346])|5(?:0[14]|2[1-3589]|3[1357]|4[1246]|6[1-4]|7[1346]|8[13568]|9[1246])|6(?:0[356]|2[1-489]|3[124-6]|4[1347]|6[13]|7[12579]|8[1-356]|9[135])|7(?:2[1-7]|3[1357]|4[145]|6[1-5]|7[1-4])|8(?:21|3[1468]|4[1347]|6[0135-9]|7[1467]|8[136])|9(?:0[12479]|2[1358]|3[1357]|4[134679]|6[1-9]|7[136]|8[147]|9[1468]))'
     :format: $1$2
-  - :regex: (\d{5})(\d{1,10})
+  - :pattern: (\d{5})(\d{1,10})
     :leadingDigits: '3'
     :format: $1$2
-  - :regex: (1\d{2})(\d{7,8})
+  - :pattern: (1\d{2})(\d{7,8})
     :leadingDigits: 1[5-7]
     :format: $1$2
-  - :regex: (177)(99)(\d{7,8})
+  - :pattern: (177)(99)(\d{7,8})
     :leadingDigits: '17799'
     :format: $1$2$3
-  - :regex: (8\d{2})(\d{7,10})
+  - :pattern: (8\d{2})(\d{7,10})
     :leadingDigits: '800'
     :format: $1$2
-  - :regex: (\d{3})(\d)(\d{4,10})
+  - :pattern: (\d{3})(\d)(\d{4,10})
     :leadingDigits: 180|900[1359]
     :format: $1$2$3
-  - :regex: (1\d{2})(\d{5,11})
+  - :pattern: (1\d{2})(\d{5,11})
     :leadingDigits: '181'
     :format: $1$2
-  - :regex: (18\d{3})(\d{6})
+  - :pattern: (18\d{3})(\d{6})
     :leadingDigits: '18500'
     :format: $1$2
-  - :regex: (18\d{2})(\d{7})
+  - :pattern: (18\d{2})(\d{7})
     :leadingDigits: 18[68]
     :format: $1$2
-  - :regex: (18\d)(\d{8})
+  - :pattern: (18\d)(\d{8})
     :leadingDigits: 18[2-579]
     :format: $1$2
-  - :regex: (700)(\d{4})(\d{4})
+  - :pattern: (700)(\d{4})(\d{4})
     :leadingDigits: '700'
     :format: $1$2$3
 - :id: DJ
@@ -2132,7 +2184,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: DK
   :countryCode: '45'
@@ -2158,7 +2210,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: DM
   :countryCode: '1'
@@ -2260,13 +2312,13 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: ([1-4]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([1-4]\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[1-4]'
     :format: $1$2$3$4
-  - :regex: ([5-8]\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: ([5-8]\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[5-8]'
     :format: $1$2$3$4
-  - :regex: (9\d)(\d{3})(\d{2})(\d{2})
+  - :pattern: (9\d)(\d{3})(\d{2})(\d{2})
     :leadingDigits: '9'
     :format: $1$2$3$4
 - :id: EC
@@ -2299,14 +2351,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d)(\d{3})(\d{4})
+  - :pattern: (\d)(\d{3})(\d{4})
     :leadingDigits: ! '[247]|[356][2-8]'
     :format: $1$2-$3
     :intlFormat: $1-$2-$3
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: '9'
     :format: $1$2$3
-  - :regex: (1800)(\d{3})(\d{3,4})
+  - :pattern: (1800)(\d{3})(\d{3,4})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: '1'
     :format: $1$2$3
 - :id: EE
@@ -2353,16 +2407,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([3-79]\d{2})(\d{4})
+  - :pattern: ([3-79]\d{2})(\d{4})
     :leadingDigits: ! '[369]|4[3-8]|5(?:[02]|1(?:[0-8]|95)|5[0-478]|6(?:4[0-4]|5[1-589]))|7[1-9]'
     :format: $1$2
-  - :regex: (70)(\d{2})(\d{4})
+  - :pattern: (70)(\d{2})(\d{4})
     :leadingDigits: '70'
     :format: $1$2$3
-  - :regex: (8000)(\d{3})(\d{3})
+  - :pattern: (8000)(\d{3})(\d{3})
     :leadingDigits: '8000'
     :format: $1$2$3
-  - :regex: ([458]\d{3})(\d{3,4})
+  - :pattern: ([458]\d{3})(\d{3,4})
     :leadingDigits: 40|5|8(?:00[1-9]|[1-5])
     :format: $1$2
 - :id: EG
@@ -2395,13 +2449,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '122'
   :formats:
-  - :regex: (\d)(\d{7,8})
+  - :pattern: (\d)(\d{7,8})
     :leadingDigits: ! '[23]'
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 1[012]|[89]00
     :format: $1$2$3
-  - :regex: (\d{2})(\d{6,7})
+  - :pattern: (\d{2})(\d{6,7})
     :leadingDigits: 1(?:3|5[23])|[4-6]|[89][2-9]
     :format: $1$2
 - :id: EH
@@ -2447,7 +2501,7 @@
       :possibleNumberPattern: \d{7}
       :exampleNumber: '7123456'
   :formats:
-  - :regex: (\d)(\d{3})(\d{3})
+  - :pattern: (\d)(\d{3})(\d{3})
     :format: $1$2$3
 - :id: ES
   :countryCode: '34'
@@ -2482,7 +2536,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([5-9]\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: ([5-9]\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: ET
   :countryCode: '251'
@@ -2505,7 +2559,7 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '991'
   :formats:
-  - :regex: ([1-59]\d)(\d{3})(\d{4})
+  - :pattern: ([1-59]\d)(\d{3})(\d{4})
     :format: $1$2$3
 - :id: FI
   :countryCode: '358'
@@ -2545,13 +2599,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{3,7})
+  - :pattern: (\d{3})(\d{3,7})
     :leadingDigits: (?:[1-3]00|[6-8]0)
     :format: $1$2
-  - :regex: (\d{2})(\d{4,10})
+  - :pattern: (\d{2})(\d{4,10})
     :leadingDigits: 2[09]|[14]|50|7[135]
     :format: $1$2
-  - :regex: (\d)(\d{4,11})
+  - :pattern: (\d)(\d{4,11})
     :leadingDigits: ! '[25689][1-8]|3'
     :format: $1$2
 - :id: FJ
@@ -2584,10 +2638,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[36-9]'
     :format: $1$2
-  - :regex: (\d{4})(\d{3})(\d{4})
+  - :pattern: (\d{4})(\d{3})(\d{4})
     :leadingDigits: '0'
     :format: $1$2$3
 - :id: FK
@@ -2629,7 +2683,7 @@
       :possibleNumberPattern: \d{3}(?:\d{3})?
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: FO
   :countryCode: '298'
@@ -2664,7 +2718,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{6})
+  - :pattern: (\d{6})
     :format: $1
 - :id: FR
   :countryCode: '33'
@@ -2709,10 +2763,11 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([1-79])(\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: ([1-79])(\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[1-79]'
     :format: $1$2$3$4$5
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP $FG
+    :pattern: (8\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: '8'
     :format: $1$2$3$4
 - :id: GA
@@ -2735,10 +2790,11 @@
       :possibleNumberPattern: \d{2,4}
       :exampleNumber: '1730'
   :formats:
-  - :regex: (1)(\d{2})(\d{2})(\d{2})
+  - :pattern: (1)(\d{2})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: '1'
     :format: $1$2$3$4
-  - :regex: (0\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: (0\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: '0'
     :format: $1$2$3$4
 - :id: GB
@@ -2800,34 +2856,34 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{4})(\d{4})
+  - :pattern: (\d{2})(\d{4})(\d{4})
     :leadingDigits: 2|5[56]|7(?:0|6(?:[013-9]|2[0-35-9]))
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 1(?:1|\d1)|3|9[018]
     :format: $1$2$3
-  - :regex: (\d{5})(\d{4,5})
+  - :pattern: (\d{5})(\d{4,5})
     :leadingDigits: 1(?:3873|5(?:242|39[456])|697[347]|768[347]|9467)
     :format: $1$2
-  - :regex: (1\d{3})(\d{5,6})
+  - :pattern: (1\d{3})(\d{5,6})
     :leadingDigits: '1'
     :format: $1$2
-  - :regex: (7\d{3})(\d{6})
+  - :pattern: (7\d{3})(\d{6})
     :leadingDigits: 7(?:[1-5789]|624)
     :format: $1$2
-  - :regex: (800)(\d{4})
+  - :pattern: (800)(\d{4})
     :leadingDigits: '8001111'
     :format: $1$2
-  - :regex: (845)(46)(4\d)
+  - :pattern: (845)(46)(4\d)
     :leadingDigits: '845464'
     :format: $1$2$3
-  - :regex: (8\d{2})(\d{3})(\d{4})
+  - :pattern: (8\d{2})(\d{3})(\d{4})
     :leadingDigits: 8(?:4[2-5]|7[0-3])
     :format: $1$2$3
-  - :regex: (80\d)(\d{3})(\d{4})
+  - :pattern: (80\d)(\d{3})(\d{4})
     :leadingDigits: '80'
     :format: $1$2$3
-  - :regex: ([58]00)(\d{6})
+  - :pattern: ([58]00)(\d{6})
     :leadingDigits: ! '[58]00'
     :format: $1$2
 - :id: GD
@@ -2888,10 +2944,12 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $NP $FG
     :leadingDigits: ! '[348]'
     :format: $1$2$3$4
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: '5'
     :format: $1$2$3$4
 - :id: GF
@@ -2914,7 +2972,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '15'
   :formats:
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: GG
   :countryCode: '44'
@@ -3003,10 +3061,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: ! '[235]'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{5})
+  - :pattern: (\d{3})(\d{5})
     :leadingDigits: '8'
     :format: $1$2
 - :id: GI
@@ -3063,7 +3121,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})
     :format: $1$2$3
 - :id: GM
   :countryCode: '220'
@@ -3083,7 +3141,7 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '117'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: GN
   :countryCode: '224'
@@ -3104,10 +3162,10 @@
       :possibleNumberPattern: \d{8}
       :exampleNumber: '78123456'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[23567]'
     :format: $1$2$3$4
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
     :leadingDigits: 6[02356]
     :format: $1$2$3$4
 - :id: GP
@@ -3131,7 +3189,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '18'
   :formats:
-  - :regex: ([56]90)(\d{2})(\d{4})
+  - :pattern: ([56]90)(\d{2})(\d{4})
     :format: $1$2-$3
 - :id: GQ
   :countryCode: '240'
@@ -3153,10 +3211,10 @@
       :nationalNumberPattern: 90\d[1-9]\d{5}
       :exampleNumber: '900123456'
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :leadingDigits: ! '[235]'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{6})
+  - :pattern: (\d{3})(\d{6})
     :leadingDigits: ! '[89]'
     :format: $1$2
 - :id: GR
@@ -3189,13 +3247,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([27]\d)(\d{4})(\d{4})
+  - :pattern: ([27]\d)(\d{4})(\d{4})
     :leadingDigits: 21|7
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 2[2-9]1|[689]
     :format: $1$2$3
-  - :regex: (2\d{3})(\d{6})
+  - :pattern: (2\d{3})(\d{6})
     :leadingDigits: 2[2-9][02-9]
     :format: $1$2
 - :id: GT
@@ -3230,10 +3288,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '110'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: ! '[2-7]'
     :format: $1$2
-  - :regex: (\d{4})(\d{3})(\d{4})
+  - :pattern: (\d{4})(\d{3})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
 - :id: GU
@@ -3285,7 +3343,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '113'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: GY
   :countryCode: '592'
@@ -3315,7 +3373,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: HK
   :countryCode: '852'
@@ -3353,16 +3411,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: ! '[235-7]|[89](?:0[1-9]|[1-9])'
     :format: $1$2
-  - :regex: (800)(\d{3})(\d{3})
+  - :pattern: (800)(\d{3})(\d{3})
     :leadingDigits: '800'
     :format: $1$2$3
-  - :regex: (900)(\d{2})(\d{3})(\d{3})
+  - :pattern: (900)(\d{2})(\d{3})(\d{3})
     :leadingDigits: '900'
     :format: $1$2$3$4
-  - :regex: (900)(\d{2,5})
+  - :pattern: (900)(\d{2,5})
     :leadingDigits: '900'
     :format: $1$2
 - :id: HN
@@ -3383,7 +3441,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '199'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :format: $1-$2
 - :id: HR
   :countryCode: '385'
@@ -3423,37 +3481,37 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (1)(\d{4})(\d{3})
+  - :pattern: (1)(\d{4})(\d{3})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: (6[09])(\d{4})(\d{3})
+  - :pattern: (6[09])(\d{4})(\d{3})
     :leadingDigits: 6[09]
     :format: $1$2$3
-  - :regex: (62)(\d{3})(\d{3,4})
+  - :pattern: (62)(\d{3})(\d{3,4})
     :leadingDigits: '62'
     :format: $1$2$3
-  - :regex: ([2-5]\d)(\d{3})(\d{3})
+  - :pattern: ([2-5]\d)(\d{3})(\d{3})
     :leadingDigits: ! '[2-5]'
     :format: $1$2$3
-  - :regex: (9\d)(\d{3})(\d{3,4})
+  - :pattern: (9\d)(\d{3})(\d{3,4})
     :leadingDigits: '9'
     :format: $1$2$3
-  - :regex: (9\d)(\d{4})(\d{4})
+  - :pattern: (9\d)(\d{4})(\d{4})
     :leadingDigits: '9'
     :format: $1$2$3
-  - :regex: (9\d)(\d{3,4})(\d{3})(\d{3})
+  - :pattern: (9\d)(\d{3,4})(\d{3})(\d{3})
     :leadingDigits: '9'
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{2})(\d{2,3})
+  - :pattern: (\d{2})(\d{2})(\d{2,3})
     :leadingDigits: 6[145]|7
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3,4})(\d{3})
+  - :pattern: (\d{2})(\d{3,4})(\d{3})
     :leadingDigits: 6[145]|7
     :format: $1$2$3
-  - :regex: (80[01])(\d{2})(\d{2,3})
+  - :pattern: (80[01])(\d{2})(\d{2,3})
     :leadingDigits: '8'
     :format: $1$2$3
-  - :regex: (80[01])(\d{3,4})(\d{3})
+  - :pattern: (80[01])(\d{3,4})(\d{3})
     :leadingDigits: '8'
     :format: $1$2$3
 - :id: HT
@@ -3486,7 +3544,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '118'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{4})
+  - :pattern: (\d{2})(\d{2})(\d{4})
     :format: $1$2$3
 - :id: HU
   :countryCode: '36'
@@ -3521,10 +3579,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (1)(\d{3})(\d{4})
+  - :pattern: (1)(\d{3})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{3,4})
+  - :pattern: (\d{2})(\d{3})(\d{3,4})
     :leadingDigits: ! '[2-9]'
     :format: $1$2$3
 - :id: ID
@@ -3557,22 +3615,24 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (\d{2})(\d{7,8})
     :leadingDigits: 2[124]|[36]1
     :format: $1$2
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (\d{3})(\d{5,7})
     :leadingDigits: ! '[4579]|2[035-9]|[36][02-9]'
     :format: $1$2
-  - :regex: (8\d{2})(\d{3,4})(\d{3,4})
+  - :pattern: (8\d{2})(\d{3,4})(\d{3,4})
     :leadingDigits: 8[1-35-9]
     :format: $1-$2-$3
-  - :regex: (177)(\d{6,8})
+  - :pattern: (177)(\d{6,8})
     :leadingDigits: '1'
     :format: $1$2
-  - :regex: (800)(\d{5,7})
+  - :pattern: (800)(\d{5,7})
     :leadingDigits: '800'
     :format: $1$2
-  - :regex: (809)(\d)(\d{3})(\d{3})
+  - :pattern: (809)(\d)(\d{3})(\d{3})
     :leadingDigits: '809'
     :format: $1$2$3$4
 - :id: IE
@@ -3629,31 +3689,34 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (1)(\d{3,4})(\d{4})
+  - :pattern: (1)(\d{3,4})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{5})
+  - :pattern: (\d{2})(\d{5})
     :leadingDigits: 2[24-9]|47|58|6[237-9]|9[35-9]
     :format: $1$2
-  - :regex: (\d{3})(\d{5})
+  - :pattern: (\d{3})(\d{5})
     :leadingDigits: 40[24]|50[45]
     :format: $1$2
-  - :regex: (48)(\d{4})(\d{4})
+  - :pattern: (48)(\d{4})(\d{4})
     :leadingDigits: '48'
     :format: $1$2$3
-  - :regex: (818)(\d{3})(\d{3})
+  - :pattern: (818)(\d{3})(\d{3})
     :leadingDigits: '81'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{3,4})
+  - :pattern: (\d{2})(\d{3})(\d{3,4})
     :leadingDigits: ! '[24-69]|7[14]'
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: ([78]\d)(\d{3,4})(\d{4})
     :leadingDigits: 76|8[35-9]
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (700)(\d{3})(\d{3})
     :leadingDigits: '70'
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (\d{4})(\d{3})(\d{3})
     :leadingDigits: 1(?:8[059]0|5)
     :format: $1$2$3
 - :id: IL
@@ -3710,28 +3773,30 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: ([2-489])(\d{3})(\d{4})
     :leadingDigits: ! '[2-489]'
     :format: $1-$2-$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: ([57]\d)(\d{3})(\d{4})
     :leadingDigits: ! '[57]'
     :format: $1-$2-$3
-  - :regex: (1)([7-9]\d{2})(\d{3})(\d{3})
+  - :pattern: (1)([7-9]\d{2})(\d{3})(\d{3})
     :leadingDigits: 1[7-9]
     :format: $1-$2-$3-$4
-  - :regex: (1255)(\d{3})
+  - :pattern: (1255)(\d{3})
     :leadingDigits: '125'
     :format: $1-$2
-  - :regex: (1200)(\d{3})(\d{3})
+  - :pattern: (1200)(\d{3})(\d{3})
     :leadingDigits: '120'
     :format: $1-$2-$3
-  - :regex: (1212)(\d{2})(\d{2})
+  - :pattern: (1212)(\d{2})(\d{2})
     :leadingDigits: '121'
     :format: $1-$2-$3
-  - :regex: (1599)(\d{6})
+  - :pattern: (1599)(\d{6})
     :leadingDigits: '15'
     :format: $1-$2
-  - :regex: (\d{4})
+  - :pattern: (\d{4})
     :leadingDigits: ! '[2-689]'
     :format: ! '*$1'
 - :id: IM
@@ -3826,34 +3891,38 @@
       :possibleNumberPattern: \d{3,4}
       :exampleNumber: '108'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{6})
+  - :pattern: (\d{2})(\d{2})(\d{6})
     :leadingDigits: 7(?:2(?:0[04-9]|5[09]|7[5-8]|9[389])|3(?:0[1-9]|[58]|7[3679]|9[689])|4(?:0[1-9]|1[15-9]|[29][89]|39|8[389])|5(?:0|[47]9|[25]0|6[6-9]|[89][7-9])|6(?:0[027]|12|20|3[19]|5[45]|6[5-9]|7[679]|9[6-9])|7(?:0[27-9]|3[5-9]|42|60|7[7-9]|8[1-9]|9[05-9])|8(?:[03][07-9]|14|2[7-9]|[4-7]|9[013-9]))|8(?:0(?:[01589]|6[67])|1(?:[02-589]|1[0135-9]|7[0-79])|2(?:[236-9]|5[1-9])|3(?:[037-9]|4[1-9]|5[0-37-9])|[45]|6[02457-9]|7[1-69]|8(?:[0-26-9]|44|5[2-9])|9(?:[035-9]|2[2-9]|4[0-8]))|9
     :format: $1$2$3
-  - :regex: (\d{2})(\d{4})(\d{4})
+  - :pattern: (\d{2})(\d{4})(\d{4})
     :leadingDigits: 11|2[02]|33|4[04]|79|80[2-46]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 1(?:2[0-249]|3[0-25]|4[145]|[569][14]|7[1257]|8[1346]|[68][1-9])|2(?:1[257]|3[013]|4[01]|5[0137]|6[0158]|78|8[1568]|9[14])|3(?:26|4[1-3]|5[34]|6[01489]|7[02-46]|8[159])|4(?:1[36]|2[1-47]|3[15]|5[12]|6[126-9]|7[0-24-9]|8[013-57]|9[014-7])|5(?:[136][25]|22|4[28]|5[12]|[78]1|9[15])|6(?:12|[2345]1|57|6[13]|7[14]|80)
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 7(?:12|2[14]|3[134]|4[47]|5(?:1|5[2-6])|[67]1|88)
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 8(?:16|2[014]|3[126]|6[136]|7[078]|8[34]|91)
     :format: $1$2$3
-  - :regex: (\d{4})(\d{3})(\d{3})
+  - :pattern: (\d{4})(\d{3})(\d{3})
     :leadingDigits: 1(?:[2-579]|[68][1-9])|[2-8]
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1600)(\d{2})(\d{4})
     :leadingDigits: '1600'
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1800)(\d{4,5})
     :leadingDigits: '1800'
     :format: $1$2
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (18[06]0)(\d{2,4})(\d{4})
     :leadingDigits: 18[06]0
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (\d{4})(\d{3})(\d{4})(\d{2})
     :leadingDigits: 18(?:03|6[12])
     :format: $1$2$3$4
 - :id: IO
@@ -3870,7 +3939,7 @@
       :nationalNumberPattern: 38\d{5}
       :exampleNumber: '3801234'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: IQ
   :countryCode: '964'
@@ -3890,13 +3959,13 @@
       :possibleNumberPattern: \d{10}
       :exampleNumber: '7912345678'
   :formats:
-  - :regex: (1)(\d{3})(\d{4})
+  - :pattern: (1)(\d{3})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: ([2-6]\d)(\d{3})(\d{3,4})
+  - :pattern: ([2-6]\d)(\d{3})(\d{3,4})
     :leadingDigits: ! '[2-6]'
     :format: $1$2$3
-  - :regex: (7\d{2})(\d{3})(\d{4})
+  - :pattern: (7\d{2})(\d{3})(\d{4})
     :leadingDigits: '7'
     :format: $1$2$3
 - :id: IR
@@ -3932,16 +4001,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (21)(\d{3,5})
+  - :pattern: (21)(\d{3,5})
     :leadingDigits: '21'
     :format: $1$2
-  - :regex: (21)(\d{3})(\d{3,4})
+  - :pattern: (21)(\d{3})(\d{3,4})
     :leadingDigits: '21'
     :format: $1$2$3
-  - :regex: (2[16])(\d{4})(\d{4})
+  - :pattern: (2[16])(\d{4})(\d{4})
     :leadingDigits: 2[16]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{3,4})
+  - :pattern: (\d{3})(\d{3})(\d{3,4})
     :leadingDigits: ! '[13-9]|2[02-9]'
     :format: $1$2$3
 - :id: IS
@@ -3978,10 +4047,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[4-9]'
     :format: $1$2
-  - :regex: (3\d{2})(\d{3})(\d{3})
+  - :pattern: (3\d{2})(\d{3})(\d{3})
     :leadingDigits: '3'
     :format: $1$2$3
 - :id: IT
@@ -4033,34 +4102,34 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{3,4})(\d{4})
+  - :pattern: (\d{2})(\d{3,4})(\d{4})
     :leadingDigits: 0[26]|55
     :format: $1$2$3
-  - :regex: (0[26])(\d{4})(\d{5})
+  - :pattern: (0[26])(\d{4})(\d{5})
     :leadingDigits: 0[26]
     :format: $1$2$3
-  - :regex: (0[26])(\d{4,6})
+  - :pattern: (0[26])(\d{4,6})
     :leadingDigits: 0[26]
     :format: $1$2
-  - :regex: (0\d{2})(\d{3,4})(\d{4})
+  - :pattern: (0\d{2})(\d{3,4})(\d{4})
     :leadingDigits: 0[13-57-9][0159]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3,6})
+  - :pattern: (\d{3})(\d{3,6})
     :leadingDigits: 0[13-57-9][0159]|8(?:03|4[17]|9(?:2|[45][0-4]))
     :format: $1$2
-  - :regex: (0\d{3})(\d{3})(\d{4})
+  - :pattern: (0\d{3})(\d{3})(\d{4})
     :leadingDigits: 0[13-57-9][2-46-8]
     :format: $1$2$3
-  - :regex: (0\d{3})(\d{2,6})
+  - :pattern: (0\d{3})(\d{2,6})
     :leadingDigits: 0[13-57-9][2-46-8]
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{3,4})
+  - :pattern: (\d{3})(\d{3})(\d{3,4})
     :leadingDigits: ! '[13]|8(?:00|4[08]|9(?:5[5-9]|9))'
     :format: $1$2$3
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: 894[5-9]
     :format: $1$2
-  - :regex: (\d{3})(\d{4})(\d{4})
+  - :pattern: (\d{3})(\d{4})(\d{4})
     :leadingDigits: '3'
     :format: $1$2$3
 - :id: JE
@@ -4202,13 +4271,14 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (\d)(\d{3})(\d{4})
     :leadingDigits: ! '[2356]|87'
     :format: $1$2$3
-  - :regex: (7)(\d{4})(\d{4})
+  - :pattern: (7)(\d{4})(\d{4})
     :leadingDigits: 7[457-9]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{5,6})
+  - :pattern: (\d{3})(\d{5,6})
     :leadingDigits: 70|8[0158]|9
     :format: $1$2
 - :id: JP
@@ -4262,52 +4332,52 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '110'
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :leadingDigits: (?:12|57|99)0
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: '800'
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: '077'
     :format: $1-$2
-  - :regex: (\d{3})(\d{2})(\d{3,4})
+  - :pattern: (\d{3})(\d{2})(\d{3,4})
     :leadingDigits: '077'
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{2})(\d{4})
+  - :pattern: (\d{3})(\d{2})(\d{4})
     :leadingDigits: 088
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{3})(\d{3,4})
+  - :pattern: (\d{3})(\d{3})(\d{3,4})
     :leadingDigits: 0(?:37|66)
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{4})(\d{4,5})
+  - :pattern: (\d{3})(\d{4})(\d{4,5})
     :leadingDigits: 0(?:37|66)
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{5})(\d{5,6})
+  - :pattern: (\d{3})(\d{5})(\d{5,6})
     :leadingDigits: 0(?:37|66)
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{6})(\d{6,7})
+  - :pattern: (\d{3})(\d{6})(\d{6,7})
     :leadingDigits: 0(?:37|66)
     :format: $1-$2-$3
-  - :regex: (\d{2})(\d{4})(\d{4})
+  - :pattern: (\d{2})(\d{4})(\d{4})
     :leadingDigits: ! '[2579]0|80[1-9]'
     :format: $1-$2-$3
-  - :regex: (\d{4})(\d)(\d{4})
+  - :pattern: (\d{4})(\d)(\d{4})
     :leadingDigits: 1(?:267|3(?:7[247]|9[278])|4(?:5[67]|66)|5(?:47|58|64|8[67])|6(?:3[245]|48|5[4-68]))|5(?:769|979[2-69])|499[2468]|7468|8(?:3(?:8[78]|96[2457-9])|636[2-57-9]|477|51[24])|9(?:496|802|9(?:1[23]|69))
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{2})(\d{4})
+  - :pattern: (\d{3})(\d{2})(\d{4})
     :leadingDigits: 1(?:2[3-6]|3[3-9]|4[2-6]|5(?:[236-8]|[45][2-69])|[68][2-7]|7[2-689]|9[1-578])|2(?:2(?:[04-689]|3[23])|3[3-58]|4[0-468]|5(?:5[78]|7[2-4]|[0468][2-9])|6(?:[0135-8]|4[2-5])|7(?:[0679]|8[2-7])|8(?:[024578]|3[25-9]|9[6-9])|9(?:11|3[2-4]))|4(?:2(?:2[2-9]|8[237-9])|3[689]|6[035-7]|7(?:[059][2-8]|[68])|80|9[3-5])|5(?:3[1-36-9]|4[4578]|5[013-8]|6[1-9]|7[2-8]|8[14-7]|9(?:[89][2-8]|[4-7]))|7(?:2[15]|3[5-9]|4[02-9]|6[135-8]|7[0-4689]|9(?:[017-9]|4[6-8]|5[2-478]|6[2-589]))|8(?:2(?:4[4-8]|9(?:[3578]|20|4[04-9]|6(?:5[25]|60)))|3(?:7(?:[2-5]|6[0-59])|[3-6][2-9]|8[2-5])|4[5-8]|5[2-9]|6(?:[37]|5(?:[467]|5[014-9])|6(?:[2-8]|9[02-69])|8[2-8]|9(?:[236-8]|9[23]))|7[579]|8[03-579]|9[2-8])|9(?:[23]0|4[02-46-9]|5[024-79]|6[4-9]|7[2-47-9]|8[02-7]|9(?:3(?:3[02-9]|4[0-24689])|4[2-69]|[5-7]))
     :format: $1-$2-$3
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: 1|2(?:2[37]|5(?:[57]|[68]0|9(?:17|99))|64|78|8[39]|917)|4(?:2(?:[68]|20|9[178])|64|7[347])|5(?:[2-589]|39[67])|60|8(?:[46-9]|3[279]|2[124589])|9(?:[235-8]|93(?:31|4))
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{2})(\d{4})
+  - :pattern: (\d{3})(\d{2})(\d{4})
     :leadingDigits: 2(?:9[14-79]|74|[34]7|[56]9)|82|993
     :format: $1-$2-$3
-  - :regex: (\d)(\d{4})(\d{4})
+  - :pattern: (\d)(\d{4})(\d{4})
     :leadingDigits: 3|4(?:2[09]|7[01])|6[1-9]
     :format: $1-$2-$3
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: ! '[2479][1-9]'
     :format: $1-$2-$3
 - :id: KE
@@ -4344,13 +4414,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{2})(\d{4,7})
+  - :pattern: (\d{2})(\d{4,7})
     :leadingDigits: ! '[24-6]'
     :format: $1$2
-  - :regex: (\d{3})(\d{6,7})
+  - :pattern: (\d{3})(\d{6,7})
     :leadingDigits: '7'
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{3,4})
+  - :pattern: (\d{3})(\d{3})(\d{3,4})
     :leadingDigits: ! '[89]'
     :format: $1$2$3
 - :id: KG
@@ -4378,13 +4448,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '101'
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :leadingDigits: 31[25]|[5-7]
     :format: $1$2$3
-  - :regex: (\d{4})(\d{5})
+  - :pattern: (\d{4})(\d{5})
     :leadingDigits: 3(?:1[36]|[2-9])
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d)(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d)(\d{3})
     :leadingDigits: '8'
     :format: $1$2$3$4
 - :id: KH
@@ -4416,10 +4486,11 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '117'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{3,4})
+  - :pattern: (\d{2})(\d{3})(\d{3,4})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: 1\d[1-9]|[2-9]
     :format: $1$2$3
-  - :regex: (1[89]00)(\d{3})(\d{3})
+  - :pattern: (1[89]00)(\d{3})(\d{3})
     :leadingDigits: 1[89]0
     :format: $1$2$3
 - :id: KI
@@ -4465,7 +4536,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: (\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})
     :format: $1$2$3
 - :id: KN
   :countryCode: '1'
@@ -4521,13 +4592,13 @@
       :possibleNumberPattern: \d{10}
       :exampleNumber: '1921234567'
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: (\d)(\d{3})(\d{4})
+  - :pattern: (\d)(\d{3})(\d{4})
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: '8'
     :format: $1$2$3
 - :id: KR
@@ -4578,34 +4649,35 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{4})(\d{4})
+  - :pattern: (\d{2})(\d{4})(\d{4})
     :leadingDigits: 1(?:0|1[19]|[69]9|5(?:44|59|8))|[57]0
     :format: $1-$2-$3
-  - :regex: (\d{2})(\d{3,4})(\d{4})
+  - :pattern: (\d{2})(\d{3,4})(\d{4})
     :leadingDigits: 1(?:[169][2-8]|[78]|5(?:[1-3]|4[56]))|[68]0|[3-6][1-9][2-9]
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d)(\d{4})
+  - :pattern: (\d{3})(\d)(\d{4})
     :leadingDigits: '1312'
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{2})(\d{4})
+  - :pattern: (\d{3})(\d{2})(\d{4})
     :leadingDigits: 131[13-9]
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: 13[2-9]
     :format: $1-$2-$3
-  - :regex: (\d{2})(\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{2})(\d{3})(\d{4})
     :leadingDigits: '30'
     :format: $1-$2-$3-$4
-  - :regex: (\d)(\d{3,4})(\d{4})
+  - :pattern: (\d)(\d{3,4})(\d{4})
     :leadingDigits: 2[2-9]
     :format: $1-$2-$3
-  - :regex: (\d)(\d{3,4})
+  - :pattern: (\d)(\d{3,4})
     :leadingDigits: 21[0-46-9]
     :format: $1-$2
-  - :regex: (\d{2})(\d{3,4})
+  - :pattern: (\d{2})(\d{3,4})
     :leadingDigits: ! '[3-6][1-9]1(?:[0-46-9])'
     :format: $1-$2
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: 1(?:5(?:44|66|77|88|99)|6(?:00|44|6[16]|70|88))
     :format: $1-$2
 - :id: KW
@@ -4632,10 +4704,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{4})(\d{3,4})
+  - :pattern: (\d{4})(\d{3,4})
     :leadingDigits: ! '[1269]'
     :format: $1$2
-  - :regex: (5[015]\d)(\d{5})
+  - :pattern: (5[015]\d)(\d{5})
     :leadingDigits: '5'
     :format: $1$2
 - :id: KY
@@ -4728,10 +4800,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '190'
   :formats:
-  - :regex: (20)(\d{2})(\d{3})(\d{3})
+  - :pattern: (20)(\d{2})(\d{3})(\d{3})
     :leadingDigits: '20'
     :format: $1$2$3$4
-  - :regex: ([2-8]\d)(\d{3})(\d{3})
+  - :pattern: ([2-8]\d)(\d{3})(\d{3})
     :leadingDigits: 2[13]|[3-8]
     :format: $1$2$3
 - :id: LB
@@ -4763,10 +4835,11 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d)(\d{3})(\d{3})
+  - :pattern: (\d)(\d{3})(\d{3})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[13-6]|7(?:[2-579]|62|8[0-7])|[89][2-9]'
     :format: $1$2$3
-  - :regex: ([7-9]\d)(\d{3})(\d{3})
+  - :pattern: ([7-9]\d)(\d{3})(\d{3})
     :leadingDigits: ! '[89][01]|7(?:[01]|6[013-9]|8[89]|91)'
     :format: $1$2$3
 - :id: LC
@@ -4845,22 +4918,23 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})
     :leadingDigits: ! '[23]|7[3-57-9]|87'
     :format: $1$2$3
-  - :regex: (6\d)(\d{3})(\d{3})
+  - :pattern: (6\d)(\d{3})(\d{3})
     :leadingDigits: '6'
     :format: $1$2$3
-  - :regex: (6[567]\d)(\d{3})(\d{3})
+  - :pattern: (6[567]\d)(\d{3})(\d{3})
     :leadingDigits: 6[567]
     :format: $1$2$3
-  - :regex: (69)(7\d{2})(\d{4})
+  - :pattern: (69)(7\d{2})(\d{4})
     :leadingDigits: '697'
     :format: $1$2$3
-  - :regex: ([7-9]0\d)(\d{2})(\d{2})
+  - :pattern: ([7-9]0\d)(\d{2})(\d{2})
     :leadingDigits: ! '[7-9]0'
     :format: $1$2$3
-  - :regex: ([89]0\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([89]0\d)(\d{2})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[89]0'
     :format: $1$2$3$4
 - :id: LK
@@ -4884,10 +4958,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '119'
   :formats:
-  - :regex: (\d{2})(\d{1})(\d{6})
+  - :pattern: (\d{2})(\d{1})(\d{6})
     :leadingDigits: ! '[1-689]'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: '7'
     :format: $1$2$3
 - :id: LR
@@ -4919,16 +4993,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: ([279]\d)(\d{3})(\d{3})
+  - :pattern: ([279]\d)(\d{3})(\d{3})
     :leadingDigits: ! '[279]'
     :format: $1$2$3
-  - :regex: (7\d{2})(\d{3})(\d{3})
+  - :pattern: (7\d{2})(\d{3})(\d{3})
     :leadingDigits: '7'
     :format: $1$2$3
-  - :regex: ([4-6])(\d{3})(\d{3})
+  - :pattern: ([4-6])(\d{3})(\d{3})
     :leadingDigits: ! '[4-6]'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: ! '[38]'
     :format: $1$2$3
 - :id: LS
@@ -4952,7 +5026,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :format: $1$2
 - :id: LT
   :countryCode: '370'
@@ -4990,16 +5064,17 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([34]\d)(\d{6})
+  - :pattern: ([34]\d)(\d{6})
     :leadingDigits: 37|4(?:1|5[45]|6[2-4])
     :format: $1$2
-  - :regex: ([3-6]\d{2})(\d{5})
+  - :pattern: ([3-6]\d{2})(\d{5})
     :leadingDigits: 3[148]|4(?:[24]|6[09])|528|6
     :format: $1$2
-  - :regex: ([7-9]\d{2})(\d{2})(\d{3})
+  - :pattern: ([7-9]\d{2})(\d{2})(\d{3})
+    :nationalPrefixFormattingRule: $NP $FG
     :leadingDigits: ! '[7-9]'
     :format: $1$2$3
-  - :regex: (5)(2\d{2})(\d{4})
+  - :pattern: (5)(2\d{2})(\d{4})
     :leadingDigits: 52[0-79]
     :format: $1$2$3
 - :id: LU
@@ -5047,31 +5122,31 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{3})
+  - :pattern: (\d{2})(\d{3})
     :leadingDigits: ! '[2-5]|7[1-9]|[89](?:[1-9]|0[2-9])'
     :format: $1$2
-  - :regex: (\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[2-5]|7[1-9]|[89](?:[1-9]|0[2-9])'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{2})(\d{3})
+  - :pattern: (\d{2})(\d{2})(\d{3})
     :leadingDigits: '20'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{1,2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{1,2})
     :leadingDigits: 2(?:[0367]|4[3-8])
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{3})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{3})
     :leadingDigits: '20'
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})(\d{1,2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})(\d{1,2})
     :leadingDigits: 2(?:[0367]|4[3-8])
     :format: $1$2$3$4$5
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{1,4})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{1,4})
     :leadingDigits: 2(?:[12589]|4[12])|[3-5]|7[1-9]|[89](?:[1-9]|0[2-9])
     :format: $1$2$3$4
-  - :regex: (\d{3})(\d{2})(\d{3})
+  - :pattern: (\d{3})(\d{2})(\d{3})
     :leadingDigits: ! '[89]0[01]|70'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :leadingDigits: '6'
     :format: $1$2$3
 - :id: LV
@@ -5101,7 +5176,7 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([2689]\d)(\d{3})(\d{3})
+  - :pattern: ([2689]\d)(\d{3})(\d{3})
     :format: $1$2$3
 - :id: LY
   :countryCode: '218'
@@ -5124,7 +5199,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '193'
   :formats:
-  - :regex: ([25679]\d)(\d{7})
+  - :pattern: ([25679]\d)(\d{7})
     :format: $1-$2
 - :id: MA
   :countryCode: '212'
@@ -5153,16 +5228,16 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '15'
   :formats:
-  - :regex: ([56]\d{2})(\d{6})
+  - :pattern: ([56]\d{2})(\d{6})
     :leadingDigits: 5(?:2[015-7]|3[0-4])|6
     :format: $1-$2
-  - :regex: ([58]\d{3})(\d{5})
+  - :pattern: ([58]\d{3})(\d{5})
     :leadingDigits: 5(?:2(?:[2-48]|90)|3(?:[5-79]|80))|892
     :format: $1-$2
-  - :regex: (5\d{4})(\d{4})
+  - :pattern: (5\d{4})(\d{4})
     :leadingDigits: 5(?:29|38)[89]
     :format: $1-$2
-  - :regex: (8[09])(\d{7})
+  - :pattern: (8[09])(\d{7})
     :leadingDigits: 8(?:0|9[013-9])
     :format: $1-$2
 - :id: MC
@@ -5193,13 +5268,14 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: ! '[89]'
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: '4'
     :format: $1$2$3
-  - :regex: (6)(\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (6)(\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: '6'
     :format: $1$2$3$4$5
 - :id: MD
@@ -5241,13 +5317,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: 22|3
     :format: $1$2$3
-  - :regex: ([25-7]\d{2})(\d{2})(\d{3})
+  - :pattern: ([25-7]\d{2})(\d{2})(\d{3})
     :leadingDigits: 2[13-79]|[5-7]
     :format: $1$2$3
-  - :regex: ([89]\d{2})(\d{5})
+  - :pattern: ([89]\d{2})(\d{5})
     :leadingDigits: ! '[89]'
     :format: $1$2
 - :id: ME
@@ -5292,10 +5368,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: ! '[2-57-9]|6(?:[389]|7(?:[0-8]|9[3-9]))'
     :format: $1$2$3
-  - :regex: (67)(9)(\d{3})(\d{3})
+  - :pattern: (67)(9)(\d{3})(\d{3})
     :leadingDigits: 679[0-2]
     :format: $1$2$3$4
 - :id: MG
@@ -5319,7 +5395,7 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '117'
   :formats:
-  - :regex: ([23]\d)(\d{2})(\d{3})(\d{2})
+  - :pattern: ([23]\d)(\d{2})(\d{3})(\d{2})
     :format: $1$2$3$4
 - :id: MF
   :countryCode: '590'
@@ -5357,7 +5433,7 @@
       :nationalNumberPattern: 635\d{4}
       :exampleNumber: '6351234'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1-$2
 - :id: MK
   :countryCode: '389'
@@ -5389,13 +5465,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (2)(\d{3})(\d{4})
+  - :pattern: (2)(\d{3})(\d{4})
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: ([347]\d)(\d{3})(\d{3})
+  - :pattern: ([347]\d)(\d{3})(\d{3})
     :leadingDigits: ! '[347]'
     :format: $1$2$3
-  - :regex: ([58]\d{2})(\d)(\d{2})(\d{2})
+  - :pattern: ([58]\d{2})(\d)(\d{2})(\d{2})
     :leadingDigits: ! '[58]'
     :format: $1$2$3$4
 - :id: ML
@@ -5419,7 +5495,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: ([246-8]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([246-8]\d)(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: MM
   :countryCode: '95'
@@ -5447,25 +5523,25 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '199'
   :formats:
-  - :regex: (\d)(\d{3})(\d{3,4})
+  - :pattern: (\d)(\d{3})(\d{3,4})
     :leadingDigits: 1|2[45]
     :format: $1$2$3
-  - :regex: (2)(\d{4})(\d{4})
+  - :pattern: (2)(\d{4})(\d{4})
     :leadingDigits: '251'
     :format: $1$2$3
-  - :regex: (\d)(\d{2})(\d{3})
+  - :pattern: (\d)(\d{2})(\d{3})
     :leadingDigits: 16|2
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{3,4})
+  - :pattern: (\d{2})(\d{3})(\d{3,4})
     :leadingDigits: 67|81
     :format: $1$2$3
-  - :regex: (\d{2})(\d{2})(\d{3,4})
+  - :pattern: (\d{2})(\d{2})(\d{3,4})
     :leadingDigits: ! '[4-8]'
     :format: $1$2$3
-  - :regex: (9)(\d{3})(\d{4,5})
+  - :pattern: (9)(\d{3})(\d{4,5})
     :leadingDigits: 9(?:[25-9]|4[13789])
     :format: $1$2$3
-  - :regex: (9)(4\d{4})(\d{4})
+  - :pattern: (9)(4\d{4})(\d{4})
     :leadingDigits: 94[0245]
     :format: $1$2$3
 - :id: MN
@@ -5493,19 +5569,20 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '102'
   :formats:
-  - :regex: ([12]\d)(\d{2})(\d{4})
+  - :pattern: ([12]\d)(\d{2})(\d{4})
     :leadingDigits: ! '[12]1'
     :format: $1$2$3
-  - :regex: ([12]2\d)(\d{5,6})
+  - :pattern: ([12]2\d)(\d{5,6})
     :leadingDigits: ! '[12]2[1-3]'
     :format: $1$2
-  - :regex: ([12]\d{3})(\d{5})
+  - :pattern: ([12]\d{3})(\d{5})
     :leadingDigits: ! '[12](?:27|[3-5]\d)2'
     :format: $1$2
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: ! '[57-9]'
     :format: $1$2
-  - :regex: ([12]\d{4})(\d{4,5})
+  - :pattern: ([12]\d{4})(\d{4,5})
     :leadingDigits: ! '[12](?:27|[3-5]\d)[4-9]'
     :format: $1$2
 - :id: MO
@@ -5526,7 +5603,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: ([268]\d{3})(\d{4})
+  - :pattern: ([268]\d{3})(\d{4})
     :format: $1$2
 - :id: MP
   :countryCode: '1'
@@ -5579,7 +5656,7 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '15'
   :formats:
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: MR
   :countryCode: '222'
@@ -5602,7 +5679,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: ([2-48]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([2-48]\d)(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: MS
   :countryCode: '1'
@@ -5660,7 +5737,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :format: $1$2
 - :id: MU
   :countryCode: '230'
@@ -5697,7 +5774,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: ([2-9]\d{2})(\d{4})
+  - :pattern: ([2-9]\d{2})(\d{4})
     :format: $1$2
 - :id: MV
   :countryCode: '960'
@@ -5732,10 +5809,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '102'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[3467]|9(?:[1-9]|0[1-9])'
     :format: $1-$2
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: '900'
     :format: $1$2$3
 - :id: MW
@@ -5759,13 +5836,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '997'
   :formats:
-  - :regex: (\d)(\d{3})(\d{3})
+  - :pattern: (\d)(\d{3})(\d{3})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: (2\d{2})(\d{3})(\d{3})
+  - :pattern: (2\d{2})(\d{3})(\d{3})
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[1789]'
     :format: $1$2$3$4
 - :id: MX
@@ -5801,17 +5878,19 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '066'
   :formats:
-  - :regex: ([358]\d)(\d{4})(\d{4})
+  - :pattern: ([358]\d)(\d{4})(\d{4})
     :leadingDigits: 33|55|81
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :leadingDigits: ! '[2467]|3[12457-9]|5[89]|8[02-9]|9[0-35-9]'
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1)([358]\d)(\d{4})(\d{4})
     :leadingDigits: 1(?:33|55|81)
     :format: 044$2$3$4
     :intlFormat: $1$2$3$4
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1)(\d{3})(\d{3})(\d{4})
     :leadingDigits: 1(?:[2467]|3[12457-9]|5[89]|8[2-9]|9[1-35-9])
     :format: 044$2$3$4
     :intlFormat: $1$2$3$4
@@ -5852,22 +5931,27 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: ([4-79])(\d{3})(\d{4})
     :leadingDigits: ! '[4-79]'
     :format: $1-$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (3)(\d{4})(\d{4})
     :leadingDigits: '3'
     :format: $1-$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: ([18]\d)(\d{3})(\d{3,4})
     :leadingDigits: 1[02-46-9][1-9]|8
     :format: $1-$2$3
-  - :regex: (1)([36-8]00)(\d{2})(\d{4})
+  - :pattern: (1)([36-8]00)(\d{2})(\d{4})
     :leadingDigits: 1[36-8]0
     :format: $1-$2-$3-$4
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (11)(\d{4})(\d{4})
     :leadingDigits: '11'
     :format: $1-$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (154)(\d{3})(\d{4})
     :leadingDigits: '15'
     :format: $1-$2$3
 - :id: MZ
@@ -5898,10 +5982,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '119'
   :formats:
-  - :regex: ([28]\d)(\d{3})(\d{3,4})
+  - :pattern: ([28]\d)(\d{3})(\d{3,4})
     :leadingDigits: 2|8[246]
     :format: $1$2$3
-  - :regex: (80\d)(\d{3})(\d{3})
+  - :pattern: (80\d)(\d{3})(\d{3})
     :leadingDigits: '80'
     :format: $1$2$3
 - :id: NA
@@ -5936,16 +6020,16 @@
       :possibleNumberPattern: \d{5}
       :exampleNumber: '10111'
   :formats:
-  - :regex: (8\d)(\d{3})(\d{4})
+  - :pattern: (8\d)(\d{3})(\d{4})
     :leadingDigits: 8[1235]
     :format: $1$2$3
-  - :regex: (6\d)(\d{2,3})(\d{4})
+  - :pattern: (6\d)(\d{2,3})(\d{4})
     :leadingDigits: '6'
     :format: $1$2$3
-  - :regex: (88)(\d{3})(\d{3})
+  - :pattern: (88)(\d{3})(\d{3})
     :leadingDigits: '88'
     :format: $1$2$3
-  - :regex: (870)(\d{3})(\d{3})
+  - :pattern: (870)(\d{3})(\d{3})
     :leadingDigits: '870'
     :format: $1$2$3
 - :id: NC
@@ -5973,7 +6057,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '15'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})
     :format: $1.$2.$3
 - :id: NE
   :countryCode: '227'
@@ -5996,10 +6080,10 @@
       :nationalNumberPattern: 09\d{6}
       :exampleNumber: 09123456
   :formats:
-  - :regex: ([029]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([029]\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[29]|09'
     :format: $1$2$3$4
-  - :regex: (08)(\d{3})(\d{3})
+  - :pattern: (08)(\d{3})(\d{3})
     :leadingDigits: 08
     :format: $1$2$3
 - :id: NF
@@ -6020,10 +6104,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{2})(\d{4})
+  - :pattern: (\d{2})(\d{4})
     :leadingDigits: '1'
     :format: $1$2
-  - :regex: (\d)(\d{5})
+  - :pattern: (\d)(\d{5})
     :leadingDigits: '3'
     :format: $1$2
 - :id: NG
@@ -6056,22 +6140,22 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '199'
   :formats:
-  - :regex: ([129])(\d{3})(\d{3,4})
+  - :pattern: ([129])(\d{3})(\d{3,4})
     :leadingDigits: ! '[129]'
     :format: $1$2$3
-  - :regex: ([3-8]\d)(\d{3})(\d{2,3})
+  - :pattern: ([3-8]\d)(\d{3})(\d{2,3})
     :leadingDigits: ! '[3-6]|7(?:[1-79]|0[1-9])|8[2-9]'
     :format: $1$2$3
-  - :regex: ([78]\d{2})(\d{3})(\d{3,4})
+  - :pattern: ([78]\d{2})(\d{3})(\d{3,4})
     :leadingDigits: 70|8[01]
     :format: $1$2$3
-  - :regex: ([78]00)(\d{4})(\d{4,5})
+  - :pattern: ([78]00)(\d{4})(\d{4,5})
     :leadingDigits: ! '[78]00'
     :format: $1$2$3
-  - :regex: ([78]00)(\d{5})(\d{5,6})
+  - :pattern: ([78]00)(\d{5})(\d{5,6})
     :leadingDigits: ! '[78]00'
     :format: $1$2$3
-  - :regex: (78)(\d{2})(\d{3})
+  - :pattern: (78)(\d{2})(\d{3})
     :leadingDigits: '78'
     :format: $1$2$3
 - :id: NI
@@ -6095,7 +6179,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '118'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :format: $1$2
 - :id: NL
   :countryCode: '31'
@@ -6146,22 +6230,23 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([1-578]\d)(\d{3})(\d{4})
+  - :pattern: ([1-578]\d)(\d{3})(\d{4})
     :leadingDigits: 1[035]|2[0346]|3[03568]|4[0356]|5[0358]|7|8[458]
     :format: $1$2$3
-  - :regex: ([1-5]\d{2})(\d{3})(\d{3})
+  - :pattern: ([1-5]\d{2})(\d{3})(\d{3})
     :leadingDigits: 1[16-8]|2[259]|3[124]|4[17-9]|5[124679]
     :format: $1$2$3
-  - :regex: (6)(\d{8})
+  - :pattern: (6)(\d{8})
     :leadingDigits: 6[0-57-9]
     :format: $1$2
-  - :regex: (66)(\d{7})
+  - :pattern: (66)(\d{7})
     :leadingDigits: '66'
     :format: $1$2
-  - :regex: (14)(\d{3,4})
+  - :pattern: (14)(\d{3,4})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: '14'
     :format: $1$2
-  - :regex: ([89]0\d)(\d{4,7})
+  - :pattern: ([89]0\d)(\d{4,7})
     :leadingDigits: 80|9
     :format: $1$2
 - :id: 'NO'
@@ -6213,10 +6298,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([489]\d{2})(\d{2})(\d{3})
+  - :pattern: ([489]\d{2})(\d{2})(\d{3})
     :leadingDigits: ! '[489]'
     :format: $1$2$3
-  - :regex: ([235-7]\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: ([235-7]\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[235-7]'
     :format: $1$2$3$4
 - :id: NP
@@ -6241,13 +6326,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (1)(\d{7})
+  - :pattern: (1)(\d{7})
     :leadingDigits: 1[2-6]
     :format: $1-$2
-  - :regex: (\d{2})(\d{6})
+  - :pattern: (\d{2})(\d{6})
     :leadingDigits: 1[01]|[2-8]|9(?:[1-69]|7[15-9])
     :format: $1-$2
-  - :regex: (9\d{2})(\d{7})
+  - :pattern: (9\d{2})(\d{7})
     :leadingDigits: 9(?:7[45]|8)
     :format: $1-$2
 - :id: NR
@@ -6272,7 +6357,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '110'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: NU
   :countryCode: '683'
@@ -6326,22 +6411,22 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '111'
   :formats:
-  - :regex: ([34679])(\d{3})(\d{4})
+  - :pattern: ([34679])(\d{3})(\d{4})
     :leadingDigits: ! '[3467]|9[1-9]'
     :format: $1-$2$3
-  - :regex: (24099)(\d{3})
+  - :pattern: (24099)(\d{3})
     :leadingDigits: '24099'
     :format: $1$2
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :leadingDigits: '21'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{3,4})
+  - :pattern: (\d{2})(\d{3})(\d{3,4})
     :leadingDigits: 2(?:1[1-9]|[69]|7[0-35-9])|86
     :format: $1$2$3
-  - :regex: (2\d)(\d{3,4})(\d{4})
+  - :pattern: (2\d)(\d{3,4})(\d{4})
     :leadingDigits: 2[028]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{3,4})
+  - :pattern: (\d{3})(\d{3})(\d{3,4})
     :comment: ''
     :leadingDigits: 2(?:10|74)|5|[89]0
     :format: $1$2$3
@@ -6369,13 +6454,13 @@
       :possibleNumberPattern: \d{4}
       :exampleNumber: '9999'
   :formats:
-  - :regex: (2\d)(\d{6})
+  - :pattern: (2\d)(\d{6})
     :leadingDigits: '2'
     :format: $1$2
-  - :regex: (9\d{3})(\d{4})
+  - :pattern: (9\d{3})(\d{4})
     :leadingDigits: '9'
     :format: $1$2
-  - :regex: ([58]00)(\d{4,6})
+  - :pattern: ([58]00)(\d{4,6})
     :leadingDigits: ! '[58]'
     :format: $1$2
 - :id: PA
@@ -6409,10 +6494,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[1-57-9]'
     :format: $1-$2
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: '6'
     :format: $1-$2
 - :id: PE
@@ -6454,16 +6539,17 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '105'
   :formats:
-  - :regex: (1)(\d{7})
+  - :pattern: (1)(\d{7})
     :leadingDigits: '1'
     :format: $1$2
-  - :regex: ([4-8]\d)(\d{6})
+  - :pattern: ([4-8]\d)(\d{6})
     :leadingDigits: ! '[4-7]|8[2-4]'
     :format: $1$2
-  - :regex: (\d{3})(\d{5})
+  - :pattern: (\d{3})(\d{5})
     :leadingDigits: '80'
     :format: $1$2
-  - :regex: (9\d{2})(\d{3})(\d{3})
+  - :pattern: (9\d{2})(\d{3})(\d{3})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: '9'
     :format: $1$2$3
 - :id: PF
@@ -6489,10 +6575,10 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '15'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: '89'
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})
     :format: $1$2$3
 - :id: PG
   :countryCode: '675'
@@ -6522,10 +6608,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '000'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[1-689]'
     :format: $1$2
-  - :regex: (7\d{2})(\d{2})(\d{3})
+  - :pattern: (7\d{2})(\d{2})(\d{3})
     :leadingDigits: '7'
     :format: $1$2$3
 - :id: PH
@@ -6553,25 +6639,30 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '117'
   :formats:
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (2)(\d{3})(\d{4})
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (\d{4})(\d{5})
     :leadingDigits: 3(?:230|397|461)|4(?:2(?:35|[46]4|51)|396|4(?:22|63)|59[347]|76[15])|5(?:221|446)|642[23]|8(?:622|8(?:[24]2|5[13]))
     :format: $1$2
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (\d{5})(\d{4})
     :leadingDigits: 3469|4(?:279|9(?:30|56))|8834
     :format: $1$2
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: ([3-8]\d)(\d{3})(\d{4})
     :leadingDigits: ! '[3-8]'
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (9\d{2})(\d{3})(\d{4})
     :leadingDigits: '9'
     :format: $1$2$3
-  - :regex: (1800)(\d{3})(\d{4})
+  - :pattern: (1800)(\d{3})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: (1800)(\d{1,2})(\d{3})(\d{4})
+  - :pattern: (1800)(\d{1,2})(\d{3})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3$4
 - :id: PK
@@ -6612,28 +6703,30 @@
       :possibleNumberPattern: \d{2,4}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(111)(\d{3})(\d{3})
+  - :pattern: (\d{2})(111)(\d{3})(\d{3})
     :leadingDigits: (?:2[125]|4[0-246-9]|5[1-35-7]|6[1-8]|7[14]|8[16]|91)111
     :format: $1$2$3$4
-  - :regex: (\d{3})(111)(\d{3})(\d{3})
+  - :pattern: (\d{3})(111)(\d{3})(\d{3})
     :leadingDigits: (?:2[349]|45|54|60|72|8[2-5]|9[2-9])\d111
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{7,8})
+  - :pattern: (\d{2})(\d{7,8})
     :leadingDigits: (?:2[125]|4[0-246-9]|5[1-35-7]|6[1-8]|7[14]|8[16]|91)[2-9]
     :format: $1$2
-  - :regex: (\d{3})(\d{6,7})
+  - :pattern: (\d{3})(\d{6,7})
     :leadingDigits: (?:2[349]|45|54|60|72|8[2-5]|9[2-9])\d[2-9]
     :format: $1$2
-  - :regex: (3\d{2})(\d{7})
+  - :pattern: (3\d{2})(\d{7})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: '3'
     :format: $1$2
-  - :regex: ([15]\d{3})(\d{5,6})
+  - :pattern: ([15]\d{3})(\d{5,6})
     :leadingDigits: 58[12]|1
     :format: $1$2
-  - :regex: (586\d{2})(\d{5})
+  - :pattern: (586\d{2})(\d{5})
     :leadingDigits: '586'
     :format: $1$2
-  - :regex: ([89]00)(\d{3})(\d{2})
+  - :pattern: ([89]00)(\d{3})(\d{2})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[89]00'
     :format: $1$2$3
 - :id: PL
@@ -6674,20 +6767,20 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{3})(\d{2})(\d{2})
     :leadingDigits: ! '[124]|3[2-4]|5[24-689]|6[1-3578]|7[14-7]|8[1-79]|9[145]'
     :format: $1$2$3$4
-  - :regex: (\d{2})(\d{4,6})
+  - :pattern: (\d{2})(\d{4,6})
     :comment: ''
     :leadingDigits: ! '[124]|3[2-4]|5[24-689]|6[1-3578]|7[14-7]|8[1-7]'
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :leadingDigits: 39|5[013]|6[0469]|7[02389]|8[08]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{2})(\d{2,3})
+  - :pattern: (\d{3})(\d{2})(\d{2,3})
     :leadingDigits: '64'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})
     :leadingDigits: '64'
     :format: $1$2
 - :id: PM
@@ -6710,7 +6803,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: ([45]\d)(\d{2})(\d{2})
+  - :pattern: ([45]\d)(\d{2})(\d{2})
     :format: $1$2$3
 - :id: PR
   :countryCode: '1'
@@ -6773,13 +6866,14 @@
       :possibleNumberPattern: \d{10}
       :exampleNumber: '1700123456'
   :formats:
-  - :regex: ([2489])(2\d{2})(\d{4})
+  - :pattern: ([2489])(2\d{2})(\d{4})
     :leadingDigits: ! '[2489]'
     :format: $1$2$3
-  - :regex: (5[69]\d)(\d{3})(\d{3})
+  - :pattern: (5[69]\d)(\d{3})(\d{3})
     :leadingDigits: '5'
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1[78]00)(\d{3})(\d{3})
     :leadingDigits: 1[78]
     :format: $1$2$3
 - :id: PT
@@ -6818,7 +6912,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([2-46-9]\d{2})(\d{3})(\d{3})
+  - :pattern: ([2-46-9]\d{2})(\d{3})(\d{3})
     :format: $1$2$3
 - :id: PW
   :countryCode: '680'
@@ -6838,7 +6932,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: PY
   :countryCode: '595'
@@ -6872,19 +6966,23 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{2})(\d{5,7})
+  - :pattern: (\d{2})(\d{5,7})
+    :nationalPrefixFormattingRule: ($FG)
     :leadingDigits: (?:[26]1|3[289]|4[124678]|7[123]|8[1236])
     :format: $1$2
-  - :regex: (\d{3})(\d{3,6})
+  - :pattern: (\d{3})(\d{3,6})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[2-9]0'
     :format: $1$2
-  - :regex: (\d{3})(\d{6})
+  - :pattern: (\d{3})(\d{6})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: 9[1-9]
     :format: $1$2
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: '8700'
     :format: $1$2$3
-  - :regex: (\d{3})(\d{4,6})
+  - :pattern: (\d{3})(\d{4,6})
+    :nationalPrefixFormattingRule: ($FG)
     :leadingDigits: ! '[2-8][1-9]'
     :format: $1$2
 - :id: QA
@@ -6916,10 +7014,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: ([28]\d{2})(\d{4})
+  - :pattern: ([28]\d{2})(\d{4})
     :leadingDigits: ! '[28]'
     :format: $1$2
-  - :regex: ([3-7]\d{3})(\d{4})
+  - :pattern: ([3-7]\d{3})(\d{4})
     :leadingDigits: ! '[3-7]'
     :format: $1$2
 - :id: RE
@@ -6954,7 +7052,7 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '15'
   :formats:
-  - :regex: ([268]\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: ([268]\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: RO
   :countryCode: '40'
@@ -6998,17 +7096,17 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([237]\d)(\d{3})(\d{4})
+  - :pattern: ([237]\d)(\d{3})(\d{4})
     :leadingDigits: ! '[23]1'
     :format: $1$2$3
-  - :regex: (21)(\d{4})
+  - :pattern: (21)(\d{4})
     :leadingDigits: '21'
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :comment: ''
     :leadingDigits: ! '[23][3-7]|[7-9]'
     :format: $1$2$3
-  - :regex: (2\d{2})(\d{3})
+  - :pattern: (2\d{2})(\d{3})
     :leadingDigits: 2[3-6]
     :format: $1$2
 - :id: RS
@@ -7049,22 +7147,22 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([23]\d{2})(\d{4,9})
+  - :pattern: ([23]\d{2})(\d{4,9})
     :leadingDigits: (?:2[389]|39)0
     :format: $1$2
-  - :regex: ([1-3]\d)(\d{5,10})
+  - :pattern: ([1-3]\d)(\d{5,10})
     :leadingDigits: 1|2(?:[0-24-7]|[389][1-9])|3(?:[0-8]|9[1-9])
     :format: $1$2
-  - :regex: (6\d)(\d{6,8})
+  - :pattern: (6\d)(\d{6,8})
     :leadingDigits: '6'
     :format: $1$2
-  - :regex: ([89]\d{2})(\d{3,9})
+  - :pattern: ([89]\d{2})(\d{3,9})
     :leadingDigits: ! '[89]'
     :format: $1$2
-  - :regex: (7[26])(\d{4,9})
+  - :pattern: (7[26])(\d{4,9})
     :leadingDigits: 7[26]
     :format: $1$2
-  - :regex: (7[08]\d)(\d{4,9})
+  - :pattern: (7[08]\d)(\d{4,9})
     :leadingDigits: 7[08]
     :format: $1$2
 - :id: RU
@@ -7096,15 +7194,16 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})
+    :nationalPrefixFormattingRule: $FG
     :comment: ''
     :leadingDigits: ! '[1-79]'
     :format: $1-$2-$3
     :intlFormat: NA
-  - :regex: ([3489]\d{2})(\d{3})(\d{2})(\d{2})
+  - :pattern: ([3489]\d{2})(\d{3})(\d{2})(\d{2})
     :leadingDigits: ! '[34689]'
     :format: $1$2-$3-$4
-  - :regex: (7\d{2})(\d{3})(\d{4})
+  - :pattern: (7\d{2})(\d{3})(\d{4})
     :leadingDigits: '7'
     :format: $1$2$3
 - :id: RW
@@ -7136,13 +7235,15 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (2\d{2})(\d{3})(\d{3})
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: ([7-9]\d{2})(\d{3})(\d{3})
+  - :pattern: ([7-9]\d{2})(\d{3})(\d{3})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[7-9]'
     :format: $1$2$3
-  - :regex: (0\d)(\d{2})(\d{2})(\d{2})
+  - :pattern: (0\d)(\d{2})(\d{2})(\d{2})
     :leadingDigits: '0'
     :format: $1$2$3$4
 - :id: SA
@@ -7179,19 +7280,21 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: ([1-467])(\d{3})(\d{4})
+  - :pattern: ([1-467])(\d{3})(\d{4})
     :leadingDigits: ! '[1-467]'
     :format: $1$2$3
-  - :regex: (5\d)(\d{3})(\d{4})
+  - :pattern: (5\d)(\d{3})(\d{4})
     :leadingDigits: '5'
     :format: $1$2$3
-  - :regex: (9200)(\d{5})
+  - :pattern: (9200)(\d{5})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: '9'
     :format: $1$2
-  - :regex: (800)(\d{3})(\d{4})
+  - :pattern: (800)(\d{3})(\d{4})
+    :nationalPrefixFormattingRule: $FG
     :leadingDigits: '80'
     :format: $1$2$3
-  - :regex: (8111)(\d{3})(\d{3})
+  - :pattern: (8111)(\d{3})(\d{3})
     :leadingDigits: '81'
     :format: $1$2$3
 - :id: SB
@@ -7225,7 +7328,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[7-9]'
     :format: $1$2
 - :id: SC
@@ -7265,10 +7368,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})
     :leadingDigits: ! '[89]'
     :format: $1$2
-  - :regex: (\d)(\d{3})(\d{3})
+  - :pattern: (\d)(\d{3})(\d{3})
     :leadingDigits: ! '[246]'
     :format: $1$2$3
 - :id: SD
@@ -7291,7 +7394,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :format: $1$2$3
 - :id: SE
   :countryCode: '46'
@@ -7335,35 +7438,35 @@
       :possibleNumberPattern: \d{3,5}
       :exampleNumber: '112'
   :formats:
-  - :regex: (8)(\d{2,3})(\d{2,3})(\d{2})
+  - :pattern: (8)(\d{2,3})(\d{2,3})(\d{2})
     :leadingDigits: '8'
     :format: $1-$2$3$4
     :intlFormat: $1$2$3$4
-  - :regex: ([1-69]\d)(\d{2,3})(\d{2})(\d{2})
+  - :pattern: ([1-69]\d)(\d{2,3})(\d{2})(\d{2})
     :leadingDigits: 1[013689]|2[0136]|3[1356]|4[0246]|54|6[03]|90
     :format: $1-$2$3$4
     :intlFormat: $1$2$3$4
-  - :regex: ([1-69]\d)(\d{3})(\d{2})
+  - :pattern: ([1-69]\d)(\d{3})(\d{2})
     :leadingDigits: 1[13689]|2[136]|3[1356]|4[0246]|54|6[03]|90
     :format: $1-$2$3
     :intlFormat: $1$2$3
-  - :regex: (\d{3})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d{2})(\d{2})(\d{2})
     :leadingDigits: 1[2457]|2[2457-9]|3[0247-9]|4[1357-9]|5[0-35-9]|6[124-9]|9(?:[125-8]|3[0-5]|4[0-3])
     :format: $1-$2$3$4
     :intlFormat: $1$2$3$4
-  - :regex: (\d{3})(\d{2,3})(\d{2})
+  - :pattern: (\d{3})(\d{2,3})(\d{2})
     :leadingDigits: 1[2457]|2[2457-9]|3[0247-9]|4[1357-9]|5[0-35-9]|6[124-9]|9(?:[125-8]|3[0-5]|4[0-3])
     :format: $1-$2$3
     :intlFormat: $1$2$3
-  - :regex: (7\d)(\d{3})(\d{2})(\d{2})
+  - :pattern: (7\d)(\d{3})(\d{2})(\d{2})
     :leadingDigits: '7'
     :format: $1-$2$3$4
     :intlFormat: $1$2$3$4
-  - :regex: (20)(\d{2,3})(\d{2})
+  - :pattern: (20)(\d{2,3})(\d{2})
     :leadingDigits: '20'
     :format: $1-$2$3
     :intlFormat: $1$2$3
-  - :regex: (9[034]\d)(\d{2})(\d{2})(\d{3})
+  - :pattern: (9[034]\d)(\d{2})(\d{2})(\d{3})
     :leadingDigits: 9[034]
     :format: $1-$2$3$4
     :intlFormat: $1$2$3$4
@@ -7407,16 +7510,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: ([3689]\d{3})(\d{4})
+  - :pattern: ([3689]\d{3})(\d{4})
     :leadingDigits: ! '[369]|8[1-9]'
     :format: $1$2
-  - :regex: (1[89]00)(\d{3})(\d{4})
+  - :pattern: (1[89]00)(\d{3})(\d{4})
     :leadingDigits: 1[89]
     :format: $1$2$3
-  - :regex: (7000)(\d{4})(\d{3})
+  - :pattern: (7000)(\d{4})(\d{3})
     :leadingDigits: '70'
     :format: $1$2$3
-  - :regex: (800)(\d{3})(\d{4})
+  - :pattern: (800)(\d{3})(\d{4})
     :leadingDigits: '80'
     :format: $1$2$3
 - :id: SH
@@ -7477,16 +7580,17 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (\d)(\d{3})(\d{2})(\d{2})
     :leadingDigits: ! '[12]|3[4-8]|4[24-8]|5[2-8]|7[3-8]'
     :format: $1$2$3$4
-  - :regex: ([3-7]\d)(\d{3})(\d{3})
+  - :pattern: ([3-7]\d)(\d{3})(\d{3})
     :leadingDigits: ! '[37][01]|4[019]|51|6'
     :format: $1$2$3
-  - :regex: ([89][09])(\d{3,6})
+  - :pattern: ([89][09])(\d{3,6})
     :leadingDigits: ! '[89][09]'
     :format: $1$2
-  - :regex: ([58]\d{2})(\d{5})
+  - :pattern: ([58]\d{2})(\d{5})
     :leadingDigits: 59|8[1-3]
     :format: $1$2
 - :id: SJ
@@ -7576,13 +7680,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (2)(\d{3})(\d{3})(\d{2})
+  - :pattern: (2)(\d{3})(\d{3})(\d{2})
     :leadingDigits: '2'
     :format: $1/$2$3$4
-  - :regex: ([3-5]\d)(\d{3})(\d{2})(\d{2})
+  - :pattern: ([3-5]\d)(\d{3})(\d{2})(\d{2})
     :leadingDigits: ! '[3-5]'
     :format: $1/$2$3$4
-  - :regex: ([689]\d{2})(\d{3})(\d{3})
+  - :pattern: ([689]\d{2})(\d{3})(\d{3})
     :leadingDigits: ! '[689]'
     :format: $1$2$3
 - :id: SL
@@ -7605,7 +7709,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{2})(\d{6})
+  - :pattern: (\d{2})(\d{6})
     :format: $1$2
 - :id: SM
   :countryCode: '378'
@@ -7637,15 +7741,15 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '113'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: ! '[5-7]'
     :format: $1$2$3$4
-  - :regex: (0549)(\d{6})
+  - :pattern: (0549)(\d{6})
     :leadingDigits: '0'
     :format: $1$2
     :comment: ''
     :intlFormat: ($1)$2
-  - :regex: (\d{6})
+  - :pattern: (\d{6})
     :leadingDigits: ! '[89]'
     :format: 0549$1
     :intlFormat: (0549)$1
@@ -7666,7 +7770,7 @@
       :nationalNumberPattern: 33301\d{4}
       :exampleNumber: '333011234'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{3})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: SO
   :countryCode: '252'
@@ -7684,16 +7788,16 @@
       :nationalNumberPattern: (?:15\d|2(?:4\d|8)|6[17-9]?\d{2}|7\d{2}|9[01]\d)\d{5}
       :exampleNumber: '90792024'
   :formats:
-  - :regex: (\d)(\d{6})
+  - :pattern: (\d)(\d{6})
     :leadingDigits: 2[0-79]|[13-5]
     :format: $1$2
-  - :regex: (\d)(\d{7})
+  - :pattern: (\d)(\d{7})
     :leadingDigits: 24|[67]
     :format: $1$2
-  - :regex: (\d{2})(\d{5,7})
+  - :pattern: (\d{2})(\d{5,7})
     :leadingDigits: 15|28|6[178]|9
     :format: $1$2
-  - :regex: (69\d)(\d{6})
+  - :pattern: (69\d)(\d{6})
     :leadingDigits: '69'
     :format: $1$2
 - :id: SR
@@ -7723,13 +7827,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '115'
   :formats:
-  - :regex: (\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})
     :leadingDigits: ! '[2-4]|5[2-58]'
     :format: $1-$2
-  - :regex: (\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})
     :leadingDigits: '56'
     :format: $1-$2-$3
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[6-8]'
     :format: $1-$2
 - :id: SS
@@ -7747,7 +7851,8 @@
       :nationalNumberPattern: (?:12|9[1257])\d{7}
       :exampleNumber: '977123456'
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
+    :nationalPrefixFormattingRule: $NP$FG
     :format: $1$2$3
 - :id: ST
   :countryCode: '239'
@@ -7767,7 +7872,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1$2
 - :id: SV
   :countryCode: '503'
@@ -7797,13 +7902,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: ! '[267]'
     :format: $1$2
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[89]'
     :format: $1$2
-  - :regex: (\d{3})(\d{4})(\d{4})
+  - :pattern: (\d{3})(\d{4})(\d{4})
     :leadingDigits: ! '[89]'
     :format: $1$2$3
 - :id: SX
@@ -7860,10 +7965,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{3,4})
+  - :pattern: (\d{2})(\d{3})(\d{3,4})
     :leadingDigits: ! '[1-5]'
     :format: $1$2$3
-  - :regex: (9\d{2})(\d{3})(\d{3})
+  - :pattern: (9\d{2})(\d{3})(\d{3})
     :leadingDigits: '9'
     :format: $1$2$3
 - :id: SZ
@@ -7892,7 +7997,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: ! '[027]'
     :format: $1$2
 - :id: TC
@@ -7950,7 +8055,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '17'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: TG
   :countryCode: '228'
@@ -7970,7 +8075,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '117'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: TH
   :countryCode: '66'
@@ -8014,13 +8119,14 @@
       :possibleNumberPattern: \d{3,4}
       :exampleNumber: '191'
   :formats:
-  - :regex: (2)(\d{3})(\d{4})
+  - :pattern: (2)(\d{3})(\d{4})
     :leadingDigits: '2'
     :format: $1$2$3
-  - :regex: ([3-9]\d)(\d{3})(\d{3,4})
+  - :pattern: ([3-9]\d)(\d{3})(\d{3,4})
     :leadingDigits: ! '[3-9]'
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1[89]00)(\d{3})(\d{3})
     :leadingDigits: '1'
     :format: $1$2$3
 - :id: TJ
@@ -8046,16 +8152,16 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([349]\d{2})(\d{2})(\d{4})
+  - :pattern: ([349]\d{2})(\d{2})(\d{4})
     :leadingDigits: ! '[34]7|91[78]'
     :format: $1$2$3
-  - :regex: ([459]\d)(\d{3})(\d{4})
+  - :pattern: ([459]\d)(\d{3})(\d{4})
     :leadingDigits: 4[48]|5|9(?:1[59]|[0235-9])
     :format: $1$2$3
-  - :regex: (331700)(\d)(\d{2})
+  - :pattern: (331700)(\d)(\d{2})
     :leadingDigits: '331700'
     :format: $1$2$3
-  - :regex: (\d{4})(\d)(\d{4})
+  - :pattern: (\d{4})(\d)(\d{4})
     :leadingDigits: 3(?:[1245]|3(?:[02-9]|1[0-589]))
     :format: $1$2$3
 - :id: TK
@@ -8107,10 +8213,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[2-489]'
     :format: $1$2
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: '7'
     :format: $1$2
 - :id: TM
@@ -8134,13 +8240,14 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '03'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})(\d{2})
     :leadingDigits: '12'
     :format: $1$2-$3-$4
-  - :regex: (\d{2})(\d{6})
+  - :pattern: (\d{2})(\d{6})
+    :nationalPrefixFormattingRule: $NP $FG
     :leadingDigits: '6'
     :format: $1$2
-  - :regex: (\d{3})(\d)(\d{2})(\d{2})
+  - :pattern: (\d{3})(\d)(\d{2})(\d{2})
     :leadingDigits: 13|[2-5]
     :format: $1$2-$3-$4
 - :id: TN
@@ -8164,7 +8271,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '197'
   :formats:
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
     :format: $1$2$3
 - :id: TO
   :countryCode: '676'
@@ -8191,13 +8298,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{2})(\d{3})
+  - :pattern: (\d{2})(\d{3})
     :leadingDigits: ! '[1-6]|7[0-4]|8[05]'
     :format: $1-$2
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: 7[5-9]|8[7-9]
     :format: $1$2
-  - :regex: (\d{4})(\d{3})
+  - :pattern: (\d{4})(\d{3})
     :leadingDigits: '0'
     :format: $1$2
 - :id: TR
@@ -8241,13 +8348,17 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ($NP$FG)
+  - :nationalPrefixFormattingRule: ($NP$FG)
+    :pattern: (\d{3})(\d{3})(\d{4})
+    :nationalPrefixOptionalWhenFormatting: 'true'
     :leadingDigits: ! '[23]|4(?:[0-35-9]|4[0-35-9])'
     :format: $1$2$3
-  - :regex: $NP$FG
+  - :nationalPrefixFormattingRule: $NP$FG
+    :pattern: (\d{3})(\d{3})(\d{4})
+    :nationalPrefixOptionalWhenFormatting: 'true'
     :leadingDigits: ! '[589]'
     :format: $1$2$3
-  - :regex: (444)(\d{1})(\d{3})
+  - :pattern: (444)(\d{1})(\d{3})
     :leadingDigits: '444'
     :format: $1$2$3
 - :id: TT
@@ -8332,10 +8443,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '110'
   :formats:
-  - :regex: ([2-8])(\d{3,4})(\d{4})
+  - :pattern: ([2-8])(\d{3,4})(\d{4})
     :leadingDigits: ! '[2-7]|8[1-9]'
     :format: $1$2$3
-  - :regex: ([89]\d{2})(\d{3})(\d{3})
+  - :pattern: ([89]\d{2})(\d{3})(\d{3})
     :leadingDigits: 80|9
     :format: $1$2$3
 - :id: TZ
@@ -8376,13 +8487,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '111'
   :formats:
-  - :regex: ([24]\d)(\d{3})(\d{4})
+  - :pattern: ([24]\d)(\d{3})(\d{4})
     :leadingDigits: ! '[24]'
     :format: $1$2$3
-  - :regex: ([67]\d{2})(\d{3})(\d{3})
+  - :pattern: ([67]\d{2})(\d{3})(\d{3})
     :leadingDigits: ! '[67]'
     :format: $1$2$3
-  - :regex: ([89]\d{2})(\d{2})(\d{4})
+  - :pattern: ([89]\d{2})(\d{2})(\d{4})
     :leadingDigits: ! '[89]'
     :format: $1$2$3
 - :id: UA
@@ -8415,13 +8526,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: ([3-69]\d)(\d{3})(\d{4})
+  - :pattern: ([3-69]\d)(\d{3})(\d{4})
     :leadingDigits: 39|4(?:[45][0-5]|87)|5(?:0|6(?:3[14-7]|7)|7[37])|6[36-8]|9[1-9]
     :format: $1$2$3
-  - :regex: ([3-689]\d{2})(\d{3})(\d{3})
+  - :pattern: ([3-689]\d{2})(\d{3})(\d{3})
     :leadingDigits: 3(?:[1-46-8]2[013-9]|52)|4[1378]2|5(?:[12457]2|6[24])|6(?:[49]2|[12][29]|5[24])|8|90
     :format: $1$2$3
-  - :regex: ([3-6]\d{3})(\d{5})
+  - :pattern: ([3-6]\d{3})(\d{5})
     :leadingDigits: 3(?:5[013-9]|[1-46-8](?:22|[013-9]))|4(?:[137][013-9]|6|[45][6-9]|8[4-6])|5(?:[1245][013-9]|6(?:3[02389]|[015689])|3|7[4-6])|6(?:[49][013-9]|5[0135-9]|[12][13-8])
     :format: $1$2
 - :id: UG
@@ -8454,13 +8565,13 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: (\d{3})(\d{6})
+  - :pattern: (\d{3})(\d{6})
     :leadingDigits: ! '[7-9]|20(?:[013-8]|2[5-9])|4(?:6[45]|[7-9])'
     :format: $1$2
-  - :regex: (\d{2})(\d{7})
+  - :pattern: (\d{2})(\d{7})
     :leadingDigits: 3|4(?:[1-5]|6[0-36-9])
     :format: $1$2
-  - :regex: (2024)(\d{5})
+  - :pattern: (2024)(\d{5})
     :leadingDigits: '2024'
     :format: $1$2
 - :id: US
@@ -8496,10 +8607,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :format: $1-$2
     :intlFormat: NA
-  - :regex: (\d{3})(\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{3})(\d{4})
     :format: ($1)$2-$3
     :comment: ''
     :intlFormat: $1-$2-$3
@@ -8537,13 +8648,15 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '911'
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :leadingDigits: ! '[24]'
     :format: $1$2
-  - :regex: (\d{2})(\d{3})(\d{3})
+  - :pattern: (\d{2})(\d{3})(\d{3})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: 9[1-9]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
+    :nationalPrefixFormattingRule: $NP$FG
     :leadingDigits: ! '[89]0'
     :format: $1$2
 - :id: UZ
@@ -8567,7 +8680,7 @@
       :possibleNumberPattern: \d{2,3}
       :exampleNumber: '01'
   :formats:
-  - :regex: ([679]\d)(\d{3})(\d{2})(\d{2})
+  - :pattern: ([679]\d)(\d{3})(\d{2})(\d{2})
     :format: $1$2$3$4
 - :id: VA
   :countryCode: '379'
@@ -8588,7 +8701,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '113'
   :formats:
-  - :regex: (06)(\d{4})(\d{4})
+  - :pattern: (06)(\d{4})(\d{4})
     :format: $1$2$3
 - :id: VC
   :countryCode: '1'
@@ -8653,7 +8766,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '171'
   :formats:
-  - :regex: (\d{3})(\d{7})
+  - :pattern: (\d{3})(\d{7})
     :format: $1-$2
 - :id: VG
   :countryCode: '1'
@@ -8757,31 +8870,32 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '113'
   :formats:
-  - :regex: ([17]99)(\d{4})
+  - :pattern: ([17]99)(\d{4})
     :leadingDigits: ! '[17]99'
     :format: $1$2
-  - :regex: ([48])(\d{4})(\d{4})
+  - :pattern: ([48])(\d{4})(\d{4})
     :leadingDigits: ! '[48]'
     :format: $1$2$3
-  - :regex: ([235-7]\d)(\d{4})(\d{3})
+  - :pattern: ([235-7]\d)(\d{4})(\d{3})
     :leadingDigits: 2[025-79]|3[0136-9]|5[2-9]|6[0-46-8]|7[02-79]
     :format: $1$2$3
-  - :regex: (80)(\d{5})
+  - :pattern: (80)(\d{5})
     :leadingDigits: '80'
     :format: $1$2
-  - :regex: (69\d)(\d{4,5})
+  - :pattern: (69\d)(\d{4,5})
     :leadingDigits: '69'
     :format: $1$2
-  - :regex: ([235-7]\d{2})(\d{4})(\d{3})
+  - :pattern: ([235-7]\d{2})(\d{4})(\d{3})
     :leadingDigits: 2[1348]|3[25]|5[01]|65|7[18]
     :format: $1$2$3
-  - :regex: (9\d)(\d{3})(\d{2})(\d{2})
+  - :pattern: (9\d)(\d{3})(\d{2})(\d{2})
     :leadingDigits: '9'
     :format: $1$2$3$4
-  - :regex: (1[2689]\d)(\d{3})(\d{4})
+  - :pattern: (1[2689]\d)(\d{3})(\d{4})
     :leadingDigits: 1(?:[26]|8[68]|99)
     :format: $1$2$3
-  - :regex: $FG
+  - :nationalPrefixFormattingRule: $FG
+    :pattern: (1[89]00)(\d{4,6})
     :leadingDigits: 1[89]0
     :format: $1$2
 - :id: VU
@@ -8808,7 +8922,7 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '112'
   :formats:
-  - :regex: (\d{3})(\d{4})
+  - :pattern: (\d{3})(\d{4})
     :leadingDigits: ! '[579]'
     :format: $1$2
 - :id: WF
@@ -8829,7 +8943,7 @@
       :possibleNumberPattern: \d{2}
       :exampleNumber: '15'
   :formats:
-  - :regex: (\d{2})(\d{2})(\d{2})
+  - :pattern: (\d{2})(\d{2})(\d{2})
     :format: $1$2$3
 - :id: WS
   :countryCode: '685'
@@ -8855,10 +8969,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '994'
   :formats:
-  - :regex: (8\d{2})(\d{3,4})
+  - :pattern: (8\d{2})(\d{3,4})
     :leadingDigits: '8'
     :format: $1$2
-  - :regex: (7\d)(\d{5})
+  - :pattern: (7\d)(\d{5})
     :leadingDigits: '7'
     :format: $1$2
 - :id: YE
@@ -8883,10 +8997,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '191'
   :formats:
-  - :regex: ([1-7])(\d{3})(\d{3,4})
+  - :pattern: ([1-7])(\d{3})(\d{3,4})
     :leadingDigits: ! '[1-6]|7[24-68]'
     :format: $1$2$3
-  - :regex: (7\d{2})(\d{3})(\d{3})
+  - :pattern: (7\d{2})(\d{3})(\d{3})
     :leadingDigits: 7[0137]
     :format: $1$2$3
 - :id: YT
@@ -8953,16 +9067,16 @@
       :possibleNumberPattern: \d{3,5}
       :exampleNumber: '10111'
   :formats:
-  - :regex: (860)(\d{3})(\d{3})
+  - :pattern: (860)(\d{3})(\d{3})
     :leadingDigits: '860'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3})(\d{4})
+  - :pattern: (\d{2})(\d{3})(\d{4})
     :leadingDigits: ! '[1-79]|8(?:[0-47]|6[1-9])'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3,4})
+  - :pattern: (\d{2})(\d{3,4})
     :leadingDigits: 8[1-4]
     :format: $1$2
-  - :regex: (\d{2})(\d{3})(\d{2,3})
+  - :pattern: (\d{2})(\d{3})(\d{2,3})
     :leadingDigits: 8[1-4]
     :format: $1$2$3
 - :id: ZM
@@ -8988,10 +9102,10 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: ([29]\d)(\d{7})
+  - :pattern: ([29]\d)(\d{7})
     :leadingDigits: ! '[29]'
     :format: $1$2
-  - :regex: (800)(\d{3})(\d{3})
+  - :pattern: (800)(\d{3})(\d{3})
     :leadingDigits: '8'
     :format: $1$2$3
 - :id: ZW
@@ -9023,34 +9137,34 @@
       :possibleNumberPattern: \d{3}
       :exampleNumber: '999'
   :formats:
-  - :regex: ([49])(\d{3})(\d{2,5})
+  - :pattern: ([49])(\d{3})(\d{2,5})
     :leadingDigits: 4|9[2-9]
     :format: $1$2$3
-  - :regex: ([179]\d)(\d{3})(\d{3,4})
+  - :pattern: ([179]\d)(\d{3})(\d{3,4})
     :leadingDigits: ! '[19]1|7'
     :format: $1$2$3
-  - :regex: (86\d{2})(\d{3})(\d{3})
+  - :pattern: (86\d{2})(\d{3})(\d{3})
     :leadingDigits: 86[24]
     :format: $1$2$3
-  - :regex: ([2356]\d{2})(\d{3,5})
+  - :pattern: ([2356]\d{2})(\d{3,5})
     :leadingDigits: 2(?:[278]|0[45]|[49]8)|3(?:08|17|3[78]|[78])|5[15][78]|6(?:[29]8|37|[68][78])
     :format: $1$2
-  - :regex: (\d{3})(\d{3})(\d{3,4})
+  - :pattern: (\d{3})(\d{3})(\d{3,4})
     :leadingDigits: 2(?:[278]|0[45]|48)|3(?:08|17|3[78]|[78])|5[15][78]|6(?:[29]8|37|[68][78])|80
     :format: $1$2$3
-  - :regex: ([1-356]\d)(\d{3,5})
+  - :pattern: ([1-356]\d)(\d{3,5})
     :leadingDigits: 1[3-9]|2(?:[1-469]|0[0-35-9]|[45][0-79])|3(?:0[0-79]|1[0-689]|[24-69]|3[0-69])|5(?:[02-46-9]|[15][0-69])|6(?:[0145]|[29][0-79]|3[0-689]|[68][0-69])
     :format: $1$2
-  - :regex: ([1-356]\d)(\d{3})(\d{3})
+  - :pattern: ([1-356]\d)(\d{3})(\d{3})
     :leadingDigits: 1[3-9]|2(?:[1-469]|0[0-35-9]|[45][0-79])|3(?:0[0-79]|1[0-689]|[24-69]|3[0-69])|5(?:[02-46-9]|[15][0-69])|6(?:[0145]|[29][0-79]|3[0-689]|[68][0-69])
     :format: $1$2$3
-  - :regex: ([25]\d{3})(\d{3,5})
+  - :pattern: ([25]\d{3})(\d{3,5})
     :leadingDigits: 258[23]|5483
     :format: $1$2
-  - :regex: ([25]\d{3})(\d{3})(\d{3})
+  - :pattern: ([25]\d{3})(\d{3})(\d{3})
     :leadingDigits: 258[23]|5483
     :format: $1$2$3
-  - :regex: (8\d{3})(\d{6})
+  - :pattern: (8\d{3})(\d{6})
     :leadingDigits: '86'
     :format: $1$2
 - :id: '001'
@@ -9070,7 +9184,7 @@
     :tollFree:
       :nationalNumberPattern: \d{8}
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :format: $1$2
 - :id: '001'
   :countryCode: '808'
@@ -9089,7 +9203,7 @@
     :sharedCost:
       :nationalNumberPattern: \d{8}
   :formats:
-  - :regex: (\d{4})(\d{4})
+  - :pattern: (\d{4})(\d{4})
     :format: $1$2
 - :id: '001'
   :countryCode: '870'
@@ -9104,7 +9218,7 @@
     :mobile:
       :nationalNumberPattern: (?:[356]\d|7[6-8])\d{7}
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :format: $1$2$3
 - :id: '001'
   :countryCode: '878'
@@ -9122,7 +9236,7 @@
     :voip:
       :nationalNumberPattern: 10\d{10}
   :formats:
-  - :regex: (\d{2})(\d{5})(\d{5})
+  - :pattern: (\d{2})(\d{5})(\d{5})
     :format: $1$2$3
 - :id: '001'
   :countryCode: '881'
@@ -9137,7 +9251,7 @@
     :mobile:
       :nationalNumberPattern: ! '[67]\d{8}'
   :formats:
-  - :regex: (\d)(\d{3})(\d{5})
+  - :pattern: (\d)(\d{3})(\d{5})
     :leadingDigits: ! '[67]'
     :format: $1$2$3
 - :id: '001'
@@ -9160,25 +9274,25 @@
       :nationalNumberPattern: 348[57]\d{7}
       :possibleNumberPattern: \d{11}
   :formats:
-  - :regex: (\d{2})(\d{4})(\d{3})
+  - :pattern: (\d{2})(\d{4})(\d{3})
     :leadingDigits: 3[23]
     :format: $1$2$3
-  - :regex: (\d{2})(\d{5})
+  - :pattern: (\d{2})(\d{5})
     :leadingDigits: 16|342
     :format: $1$2
-  - :regex: (\d{2})(\d{4})(\d{4})
+  - :pattern: (\d{2})(\d{4})(\d{4})
     :leadingDigits: 34[57]
     :format: $1$2$3
-  - :regex: (\d{3})(\d{4})(\d{4})
+  - :pattern: (\d{3})(\d{4})(\d{4})
     :leadingDigits: '348'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{2})(\d{4})
+  - :pattern: (\d{2})(\d{2})(\d{4})
     :leadingDigits: '1'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{3,4})(\d{4})
+  - :pattern: (\d{2})(\d{3,4})(\d{4})
     :leadingDigits: '16'
     :format: $1$2$3
-  - :regex: (\d{2})(\d{4,5})(\d{5})
+  - :pattern: (\d{2})(\d{4,5})(\d{5})
     :leadingDigits: '16'
     :format: $1$2$3
 - :id: '001'
@@ -9197,9 +9311,9 @@
     :voip:
       :nationalNumberPattern: 51(?:00\d{5}(?:\d{3})?|10\d{8})
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})
     :format: $1$2$3
-  - :regex: (\d{3})(\d{3})(\d{3})(\d{3})
+  - :pattern: (\d{3})(\d{3})(\d{3})(\d{3})
     :format: $1$2$3$4
 - :id: '001'
   :countryCode: '888'
@@ -9218,7 +9332,7 @@
     :uan:
       :nationalNumberPattern: \d{11}
   :formats:
-  - :regex: (\d{3})(\d{3})(\d{5})
+  - :pattern: (\d{3})(\d{3})(\d{5})
     :format: $1$2$3
 - :id: '001'
   :countryCode: '979'
@@ -9237,5 +9351,5 @@
     :premiumRate:
       :nationalNumberPattern: \d{9}
   :formats:
-  - :regex: (\d)(\d{4})(\d{4})
+  - :pattern: (\d)(\d{4})(\d{4})
     :format: $1$2$3

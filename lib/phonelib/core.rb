@@ -8,20 +8,21 @@ module Phonelib
     # constants for phone types
 
     # Validation patterns keys constants
-    # General pattern for country
+    # General pattern for country key
     GENERAL = :generalDesc
-    # Freephone line pattern
+    # Freephone line pattern key
     PREMIUM_RATE = :premiumRate
-    # Freephone line pattern
+    # Freephone line pattern key
     TOLL_FREE = :tollFree
-    # Shared cost pattern. The cost of this call is shared between the caller
-    # and the recipient, and is hence typically less than PREMIUM_RATE calls
+    # Shared cost pattern key. The cost of this call is shared between caller
+    # and recipient, and is hence typically less than PREMIUM_RATE calls
     SHARED_COST = :sharedCost
-    # Voice over IP pattern. This includes TSoIP (Telephony Service over IP).
+    # Voice over IP pattern key. This includes TSoIP (Telephony Service over IP)
     VOIP = :voip
     # A personal number is associated with a particular person, and may be
     # routed to either a MOBILE or FIXED_LINE number.
     PERSONAL_NUMBER = :personalNumber
+    # Pager phone number pattern key
     PAGER = :pager
     # Used for 'Universal Access Numbers' or 'Company Numbers'. They may be
     # further routed to specific offices, but allow one number to be used for a
@@ -29,17 +30,24 @@ module Phonelib
     UAN = :uan
     # Used for 'Voice Mail Access Numbers'.
     VOICEMAIL = :voicemail
-    # Fixed line pattern
+    # Fixed line pattern key
     FIXED_LINE = :fixedLine
-    # Mobile phone number pattern
+    # Mobile phone number pattern key
     MOBILE = :mobile
+    # Emergency phone number pattern key
     EMERGENCY = :emergency
+    # Short code phone number pattern key
     SHORT_CODE = :shortCode
-    # In case MOBILE and FIXED pattern are the same, this type is returned
+    # In case MOBILE and FIXED patterns are the same, this type is returned
     FIXED_OR_MOBILE = :fixedOrMobile
 
-    # :stopdoc:
-    # hash of all possible types with description
+    # Default number formatting data hash
+    DEFAULT_NUMBER_FORMAT = {
+      pattern: "(\\d+)(\\d{3})(\\d{4})",
+      format: "$1 $2 $3"
+    }
+
+    # hash of all phone types with human representation
     TYPES = {
       generalDesc: 'General Pattern',
       premiumRate: 'Premium Rate',
@@ -61,10 +69,9 @@ module Phonelib
     NOT_FOR_CHECK = [
       :generalDesc, :emergency, :shortCode, :fixedLine, :mobile, :fixedOrMobile
     ]
-    # :startdoc:
 
-    # method for parsing phone number
-    # on first run fills @@phone_data with data present in yaml file
+    # method for parsing phone number.
+    # On first run fills @@phone_data with data present in yaml file
     def parse(phone, country = nil)
       require 'yaml'
       data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'

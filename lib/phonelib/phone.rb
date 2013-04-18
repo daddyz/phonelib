@@ -1,8 +1,9 @@
 module Phonelib
-  # class for parsed phone number, includes basic validation methods
+  # class for parsed phone number, includes validation and formatting methods
   class Phone
     # defining reader methods for class variables
-    attr_reader :original, :sanitized, :national_number
+    attr_reader :original, # original phone number passed for parsing
+                :sanitized # sanitized phone number representation
 
     # class initialization method
     #
@@ -60,16 +61,36 @@ module Phonelib
       !possible?
     end
 
-    def international
+    # Returns formatted national number
+    def national
+      return @national_number unless valid?
       format = @analyzed_data[country][:format]
-      country_code = @analyzed_data[country][:countryCode]
-      regexp = Regexp.new(format[:regex])
+      national_prefix = @analyzed_data[country][:national_prefix]
+      national_prefix_rule = @analyzed_data[country][:national_prefix_rule]
+
       format_string = format[:format].gsub(/(\d)\$/, "\\1 $")
 
-      md = regexp.match(@national_number)
+      rule = format[:nationalPrefixFormattingRule] || national_prefix_rule
+      if !!rule
+        format_string.gsub!('$1',
+                            rule.gsub('$NP', national_prefix).gsub('$FG', '$1'))
+      end
 
-      "+" + country_code + " " +
-        format_string.gsub(/\$(\d)/){||md[$~[1].to_i]}
+      md = @national_number.match(/#{format[:pattern]}/)
+      format_string.gsub(/\$(\d)/) {|el| md[el[1].to_i] }
+    end
+
+    # Returns e164 formatted phone number
+    def international
+      return "+#{@sanitized}" unless valid?
+      national_number = national
+      if national_prefix = @analyzed_data[country][:national_prefix]
+        national_number.gsub!(/^#{national_prefix}/, '')
+        national_number.strip!
+      end
+      country_code = @analyzed_data[country][:country_code]
+
+      "+#{country_code} #{national_number}"
     end
 
     # Returns whether a current parsed phone number is valid for specified
@@ -100,23 +121,15 @@ module Phonelib
     # Analyze current phone with provided data hash
     def analyze_phone(country_data)
       possible_countries = country_data.select do |data|
-        country_code = data[:countryCode]
-        leading_digits = data[:leadingDigits] || ""
-
-        @sanitized.start_with?(country_code + leading_digits)
+        @sanitized.start_with?("#{data[:countryCode]}#{data[:leadingDigits]}")
       end
 
       if possible_countries.size > 1
-        possible_countries = possible_countries.select do |data|
-          country_code = data[:countryCode]
-
-          general_description = data[:types][Core::GENERAL]
-
-          if general_description
+        possible_countries.select! do |data|
+          if data[:types] && general_description = data[:types][Core::GENERAL]
+            country_code = data[:countryCode]
             pattern = general_description[:nationalNumberPattern]
-            re = Regexp.new(country_code + pattern)
-
-            re === @sanitized
+            /#{country_code}#{pattern}/ =~ @sanitized
           else
             false
           end
@@ -124,17 +137,17 @@ module Phonelib
       end
 
       possible_countries.each do |country_data|
-        next if country_data[:types].empty?
-
         prefix_length = country_data[:countryCode].length
         @national_number = @sanitized[prefix_length..@sanitized.length]
-        @analyzed_data[country_data[:id]] =
-            get_all_number_types(@national_number, country_data[:types])
+        data = {
+            national_prefix: country_data[:nationalPrefix],
+            national_prefix_rule: country_data[:nationalPrefixFormattingRule],
+            country_code: country_data[:countryCode],
+            format: get_number_format(country_data[:formats])
+        }
+        data.merge! get_all_number_types(@national_number, country_data[:types])
 
-        @analyzed_data[country_data[:id]][:countryCode] = country_data[:countryCode]
-
-        @analyzed_data[country_data[:id]][:format] =
-          get_number_format(@national_number, country_data[:formats])
+        @analyzed_data[country_data[:id]] = data
       end
     end
 
@@ -160,7 +173,6 @@ module Phonelib
         end
 
         possible, national = get_patterns(patterns)
-
         if number_possible?(number, possible)
           response[:possible] << type
           response[:valid] << type if number_valid_and_possible?(number,
@@ -172,18 +184,12 @@ module Phonelib
       response
     end
 
-    DEFAULT_NUMBER_FORMAT = {
-      :regex => "(\\d+)(\\d{3})(\\d{4})",
-      :format => "$1 $2 $3"
-    }
-
-    def get_number_format(number, format_data)
+    # Gets matched number formating rule or default one
+    def get_number_format(format_data)
       if format_data
-        format_data.find { |f|
-          Regexp.new("^" + f[:regex] + "$") === @national_number
-        }
+        format_data.find { |f| /^#{f[:pattern]}$/ =~ @national_number }
       else
-        DEFAULT_NUMBER_FORMAT
+        Core::DEFAULT_NUMBER_FORMAT
       end
     end
 
@@ -196,11 +202,12 @@ module Phonelib
       end
     end
 
+    # Returns array of two elements. Valid phone pattern and possible pattern
     def get_patterns(patterns)
       national_pattern = patterns[:nationalNumberPattern]
       possible_pattern = patterns[:possibleNumberPattern] || national_pattern
 
-      [national_pattern, possible_pattern]
+      [possible_pattern, national_pattern]
     end
 
     # Checks if passed number matches both valid and possible patterns

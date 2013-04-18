@@ -49,6 +49,12 @@ class PhonelibTest < ActiveSupport::TestCase
     assert Phonelib.impossible?('97254123')
   end
 
+  test "possible but not valid phone number" do
+    phone = Phonelib.parse('9721234567')
+    assert !phone.valid?
+    assert phone.possible?
+  end
+
   test "valid_for_country? with correct data" do
     assert Phonelib.valid_for_country?('972541234567', 'IL')
   end
@@ -75,5 +81,25 @@ class PhonelibTest < ActiveSupport::TestCase
 
   test "valid_for_country? with incorrect data" do
     assert !Phonelib.valid_for_country?('972541234567', 'US')
+  end
+
+  test "international method returns with right formatting" do
+    phone = Phonelib.parse('972541234567')
+    assert phone.international == '+972 54-123-4567'
+  end
+
+  test "national method returns right formatting" do
+    phone = Phonelib.parse('972541234567')
+    assert phone.national == '054-123-4567'
+  end
+
+  test "international method returns sanitized when number invalid but possible" do
+    phone = Phonelib.parse('9721234567')
+    assert phone.international == '+9721234567'
+  end
+
+  test "national method returns sanitized national when number invalid but possible" do
+    phone = Phonelib.parse('9721234567')
+    assert phone.national == '1234567'
   end
 end
