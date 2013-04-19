@@ -41,6 +41,18 @@ module Phonelib
     # In case MOBILE and FIXED patterns are the same, this type is returned
     FIXED_OR_MOBILE = :fixedOrMobile
 
+    # Internal use keys for validations
+    # Valid regex pattern key
+    VALID_PATTERN = :nationalNumberPattern
+    # Possible regex pattern key
+    POSSIBLE_PATTERN = :possibleNumberPattern
+    # National prefix key
+    NATIONAL_PREFIX = :nationalPrefix
+    # National prefix rule key
+    NATIONAL_PREFIX_RULE = :nationalPrefixFormattingRule
+    # Country code key
+    COUNTRY_CODE = :countryCode
+
     # Default number formatting data hash
     DEFAULT_NUMBER_FORMAT = {
       pattern: "(\\d+)(\\d{3})(\\d{4})",

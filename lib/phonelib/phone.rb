@@ -65,30 +65,28 @@ module Phonelib
     def national
       return @national_number unless valid?
       format = @analyzed_data[country][:format]
-      national_prefix = @analyzed_data[country][:national_prefix]
-      national_prefix_rule = @analyzed_data[country][:national_prefix_rule]
+      prefix = @analyzed_data[country][Core::NATIONAL_PREFIX]
+      rule = (format[Core::NATIONAL_PREFIX_RULE] ||
+          @analyzed_data[country][Core::NATIONAL_PREFIX_RULE])
 
-      format_string = format[:format].gsub(/(\d)\$/, "\\1 $")
-
-      rule = format[:nationalPrefixFormattingRule] || national_prefix_rule
       if !!rule
-        format_string.gsub!('$1',
-                            rule.gsub('$NP', national_prefix).gsub('$FG', '$1'))
+        rule.gsub!(/(\$NP|\$FG)/, { '$NP' => prefix, '$FG' => '$1' })
+        format_string = format[:format].gsub(/(\d)\$/, "\\1 $").gsub('$1', rule)
       end
 
-      md = @national_number.match(/#{format[:pattern]}/)
-      format_string.gsub(/\$(\d)/) {|el| md[el[1].to_i] }
+      matches = @national_number.match(/#{format[:pattern]}/)
+      format_string.gsub(/\$\d/) {|el| matches[el[1].to_i] }
     end
 
     # Returns e164 formatted phone number
     def international
       return "+#{@sanitized}" unless valid?
       national_number = national
-      if national_prefix = @analyzed_data[country][:national_prefix]
+      if national_prefix = @analyzed_data[country][Core::NATIONAL_PREFIX]
         national_number.gsub!(/^#{national_prefix}/, '')
         national_number.strip!
       end
-      country_code = @analyzed_data[country][:country_code]
+      country_code = @analyzed_data[country][Core::COUNTRY_CODE]
 
       "+#{country_code} #{national_number}"
     end
@@ -121,63 +119,43 @@ module Phonelib
     # Analyze current phone with provided data hash
     def analyze_phone(country_data)
       possible_countries = country_data.select do |data|
-        @sanitized.start_with?("#{data[:countryCode]}#{data[:leadingDigits]}")
-      end
-
-      if possible_countries.size > 1
-        possible_countries.select! do |data|
-          if data[:types] && general_description = data[:types][Core::GENERAL]
-            country_code = data[:countryCode]
-            pattern = general_description[:nationalNumberPattern]
-            /#{country_code}#{pattern}/ =~ @sanitized
-          else
-            false
-          end
+        if data[:types]
+          possible, valid = get_patterns(data[:types][Core::GENERAL])
         end
+        @sanitized.start_with?("#{data[:countryCode]}#{data[:leadingDigits]}") \
+            && /^#{data[:countryCode]}#{valid}$/ =~ @sanitized
       end
 
-      possible_countries.each do |country_data|
-        prefix_length = country_data[:countryCode].length
-        @national_number = @sanitized[prefix_length..@sanitized.length]
-        data = {
-            national_prefix: country_data[:nationalPrefix],
-            national_prefix_rule: country_data[:nationalPrefixFormattingRule],
-            country_code: country_data[:countryCode],
-            format: get_number_format(country_data[:formats])
-        }
-        data.merge! get_all_number_types(@national_number, country_data[:types])
+      possible_countries.each do |data|
+        @national_number = @sanitized[data[:countryCode].length..-1]
+        data[:format] = get_number_format(data[:formats])
+        data.merge! all_number_types(data[:types])
 
-        @analyzed_data[country_data[:id]] = data
+        @analyzed_data[data[:id]] = data
       end
     end
 
     # Returns all valid and possible phone number types for currently parsed
     # phone for provided data hash.
-    def get_all_number_types(number, data)
+    def all_number_types(data)
       response = {valid: [], possible: []}
-
-      return response if data[Core::GENERAL].empty?
-      possible, national = get_patterns(data[Core::GENERAL])
-      return response unless number_valid_and_possible?(number,
-                                                        possible, national)
 
       same_fixed_and_mobile, additional_check =
           check_same_types(data[Core::FIXED_LINE], data[Core::MOBILE])
 
       (Core::TYPES.keys - Core::NOT_FOR_CHECK + additional_check).each do |type|
         next if data[type].nil? || data[type].empty?
-        patterns = data[type]
+        possible, national = get_patterns(data[type])
 
         if same_fixed_and_mobile && additional_check.include?(type)
           type = Core::FIXED_OR_MOBILE
         end
 
-        possible, national = get_patterns(patterns)
-        if number_possible?(number, possible)
+        if number_possible?(possible)
           response[:possible] << type
-          response[:valid] << type if number_valid_and_possible?(number,
-                                                                 possible,
-                                                                 national)
+          if number_valid_and_possible?(possible, national)
+            response[:valid] << type
+          end
         end
       end
 
@@ -204,26 +182,26 @@ module Phonelib
 
     # Returns array of two elements. Valid phone pattern and possible pattern
     def get_patterns(patterns)
-      national_pattern = patterns[:nationalNumberPattern]
-      possible_pattern = patterns[:possibleNumberPattern] || national_pattern
+      national_pattern = patterns[Core::VALID_PATTERN]
+      possible_pattern = patterns[Core::POSSIBLE_PATTERN] || national_pattern
 
       [possible_pattern, national_pattern]
     end
 
     # Checks if passed number matches both valid and possible patterns
-    def number_valid_and_possible?(number, possible_pattern, national_pattern)
-      national_match = number.match(/^(?:#{national_pattern})$/)
-      possible_match = number.match(/^(?:#{possible_pattern})$/)
+    def number_valid_and_possible?(possible_pattern, national_pattern)
+      national_match = @national_number.match(/^(?:#{national_pattern})$/)
+      possible_match = @national_number.match(/^(?:#{possible_pattern})$/)
 
       national_match && possible_match &&
-          national_match.to_s.length == number.length &&
-          possible_match.to_s.length == number.length
+          national_match.to_s.length == @national_number.length &&
+          possible_match.to_s.length == @national_number.length
     end
 
     # Checks if passed number matches possible pattern
-    def number_possible?(number, possible_pattern)
-      possible_match = number.match(/^(?:#{possible_pattern})$/)
-      possible_match && possible_match.to_s.length == number.length
+    def number_possible?(possible_pattern)
+      possible_match = @national_number.match(/^(?:#{possible_pattern})$/)
+      possible_match && possible_match.to_s.length == @national_number.length
     end
 
     # Sanitizes passed phone number. Returns only digits from passed string.
