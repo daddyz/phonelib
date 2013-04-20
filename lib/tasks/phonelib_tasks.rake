@@ -15,7 +15,7 @@ namespace :phonelib do
       f.write(xml_data)
     end
 
-    # start parsing 
+    # start parsing
     doc = Nokogiri::XML(xml_data)
 
     main = doc.elements.first.elements.first
@@ -23,16 +23,16 @@ namespace :phonelib do
     main.elements.each do |el|
       # each country
       country = {}
-      el.attributes.each do |k, v| 
-        country[k.to_sym] = v.to_s
+      el.attributes.each do |k, v|
+        country[k.to_sym] = v.to_s.tr(" \n", "")
       end
 
       country[:types] = {}
 
-      el.children.each do | phone_type | 
+      el.children.each do | phone_type |
         if !%w(comment text).include?(phone_type.name)
-          phone_type_sym = phone_type.name.to_sym  
-           
+          phone_type_sym = phone_type.name.to_sym
+
           if phone_type.name != 'availableFormats'
             country[:types][phone_type_sym] = {}
             phone_type.elements.each do |pattern|
@@ -42,7 +42,7 @@ namespace :phonelib do
           else
             country[:formats] = []
             phone_type.children.each do |format|
-              
+
               if !%w(comment text).include?(format.name)
                 current_format = {}
                 format.each do |f|
@@ -55,19 +55,19 @@ namespace :phonelib do
                   end
                 end
 
-                country[:formats].push(current_format) 
+                country[:formats].push(current_format)
               end
-            end    
-          end  
-          
-        end 
+            end
+          end
+
+        end
       end
-      
-      countries.push(country)   
+
+      countries.push(country)
     end
     target = 'data/phone_data.yml'
     File.open(target, "w+") do |f|
       f.write(countries.to_yaml)
     end
   end
-end  
+end

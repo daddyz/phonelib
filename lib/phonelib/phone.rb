@@ -67,12 +67,12 @@ module Phonelib
       format = @analyzed_data[country][:format]
       prefix = @analyzed_data[country][Core::NATIONAL_PREFIX]
       rule = (format[Core::NATIONAL_PREFIX_RULE] ||
-          @analyzed_data[country][Core::NATIONAL_PREFIX_RULE])
+          @analyzed_data[country][Core::NATIONAL_PREFIX_RULE] || '$1')
 
-      if !!rule
-        rule.gsub!(/(\$NP|\$FG)/, { '$NP' => prefix, '$FG' => '$1' })
-        format_string = format[:format].gsub(/(\d)\$/, "\\1 $").gsub('$1', rule)
-      end
+      # add space to format groups, change first group to rule,
+      # change rule's constants to values
+      format_string = format[:format].gsub(/(\d)\$/, "\\1 $").gsub('$1', rule).
+          gsub(/(\$NP|\$FG)/, { '$NP' => prefix, '$FG' => '$1' })
 
       matches = @national_number.match(/#{format[:pattern]}/)
       format_string.gsub(/\$\d/) {|el| matches[el[1].to_i] }
@@ -118,20 +118,16 @@ module Phonelib
     private
     # Analyze current phone with provided data hash
     def analyze_phone(country_data)
-      possible_countries = country_data.select do |data|
-        if data[:types]
+      country_data.each do |data|
+        if @sanitized.start_with? "#{data[:countryCode]}#{data[:leadingDigits]}"
           possible, valid = get_patterns(data[:types][Core::GENERAL])
+          next unless /^#{data[:countryCode]}#{valid}$/ =~ @sanitized
+
+          @national_number = @sanitized[data[:countryCode].length..-1]
+          @analyzed_data[data[:id]] = data
+          @analyzed_data[data[:id]][:format] = get_number_format(data[:formats])
+          @analyzed_data[data[:id]].merge! all_number_types(data[:types])
         end
-        @sanitized.start_with?("#{data[:countryCode]}#{data[:leadingDigits]}") \
-            && /^#{data[:countryCode]}#{valid}$/ =~ @sanitized
-      end
-
-      possible_countries.each do |data|
-        @national_number = @sanitized[data[:countryCode].length..-1]
-        data[:format] = get_number_format(data[:formats])
-        data.merge! all_number_types(data[:types])
-
-        @analyzed_data[data[:id]] = data
       end
     end
 
@@ -140,23 +136,18 @@ module Phonelib
     def all_number_types(data)
       response = {valid: [], possible: []}
 
-      same_fixed_and_mobile, additional_check =
-          check_same_types(data[Core::FIXED_LINE], data[Core::MOBILE])
+      additional_types = check_same_types(data)
+      (Core::TYPES.keys - Core::NOT_FOR_CHECK + additional_types).each do |type|
+        check_type = case type
+                     when Core::FIXED_OR_MOBILE
+                       Core::FIXED_LINE
+                     else
+                       type
+                     end
+        possible, valid = get_patterns(data[check_type])
 
-      (Core::TYPES.keys - Core::NOT_FOR_CHECK + additional_check).each do |type|
-        next if data[type].nil? || data[type].empty?
-        possible, national = get_patterns(data[type])
-
-        if same_fixed_and_mobile && additional_check.include?(type)
-          type = Core::FIXED_OR_MOBILE
-        end
-
-        if number_possible?(possible)
-          response[:possible] << type
-          if number_valid_and_possible?(possible, national)
-            response[:valid] << type
-          end
-        end
+        response[:possible] << type if number_possible?(possible)
+        response[:valid] << type if number_valid_and_possible?(possible, valid)
       end
 
       response
@@ -172,16 +163,17 @@ module Phonelib
     end
 
     # Checks if fixed line pattern and mobile pattern are the same
-    def check_same_types(fixed, mobile)
-      if fixed == mobile
-        [ true, [ Core::FIXED_LINE ] ]
+    def check_same_types(data)
+      if data[Core::FIXED_LINE] == data[Core::MOBILE]
+        [ Core::FIXED_OR_MOBILE ]
       else
-        [ false, [ Core::FIXED_LINE, Core::MOBILE ] ]
+        [ Core::FIXED_LINE, Core::MOBILE ]
       end
     end
 
     # Returns array of two elements. Valid phone pattern and possible pattern
     def get_patterns(patterns)
+      return [nil, nil] if patterns.nil?
       national_pattern = patterns[Core::VALID_PATTERN]
       possible_pattern = patterns[Core::POSSIBLE_PATTERN] || national_pattern
 
