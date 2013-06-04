@@ -123,11 +123,13 @@ module Phonelib
 
     # method checks if passed phone number is valid for provided country
     def valid_for_country?(phone_number, country)
+      country = country.to_s.upcase
       parse(phone_number, country).valid_for_country?(country)
     end
 
     # method checks if passed phone number is invalid for provided country
     def invalid_for_country?(phone_number, country)
+      country = country.to_s.upcase
       parse(phone_number, country).invalid_for_country?(country)
     end
 
