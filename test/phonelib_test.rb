@@ -89,31 +89,39 @@ class PhonelibTest < Test::Unit::TestCase
 
   context 'valid_for_country?' do
     context 'with correct data' do
-      should 'be valid' do
-        assert Phonelib.valid_for_country?('972541234567', 'IL')
-      end
+      ['IL', :il].each do |country|
+        context "with #{country} as country" do
+          should 'be valid' do
+            assert Phonelib.valid_for_country?('972541234567', country)
+          end
 
-      context 'and national number' do
-        should 'be valid' do
-          assert Phonelib.valid_for_country?('0541234567', 'IL')
-        end
-      end
+          context 'and national number' do
+            should 'be valid' do
+              assert Phonelib.valid_for_country?('0541234567', country)
+            end
+          end
 
-      context 'and without prefix' do
-        should 'be valid' do
-          assert Phonelib.valid_for_country?('541234567', 'IL')
+          context 'and without prefix' do
+            should 'be valid' do
+              assert Phonelib.valid_for_country?('541234567', country)
+            end
+          end
         end
       end
     end
 
-    context 'with incorrect data' do
-      should 'not be valid' do
-        assert !Phonelib.valid_for_country?('972541234567', 'US')
-      end
+    ['US', :us].each do |country|
+      context "with #{country} as country" do
+        context 'with incorrect data' do
+          should 'not be valid' do
+            assert !Phonelib.valid_for_country?('972541234567', country)
+          end
 
-      context 'and without prefix' do
-        should 'not be valid' do
-          assert !Phonelib.valid_for_country?('541234567', 'US')
+          context 'and without prefix' do
+            should 'not be valid' do
+              assert !Phonelib.valid_for_country?('541234567', country)
+            end
+          end
         end
       end
     end
@@ -121,14 +129,22 @@ class PhonelibTest < Test::Unit::TestCase
 
   context '.invalid_for_country?' do
     context 'with correct data' do
-      should 'not be invalid' do
-        assert !Phonelib.invalid_for_country?('972541234567', 'IL')
+      ['IL', :il].each do |country|
+        context "with #{country} as country" do
+          should 'not be invalid' do
+            assert !Phonelib.invalid_for_country?('972541234567', country)
+          end
+        end
       end
     end
 
     context 'with incorrect data' do
-      should 'be invalid' do
-        assert Phonelib.invalid_for_country?('972541234567', 'US')
+      ['US', :us].each do |country|
+        context "with #{country} as country" do
+          should 'be invalid' do
+            assert Phonelib.invalid_for_country?('972541234567', country)
+          end
+        end
       end
     end
   end
