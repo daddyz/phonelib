@@ -79,6 +79,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
+    shoulda-context (1.1.2)
     slop (3.4.4)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -101,4 +102,5 @@ DEPENDENCIES
   phonelib!
   pry
   rails (>= 3.1.0)
+  shoulda-context
   sqlite3
