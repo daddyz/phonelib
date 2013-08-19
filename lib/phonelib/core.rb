@@ -135,7 +135,7 @@ module Phonelib
 
     private
     def convert_phone_to_e164(phone, prefix, national_prefix)
-      return phone if phone.start_with?(prefix)
+      return phone if phone.gsub('+','').start_with?(prefix)
       if !!national_prefix && phone.start_with?(national_prefix)
         phone = phone[1..phone.length]
       end
