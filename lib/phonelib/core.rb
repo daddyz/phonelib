@@ -85,6 +85,10 @@ module Phonelib
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
     def parse(phone, country = nil)
+      if country.nil? && !phone.to_s.start_with?('+')
+        country = Phonelib.default_country
+      end
+
       require 'yaml'
       data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
       @@phone_data ||= YAML.load_file(data_file)

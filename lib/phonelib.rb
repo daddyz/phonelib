@@ -6,6 +6,14 @@ module Phonelib
   extend Module.new {
     include Core
   }
+
+  def self.default_country
+    @default_country
+  end
+
+  def self.default_country=(country)
+    @default_country = country
+  end
 end
 
 if defined?(Rails)

@@ -32,6 +32,10 @@ Phonelib was written and tested on Rails >= 3.1. You can install it by adding in
 
 Run the bundle command to install it.
 
+To set the default country (country names are {ISO 3166-1 Alpha-2}[http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] codes), create a initializer in <tt>config/initializers/phonelib.rb</tt>:
+
+  Phonelib.default_country = "CN"
+
 === ActiveRecord Integration
 
 This gem adds validator for active record.
@@ -44,9 +48,7 @@ Please note that passing blank value also fails.
 
 Additional options:
 
-  validates :attribute, phone: { default_country: 'CN', possible: true, allow_blank: true }
-
-<tt>default_country: 'CN'</tt> - Set the default territory to China (territory names are {ISO 3166-1 Alpha-2}[http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] codes)
+  validates :attribute, phone: { possible: true, allow_blank: true }
 
 <tt>possible: true</tt> - enables validation to check whether the passed number is a possible phone number (not strict check).
 Refer to {Google libphonenumber}[http://code.google.com/p/libphonenumber/] for more information on it.
