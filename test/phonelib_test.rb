@@ -17,6 +17,13 @@ class PhonelibTest < Test::Unit::TestCase
       assert !@phone.valid?
       assert @phone.possible?
     end
+
+    context 'with international formatting' do
+      setup { @phone = Phonelib.parse('+1 (972) 123-4567', 'US') }
+      should 'return exact original' do
+        assert_equal '+1 (972) 123-4567', @phone.original
+      end
+    end
   end
 
   context '.valid?' do
