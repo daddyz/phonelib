@@ -4,7 +4,7 @@ class PhoneValidator < ActiveModel::EachValidator
 
   # Validation method
   def validate_each(record, attribute, value)
-    phone = parse(value)
+    phone = parse(value, options[:default_country])
     valid = options[:possible] ? phone.possible? : phone.valid?
     valid = true if options[:allow_blank] && phone.original.blank?
 
