@@ -32,6 +32,10 @@ Phonelib was written and tested on Rails >= 3.1. You can install it by adding in
 
 Run the bundle command to install it.
 
+To set the default country (country names are {ISO 3166-1 Alpha-2}[http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] codes), create a initializer in <tt>config/initializers/phonelib.rb</tt>:
+
+  Phonelib.default_country = "CN"
+
 === ActiveRecord Integration
 
 This gem adds validator for active record.
@@ -68,7 +72,7 @@ There is also option to check if provided phone is valid for specified country.
 Country should be specified as two letters country code (like "US" for United States).
 Country can be specified as String <tt>'US'</tt> or <tt>'us'</tt> as well as symbol <tt>:us</tt>.
 
-  Phonelib.valid_for_country? '123456789', 'XX'   # checks if passed value is valid number for specified country 
+  Phonelib.valid_for_country? '123456789', 'XX'   # checks if passed value is valid number for specified country
   Phonelib.invalid_for_country? '123456789', 'XX' # checks if passed value is invalid number for specified country
 
 Additionally you can run:
