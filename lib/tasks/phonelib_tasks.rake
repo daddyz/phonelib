@@ -7,7 +7,7 @@ namespace :phonelib do
     require 'nokogiri'
 
     # get metadata from google
-    url = 'http://libphonenumber.googlecode.com/svn/trunk/resources/PhoneNumberMetaData.xml'
+    url = 'http://libphonenumber.googlecode.com/svn/trunk/resources/PhoneNumberMetadata.xml'
     xml_data = Net::HTTP.get_response(URI.parse(url)).body
 
     # save in file for debug
