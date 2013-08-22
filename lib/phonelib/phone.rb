@@ -65,7 +65,7 @@ module Phonelib
     def national
       return @national_number unless valid?
       format = @analyzed_data[country][:format]
-      prefix = @analyzed_data[country][Core::NATIONAL_PREFIX]
+      prefix = types.include?(:mobile) ? '' : @analyzed_data[country][Core::NATIONAL_PREFIX]
       rule = (format[Core::NATIONAL_PREFIX_RULE] ||
           @analyzed_data[country][Core::NATIONAL_PREFIX_RULE] || '$1')
 
