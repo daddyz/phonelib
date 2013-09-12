@@ -64,10 +64,7 @@ module Phonelib
     # Returns formatted national number
     def national
       return @national_number unless valid?
-      format = @analyzed_data[country][:format]
-      prefix = @analyzed_data[country][Core::NATIONAL_PREFIX]
-      rule = (format[Core::NATIONAL_PREFIX_RULE] ||
-          @analyzed_data[country][Core::NATIONAL_PREFIX_RULE] || '$1')
+      format, prefix, rule = get_formatting_data
 
       # add space to format groups, change first group to rule,
       # change rule's constants to values
@@ -99,7 +96,6 @@ module Phonelib
     # * +country+ - ISO code of country (2 letters) like 'US', 'us' or :us for United States
     #
     def valid_for_country?(country)
-      country = country.to_s.upcase
       @analyzed_data.select {|iso2, data| country == iso2 &&
           data[:valid].any? }.any?
     end
@@ -112,12 +108,20 @@ module Phonelib
     # * +country+ - ISO code of country (2 letters) like 'US', 'us' or :us for United States
     #
     def invalid_for_country?(country)
-      country = country.to_s.upcase
-      @analyzed_data.select {|iso2, data| country == iso2 &&
-          data[:valid].any? }.empty?
+      !valid_for_country?(country)
     end
 
     private
+    # Get needable data for formatting phone as national number
+    def get_formatting_data
+      format = @analyzed_data[country][:format]
+      prefix = @analyzed_data[country][Core::NATIONAL_PREFIX]
+      rule = (format[Core::NATIONAL_PREFIX_RULE] ||
+          @analyzed_data[country][Core::NATIONAL_PREFIX_RULE] || '$1')
+
+      [format, prefix, rule]
+    end
+
     # Analyze current phone with provided data hash
     def analyze_phone(country_data)
       country_data.each do |data|

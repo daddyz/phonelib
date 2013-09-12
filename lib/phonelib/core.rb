@@ -129,17 +129,20 @@ module Phonelib
     end
 
     private
+    # Load data file into memory
     def load_data
       require 'yaml'
       data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
       @@phone_data ||= YAML.load_file(data_file)
     end
 
+    # Get country that was provided or default country in needable format
     def country_or_default_country(country)
       country = country || @@default_country
       country.to_s.upcase unless country.nil?
     end
 
+    # Get Phone instance for provided phone with country specified
     def detect_and_parse_by_country(phone, country)
       detected = @@phone_data.detect { |data| data[:id] == country }
       if !!detected
@@ -150,6 +153,7 @@ module Phonelib
       Phonelib::Phone.new(phone, [detected])
     end
 
+    # Create phone representation in e164 format
     def convert_phone_to_e164(phone, prefix, national_prefix)
       return phone if phone.gsub('+','').start_with?(prefix)
       if !!national_prefix && phone.start_with?(national_prefix)
