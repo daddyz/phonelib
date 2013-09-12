@@ -179,4 +179,23 @@ class PhonelibTest < Test::Unit::TestCase
       assert_equal '1234567', phone.national
     end
   end
+
+  context 'default_country' do
+    should 'be invalid with no default country set' do
+      phone = Phonelib.parse('541234567')
+      assert !phone.valid?
+    end
+
+    should 'valid with default country set' do
+      Phonelib.default_country = :IL
+      phone = Phonelib.parse('541234567')
+      assert phone.valid?
+    end
+
+    should 'valid with wrong default country set' do
+      Phonelib.default_country = :UA
+      phone = Phonelib.parse('972541234567')
+      assert phone.valid?
+    end
+  end
 end

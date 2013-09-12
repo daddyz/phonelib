@@ -4,6 +4,7 @@ class PhonesControllerTest < ActionController::TestCase
 
   setup do
     @phone = phones(:valid_and_possible)
+    Phonelib.default_country = nil
   end
 
   test "should get index" do

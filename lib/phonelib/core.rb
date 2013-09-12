@@ -4,6 +4,10 @@ module Phonelib
     # variable will include hash with data for validation
     @@phone_data = nil
 
+    # default country for parsing variable setting
+    mattr_accessor :default_country
+    @@default_country = nil
+
     # gem constants definition
     # constants for phone types
 
@@ -34,10 +38,6 @@ module Phonelib
     FIXED_LINE = :fixedLine
     # Mobile phone number pattern key
     MOBILE = :mobile
-    # Emergency phone number pattern key
-    EMERGENCY = :emergency
-    # Short code phone number pattern key
-    SHORT_CODE = :shortCode
     # In case MOBILE and FIXED patterns are the same, this type is returned
     FIXED_OR_MOBILE = :fixedOrMobile
 
@@ -72,34 +72,27 @@ module Phonelib
       voicemail: 'VoiceMail',
       fixedLine: 'Fixed Line',
       mobile: 'Mobile',
-      emergency: 'Emergency',
-      shortCode: 'Short Code',
       fixedOrMobile: 'Fixed Line or Mobile'
     }
 
     # array of types not included for validation check in cycle
-    NOT_FOR_CHECK = [
-      :generalDesc, :emergency, :shortCode, :fixedLine, :mobile, :fixedOrMobile
-    ]
+    NOT_FOR_CHECK = [ :generalDesc, :fixedLine, :mobile, :fixedOrMobile ]
 
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
-    def parse(phone, country = nil)
-      country = Phonelib.default_country if use_default_country?(phone, country)
+    def parse(phone, passed_country = nil)
+      load_data
 
-      require 'yaml'
-      data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
-      @@phone_data ||= YAML.load_file(data_file)
+      country = country_or_default_country(passed_country)
       if country.nil?
         Phonelib::Phone.new(phone, @@phone_data)
       else
-        detected = @@phone_data.detect { |data| data[:id] == country }
-        if !!detected
-          phone = convert_phone_to_e164(phone,
-                                        detected[:countryCode],
-                                        detected[:nationalPrefix])
+        detected = detect_and_parse_by_country(phone, country)
+        if passed_country.nil? && @@default_country && detected.impossible?
+          Phonelib::Phone.new(phone, @@phone_data)
+        else
+          detected
         end
-        Phonelib::Phone.new(phone, [detected])
       end
     end
 
@@ -136,16 +129,33 @@ module Phonelib
     end
 
     private
+    def load_data
+      require 'yaml'
+      data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
+      @@phone_data ||= YAML.load_file(data_file)
+    end
+
+    def country_or_default_country(country)
+      country = country || @@default_country
+      country.to_s.upcase unless country.nil?
+    end
+
+    def detect_and_parse_by_country(phone, country)
+      detected = @@phone_data.detect { |data| data[:id] == country }
+      if !!detected
+        phone = convert_phone_to_e164(phone,
+                                      detected[:countryCode],
+                                      detected[:nationalPrefix])
+      end
+      Phonelib::Phone.new(phone, [detected])
+    end
+
     def convert_phone_to_e164(phone, prefix, national_prefix)
       return phone if phone.gsub('+','').start_with?(prefix)
       if !!national_prefix && phone.start_with?(national_prefix)
         phone = phone[1..phone.length]
       end
       prefix + phone
-    end
-
-    def use_default_country?(phone, country)
-      country.nil? && !phone.to_s.gsub(/[^\+0-9]+/, '').start_with?('+')
     end
   end
 end
