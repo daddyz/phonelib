@@ -96,6 +96,7 @@ module Phonelib
     # * +country+ - ISO code of country (2 letters) like 'US', 'us' or :us for United States
     #
     def valid_for_country?(country)
+      country = country.to_s.upcase
       @analyzed_data.select {|iso2, data| country == iso2 &&
           data[:valid].any? }.any?
     end
