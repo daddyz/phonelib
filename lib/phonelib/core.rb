@@ -5,9 +5,18 @@ module Phonelib
     @@phone_data = nil
 
     # default country for parsing variable setting
-    mattr_accessor :default_country
     @@default_country = nil
 
+    # getter method for default_country variable
+    def default_country
+      @@default_country
+    end
+
+    # setter method for default_country variable
+    def default_country=(country)
+      @@default_country = country
+    end
+    
     # gem constants definition
     # constants for phone types
 
