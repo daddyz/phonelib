@@ -17,7 +17,7 @@ http://rubydoc.info/gems/phonelib/frames
 
 === Bug reports
 
-If you discover a problem with Evercookie gem, let us know about it.
+If you discover a problem with Phonelib gem, let us know about it.
 https://github.com/daddyz/phonelib/issues
 
 === Example application
