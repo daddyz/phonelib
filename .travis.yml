@@ -14,7 +14,7 @@ script:
   - bundle exec rake test
 
 before_script:
-  - bundle install
+#  - bundle install
   - cd test/dummy/ && rake db:setup && cd ../../
 
 matrix:
