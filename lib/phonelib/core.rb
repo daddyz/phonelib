@@ -93,7 +93,8 @@ module Phonelib
       load_data
 
       country = country_or_default_country(passed_country)
-      if country.nil?
+      if phone.nil? || country.nil?
+        # has to return instance of Phonelib::Phone even if no phone passed
         Phonelib::Phone.new(phone, @@phone_data)
       else
         detected = detect_and_parse_by_country(phone, country)

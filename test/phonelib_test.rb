@@ -197,5 +197,11 @@ class PhonelibTest < Test::Unit::TestCase
       phone = Phonelib.parse('972541234567')
       assert phone.valid?
     end
+
+    should 'not fail when no phone passed and default country set' do
+      Phonelib.default_country = :UA
+      phone = Phonelib.parse(nil)
+      assert phone.invalid?
+    end
   end
 end
