@@ -11,11 +11,11 @@ gemfile:
   - Gemfile
 
 script:
-  - bundle exec rake test
+  - cd test/dummy/ && rake db:setup && cd ../../ && bundle exec rake test
 
-before_script:
+#before_script:
 #  - bundle install
-  - cd test/dummy/ && rake db:setup && cd ../../
+#  - cd test/dummy/ && rake db:setup && cd ../../
 
 matrix:
   exclude: 
