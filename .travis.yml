@@ -14,5 +14,9 @@ script:
   - bundle exec rake test
 
 before_script:
-#  - bundle install
   - cd test/dummy/ && rake db:setup && cd ../../
+
+matrix:
+  exclude:
+    - rvm: 1.9.2
+      gemfile: gemfiles/Gemfile.rails-4.0.x
