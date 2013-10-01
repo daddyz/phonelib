@@ -6,18 +6,13 @@ rvm:
   - 2.0.0
 
 gemfile:
-  - gemfiles/Gemfile.rails-2.3.x
   - gemfiles/Gemfile.rails-3.1.x
+  - gemfiles/Gemfile.rails-4.0.x
   - Gemfile
 
 script:
-  - cd test/dummy/ && rake db:setup && cd ../../ && bundle exec rake test
+  - bundle exec rake test
 
-#before_script:
+before_script:
 #  - bundle install
-#  - cd test/dummy/ && rake db:setup && cd ../../
-
-matrix:
-  exclude: 
-    - rvm: 2.0.0
-      gemfile: gemfiles/Gemfile.rails-2.3.x
+  - cd test/dummy/ && rake db:setup && cd ../../
