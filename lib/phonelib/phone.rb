@@ -163,7 +163,11 @@ module Phonelib
     # Gets matched number formating rule or default one
     def get_number_format(format_data)
       if format_data
-        format_data.find { |f| /^#{f[:pattern]}$/ =~ @national_number }
+        format_data.find do |format|
+          (format[:leadingDigits].nil? \
+              || /^#{format[:leadingDigits]}/ =~ @national_number) \
+          && /^#{format[:pattern]}$/ =~ @national_number
+        end
       else
         Core::DEFAULT_NUMBER_FORMAT
       end

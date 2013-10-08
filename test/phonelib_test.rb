@@ -178,6 +178,11 @@ class PhonelibTest < Test::Unit::TestCase
       phone = Phonelib.parse('9721234567')
       assert_equal '1234567', phone.national
     end
+
+    should 'return without leading digit for CN number' do
+      phone = Phonelib.parse('18621374266', 'CN')
+      assert_equal '186 2137 4266', phone.national
+    end
   end
 
   context 'default_country' do
