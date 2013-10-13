@@ -51,7 +51,7 @@ namespace :phonelib do
 
                 format.children.each do |f|
                   if f.name != 'text'
-                    current_format[f.name.to_sym] = f.children.first.to_s.tr(" \n", "")
+                    current_format[f.name.to_sym] = f.children.first.to_s.gsub(/\n\s+/, "")
                   end
                 end
 
