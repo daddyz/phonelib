@@ -33,6 +33,13 @@ class PhonelibTest < Test::Unit::TestCase
       end
     end
 
+    context 'with formatted number' do
+      should 'be valid' do
+        phone = Phonelib.parse('+41 44 668 18 00')
+        assert phone.valid?
+      end
+    end
+
     context 'with valid phone number' do
       should 'be valid' do
         assert Phonelib.valid?('972541234567')
