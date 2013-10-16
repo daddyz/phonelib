@@ -33,13 +33,6 @@ class PhonelibTest < Test::Unit::TestCase
       end
     end
 
-    context 'with formatted number' do
-      should 'be valid' do
-        phone = Phonelib.parse('+41 44 668 18 00')
-        assert phone.valid?
-      end
-    end
-
     context 'with valid phone number' do
       should 'be valid' do
         assert Phonelib.valid?('972541234567')
@@ -214,6 +207,12 @@ class PhonelibTest < Test::Unit::TestCase
       Phonelib.default_country = :UA
       phone = Phonelib.parse(nil)
       assert phone.invalid?
+    end
+
+    should 'be valid when number invalid for default country' do
+      Phonelib.default_country = :CN
+      phone = Phonelib.parse('+41 44 668 18 00')
+      assert phone.valid?
     end
   end
 end

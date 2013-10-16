@@ -98,7 +98,7 @@ module Phonelib
         Phonelib::Phone.new(phone, @@phone_data)
       else
         detected = detect_and_parse_by_country(phone, country)
-        if passed_country.nil? && @@default_country && detected.impossible?
+        if passed_country.nil? && @@default_country && detected.invalid?
           Phonelib::Phone.new(phone, @@phone_data)
         else
           detected
