@@ -8,6 +8,6 @@ module Phonelib
   }
 end
 
-if defined?(Rails)
+if defined?(ActiveModel)
   autoload :PhoneValidator, 'validators/phone_validator'
 end
