@@ -48,7 +48,7 @@ module Phonelib
           valid_countries.detect do |iso2|
             @analyzed_data[iso2][:mainCountryForCode] == "true"
           end
-        end || intermediate[0]
+        end || valid_countries[0]
       end
     end
 
