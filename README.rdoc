@@ -97,17 +97,22 @@ You can also fetch matched valid phone types
   phone.type  # returns first element from array of all valid types
 
 Possible types:
-* <tt>:premiumRate</tt> - Premium Rate
-* <tt>:tollFree</tt> - Toll Free
-* <tt>:sharedCost</tt> - Shared Cost
+* <tt>:premium_rate</tt> - Premium Rate
+* <tt>:toll_free</tt> - Toll Free
+* <tt>:shared_cost</tt> - Shared Cost
 * <tt>:voip</tt> - VoIP
-* <tt>:personalNumber</tt> - Personal Number
+* <tt>:personal_number</tt> - Personal Number
 * <tt>:pager</tt> - Pager
 * <tt>:uan</tt> - UAN
 * <tt>:voicemail</tt> - VoiceMail
-* <tt>:fixedLine</tt> - Fixed Line
+* <tt>:fixed_line</tt> - Fixed Line
 * <tt>:mobile</tt> - Mobile
-* <tt>:fixedOrMobile</tt> - Fixed Line or Mobile (if both mobile and fixed pattern matches)
+* <tt>:fixed_or_mobile</tt> - Fixed Line or Mobile (if both mobile and fixed pattern matches)
+
+Or you can get human representation of matched types
+
+  phone.human_types # return array of human representations of valid types
+  phone.human_type  # return human representation of first valid type
 
 Also you can fetch all matched countries
 

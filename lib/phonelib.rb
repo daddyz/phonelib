@@ -1,3 +1,4 @@
+# main module definition
 module Phonelib
   # load gem classes
   autoload :Core, 'phonelib/core'

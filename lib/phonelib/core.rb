@@ -16,25 +16,25 @@ module Phonelib
     def default_country=(country)
       @@default_country = country
     end
-    
+
     # gem constants definition
     # constants for phone types
 
     # Validation patterns keys constants
     # General pattern for country key
-    GENERAL = :generalDesc
+    GENERAL = :general_desc
     # Freephone line pattern key
-    PREMIUM_RATE = :premiumRate
+    PREMIUM_RATE = :premium_rate
     # Freephone line pattern key
-    TOLL_FREE = :tollFree
+    TOLL_FREE = :toll_free
     # Shared cost pattern key. The cost of this call is shared between caller
     # and recipient, and is hence typically less than PREMIUM_RATE calls
-    SHARED_COST = :sharedCost
-    # Voice over IP pattern key. This includes TSoIP (Telephony Service over IP)
+    SHARED_COST = :shared_cost
+    # VoIP pattern key. This includes TSoIP (Telephony Service over IP)
     VOIP = :voip
     # A personal number is associated with a particular person, and may be
     # routed to either a MOBILE or FIXED_LINE number.
-    PERSONAL_NUMBER = :personalNumber
+    PERSONAL_NUMBER = :personal_number
     # Pager phone number pattern key
     PAGER = :pager
     # Used for 'Universal Access Numbers' or 'Company Numbers'. They may be
@@ -44,48 +44,48 @@ module Phonelib
     # Used for 'Voice Mail Access Numbers'.
     VOICEMAIL = :voicemail
     # Fixed line pattern key
-    FIXED_LINE = :fixedLine
+    FIXED_LINE = :fixed_line
     # Mobile phone number pattern key
     MOBILE = :mobile
     # In case MOBILE and FIXED patterns are the same, this type is returned
-    FIXED_OR_MOBILE = :fixedOrMobile
+    FIXED_OR_MOBILE = :fixed_or_mobile
 
     # Internal use keys for validations
     # Valid regex pattern key
-    VALID_PATTERN = :nationalNumberPattern
+    VALID_PATTERN = :national_number_pattern
     # Possible regex pattern key
-    POSSIBLE_PATTERN = :possibleNumberPattern
+    POSSIBLE_PATTERN = :possible_number_pattern
     # National prefix key
-    NATIONAL_PREFIX = :nationalPrefix
+    NATIONAL_PREFIX = :national_prefix
     # National prefix rule key
-    NATIONAL_PREFIX_RULE = :nationalPrefixFormattingRule
+    NATIONAL_PREFIX_RULE = :national_prefix_formatting_rule
     # Country code key
-    COUNTRY_CODE = :countryCode
+    COUNTRY_CODE = :country_code
 
     # Default number formatting data hash
     DEFAULT_NUMBER_FORMAT = {
-      pattern: "(\\d+)(\\d{3})(\\d{4})",
-      format: "$1 $2 $3"
+      pattern: '(\\d+)(\\d{3})(\\d{4})',
+      format: '$1 $2 $3'
     }
 
     # hash of all phone types with human representation
     TYPES = {
-      generalDesc: 'General Pattern',
-      premiumRate: 'Premium Rate',
-      tollFree: 'Toll Free',
-      sharedCost: 'Shared Cost',
+      general_desc: 'General Pattern',
+      premium_rate: 'Premium Rate',
+      toll_free: 'Toll Free',
+      shared_cost: 'Shared Cost',
       voip: 'VoIP',
-      personalNumber: 'Personal Number',
+      personal_number: 'Personal Number',
       pager: 'Pager',
       uan: 'UAN',
       voicemail: 'VoiceMail',
-      fixedLine: 'Fixed Line',
+      fixed_line: 'Fixed Line',
       mobile: 'Mobile',
-      fixedOrMobile: 'Fixed Line or Mobile'
+      fixed_or_mobile: 'Fixed Line or Mobile'
     }
 
     # array of types not included for validation check in cycle
-    NOT_FOR_CHECK = [ :generalDesc, :fixedLine, :mobile, :fixedOrMobile ]
+    NOT_FOR_CHECK = [:general_desc, :fixed_line, :mobile, :fixed_or_mobile]
 
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
@@ -137,6 +137,7 @@ module Phonelib
     end
 
     private
+
     # Load data file into memory
     def load_data
       require 'yaml'
@@ -152,18 +153,18 @@ module Phonelib
 
     # Get Phone instance for provided phone with country specified
     def detect_and_parse_by_country(phone, country)
-      detected = @@phone_data.detect { |data| data[:id] == country }
-      if !!detected
+      detected = @@phone_data.find { |data| data[:id] == country }
+      if detected
         phone = convert_phone_to_e164(phone,
-                                      detected[:countryCode],
-                                      detected[:nationalPrefix])
+                                      detected[:country_code],
+                                      detected[:national_prefix])
       end
       Phonelib::Phone.new(phone, [detected])
     end
 
     # Create phone representation in e164 format
     def convert_phone_to_e164(phone, prefix, national_prefix)
-      return phone if phone.gsub('+','').start_with?(prefix)
+      return phone if phone.gsub('+', '').start_with?(prefix)
       if !!national_prefix && phone.start_with?(national_prefix)
         phone = phone[1..phone.length]
       end
