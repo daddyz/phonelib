@@ -34,10 +34,21 @@ module Phonelib
       @analyzed_data.map {|iso2, data| iso2}
     end
 
+    # Return countries with valid patterns
+    def valid_countries
+      @valid_countries ||= countries.select do |iso2|
+        !@analyzed_data[iso2][:valid].empty?       
+      end
+    end
+
     # Returns first country that matched valid patterns
     def country
-      @country ||= countries.detect do |iso2|
-        !@analyzed_data[iso2][:valid].empty?
+      @country ||= begin
+        if valid_countries.size > 1
+          valid_countries.detect do |iso2|
+            @analyzed_data[iso2][:mainCountryForCode] == "true"
+          end
+        end || valid_countries[0]
       end
     end
 
