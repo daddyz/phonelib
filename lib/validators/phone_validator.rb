@@ -24,7 +24,7 @@
 #   class Phone < ActiveRecord::Base
 #     attr_accessible :number
 #     validates :number, phone: { allow_blank: true }
-#   end 
+#   end
 class PhoneValidator < ActiveModel::EachValidator
   # Include all core methods
   include Phonelib::Core

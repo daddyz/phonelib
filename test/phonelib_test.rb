@@ -96,7 +96,7 @@ class PhonelibTest < Test::Unit::TestCase
 
   context 'valid_for_country?' do
     context 'with correct data' do
-      ['IL', :il].each do |country|
+      ['IL', 'il', :il].each do |country|
         context "with #{country} as country" do
           should 'be valid' do
             assert Phonelib.valid_for_country?('972541234567', country)
@@ -117,7 +117,7 @@ class PhonelibTest < Test::Unit::TestCase
       end
     end
 
-    ['US', :us].each do |country|
+    ['US', 'us', :us].each do |country|
       context "with #{country} as country" do
         context 'with incorrect data' do
           should 'not be valid' do
@@ -136,7 +136,7 @@ class PhonelibTest < Test::Unit::TestCase
 
   context '.invalid_for_country?' do
     context 'with correct data' do
-      ['IL', :il].each do |country|
+      ['IL', 'il', :il].each do |country|
         context "with #{country} as country" do
           should 'not be invalid' do
             assert !Phonelib.invalid_for_country?('972541234567', country)
@@ -146,7 +146,7 @@ class PhonelibTest < Test::Unit::TestCase
     end
 
     context 'with incorrect data' do
-      ['US', :us].each do |country|
+      ['US', 'us', :us].each do |country|
         context "with #{country} as country" do
           should 'be invalid' do
             assert Phonelib.invalid_for_country?('972541234567', country)
@@ -182,6 +182,25 @@ class PhonelibTest < Test::Unit::TestCase
     should 'return without leading digit for CN number' do
       phone = Phonelib.parse('18621374266', 'CN')
       assert_equal '186 2137 4266', phone.national
+    end
+  end
+
+  context 'types' do
+    setup { @phone = Phonelib.parse('972541234567') }
+    should 'return :mobile type' do
+      assert_equal :mobile, @phone.type
+    end
+
+    should 'return Mobile human type' do
+      assert_equal 'Mobile', @phone.human_type
+    end
+
+    should 'return [:mobile] as all types' do
+      assert_equal [:mobile], @phone.types
+    end
+
+    should 'return [Mobile] as all human types' do
+      assert_equal %w(Mobile), @phone.human_types
     end
   end
 
