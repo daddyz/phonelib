@@ -204,6 +204,18 @@ class PhonelibTest < Test::Unit::TestCase
     end
   end
 
+  context 'country' do
+    should 'return IL as country' do
+      phone = Phonelib.parse('972541234567')
+      assert 'IL', phone.country
+    end
+
+    should 'return RU as country' do
+      phone = Phonelib.parse('78005500500')
+      assert 'RU', phone.country
+    end
+  end
+
   context 'default_country' do
     should 'be invalid with no default country set' do
       phone = Phonelib.parse('541234567')

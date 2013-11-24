@@ -47,18 +47,16 @@ module Phonelib
     # Return countries with valid patterns
     def valid_countries
       @valid_countries ||= countries.select do |iso2|
-        !@analyzed_data[iso2][:valid].empty?       
+        @analyzed_data[iso2][:valid].any?
       end
     end
 
     # Returns first country that matched valid patterns
     def country
       @country ||= begin
-        if valid_countries.size > 1
-          valid_countries.detect do |iso2|
-            @analyzed_data[iso2][:main_country_for_code] == 'true'
-          end
-        end || valid_countries[0]
+        valid_countries.find do |iso2|
+          @analyzed_data[iso2][:main_country_for_code] == 'true'
+        end || valid_countries.first
       end
     end
 
