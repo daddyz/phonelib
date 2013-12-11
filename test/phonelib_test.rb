@@ -246,4 +246,16 @@ class PhonelibTest < Test::Unit::TestCase
       assert phone.valid?
     end
   end
+
+  context 'issue #16' do
+    should 'parse as LT country' do
+      phone = Phonelib.parse('00370 611 11 111')
+      assert_equal 'LT', phone.country
+    end
+
+    should 'show correct international' do
+      phone = Phonelib.parse('370 611 11 111')
+      assert_equal '+370 (611) 11111', phone.international
+    end
+  end
 end

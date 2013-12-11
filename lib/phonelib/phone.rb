@@ -31,12 +31,12 @@ module Phonelib
 
     # Returns human representation of all matched phone types
     def human_types
-      types.map { |type| Core::TYPES[type] }
+      types.map { |type| Core::TYPES_DESC[type] }
     end
 
     # Return human representation of phone type
     def human_type
-      Core::TYPES[type]
+      Core::TYPES_DESC[type]
     end
 
     # Returns all countries that matched valid patterns
@@ -55,7 +55,7 @@ module Phonelib
     def country
       @country ||= begin
         valid_countries.find do |iso2|
-          @analyzed_data[iso2][:main_country_for_code] == 'true'
+          @analyzed_data[iso2][Core::MAIN_COUNTRY_FOR_CODE] == 'true'
         end || valid_countries.first
       end
     end
@@ -90,7 +90,7 @@ module Phonelib
       format_string = format[:format].gsub(/(\d)\$/, '\\1 $').gsub('$1', rule)
           .gsub(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
 
-      matches = @national_number.match(/#{format[:pattern]}/)
+      matches = @national_number.match(/#{format[Core::PATTERN]}/)
       format_string.gsub(/\$\d/) { |el| matches[el[1].to_i] }
     end
 
@@ -149,17 +149,24 @@ module Phonelib
     # Analyze current phone with provided data hash
     def analyze_phone(country_data)
       country_data.each do |data|
-        phone_code = "#{data[:country_code]}#{data[:leading_digits]}"
-        if @sanitized.start_with? phone_code
-          _possible, valid = get_patterns(data[:types][Core::GENERAL])
-          next unless /^#{data[:country_code]}#{valid}$/ =~ @sanitized
-
-          @national_number = @sanitized[data[:country_code].length..-1]
+        if match = sanitized_match_data?(data)
+          prefix_length = data[Core::COUNTRY_CODE].length
+          prefix_length += match[1].length unless match[1].nil?
+          @national_number = @sanitized[prefix_length..-1]
           @analyzed_data[data[:id]] = data
           @analyzed_data[data[:id]][:format] =
-              get_number_format(data[:formats])
-          @analyzed_data[data[:id]].merge! all_number_types(data[:types])
+              get_number_format(data[Core::FORMATS])
+          @analyzed_data[data[:id]].merge! all_number_types(data[Core::TYPES])
         end
+      end
+    end
+
+    def sanitized_match_data?(data)
+      phone_code = "#{data[Core::COUNTRY_CODE]}#{data[Core::LEADING_DIGITS]}"
+      inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
+      if @sanitized.match(/^#{inter_prefix}#{phone_code}/)
+        _possible, valid = get_patterns(data[Core::TYPES][Core::GENERAL])
+        @sanitized.match /^#{inter_prefix}#{data[Core::COUNTRY_CODE]}#{valid}$/
       end
     end
 
@@ -169,7 +176,7 @@ module Phonelib
       response = { valid: [], possible: [] }
 
       additional = check_same_types(data)
-      (Core::TYPES.keys - Core::NOT_FOR_CHECK + additional).each do |type|
+      (Core::TYPES_DESC.keys - Core::NOT_FOR_CHECK + additional).each do |type|
         check_type = (type == Core::FIXED_OR_MOBILE ? Core::FIXED_LINE : type)
         possible, valid = get_patterns(data[check_type])
 
@@ -184,9 +191,9 @@ module Phonelib
     def get_number_format(format_data)
       if format_data
         format_data.find do |format|
-          (format[:leading_digits].nil? \
-              || /^#{format[:leading_digits]}/ =~ @national_number) \
-          && /^#{format[:pattern]}$/ =~ @national_number
+          (format[Core::LEADING_DIGITS].nil? \
+              || /^#{format[Core::LEADING_DIGITS]}/ =~ @national_number) \
+          && /^#{format[Core::PATTERN]}$/ =~ @national_number
         end
       else
         Core::DEFAULT_NUMBER_FORMAT

@@ -61,6 +61,18 @@ module Phonelib
     NATIONAL_PREFIX_RULE = :national_prefix_formatting_rule
     # Country code key
     COUNTRY_CODE = :country_code
+    # Leading digits key
+    LEADING_DIGITS = :leading_digits
+    # International prefix key
+    INTERNATIONAL_PREFIX = :international_prefix
+    # Main country for code key
+    MAIN_COUNTRY_FOR_CODE = :main_country_for_code
+    # Types key
+    TYPES = :types
+    # Formats key
+    FORMATS = :formats
+    # Pattern key
+    PATTERN = :pattern
 
     # Default number formatting data hash
     DEFAULT_NUMBER_FORMAT = {
@@ -69,7 +81,7 @@ module Phonelib
     }
 
     # hash of all phone types with human representation
-    TYPES = {
+    TYPES_DESC = {
       general_desc: 'General Pattern',
       premium_rate: 'Premium Rate',
       toll_free: 'Toll Free',
@@ -156,8 +168,8 @@ module Phonelib
       detected = @@phone_data.find { |data| data[:id] == country }
       if detected
         phone = convert_phone_to_e164(phone,
-                                      detected[:country_code],
-                                      detected[:national_prefix])
+                                      detected[Core::COUNTRY_CODE],
+                                      detected[Core::NATIONAL_PREFIX])
       end
       Phonelib::Phone.new(phone, [detected])
     end
