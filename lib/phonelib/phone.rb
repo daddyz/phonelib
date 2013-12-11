@@ -155,10 +155,14 @@ module Phonelib
           next unless /^#{data[:country_code]}#{valid}$/ =~ @sanitized
 
           @national_number = @sanitized[data[:country_code].length..-1]
-          @analyzed_data[data[:id]] = data
-          @analyzed_data[data[:id]][:format] =
-              get_number_format(data[:formats])
-          @analyzed_data[data[:id]].merge! all_number_types(data[:types])
+          types = all_number_types(data[:types])
+          unless types[:valid].empty?
+            
+            @analyzed_data[data[:id]] = data
+            @analyzed_data[data[:id]][:format] =
+                get_number_format(data[:formats])
+            @analyzed_data[data[:id]].merge! types
+          end
         end
       end
     end
