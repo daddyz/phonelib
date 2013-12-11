@@ -97,14 +97,12 @@ module Phonelib
     # Returns e164 formatted phone number
     def international
       return "+#{@sanitized}" unless valid?
-      national_number = national
-      if national_prefix = @analyzed_data[country][Core::NATIONAL_PREFIX]
-        national_number.gsub!(/^#{national_prefix}/, '')
-        national_number.strip!
-      end
-      country_code = @analyzed_data[country][Core::COUNTRY_CODE]
 
-      "+#{country_code} #{national_number}"
+      format = @analyzed_data[country][:format]
+      matches = @national_number.match(/#{format[Core::PATTERN]}/)
+      national = format[:format].gsub(/\$\d/) { |el| matches[el[1].to_i] }
+
+      "+#{@analyzed_data[country][Core::COUNTRY_CODE]} #{national}"
     end
 
     # Returns whether a current parsed phone number is valid for specified
@@ -161,6 +159,7 @@ module Phonelib
       end
     end
 
+    # Check if sanitized phone match country data
     def sanitized_match_data?(data)
       phone_code = "#{data[Core::COUNTRY_CODE]}#{data[Core::LEADING_DIGITS]}"
       inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
