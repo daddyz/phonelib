@@ -14,7 +14,7 @@ script:
   - bundle exec rake test
 
 before_script:
-  - cd test/dummy/ && rake db:setup && cd ../../
+  - cd test/dummy/ && bundle exec rake db:setup && cd ../../
 
 matrix:
   exclude:
