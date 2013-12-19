@@ -96,9 +96,6 @@ module Phonelib
       fixed_or_mobile: 'Fixed Line or Mobile'
     }
 
-    # array of types not included for validation check in cycle
-    NOT_FOR_CHECK = [:general_desc, :fixed_line, :mobile, :fixed_or_mobile]
-
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
     def parse(phone, passed_country = nil)
