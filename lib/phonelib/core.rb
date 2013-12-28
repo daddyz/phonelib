@@ -164,20 +164,26 @@ module Phonelib
     def detect_and_parse_by_country(phone, country)
       detected = @@phone_data.find { |data| data[:id] == country }
       if detected
-        phone = convert_phone_to_e164(phone,
-                                      detected[Core::COUNTRY_CODE],
-                                      detected[Core::NATIONAL_PREFIX])
+        phone = convert_phone_to_e164(phone, detected)
+        Phonelib::Phone.new(phone, [detected])
       end
-      Phonelib::Phone.new(phone, [detected])
     end
 
     # Create phone representation in e164 format
-    def convert_phone_to_e164(phone, prefix, national_prefix)
-      return phone if phone.gsub('+', '').start_with?(prefix)
-      if !!national_prefix && phone.start_with?(national_prefix)
-        phone = phone[1..phone.length]
+    def convert_phone_to_e164(phone, data) #prefix, national_prefix)
+      rx = []
+      rx << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
+      rx << "(#{data[Core::COUNTRY_CODE]})?"
+      rx << "(#{data[Core::NATIONAL_PREFIX]})?"
+      rx << "(#{data[Core::TYPES][Core::GENERAL][Core::VALID_PATTERN]})"
+
+      match = phone.gsub('+', '').match(/^#{rx.join}$/)
+      if match
+        national_start = 1.upto(3).map {|i| match[i].to_s.length}.inject(:+)
+        "#{data[Core::COUNTRY_CODE]}#{phone[national_start..-1]}"
+      else
+        phone
       end
-      prefix + phone
     end
   end
 end

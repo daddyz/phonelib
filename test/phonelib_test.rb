@@ -258,4 +258,46 @@ class PhonelibTest < Test::Unit::TestCase
       assert_equal '+370 611 11111', phone.international
     end
   end
+
+  context 'example numbers' do
+    should 'be valid' do
+      require 'yaml'
+      data_file = File.dirname(__FILE__) + '/../data/phone_data.yml'
+      phone_data ||= YAML.load_file(data_file)
+      phone_data.each do |data|
+        country = data[:id]
+        next unless country =~ /[A-Z]{2}/
+        data[:types].each do |type, type_data|
+          next unless Phonelib::Core::TYPES_DESC.keys.include? type
+          next unless type_data[:example_number]
+          number = "#{type_data[:example_number]}"
+          phone = Phonelib.parse(number, country)
+          msg = "Phone #{number} in #{country} of #{type}"
+
+          phone_assertions(phone, type, country, msg)
+        end
+      end
+    end
+
+    def phone_assertions(phone, type, country, msg)
+      assert phone.valid?, "#{msg} not valid"
+      assert !phone.invalid?, "#{msg} not valid"
+      assert phone.possible?, "#{msg} not possible"
+      assert !phone.impossible?, "#{msg} not possible"
+      assert phone.valid_for_country?(country),
+             "#{msg} not valid for country"
+      assert !phone.invalid_for_country?(country),
+             "#{msg} not valid for country"
+
+      assert_equal phone.country, country, "#{msg} wrong country "
+      if phone.type == Phonelib::Core::FIXED_OR_MOBILE
+        fixed_or_mobile = [Phonelib::Core::FIXED_LINE, Phonelib::Core::MOBILE]
+        assert fixed_or_mobile.include?(type),
+               "#{msg} wrong type #{phone.types}"
+      else
+        assert phone.types.include?(type),
+               "#{msg} wrong type #{phone.types}"
+      end
+    end
+  end
 end

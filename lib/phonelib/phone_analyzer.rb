@@ -30,11 +30,11 @@ module Phonelib
 
     # Check if sanitized phone match country data
     def phone_match_data?(phone, data)
-      phone_code = "#{data[Core::COUNTRY_CODE]}#{data[Core::LEADING_DIGITS]}"
+      country_code = "#{data[Core::COUNTRY_CODE]}"
       inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      if phone.match(/^#{inter_prefix}#{phone_code}/)
+      if phone.match(/^#{inter_prefix}#{country_code}/)
         _possible, valid = get_patterns(data[Core::TYPES], Core::GENERAL)
-        phone.match /^#{inter_prefix}#{data[Core::COUNTRY_CODE]}#{valid}$/
+        phone.match /^#{inter_prefix}#{country_code}#{valid}$/
       end
     end
 
