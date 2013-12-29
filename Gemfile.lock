@@ -103,5 +103,5 @@ DEPENDENCIES
   phonelib!
   pry
   rails (>= 3.1.0)
-  shoulda-context
+  shoulda-context (= 1.1.2)
   sqlite3

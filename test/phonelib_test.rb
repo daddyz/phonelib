@@ -291,11 +291,11 @@ class PhonelibTest < Test::Unit::TestCase
 
       assert_equal phone.country, country, "#{msg} wrong country "
       if phone.type == Phonelib::Core::FIXED_OR_MOBILE
-        fixed_or_mobile = [Phonelib::Core::FIXED_LINE, Phonelib::Core::MOBILE]
-        assert fixed_or_mobile.include?(type),
-               "#{msg} wrong type #{phone.types}"
+        assert_contains [Phonelib::Core::FIXED_LINE, Phonelib::Core::MOBILE],
+                        type,
+                        "#{msg} wrong type #{phone.types}"
       else
-        assert phone.types.include?(type),
+        assert_contains phone.types, type,
                "#{msg} wrong type #{phone.types}"
       end
     end
