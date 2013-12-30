@@ -262,6 +262,7 @@ class PhonelibTest < Test::Unit::TestCase
   context 'example numbers' do
     should 'be valid' do
       require 'yaml'
+      YAML::ENGINE.yamler = 'syck'
       data_file = File.dirname(__FILE__) + '/../data/phone_data.yml'
       phone_data ||= YAML.load_file(data_file)
       phone_data.each do |data|
