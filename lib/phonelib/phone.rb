@@ -96,8 +96,11 @@ module Phonelib
       format_string = format[:format].gsub(/(\d)\$/, '\\1 $').gsub('$1', rule)
           .gsub(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
 
-      matches = @national_number.match(/#{format[Core::PATTERN]}/)
-      format_string.gsub(/\$\d/) { |el| matches[el[1].to_i] }
+      if matches = @national_number.match(/#{format[Core::PATTERN]}/)
+        format_string.gsub(/\$\d/) { |el| matches[el[1].to_i] }
+      else
+        @national_number
+      end
     end
 
     # Returns e164 formatted phone number
@@ -105,8 +108,11 @@ module Phonelib
       return "+#{@sanitized}" unless valid?
 
       format = @analyzed_data[country][:format]
-      matches = @national_number.match(/#{format[Core::PATTERN]}/)
-      national = format[:format].gsub(/\$\d/) { |el| matches[el[1].to_i] }
+      if matches = @national_number.match(/#{format[Core::PATTERN]}/)
+        national = format[:format].gsub(/\$\d/) { |el| matches[el[1].to_i] }
+      else
+        national = @national_number
+      end
 
       "+#{@analyzed_data[country][Core::COUNTRY_CODE]} #{national}"
     end

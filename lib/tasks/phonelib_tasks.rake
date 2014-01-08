@@ -3,10 +3,7 @@ namespace :phonelib do
   desc 'Import and reparse original data file from Google libphonenumber'
   task :import_data do
     require 'net/http'
-    require 'yaml'
     require 'nokogiri'
-
-    YAML::ENGINE.yamler = 'syck'
 
     # get metadata from google
     url = 'http://libphonenumber.googlecode.com/svn/trunk/resources/PhoneNumberMetadata.xml'
@@ -68,9 +65,8 @@ namespace :phonelib do
 
       countries.push(country)
     end
-    target = 'data/phone_data.yml'
-    File.open(target, 'w+') do |f|
-      f.write(countries.to_yaml)
+    File.open('data/phone_data.dat', 'wb+') do |f|
+      Marshal.dump(countries, f)
     end
   end
 

@@ -259,12 +259,18 @@ class PhonelibTest < Test::Unit::TestCase
     end
   end
 
+  context 'issue #18' do
+    should 'not raise exceptions' do
+      assert_not_nil Phonelib.parse('54932', 'DE').national
+      assert_not_nil Phonelib.parse('33251304029', 'LU').national
+      assert_not_nil Phonelib.parse('61130374', 'AU').national
+    end
+  end
+
   context 'example numbers' do
     should 'be valid' do
-      require 'yaml'
-      YAML::ENGINE.yamler = 'syck'
-      data_file = File.dirname(__FILE__) + '/../data/phone_data.yml'
-      phone_data ||= YAML.load_file(data_file)
+      data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
+      phone_data ||= Marshal.load(File.read(data_file))
       phone_data.each do |data|
         country = data[:id]
         next unless country =~ /[A-Z]{2}/

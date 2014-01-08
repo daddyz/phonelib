@@ -149,11 +149,8 @@ module Phonelib
 
     # Load data file into memory
     def load_data
-      require 'yaml'
-      # ensure we are using Syck engine for yaml parsing
-      YAML::ENGINE.yamler = 'syck'
-      data_file = File.dirname(__FILE__) + '/../../data/phone_data.yml'
-      @@phone_data ||= YAML.load_file(data_file)
+      data_file = File.dirname(__FILE__) + '/../../data/phone_data.dat'
+      @@phone_data ||= Marshal.load(File.read(data_file))
     end
 
     # Get country that was provided or default country in needable format

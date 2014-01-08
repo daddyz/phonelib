@@ -73,15 +73,11 @@ module Phonelib
 
     # Gets matched number formatting rule or default one
     def get_number_format(national, format_data)
-      if format_data
-        format_data.find do |format|
-          (format[Core::LEADING_DIGITS].nil? \
-              || /^#{format[Core::LEADING_DIGITS]}/ =~ national) \
-          && /^#{format[Core::PATTERN]}$/ =~ national
-        end
-      else
-        Core::DEFAULT_NUMBER_FORMAT
-      end
+      format_data && format_data.find do |format|
+        (format[Core::LEADING_DIGITS].nil? \
+            || /^#{format[Core::LEADING_DIGITS]}/ =~ national) \
+        && /^#{format[Core::PATTERN]}$/ =~ national
+      end || Core::DEFAULT_NUMBER_FORMAT
     end
 
     # Checks if fixed line pattern and mobile pattern are the same and returns
