@@ -295,6 +295,10 @@ class PhonelibTest < Test::Unit::TestCase
              "#{msg} not valid for country"
       assert !phone.invalid_for_country?(country),
              "#{msg} not valid for country"
+      assert phone.national.is_a? String
+      assert phone.national.length > 0
+      assert phone.international.is_a? String
+      assert phone.international.length > 0
 
       assert_equal phone.country, country, "#{msg} wrong country "
       if phone.type == Phonelib::Core::FIXED_OR_MOBILE
