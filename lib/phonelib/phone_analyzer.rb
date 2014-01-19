@@ -7,12 +7,14 @@ module Phonelib
     # analyze provided phone if it matches country data ang returns result of
     # analyze
     def analyze(phone, country_data)
+      all_data = {}
       country_data.each do |data|
         if country_match = phone_match_data?(phone, data)
-          return get_national_and_data(phone, data, country_match)
+
+          all_data.merge! get_national_and_data(phone, data, country_match)
         end
       end
-      [ '', {} ]
+      all_data
     end
 
     private
@@ -22,17 +24,18 @@ module Phonelib
     def get_national_and_data(phone, data, country_match)
       prefix_length = data[Core::COUNTRY_CODE].length
       prefix_length += country_match[1].length unless country_match[1].nil?
-      national = phone[prefix_length..-1]
-      data[:format] = get_number_format(national, data[Core::FORMATS])
-      data.merge! all_number_types(national, data[Core::TYPES])
-      [ national, { data[:id] => data } ]
+      result = data.select { |k, v| ![:types, :formats].include?(k) }
+      result[:national] = phone[prefix_length..-1]
+      result[:format] = get_number_format(result[:national], data[Core::FORMATS])
+      result.merge! all_number_types(result[:national], data[Core::TYPES])
+      { result[:id] => result }
     end
 
     # Check if sanitized phone match country data
     def phone_match_data?(phone, data)
       country_code = "#{data[Core::COUNTRY_CODE]}"
       inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      if phone.match(/^#{inter_prefix}#{country_code}/)
+      if phone =~ /^#{inter_prefix}#{country_code}/
         _possible, valid = get_patterns(data[Core::TYPES], Core::GENERAL)
         phone.match /^#{inter_prefix}#{country_code}#{valid}$/
       end

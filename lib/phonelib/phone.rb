@@ -21,7 +21,12 @@ module Phonelib
       if @sanitized.empty?
         @analyzed_data = {}
       else
-        @national_number, @analyzed_data = analyze(@sanitized, country_data)
+        @analyzed_data = analyze(@sanitized, country_data)
+        if country
+          @national_number,= @analyzed_data[country][:national]
+        else
+          @national_number = @sanitized
+        end
       end
     end
 
@@ -62,7 +67,7 @@ module Phonelib
       @country ||= begin
         valid_countries.find do |iso2|
           @analyzed_data[iso2][Core::MAIN_COUNTRY_FOR_CODE] == 'true'
-        end || valid_countries.first
+        end || valid_countries.first || countries.first
       end
     end
 

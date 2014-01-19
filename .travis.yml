@@ -8,14 +8,15 @@ rvm:
 
 gemfile:
   - gemfiles/Gemfile.rails-3.1.x
+  - gemfiles/Gemfile.rails-3.2.x
   - gemfiles/Gemfile.rails-4.0.x
   - Gemfile
 
 script:
-  - bundle exec rake test
+  - bundle exec rake spec
 
 before_script:
-  - cd test/dummy/ && bundle exec rake db:setup && cd ../../
+  - cd spec/dummy/ && bundle exec rake db:setup && cd ../../
 
 matrix:
   exclude:
