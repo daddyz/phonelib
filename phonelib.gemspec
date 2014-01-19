@@ -23,9 +23,8 @@ Gem::Specification.new do |s|
   s.files = Dir['{data,lib,tasks}/**/*'] + %w(MIT-LICENSE Rakefile README.rdoc)
   s.test_files = Dir['test/**/*']
 
-  s.add_development_dependency 'rails', '>= 3.1.0'
-  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'nokogiri'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'shoulda-context', '= 1.1.2'
+  s.add_development_dependency 'rspec'
 end
