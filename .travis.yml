@@ -16,7 +16,7 @@ script:
   - bundle exec rake spec
 
 before_script:
-  - cd spec/dummy/ && bundle exec rake db:setup && cd ../../
+  - bundle exec rake phonelib:create_test_db
 
 matrix:
   exclude:

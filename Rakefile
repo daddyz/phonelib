@@ -25,7 +25,6 @@ Bundler::GemHelper.install_tasks
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |t|
-
   if defined? Rails
     puts 'Rails found! Running tests with Rails'
     t.pattern = 'spec/**/*_spec.rb'
