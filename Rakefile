@@ -5,14 +5,18 @@ rescue LoadError
 end
 Bundler.require
 
-require 'rdoc/task'
-
-RDoc::Task.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'Phonelib'
-  rdoc.options << '--line-numbers'
-  rdoc.rdoc_files.include('README.rdoc')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+begin
+  # can't do anything to make build pass on ruby 1.9.2
+  require 'rdoc/task'
+  RDoc::Task.new(:rdoc) do |rdoc|
+    rdoc.rdoc_dir = 'rdoc'
+    rdoc.title    = 'Phonelib'
+    rdoc.options << '--line-numbers'
+    rdoc.rdoc_files.include('README.rdoc')
+    rdoc.rdoc_files.include('lib/**/*.rb')
+  end
+rescue
+  puts 'Running without rdoc tasks'
 end
 
 Bundler::GemHelper.install_tasks
