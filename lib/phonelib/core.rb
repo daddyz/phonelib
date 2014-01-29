@@ -169,9 +169,11 @@ module Phonelib
         detected = @@phone_data.find { |data| data[:id] == country }
         if detected
           phone = convert_phone_to_e164(phone, detected)
-          Phonelib::Phone.new(phone, original, [detected])
-        else
-          detect_or_parse_by_country(phone, original)
+          if phone[0] == '+'
+            detect_or_parse_by_country(phone[1..-1], original)
+          else
+            Phonelib::Phone.new(phone, original, [detected])
+          end
         end
       end
     end
@@ -186,10 +188,10 @@ module Phonelib
 
       match = phone.match(/^#{rx.join}$/)
       if match
-        national_start = 1.upto(3).map {|i| match[i].to_s.length}.inject(:+)
+        national_start = (1..3).map { |i| match[i].to_s.length }.inject(:+)
         "#{data[Core::COUNTRY_CODE]}#{phone[national_start..-1]}"
       else
-        phone
+        phone.sub(/^#{data[Core::INTERNATIONAL_PREFIX]}/, '+')
       end
     end
 
