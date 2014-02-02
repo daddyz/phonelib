@@ -274,6 +274,33 @@ describe Phonelib do
     end
   end
 
+  context 'issue #19' do
+    it 'should parse as valid numbers with international prefix' do
+      phone1 = Phonelib.parse('0049032123456789', 'GB')
+      phone2 = Phonelib.parse('81049032123456789', 'RU')
+      expect(phone1.valid?).to be_true
+      expect(phone1.country).to eq('DE')
+      expect(phone2.valid?).to be_true
+      expect(phone2.country).to eq('DE')
+    end
+  end
+
+  context 'issue #20' do
+    it 'should parse with special characters' do
+      expect(Phonelib.parse('(202) 867-5309', 'US').valid?).to be_true
+      expect(Phonelib.parse('2028675309', 'US').valid?).to be_true
+    end
+  end
+
+  context 'issue #21' do
+    it 'should parse without country code' do
+      phone1 = Phonelib.parse '+81 90 1234 5678', 'JP'
+      expect(phone1.valid_for_country?('JP')).to be_true
+      phone2 = Phonelib.parse '90 1234 5678', 'JP'
+      expect(phone2.valid_for_country?('JP')).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'be valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

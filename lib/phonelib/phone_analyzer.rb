@@ -23,7 +23,7 @@ module Phonelib
     # provided phone number
     def get_national_and_data(phone, data, country_match)
       prefix_length = data[Core::COUNTRY_CODE].length
-      prefix_length += country_match[1].length unless country_match[1].nil?
+      prefix_length += [1, 2].map {|i| country_match[i].to_s.length}.inject(:+)
       result = data.select { |k, v| ![:types, :formats].include?(k) }
       result[:national] = phone[prefix_length..-1]
       result[:format] = get_number_format(result[:national], data[Core::FORMATS])
@@ -36,8 +36,9 @@ module Phonelib
       country_code = "#{data[Core::COUNTRY_CODE]}"
       inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
       if phone =~ /^#{inter_prefix}#{country_code}/
+        national_prefix = "(#{data[Core::NATIONAL_PREFIX]})?"
         _possible, valid = get_patterns(data[Core::TYPES], Core::GENERAL)
-        phone.match /^#{inter_prefix}#{country_code}#{valid}$/
+        phone.match /^#{inter_prefix}#{country_code}#{national_prefix}#{valid}$/
       end
     end
 
