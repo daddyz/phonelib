@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
     IMPORTANT NOTICE!
     Phone types were changed from camel case to snake case!
     Example: ":tollFree" changed to ":toll_free".
-    Please update your app in case your are checking types!
+    Please update your app in case you are checking types!
   EOS
   s.files = Dir['{data,lib,tasks}/**/*'] + %w(MIT-LICENSE Rakefile README.rdoc)
   s.test_files = Dir['test/**/*']

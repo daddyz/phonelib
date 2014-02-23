@@ -60,10 +60,11 @@ module Phonelib
       types_for_check(data).each do |type|
         possible, valid = get_patterns(data, type)
 
-        response[:possible] << type if number_possible?(number, possible)
-        response[:valid] << type if number_valid_and_possible?(number,
+        valid_and_possible, possible_result = number_valid_and_possible?(number,
                                                                possible,
                                                                valid)
+        response[:possible] << type if possible_result
+        response[:valid] << type if valid_and_possible
       end
 
       response
@@ -109,20 +110,16 @@ module Phonelib
       [possible_pattern, national_pattern]
     end
 
-    # Checks if passed number matches both valid and possible patterns
+    # Checks if passed number matches valid and possible patterns
     def number_valid_and_possible?(number, possible_pattern, national_pattern)
       national_match = number.match(/^(?:#{national_pattern})$/)
       possible_match = number.match(/^(?:#{possible_pattern})$/)
 
-      national_match && possible_match &&
+      valid_and_possible = national_match && possible_match &&
           national_match.to_s.length == number.length &&
           possible_match.to_s.length == number.length
-    end
-
-    # Checks if passed number matches possible pattern
-    def number_possible?(number, possible_pattern)
-      possible_match = number.match(/^(?:#{possible_pattern})$/)
-      possible_match && possible_match.to_s.length == number.length
+      possible = possible_match && possible_match.to_s.length == number.length
+      [valid_and_possible, possible]
     end
   end
 end
