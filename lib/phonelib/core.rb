@@ -3,7 +3,6 @@ module Phonelib
   module Core
     # variable will include hash with data for validation
     @@phone_data = nil
-    @@cached_data = {}
 
     # default country for parsing variable setting
     @@default_country = nil
@@ -167,7 +166,7 @@ module Phonelib
       if country.nil?
         Phonelib::Phone.new(phone, original, @@phone_data)
       else
-        detected = @@cached_data[country] ||= @@phone_data.find { |data| data[:id] == country }
+        detected = @@phone_data[country]
         if detected
           phone = convert_phone_to_e164(phone, detected)
           if phone[0] == '+'
