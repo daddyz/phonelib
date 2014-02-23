@@ -16,6 +16,7 @@ namespace :phonelib do
     # get metadata from google
     url = 'http://libphonenumber.googlecode.com/svn/trunk/resources/PhoneNumberMetadata.xml'
     xml_data = Net::HTTP.get_response(URI.parse(url)).body
+    xml_data.force_encoding("utf-8")
 
     # save in file for debug
     File.open('data/PhoneNumberMetaData.xml', 'w+') do |f|
@@ -26,7 +27,7 @@ namespace :phonelib do
     doc = Nokogiri::XML(xml_data)
 
     main = doc.elements.first.elements.first
-    countries = []
+    countries = {}
     main.elements.each do |el|
       # each country
       country = {}
@@ -71,7 +72,7 @@ namespace :phonelib do
         end
       end
 
-      countries.push(country)
+      countries[country[:id]] = country
     end
     File.open('data/phone_data.dat', 'wb+') do |f|
       Marshal.dump(countries, f)

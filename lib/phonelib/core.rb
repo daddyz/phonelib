@@ -99,7 +99,7 @@ module Phonelib
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
     def parse(original, passed_country = nil)
-      load_data
+      @@phone_data ||= load_data
       sanitized = sanitize_phone original
 
       country = country_or_default_country(passed_country)
@@ -152,7 +152,7 @@ module Phonelib
     # Load data file into memory
     def load_data
       data_file = File.dirname(__FILE__) + '/../../data/phone_data.dat'
-      @@phone_data ||= Marshal.load(File.read(data_file))
+      Marshal.load(File.read(data_file))
     end
 
     # Get country that was provided or default country in needable format
@@ -166,7 +166,7 @@ module Phonelib
       if country.nil?
         Phonelib::Phone.new(phone, original, @@phone_data)
       else
-        detected = @@phone_data.find { |data| data[:id] == country }
+        detected = @@phone_data[country]
         if detected
           phone = convert_phone_to_e164(phone, detected)
           if phone[0] == '+'

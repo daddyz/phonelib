@@ -302,10 +302,10 @@ describe Phonelib do
   end
 
   context 'example numbers' do
-    it 'be valid' do
+    it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
-      phone_data ||= Marshal.load(File.read(data_file))
-      phone_data.each do |data|
+      phone_data = Marshal.load(File.read(data_file))
+      phone_data.each do |key, data|
         country = data[:id]
         next unless country =~ /[A-Z]{2}/
         data[:types].each do |type, type_data|
