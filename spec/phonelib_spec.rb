@@ -278,10 +278,12 @@ describe Phonelib do
     it 'should parse as valid numbers with international prefix' do
       phone1 = Phonelib.parse('0049032123456789', 'GB')
       phone2 = Phonelib.parse('81049032123456789', 'RU')
+      phone3 = Phonelib.parse('81049032123456789', 'GB')
       expect(phone1.valid?).to be_true
       expect(phone1.country).to eq('DE')
       expect(phone2.valid?).to be_true
       expect(phone2.country).to eq('DE')
+      expect(phone3.valid?).to be_false
     end
   end
 

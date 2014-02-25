@@ -15,18 +15,7 @@ module Phonelib
     def analyze(phone, passed_country)
       country = country_or_default_country passed_country
 
-      result = if country && Phonelib.phone_data[country]
-                 # if country was provided and it's a valid country, trying to
-                 # create e164 representation of phone number,
-                 # kind of normalization for parsing
-                 e164 = convert_to_e164 phone, Phonelib.phone_data[country]
-                 # if phone starts with international prefix of provided
-                 # country try to reanalyze without international prefix for
-                 # all countries
-                 return analyze(e164.gsub('+', ''), nil) if e164[0] == '+'
-                 # trying to parse number for provided country
-                 parse_single_country e164, Phonelib.phone_data[country]
-               end
+      result = try_to_parse_single_country(phone, country)
       # if previous parsing failed, trying for all countries
       if result.nil? || result.values.first[:valid].empty?
         result = detect_and_parse phone
@@ -35,6 +24,28 @@ module Phonelib
     end
 
     private
+
+    # trying to parse phone for single country including international prefix
+    # check for provided country
+    #
+    # ==== Attributes
+    #
+    # * +phone+ - phone for parsing
+    # * +country+ - country to parse phone with
+    def try_to_parse_single_country(phone, country)
+      if country && Phonelib.phone_data[country]
+        # if country was provided and it's a valid country, trying to
+        # create e164 representation of phone number,
+        # kind of normalization for parsing
+        e164 = convert_to_e164 phone, Phonelib.phone_data[country]
+        # if phone starts with international prefix of provided
+        # country try to reanalyze without international prefix for
+        # all countries
+        return analyze(e164.gsub('+', ''), nil) if e164[0] == '+'
+        # trying to parse number for provided country
+        parse_single_country e164, Phonelib.phone_data[country]
+      end
+    end
 
     # method checks if phone is valid against single provided country data
     #
