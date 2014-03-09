@@ -10,6 +10,4 @@ module Phonelib
   }
 end
 
-if defined?(ActiveModel)
-  autoload :PhoneValidator, 'validators/phone_validator'
-end
+autoload :PhoneValidator, 'validators/phone_validator' if defined? ActiveModel
