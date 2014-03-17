@@ -143,7 +143,7 @@ module Phonelib
     # Load data file into memory
     def load_data
       data_file = File.dirname(__FILE__) + '/../../data/phone_data.dat'
-      Marshal.load(File.read(data_file))
+      Marshal.load(File.binread(data_file))
     end
   end
 end

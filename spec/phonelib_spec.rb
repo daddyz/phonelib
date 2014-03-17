@@ -306,7 +306,7 @@ describe Phonelib do
   context 'example numbers' do
     it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
-      phone_data = Marshal.load(File.read(data_file))
+      phone_data = Marshal.load(File.binread(data_file))
       phone_data.each do |key, data|
         country = data[:id]
         next unless country =~ /[A-Z]{2}/
