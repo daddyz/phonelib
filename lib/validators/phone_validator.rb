@@ -27,11 +27,6 @@
 #     validates :mobile, phone: { possible: :mobile }
 #   end
 #
-#   class Phone < ActiveRecord::Base
-#     attr_accessible :number
-#     validates :number, phone: { possible: [:mobile, :fixed] }
-#   end
-#
 # Validates that attribute is a valid phone number.
 # Empty value is allowed to be passed.
 #
