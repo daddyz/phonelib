@@ -18,6 +18,20 @@
 #     validates :number, phone: { possible: true }
 #   end
 #
+# Validates that attribute is a possible phone number of specified type(s).
+# Symbol or array accepted. If empty value passed for attribute it fails.
+#
+#   class Phone < ActiveRecord::Base
+#     attr_accessible :number, :mobile
+#     validates :number, phone: { possible: [:mobile, :fixed] }
+#     validates :mobile, phone: { possible: :mobile }
+#   end
+#
+#   class Phone < ActiveRecord::Base
+#     attr_accessible :number
+#     validates :number, phone: { possible: [:mobile, :fixed] }
+#   end
+#
 # Validates that attribute is a valid phone number.
 # Empty value is allowed to be passed.
 #
