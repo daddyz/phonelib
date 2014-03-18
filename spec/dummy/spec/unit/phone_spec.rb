@@ -4,44 +4,68 @@ describe Phone do
   it 'saves with valid phone' do
     phone = Phone.new(number: '972541234567')
 
-    assert phone.save
-    assert phone.errors.empty?
+    expect(phone.save).to be_true
+    expect(phone.errors.empty?).to be_true
   end
 
   it "can't save with invalid phone" do
     phone = Phone.new(number: 'wrong')
 
-    assert !phone.save
-    assert phone.errors.any?
+    expect(phone.save).to be_false
+    expect(phone.errors.any?).to be_true
   end
 
-  it 'valid passes' do
+  it 'passes when valid' do
     phone = phones(:valid_and_possible)
-    assert phone.save
-    assert phone.errors.empty?
+    expect(phone.save).to be_true
+    expect(phone.errors.empty?).to be_true
   end
 
-  it 'wrong fails' do
+  it 'fails with wrong' do
     phone = phones(:wrong)
-    assert !phone.save
-    assert phone.errors.any?
+    expect(phone.save).to be_false
+    expect(phone.errors.any?).to be_true
   end
 
-  it 'allow blank passes' do
+  it 'passes with allow blank' do
     phone = phones(:only_valid)
-    assert phone.save
-    assert phone.errors.empty?
+    expect(phone.save).to be_true
+    expect(phone.errors.empty?).to be_true
   end
 
-  it 'without allow blank fails' do
+  it 'fails without allow blank' do
     phone = phones(:only_possible)
-    assert !phone.save
-    assert phone.errors.any?
+    expect(phone.save).to be_false
+    expect(phone.errors.any?).to be_true
   end
 
-  it 'wrong possible and not blank fails' do
+  it 'fails when wrong possible and not blank' do
     phone = phones(:valid_with_bad_possible)
-    assert !phone.save
-    assert phone.errors.any?
+    expect(phone.save).to be_false
+    expect(phone.errors.any?).to be_true
+  end
+
+  it 'should pass with valid type' do
+    phone = phones(:valid_type)
+    expect(phone.save).to be_true
+    expect(phone.errors.empty?).to be_true
+  end
+
+  it 'should fail with invalid type' do
+    phone = phones(:invalid_type)
+    expect(phone.save).to be_false
+    expect(phone.errors.any?).to be_true
+  end
+
+  it 'should pass with possible type' do
+    phone = phones(:possible_type)
+    expect(phone.save).to be_true
+    expect(phone.errors.empty?).to be_true
+  end
+
+  it 'should fail with impossible type' do
+    phone = phones(:impossible_type)
+    expect(phone.save).to be_false
+    expect(phone.errors.any?).to be_true
   end
 end

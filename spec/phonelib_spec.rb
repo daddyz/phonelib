@@ -202,8 +202,10 @@ describe Phonelib do
       expect(@phone.human_type).to eq('Mobile')
     end
 
-    it 'returns [:mobile] as all types' do
+    it 'returns [:mobile] as all types and possible_types' do
       expect(@phone.types).to eq([:mobile])
+      possible_types = [:premium_rate, :toll_free, :voip, :mobile]
+      expect(@phone.possible_types).to eq(possible_types)
     end
 
     it 'returns [Mobile] as all human types' do

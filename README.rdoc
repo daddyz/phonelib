@@ -48,12 +48,15 @@ Please note that passing blank value also fails.
 
 Additional options:
 
-  validates :attribute, phone: { possible: true, allow_blank: true }
+  validates :attribute, phone: { possible: true, allow_blank: true, types: [:voip, :mobile] }
 
 <tt>possible: true</tt> - enables validation to check whether the passed number is a possible phone number (not strict check).
 Refer to {Google libphonenumber}[http://code.google.com/p/libphonenumber/] for more information on it.
 
 <tt>allow_blank: true</tt> - when no value passed then validation passes
+
+<tt>types: :mobile</tt> or <tt>types: [:voip, :mobile]</tt> - allows to validate against specific phone types patterns,
+if mixed with <tt>possible</tt> will check if number is possible for specified type
 
 === Basic usage
 
@@ -93,8 +96,9 @@ Returned value is object of <tt>Phonelib::Phone</tt> class which have following 
 
 You can also fetch matched valid phone types
 
-  phone.types # returns array of all valid types
-  phone.type  # returns first element from array of all valid types
+  phone.types          # returns array of all valid types
+  phone.type           # returns first element from array of all valid types
+  phone.possible_types # returns array of all possible types
 
 Possible types:
 * <tt>:premium_rate</tt> - Premium Rate

@@ -37,6 +37,11 @@ module Phonelib
       @data.flat_map { |iso2, data| data[:valid] }.uniq
     end
 
+    # Returns all possible types that matched possible patterns
+    def possible_types
+      @data.flat_map { |iso2, data| data[:possible] }.uniq
+    end
+
     # Returns first phone type that matched
     def type
       types.first

@@ -14,3 +14,19 @@ only_possible:
 valid_with_bad_possible:
   number: '972541234567'
   possible_number: 'wrong'
+
+valid_type:
+  number: '972541234567'
+  type_number: '97221234567'
+
+invalid_type:
+  number: '972541234567'
+  type_number: '972541234567'
+
+possible_type:
+  number: '972541234567'
+  possible_type_number: '972541234567'
+
+impossible_type:
+  number: '972541234567'
+  possible_type_number: '97221234567'
