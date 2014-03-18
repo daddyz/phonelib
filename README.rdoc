@@ -134,3 +134,17 @@ Phone class has following attributes
 Gem includes data from Google libphonenumber which has regex patterns for validations.
 Valid patterns are more specific to phone type and country.
 Possible patterns as usual are patterns with number of digits in number.
+
+=== Development and tests
+
+Everyone can do whatever he wants, the only limit is your imagination.
+Just don't forget to write test before the pull request.
+In order to run test without Rails functionality simply use
+
+  bundle exec rake spec
+
+If you want to run including Rails environment, you need to set <tt>BUNDLE_GEMFILE</tt> while running the spec task, for example:
+
+  BUNDLE_GEMFILE=gemfiles/Gemfile.rails-3.2.x bundle exec rake spec
+
+Gemfiles can be found in <tt>gemfiles</tt> folder, there are gemfiles for Rails 3.1, 3.2 and 4.
