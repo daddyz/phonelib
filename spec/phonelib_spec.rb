@@ -305,6 +305,21 @@ describe Phonelib do
     end
   end
 
+  context 'issue #27' do
+    it 'should not raise error while parsing invalid numbers' do
+      test_cases = [
+        ['0000', 'PH'], ['0000', 'IN'],
+        ['01114552586', 'US'], ['01148209679', 'CA'],
+        ['000000000000000', 'CN'], ['0050016323', 'KR']
+      ]
+      test_cases.each_with_index do |test_case, i|
+        number, country = test_case
+        phone = Phonelib.parse number, country
+        expect(phone.valid_for_country?(country)).to be_false
+      end
+    end
+  end
+
   context 'example numbers' do
     it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
