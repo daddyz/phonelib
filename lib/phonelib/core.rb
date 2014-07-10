@@ -6,7 +6,7 @@ module Phonelib
 
     # getter for phone data for other modules of gem, can be used outside
     def phone_data
-      @@phone_data
+      @@phone_data ||= load_data
     end
 
     # default country for parsing variable setting
@@ -104,7 +104,6 @@ module Phonelib
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
     def parse(phone, passed_country = nil)
-      @@phone_data ||= load_data
       Phonelib::Phone.new phone, passed_country
     end
 
