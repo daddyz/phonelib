@@ -121,7 +121,8 @@ module Phonelib
 
       format = @data[country][:format]
       if matches = @national_number.match(/#{format[Core::PATTERN]}/)
-        national = format[:format].gsub(/\$\d/) { |el| matches[el[1].to_i] }
+        fmt = format[:intl_format] || format[:format]
+        national = fmt.gsub(/\$\d/) { |el| matches[el[1].to_i] }
       else
         national = @national_number
       end

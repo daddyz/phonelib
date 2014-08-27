@@ -320,6 +320,20 @@ describe Phonelib do
     end
   end
 
+  context 'issue #33' do
+    it 'should be valid for mexico numbers' do
+      number = Phonelib.parse('+5215545258448', 'mx')
+      expect(number.valid?).to be_true
+      expect(number.international).to eq('+52 1 55 4525 8448')
+      expect(number.national).to eq('044 55 4525 8448')
+
+      intl = number.international
+
+      expect(Phonelib.valid?(intl)).to be_true
+      expect(Phonelib.valid_for_country?(intl, 'mx')).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
