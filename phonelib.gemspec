@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'nokogiri'
+  s.add_development_dependency 'nokogiri', '= 1.6.0'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
 end
