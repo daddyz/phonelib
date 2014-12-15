@@ -10,7 +10,7 @@ module Phonelib
 
     class Importer
       MAIN_FILE = 'resources/PhoneNumberMetadata.xml'
-      ALTERNATE_FORMATS_FILE = 'resources/PhoneNumberAlternateFormats.xml'
+      FORMATS_FILE = 'resources/PhoneNumberAlternateFormats.xml'
       GEOCODING_DIR = 'resources/geocoding/en/'
       CARRIER_DIR = 'resources/carrier/en/'
       TIMEZONES_DIR= 'resources/timezones/'
@@ -68,29 +68,19 @@ module Phonelib
 
       def import_main_data
         puts 'IMPORTING MAIN DATA'
-        main = get_main_from_xml("#{@destination}#{MAIN_FILE}")
-        main.elements.each do |el|
+        main_from_xml("#{@destination}#{MAIN_FILE}").elements.each do |el|
           # each country
-          country = {}
-          el.attributes.each do |k, v|
-            country[name2sym(k)] = str_clean(v)
-          end
-
+          country = get_hash_from_xml(el, :attributes)
           country[:types] = {}
 
           el.children.each do | phone_type |
-            if is_not_comment phone_type.name
-              phone_type_sym = name2sym(phone_type.name)
+            next unless is_not_comment phone_type.name
 
-              if phone_type.name != 'availableFormats'
-                country[:types][phone_type_sym] = {}
-                phone_type.elements.each do |pattern|
-                  country[:types][phone_type_sym][name2sym(pattern.name)] =
-                      str_clean(pattern.children.first)
-                end
-              else
-                country[:formats] = parse_formats(phone_type.children)
-              end
+            if phone_type.name == 'availableFormats'
+              country[:formats] = parse_formats(phone_type.children)
+            else
+              country[:types][name2sym(phone_type.name)] =
+                  get_hash_from_xml(phone_type, :element)
             end
           end
 
@@ -101,8 +91,8 @@ module Phonelib
       def import_alternate_formats
         puts 'IMPORTING ALTERNATE FORMATS'
 
-        main = get_main_from_xml("#{@destination}#{ALTERNATE_FORMATS_FILE}")
-        main.elements.each do |el|
+
+        main_from_xml("#{@destination}#{FORMATS_FILE}").elements.each do |el|
           el.children.each do | phone_type |
             if phone_type.name == 'availableFormats'
               formats = parse_formats(phone_type.children)
@@ -135,27 +125,40 @@ module Phonelib
                               :c)
       end
 
-      def parse_formats(formats_children)
-        formats = []
-        formats_children.each do |format|
-
-          if is_not_comment format.name
-            current_format = {}
-            format.each do |f|
-              current_format[name2sym(f[0])] = f[1]
+      def get_hash_from_xml(data, type)
+        hash = {}
+        case type
+          when :attributes
+            data.attributes.each do |k, v|
+              hash[name2sym(k)] = str_clean(v)
             end
-
-            format.children.each do |f|
-              if f.name != 'text'
-                current_format[name2sym(f.name)] =
-                    str_clean(f.children.first, is_not_format(f.name))
-              end
+          when :children
+            data.each do |f|
+              hash[name2sym(f[0])] = f[1]
             end
-
-            formats.push(current_format)
-          end
+          when :element
+            data.elements.each do |child|
+              hash[name2sym(child.name)] = str_clean(child.children.first)
+            end
         end
-        formats
+        hash
+      end
+
+      def parse_formats(formats_children)
+        formats_children.map do |format|
+          next unless is_not_comment format.name
+
+          current_format = get_hash_from_xml(format, :children)
+
+          format.children.each do |f|
+            if is_not_comment f.name
+              current_format[name2sym(f.name)] =
+                  str_clean(f.children.first, is_not_format(f.name))
+            end
+          end
+
+          current_format
+        end.compact
       end
 
       def import_raw_files_data(dir, var, key)
@@ -203,7 +206,7 @@ module Phonelib
         !XML_COMMENT_ATTRIBUTES.include? name
       end
 
-      def get_main_from_xml(file)
+      def main_from_xml(file)
         xml_data = File.read(file)
         xml_data.force_encoding("utf-8")
 
