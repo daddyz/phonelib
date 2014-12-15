@@ -89,27 +89,8 @@ module Phonelib
                       str_clean(pattern.children.first)
                 end
               else
-                country[:formats] = []
-                phone_type.children.each do |format|
-
-                  if is_not_comment format.name
-                    current_format = {}
-                    format.each do |f|
-                      current_format[name2sym(f[0])] = f[1]
-                    end
-
-                    format.children.each do |f|
-                      if f.name != 'text'
-                        current_format[name2sym(f.name)] =
-                            str_clean(f.children.first, is_not_format(f.name))
-                      end
-                    end
-
-                    country[:formats].push(current_format)
-                  end
-                end
+                country[:formats] = parse_formats(phone_type.children)
               end
-
             end
           end
 
@@ -123,26 +104,8 @@ module Phonelib
         main = get_main_from_xml("#{@destination}#{ALTERNATE_FORMATS_FILE}")
         main.elements.each do |el|
           el.children.each do | phone_type |
-            formats = []
             if phone_type.name == 'availableFormats'
-              phone_type.children.each do |format|
-
-                if is_not_comment format.name
-                  current_format = {}
-                  format.each do |f|
-                    current_format[name2sym(f[0])] = f[1]
-                  end
-
-                  format.children.each do |f|
-                    if f.name != 'text'
-                      current_format[name2sym(f.name)] =
-                          str_clean(f.children.first, is_not_format(f.name))
-                    end
-                  end
-
-                  formats.push(current_format)
-                end
-              end
+              formats = parse_formats(phone_type.children)
 
               country_code = el.attribute('countryCode').value
               @data[get_country_by_code(country_code)][:formats] += formats
@@ -170,6 +133,29 @@ module Phonelib
         import_raw_files_data("#{@destination}#{CARRIER_DIR}*",
                               @carriers,
                               :c)
+      end
+
+      def parse_formats(formats_children)
+        formats = []
+        formats_children.each do |format|
+
+          if is_not_comment format.name
+            current_format = {}
+            format.each do |f|
+              current_format[name2sym(f[0])] = f[1]
+            end
+
+            format.children.each do |f|
+              if f.name != 'text'
+                current_format[name2sym(f.name)] =
+                    str_clean(f.children.first, is_not_format(f.name))
+              end
+            end
+
+            formats.push(current_format)
+          end
+        end
+        formats
       end
 
       def import_raw_files_data(dir, var, key)
