@@ -73,9 +73,7 @@ module Phonelib
           country = get_hash_from_xml(el, :attributes)
           country[:types] = {}
 
-          el.children.each do | phone_type |
-            next unless is_not_comment phone_type.name
-
+          without_comments(el.children).each do | phone_type |
             if phone_type.name == 'availableFormats'
               country[:formats] = parse_formats(phone_type.children)
             else
@@ -125,6 +123,12 @@ module Phonelib
                               :c)
       end
 
+      def without_comments(data)
+        data.select do |el|
+          !XML_COMMENT_ATTRIBUTES.include? el.name
+        end
+      end
+
       def get_hash_from_xml(data, type)
         hash = {}
         case type
@@ -145,16 +149,12 @@ module Phonelib
       end
 
       def parse_formats(formats_children)
-        formats_children.map do |format|
-          next unless is_not_comment format.name
-
+        without_comments(formats_children).map do |format|
           current_format = get_hash_from_xml(format, :children)
 
-          format.children.each do |f|
-            if is_not_comment f.name
-              current_format[name2sym(f.name)] =
-                  str_clean(f.children.first, is_not_format(f.name))
-            end
+          without_comments(format.children).each do |f|
+            current_format[name2sym(f.name)] =
+                str_clean(f.children.first, is_not_format(f.name))
           end
 
           current_format
@@ -200,10 +200,6 @@ module Phonelib
 
       def is_not_format(name)
         !XML_FORMAT_NAMES.include? name
-      end
-
-      def is_not_comment(name)
-        !XML_COMMENT_ATTRIBUTES.include? name
       end
 
       def main_from_xml(file)
