@@ -183,12 +183,26 @@ describe Phonelib do
 
     it 'returns sanitized national when number invalid but possible' do
       phone = Phonelib.parse('9721234567')
+      expect(phone.valid?).to be_false
+      expect(phone.possible?).to be_true
       expect(phone.national).to eq('1234567')
     end
 
     it 'return without leading digit for CN number' do
       phone = Phonelib.parse('18621374266', 'CN')
       expect(phone.national).to eq('186 2137 4266')
+    end
+  end
+
+  context '#e164' do
+    it 'returns right e164 phone' do
+      phone = Phonelib.parse('972541234567')
+      expect(phone.e164).to eq('+972541234567')
+    end
+
+    it 'returns sanitized when number invalid but possible' do
+      phone = Phonelib.parse('9721234567')
+      expect(phone.e164).to eq('+9721234567')
     end
   end
 
@@ -253,6 +267,38 @@ describe Phonelib do
       Phonelib.default_country = :CN
       phone = Phonelib.parse('+41 44 668 18 00')
       expect(phone.valid?).to be_true
+    end
+  end
+
+  context 'extended data' do
+    it 'should have geo_name' do
+      phone = Phonelib.parse('12015551234')
+      expect(phone.geo_name).to eq('NewJersey')
+    end
+
+    it 'should have timezone' do
+      phone = Phonelib.parse('12015551234')
+      expect(phone.timezone).to eq('America/New_York')
+    end
+
+    it 'should have carrier' do
+      phone = Phonelib.parse('+4915123456789')
+      expect(phone.carrier).to eq('T-Mobile')
+    end
+
+    it 'should be present when invalid but possible' do
+      phone = Phonelib.parse('9721234567', :il)
+      expect(phone.valid?).to be_false
+      expect(phone.possible?).to be_true
+      expect(phone.timezone).to eq('Asia/Jerusalem')
+    end
+
+    it 'should not have ext data when impossible' do
+      phone = Phonelib.parse('324')
+      expect(phone.valid?).to be_false
+      expect(phone.geo_name).to be_nil
+      expect(phone.timezone).to be_nil
+      expect(phone.carrier).to be_nil
     end
   end
 

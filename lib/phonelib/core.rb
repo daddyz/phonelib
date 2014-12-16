@@ -9,6 +9,14 @@ module Phonelib
       @@phone_data ||= load_data
     end
 
+    # variable for storing geo/carrier/timezone data
+    @@phone_ext_data = nil
+
+    # getter for extended phone data
+    def phone_ext_data
+      @@phone_ext_data ||= load_ext_data
+    end
+
     # default country for parsing variable setting
     @@default_country = nil
 
@@ -23,6 +31,12 @@ module Phonelib
     end
 
     # gem constants definition
+
+    # Main data file
+    FILE_MAIN_DATA = 'data/phone_data.dat'
+    # Extended data file
+    FILE_EXT_DATA = 'data/extended_data.dat'
+
     # constants for phone types
 
     # Validation patterns keys constants
@@ -101,6 +115,21 @@ module Phonelib
       fixed_or_mobile: 'Fixed Line or Mobile'
     }
 
+    # Extended data prefixes hash key
+    EXT_PREFIXES = :prefixes
+    # Extended data geo names array key
+    EXT_GEO_NAMES = :geo_names
+    # Extended data timezones array key
+    EXT_TIMEZONES = :timezones
+    # Extended data carriers array key
+    EXT_CARRIERS = :carriers
+    # Extended data key for geoname in prefixes hash
+    EXT_GEO_NAME_KEY = :g
+    # Extended data key for timezone in prefixes hash
+    EXT_TIMEZONE_KEY = :t
+    # Extended data key for carrier in prefixes hash
+    EXT_CARRIER_KEY = :c
+
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
     def parse(phone, passed_country = nil)
@@ -141,7 +170,13 @@ module Phonelib
 
     # Load data file into memory
     def load_data
-      data_file = File.dirname(__FILE__) + '/../../data/phone_data.dat'
+      data_file = "#{File.dirname(__FILE__)}/../../#{FILE_MAIN_DATA}"
+      Marshal.load(File.binread(data_file))
+    end
+
+    # Load extended data file into memory
+    def load_ext_data
+      data_file = "#{File.dirname(__FILE__)}/../../#{FILE_EXT_DATA}"
       Marshal.load(File.binread(data_file))
     end
   end
