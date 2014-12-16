@@ -128,6 +128,17 @@ Also it is possible to get formatted phone number
   phone.international # returns formatted e164 international phone number
   phone.national      # returns formatted national number with country prefix
 
+You can get E164 formatted number
+
+  phone.e164 # returns number in E164 format
+
+There is extended data available for numbers. It will return <tt>nil</tt> in case there is no data or phone is impossible.
+Can return array of values in case there are some results for specified number
+
+  phone.geo_name # returns geo name of parsed phone
+  phone.timezone # returns timezone name of parsed phone
+  phone.carrier  # returns carrier name of parsed phone
+
 Phone class has following attributes
 
   phone.original        # string that was passed as phone number

@@ -211,7 +211,7 @@ module Phonelib
       result = {}
       ext_keys.each { |key| result[key] = 0 }
 
-      return result unless valid?
+      return result unless possible?
 
       drill = Phonelib.phone_ext_data[Phonelib::Core::EXT_PREFIXES]
 
