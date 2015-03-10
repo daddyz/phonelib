@@ -78,6 +78,11 @@ module Phonelib
       end
     end
 
+    # Returns the country code from the original phone number.
+    def country_code
+      @data.values.first[:country_code]
+    end
+
     # Returns whether a current parsed phone number is valid
     def valid?
       @data.select { |iso2, data| data[:valid].any? }.any?
