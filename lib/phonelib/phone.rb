@@ -3,7 +3,6 @@ module Phonelib
   class Phone
     # defining reader methods for class variables
     attr_reader :original # original phone number passed for parsing
-    attr_reader :national_number
 
     # including module that has all phone analyzing methods
     include Phonelib::PhoneAnalyzer

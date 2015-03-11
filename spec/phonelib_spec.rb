@@ -251,18 +251,6 @@ describe Phonelib do
     end
   end
 
-  context 'national_number' do
-    it 'returns 7731231234 as national number' do
-      phone = Phonelib.parse('17731231234')
-      expect(phone.national_number).to eq("7731231234")
-    end
-
-    it 'returns 8005500500 as national number' do
-      phone = Phonelib.parse('78005500500')
-      expect(phone.national_number).to eq("8005500500")
-    end
-  end
-
   context 'default_country' do
     it 'should be invalid with no default country set' do
       phone = Phonelib.parse('541234567')
