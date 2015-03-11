@@ -80,7 +80,9 @@ module Phonelib
 
     # Returns the country code from the original phone number.
     def country_code
-      @data.values.first[:country_code]
+      if country_data = Phonelib.phone_data[country]
+        country_data[:country_code]
+      end
     end
 
     # Returns whether a current parsed phone number is valid

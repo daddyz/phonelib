@@ -249,6 +249,11 @@ describe Phonelib do
       phone = Phonelib.parse('78005500500')
       expect(phone.country_code).to eq("7")
     end
+
+    it 'retrns nil as coutnry code if no country' do
+      phone = Phonelib.parse('7731231234')
+      expect(phone.country_code).to be_nil
+    end
   end
 
   context 'default_country' do
