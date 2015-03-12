@@ -239,6 +239,23 @@ describe Phonelib do
     end
   end
 
+  context 'country_code' do
+    it 'returns 1 as country code' do
+      phone = Phonelib.parse('17731231234')
+      expect(phone.country_code).to eq("1")
+    end
+
+    it 'returns 7 as country code' do
+      phone = Phonelib.parse('78005500500')
+      expect(phone.country_code).to eq("7")
+    end
+
+    it 'retrns nil as coutnry code if no country' do
+      phone = Phonelib.parse('7731231234')
+      expect(phone.country_code).to be_nil
+    end
+  end
+
   context 'default_country' do
     it 'should be invalid with no default country set' do
       phone = Phonelib.parse('541234567')
