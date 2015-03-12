@@ -122,8 +122,9 @@ Or you can get human representation of matched types
 
 Also you can fetch all matched countries
 
-  phone.countries # returns array of all matched countries
-  phone.country   # returns first element from array of all matched countries
+  phone.countries    # returns array of all matched countries
+  phone.country      # returns first element from array of all matched countries
+  phone.country_code # returns country phone prefix
 
 Also it is possible to get formatted phone number
 
