@@ -124,6 +124,8 @@ module Phonelib
 
     # Returns e164 formatted phone number
     def international
+      sanitized = self.sanitized
+      return nil if sanitized.nil? || sanitized.empty?
       return "+#{sanitized}" unless valid?
 
       format = @data[country][:format]
@@ -139,7 +141,8 @@ module Phonelib
 
     # Returns e164 unformatted phone number
     def e164
-      international.gsub /[^+0-9]/, ''
+      international = self.international
+      international and international.gsub /[^+0-9]/, ''
     end
 
     # Returns whether a current parsed phone number is valid for specified
