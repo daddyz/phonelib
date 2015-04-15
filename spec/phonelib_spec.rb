@@ -173,6 +173,14 @@ describe Phonelib do
       phone = Phonelib.parse('9721234567')
       expect(phone.international).to eq('+9721234567')
     end
+
+    it 'returns nil when number is nil' do
+      expect(Phonelib.parse(nil).international).to be_nil
+    end
+
+    it 'returns nil when number is empty' do
+      expect(Phonelib.parse('').international).to be_nil
+    end
   end
 
   context '#national' do
@@ -203,6 +211,14 @@ describe Phonelib do
     it 'returns sanitized when number invalid but possible' do
       phone = Phonelib.parse('9721234567')
       expect(phone.e164).to eq('+9721234567')
+    end
+
+    it 'returns nil when number is blank' do
+      expect(Phonelib.parse(nil).e164).to be_nil
+    end
+
+    it 'returns nil when number is empty' do
+      expect(Phonelib.parse('').e164).to be_nil
     end
   end
 
@@ -250,7 +266,7 @@ describe Phonelib do
       expect(phone.country_code).to eq("7")
     end
 
-    it 'retrns nil as coutnry code if no country' do
+    it 'returns nil as country code if no country' do
       phone = Phonelib.parse('7731231234')
       expect(phone.country_code).to be_nil
     end
