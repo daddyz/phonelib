@@ -413,6 +413,16 @@ describe Phonelib do
     end
   end
 
+  context 'issue #43' do
+    it 'should parse german five-digit area codes correctly' do
+      number = Phonelib.parse('+492304973401', 'de')
+      expect(number.valid?).to be_true
+      expect(number.international).to eq('+49 2304 973401')
+      expect(number.national).to eq('02304 973401')
+      expect(number.geo_name).to eq('Schwerte')
+    end
+  end
+
   context 'example numbers' do
     it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

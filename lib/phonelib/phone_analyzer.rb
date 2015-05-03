@@ -192,8 +192,8 @@ module Phonelib
     def get_number_format(national, format_data)
       format_data && format_data.find do |format|
         (format[Core::LEADING_DIGITS].nil? \
-            || /^#{format[Core::LEADING_DIGITS]}/ =~ national) \
-        && /^#{format[Core::PATTERN]}$/ =~ national
+            || /^(#{format[Core::LEADING_DIGITS]})/ =~ national) \
+        && /^(#{format[Core::PATTERN]})$/ =~ national
       end || Core::DEFAULT_NUMBER_FORMAT
     end
 
