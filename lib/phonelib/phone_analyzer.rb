@@ -18,7 +18,8 @@ module Phonelib
       result = try_to_parse_single_country(phone, country)
       # if previous parsing failed, trying for all countries
       if result.nil? || result.empty? || result.values.first[:valid].empty?
-        result = detect_and_parse phone
+        detected = detect_and_parse phone
+        result = detected.empty? ? result || {} : detected
       end
       result
     end

@@ -423,6 +423,14 @@ describe Phonelib do
     end
   end
 
+  context 'issue #45' do
+    it 'should parse possible finish number' do
+      number = Phonelib.parse('030710', :fi)
+      expect(number.valid?).to be_false
+      expect(number.possible?).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
