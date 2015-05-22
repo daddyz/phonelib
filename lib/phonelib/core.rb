@@ -9,6 +9,14 @@ module Phonelib
       @@phone_data ||= load_data
     end
 
+    # used to cache frequently-used regular expressions
+    @@phone_regexp_cache = {}
+
+    # getter for phone regexp cache (internal use only)
+    def phone_regexp_cache
+      @@phone_regexp_cache
+    end
+
     # variable for storing geo/carrier/timezone data
     @@phone_ext_data = nil
 
