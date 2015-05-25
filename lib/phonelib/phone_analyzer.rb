@@ -4,6 +4,11 @@ module Phonelib
     # array of types not included for validation check in cycle
     NOT_FOR_CHECK = [:general_desc, :fixed_line, :mobile, :fixed_or_mobile]
 
+    # caches regular expression, reusing it for later lookups
+    def cr(regexp)
+      Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(regexp)
+    end
+
     # parses provided phone if it is valid for  country data and returns result of
     # analyze
     #
@@ -95,7 +100,7 @@ module Phonelib
         national_start = (1..3).map { |i| match[i].to_s.length }.inject(:+)
         "#{data[Core::COUNTRY_CODE]}#{phone[national_start..-1]}"
       else
-        phone.sub(/^#{data[Core::INTERNATIONAL_PREFIX]}/, '+')
+        phone.sub(cr("^#{data[Core::INTERNATIONAL_PREFIX]}"), '+')
       end
     end
 
@@ -117,7 +122,7 @@ module Phonelib
       regex << "(#{data[Core::NATIONAL_PREFIX]})?"
       regex << "(#{data[Core::TYPES][Core::GENERAL][Core::VALID_PATTERN]})"
 
-      /^#{regex.join}$/
+      cr("^#{regex.join}$")
     end
 
     # returns national number and analyzing results for provided phone number
@@ -147,7 +152,7 @@ module Phonelib
     def phone_match_data?(phone, data)
       country_code = "#{data[Core::COUNTRY_CODE]}"
       inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      if phone =~ /^#{inter_prefix}#{country_code}/
+      if phone.match cr("^#{inter_prefix}#{country_code}")
         phone.match full_valid_regex_for_data(data, false)
       end
     end
@@ -193,8 +198,8 @@ module Phonelib
     def get_number_format(national, format_data)
       format_data && format_data.find do |format|
         (format[Core::LEADING_DIGITS].nil? \
-            || /^(#{format[Core::LEADING_DIGITS]})/ =~ national) \
-        && /^(#{format[Core::PATTERN]})$/ =~ national
+            || national.match(cr("^(#{format[Core::LEADING_DIGITS]})"))) \
+        && national.match(cr("^(#{format[Core::PATTERN]})$"))
       end || Core::DEFAULT_NUMBER_FORMAT
     end
 
@@ -240,12 +245,12 @@ module Phonelib
     # * +possible_pattern+ - possible pattern for validation
     # * +national_pattern+ - valid pattern for validation
     def number_valid_and_possible?(number, possible_pattern, national_pattern)
-      possible_match = number.match(/^(?:#{possible_pattern})$/)
+      possible_match = number.match(cr("^(?:#{possible_pattern})$"))
       possible = possible_match && possible_match.to_s.length == number.length
 
       if possible
         # doing national pattern match only in case possible matches
-        national_match = number.match(/^(?:#{national_pattern})$/)
+        national_match = number.match(cr("^(?:#{national_pattern})$"))
         valid = national_match && national_match.to_s.length == number.length
       else
         valid = false
