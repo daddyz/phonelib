@@ -431,6 +431,25 @@ describe Phonelib do
     end
   end
 
+  context 'issue #46' do
+    it "2503019 should be possible number for us, but can't" do
+      # this number can't be possible, it matches only with generalDesc
+      # possible pattern, but it is not possible for any of the country types.
+      # Google's library returns possible because of generalDesc match,
+      # this library works in a different way, it should now the type of phone,
+      # so this library can't determine number as possible
+      number = Phonelib.parse('2503019', :us)
+      expect(number.valid?).to be_false
+      expect(number.possible?).to be_false
+    end
+
+    it '026875105 should be possible number for hk' do
+      number = Phonelib.parse('026875105', :hk)
+      expect(number.valid?).to be_false
+      expect(number.possible?).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
@@ -441,11 +460,12 @@ describe Phonelib do
         data[:types].each do |type, type_data|
           next unless Phonelib::Core::TYPES_DESC.keys.include? type
           next unless type_data[:example_number]
-          number = "#{type_data[:example_number]}"
-          phone = Phonelib.parse(number, country)
-          msg = "Phone #{number} in #{country} of #{type}"
+          type_data[:example_number].split('|').each do |number|
+            phone = Phonelib.parse(number, country)
+            msg = "Phone #{number} in #{country} of #{type}"
 
-          phone_assertions(phone, type, country, msg)
+            phone_assertions(phone, type, country, msg)
+          end
         end
       end
     end

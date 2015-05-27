@@ -15,6 +15,8 @@ module Phonelib
     class Importer
       # main data file in repo
       MAIN_FILE = 'resources/PhoneNumberMetadata.xml'
+      # short number metadata
+      SHORT_DATA_FILE = 'resources/ShortNumberMetadata.xml'
       # alternate formats data file in repo
       FORMATS_FILE = 'resources/PhoneNumberAlternateFormats.xml'
       # geocoding data dir in repo
@@ -41,6 +43,7 @@ module Phonelib
 
         clone_repo
         import_main_data
+        import_short_data
         import_alternate_formats
         import_geocoding_data
         import_timezone_data
@@ -99,7 +102,39 @@ module Phonelib
             end
           end
 
+          country[:types] = add_possible_if_not_exists(country[:types])
+
           @data[country[:id]] = country
+        end
+      end
+
+      # method parses main data file
+      def import_short_data
+        puts 'IMPORTING SHORT NUMBER DATA'
+        main_from_xml("#{@destination}#{SHORT_DATA_FILE}").elements.each do |el|
+          # each country
+          country = get_hash_from_xml(el, :attributes)
+          country[:types] = {}
+
+          without_comments(el.children).each do | phone_type |
+            country[:types][name2sym(phone_type.name)] =
+                get_hash_from_xml(phone_type, :element)
+          end
+
+          country[:types] = add_possible_if_not_exists(country[:types])
+
+          id = country[:id]
+          country[:types].each do |type, data|
+            @data[id][:types][type] = data && next unless @data[id][:types][type]
+
+            data.each do |k, v|
+              if @data[id][:types][type][k]
+                @data[id][:types][type][k] += "|#{v}"
+              else
+                @data[id][:types][type][k] = v
+              end
+            end
+          end
         end
       end
 
@@ -142,6 +177,17 @@ module Phonelib
         import_raw_files_data("#{@destination}#{CARRIER_DIR}*",
                               @carriers,
                               :c)
+      end
+
+      # adds possible pattern in case it doesn't exists
+      def add_possible_if_not_exists(types)
+        types.each do |type, data|
+          if data[Core::VALID_PATTERN] && !data[Core::POSSIBLE_PATTERN]
+            types[type][Core::POSSIBLE_PATTERN] =
+                data[Core::VALID_PATTERN]
+          end
+        end
+        types
       end
 
       # method filters xml elements excluding comments elements

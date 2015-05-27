@@ -39,17 +39,18 @@ module Phonelib
     # * +phone+ - phone for parsing
     # * +country+ - country to parse phone with
     def try_to_parse_single_country(phone, country)
-      if country && Phonelib.phone_data[country]
+      data = Phonelib.phone_data[country]
+      if country && data
         # if country was provided and it's a valid country, trying to
         # create e164 representation of phone number,
         # kind of normalization for parsing
-        e164 = convert_to_e164 phone, Phonelib.phone_data[country]
+        e164 = convert_to_e164 phone, data
         # if phone starts with international prefix of provided
         # country try to reanalyze without international prefix for
         # all countries
         return analyze(e164.gsub('+', ''), nil) if e164[0] == '+'
         # trying to parse number for provided country
-        parse_single_country e164, Phonelib.phone_data[country]
+        parse_single_country e164, data
       end
     end
 
@@ -60,8 +61,13 @@ module Phonelib
     # * +e164+ - e164 representation of phone for parsing
     # * +data+ - country data for single country for parsing
     def parse_single_country(e164, data)
-      country_match = phone_match_data?(e164, data)
-      country_match && get_national_and_data(e164, data, country_match)
+      valid_match = phone_match_data?(e164, data)
+      if valid_match
+        get_national_and_data(e164, data, valid_match)
+      else
+        possible_match = phone_match_data?(e164, data, true)
+        possible_match && get_national_and_data(e164, data, possible_match)
+      end
     end
 
     # method tries to detect what is the country for provided phone
@@ -95,12 +101,15 @@ module Phonelib
     # * +phone+ - phone number for parsing
     # * +data+  - country data to be based on for creating e164 representation
     def convert_to_e164(phone, data)
-      match = phone.match full_valid_regex_for_data(data)
-      if match
+      match = phone.match full_regex_for_data(data, Core::VALID_PATTERN)
+      case
+      when match
         national_start = (1..3).map { |i| match[i].to_s.length }.inject(:+)
         "#{data[Core::COUNTRY_CODE]}#{phone[national_start..-1]}"
-      else
+      when phone.match(cr("^#{data[Core::INTERNATIONAL_PREFIX]}"))
         phone.sub(cr("^#{data[Core::INTERNATIONAL_PREFIX]}"), '+')
+      else
+        "#{data[Core::COUNTRY_CODE]}#{phone}"
       end
     end
 
@@ -111,7 +120,7 @@ module Phonelib
     #
     # * +data+ - country data hash
     # * +country_optional+ - whether to put country code as optional group
-    def full_valid_regex_for_data(data, country_optional = true)
+    def full_regex_for_data(data, type, country_optional = true)
       regex = []
       regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
       regex << if country_optional
@@ -120,7 +129,7 @@ module Phonelib
                  data[Core::COUNTRY_CODE]
                end
       regex << "(#{data[Core::NATIONAL_PREFIX]})?"
-      regex << "(#{data[Core::TYPES][Core::GENERAL][Core::VALID_PATTERN]})"
+      regex << "(#{data[Core::TYPES][Core::GENERAL][type]})"
 
       cr("^#{regex.join}$")
     end
@@ -135,7 +144,7 @@ module Phonelib
     def get_national_and_data(phone, data, country_match)
       prefix_length = data[Core::COUNTRY_CODE].length
       prefix_length += [1, 2].map { |i| country_match[i].to_s.size }.inject(:+)
-      result = data.select { |k, v| ![:types, :formats].include?(k) }
+      result = data.select { |k, v| k != :types && k != :formats }
       result[:national] = phone[prefix_length..-1]
       result[:format] = get_number_format(result[:national],
                                           data[Core::FORMATS])
@@ -149,12 +158,13 @@ module Phonelib
     #
     # * +phone+ - phone number for parsing
     # * +data+  - country data
-    def phone_match_data?(phone, data)
+    def phone_match_data?(phone, data, possible = false)
       country_code = "#{data[Core::COUNTRY_CODE]}"
       inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      if phone.match cr("^#{inter_prefix}#{country_code}")
-        phone.match full_valid_regex_for_data(data, false)
-      end
+      return unless phone.match cr("^#{inter_prefix}#{country_code}")
+
+      type = possible ? Core::POSSIBLE_PATTERN : Core::VALID_PATTERN
+      phone.match full_regex_for_data(data, type, false)
     end
 
     # Returns all valid and possible phone number types for currently parsed
@@ -224,17 +234,14 @@ module Phonelib
     # * +all_patterns+ - hash of all patterns for validation
     # * +type+ - type of phone to get patterns for
     def get_patterns(all_patterns, type)
-      patterns = case type
-                 when Core::FIXED_OR_MOBILE
-                   all_patterns[Core::FIXED_LINE]
-                 else
-                   all_patterns[type]
-                 end
-      return [nil, nil] if patterns.nil?
-      national_pattern = patterns[Core::VALID_PATTERN]
-      possible_pattern = patterns[Core::POSSIBLE_PATTERN] || national_pattern
+      type = Core::FIXED_LINE if type == Core::FIXED_OR_MOBILE
+      patterns = all_patterns[type]
 
-      [possible_pattern, national_pattern]
+      if patterns.nil?
+        [nil, nil]
+      else
+        [patterns[Core::POSSIBLE_PATTERN], patterns[Core::VALID_PATTERN]]
+      end
     end
 
     # Checks if passed number matches valid and possible patterns
@@ -248,12 +255,12 @@ module Phonelib
       possible_match = number.match(cr("^(?:#{possible_pattern})$"))
       possible = possible_match && possible_match.to_s.length == number.length
 
+      return [possible, possible] if possible_pattern == national_pattern
+      valid = false
       if possible
         # doing national pattern match only in case possible matches
         national_match = number.match(cr("^(?:#{national_pattern})$"))
         valid = national_match && national_match.to_s.length == number.length
-      else
-        valid = false
       end
 
       [valid && possible, possible]

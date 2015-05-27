@@ -6,7 +6,7 @@ module Phonelib
 
     # getter for phone data for other modules of gem, can be used outside
     def phone_data
-      @@phone_data ||= load_data
+      @@phone_data ||= load_data.freeze
     end
 
     # used to cache frequently-used regular expressions
@@ -22,7 +22,7 @@ module Phonelib
 
     # getter for extended phone data
     def phone_ext_data
-      @@phone_ext_data ||= load_ext_data
+      @@phone_ext_data ||= load_ext_data.freeze
     end
 
     # default country for parsing variable setting
