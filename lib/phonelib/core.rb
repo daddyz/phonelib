@@ -84,6 +84,8 @@ module Phonelib
     POSSIBLE_PATTERN = :possible_number_pattern
     # National prefix key
     NATIONAL_PREFIX = :national_prefix
+    # National prefix for parsing key
+    NATIONAL_PREFIX_FOR_PARSING = :national_prefix_for_parsing
     # National prefix rule key
     NATIONAL_PREFIX_RULE = :national_prefix_formatting_rule
     # Country code key

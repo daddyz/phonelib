@@ -450,6 +450,12 @@ describe Phonelib do
     end
   end
 
+  context 'the country has a specific rule for parsing a national code' do
+    let(:valid_belarus_national_number){ Phonelib.parse('80298570767', 'BY') }
+
+    it { expect(valid_belarus_national_number).to be_valid }
+  end
+
   context 'example numbers' do
     it 'is valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
