@@ -40,7 +40,7 @@ module Phonelib
         @timezones = []
         @carriers = []
 
-        #clone_repo
+        clone_repo
         import_main_data
         import_short_data
         import_alternate_formats
