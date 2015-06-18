@@ -30,9 +30,6 @@ module Phonelib
       # timezones data dir in repo
       TIMEZONES_DIR= 'resources/timezones/'
 
-      # xml format attributes names
-      XML_FORMAT_NAMES = %w(intlFormat format)
-
       # class initialization method
       def initialize
         @destination = File.path(
@@ -229,24 +226,6 @@ module Phonelib
             @prefixes = fill_prefixes(key, name2index[name], prefix, @prefixes)
           end
         end
-      end
-
-      # method updates prefixes hash recursively
-      def fill_prefixes(key, value, prefix, prefixes)
-        prefixes = {} if prefixes.nil?
-        if prefix.size == 1
-          prefixes[prefix.to_i] = {} unless prefixes[prefix.to_i]
-          prefixes[prefix.to_i][key] = value
-        else
-          pr = prefix[0].to_i
-          prefixes[pr] = fill_prefixes(key, value, prefix[1..-1], prefixes[pr])
-        end
-        prefixes
-      end
-
-      # method for checking if element name is not a format element
-      def is_not_format(name)
-        !XML_FORMAT_NAMES.include? name
       end
 
       # method finds country by country prefix
