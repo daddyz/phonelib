@@ -38,6 +38,8 @@ To set the default country (country names are {ISO 3166-1 Alpha-2}[http://en.wik
 
   Phonelib.default_country = "CN"
 
+In case phone number that was passed for parsing has "+" sign in the beginning, library will try to detect a country regarding the provided one.
+
 === ActiveRecord Integration
 
 This gem adds validator for active record.
@@ -114,6 +116,17 @@ Possible types:
 * <tt>:fixed_line</tt> - Fixed Line
 * <tt>:mobile</tt> - Mobile
 * <tt>:fixed_or_mobile</tt> - Fixed Line or Mobile (if both mobile and fixed pattern matches)
+* <tt>:short_code</tt>
+* <tt>:emergency</tt>
+* <tt>:carrier_specific</tt>
+* <tt>:sms_services</tt>
+* <tt>:expanded_emergency</tt>
+* <tt>:no_international_dialling</tt>
+* <tt>:carrier_services
+* <tt>:directory_services</tt>
+* <tt>:standard_rate</tt>
+* <tt>:carrier_selection_codes</tt>
+* <tt>:area_code_optional</tt>
 
 Or you can get human representation of matched types
 

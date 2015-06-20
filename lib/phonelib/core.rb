@@ -76,6 +76,28 @@ module Phonelib
     MOBILE = :mobile
     # In case MOBILE and FIXED patterns are the same, this type is returned
     FIXED_OR_MOBILE = :fixed_or_mobile
+    # Short code
+    SHORT_CODE = :short_code
+    # emergency numbers
+    EMERGENCY = :emergency
+    # carrier specific type
+    CARRIER_SPECIFIC = :carrier_specific
+    # SMS Services only type
+    SMS_SERVICES = :sms_services
+    # expendad emergency type
+    EXPANDED_EMERGENCY = :expanded_emergency
+    # no international dialling type
+    NO_INTERNATIONAL_DIALING = :no_international_dialling
+    # carrier services type
+    CARRIER_SERVICES = :carrier_services
+    # directory services
+    DIRECTORY_SERVICES = :directory_services
+    # standard rate type
+    STANDARD_RATE = :standard_rate
+    # carrier selection codes
+    CARRIER_SELECTION_CODES = :carrier_selection_codes
+    # area code optional type
+    AREA_CODE_OPTIONAL = :area_code_optional
 
     # Internal use keys for validations
     # Valid regex pattern key
@@ -122,8 +144,26 @@ module Phonelib
       voicemail: 'VoiceMail',
       fixed_line: 'Fixed Line',
       mobile: 'Mobile',
-      fixed_or_mobile: 'Fixed Line or Mobile'
+      fixed_or_mobile: 'Fixed Line or Mobile',
+      short_code: 'Short code',
+      emergency: 'Emergency services',
+      carrier_specific: 'Carrier specific number',
+      sms_services: 'SMS Services only phone',
+      expanded_emergency: 'Expanded emergency',
+      no_international_dialling: 'No International Dialing phone',
+      carrier_services: 'Carrier Services',
+      directory_services: 'Directory Services',
+      standard_rate: 'Standard Rate Destination',
+      carrier_selection_codes: 'Carrier Selection codes',
+      area_code_optional: 'Are code optional'
     }
+
+    SHORT_CODES = [
+        :short_code, :emergency, :carrier_specific, :sms_services,
+        :expanded_emergency, :no_international_dialling, :carrier_services,
+        :directory_services, :standard_rate, :carrier_selection_codes,
+        :area_code_optional
+    ]
 
     # Extended data prefixes hash key
     EXT_PREFIXES = :prefixes

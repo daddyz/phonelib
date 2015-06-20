@@ -75,7 +75,7 @@ describe Phonelib do
 
     context 'with invalid phone number' do
       it 'should be false' do
-        expect(Phonelib.possible?('97254123')).to be_false
+        expect(Phonelib.possible?('97254')).to be_false
       end
     end
   end
@@ -89,7 +89,7 @@ describe Phonelib do
 
     context 'with invalid phone number' do
       it 'should be true' do
-        expect(Phonelib.impossible?('97254123')).to be_true
+        expect(Phonelib.impossible?('97254')).to be_true
       end
     end
   end
@@ -234,7 +234,7 @@ describe Phonelib do
 
     it 'returns [:mobile] as all types and possible_types' do
       expect(@phone.types).to eq([:mobile])
-      possible_types = [:premium_rate, :toll_free, :voip, :mobile]
+      possible_types = [:premium_rate, :toll_free, :voip, :no_international_dialling, :mobile]
       expect(@phone.possible_types).to eq(possible_types)
     end
 
@@ -327,8 +327,9 @@ describe Phonelib do
     end
 
     it 'should not have ext data when impossible' do
-      phone = Phonelib.parse('324')
+      phone = Phonelib.parse('71')
       expect(phone.valid?).to be_false
+      expect(phone.possible?).to be_false
       expect(phone.geo_name).to be_nil
       expect(phone.timezone).to be_nil
       expect(phone.carrier).to be_nil
@@ -450,6 +451,24 @@ describe Phonelib do
     end
   end
 
+  context 'issue #49' do
+    it 'should be invalid for countries if + present' do
+      expect(Phonelib.valid_for_country?('+591 3 3466166', 'DE')).to be_false
+      expect(Phonelib.valid_for_country?('+55 11 2606-1011', 'DE')).to be_false
+      expect(Phonelib.valid_for_country?('+7 926 398-00-95', 'DE')).to be_false
+      expect(Phonelib.valid_for_country?('+55 1 5551234', 'AT')).to be_false
+      expect(Phonelib.valid_for_country?('+57 1 2265858', 'DE')).to be_false
+    end
+
+    it 'should be valid for countries if no + in number' do
+      expect(Phonelib.valid_for_country?('591 3 3466166', 'DE')).to be_true
+      expect(Phonelib.valid_for_country?('55 11 2606-1011', 'DE')).to be_true
+      expect(Phonelib.valid_for_country?('7 926 398-00-95', 'DE')).to be_true
+      expect(Phonelib.valid_for_country?('55 1 5551234', 'AT')).to be_true
+      expect(Phonelib.valid_for_country?('57 1 2265858', 'DE')).to be_true
+    end
+  end
+
   context 'the country has a specific rule for parsing a national code' do
     let(:valid_belarus_national_number){ Phonelib.parse('80298570767', 'BY') }
 
@@ -464,7 +483,7 @@ describe Phonelib do
         country = data[:id]
         next unless country =~ /[A-Z]{2}/
         data[:types].each do |type, type_data|
-          next unless Phonelib::Core::TYPES_DESC.keys.include? type
+          next unless (Phonelib::Core::TYPES_DESC.keys - Phonelib::Core::SHORT_CODES).include? type
           next unless type_data[:example_number]
           type_data[:example_number].split('|').each do |number|
             phone = Phonelib.parse(number, country)
