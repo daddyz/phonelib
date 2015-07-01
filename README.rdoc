@@ -24,7 +24,7 @@ https://github.com/daddyz/phonelib/issues
 
 === Example application
 
-You can see an example of ActiveRecord validation by phonelib working in test/dummy application of this gem
+You can see an example of ActiveRecord validation by phonelib working in spec/dummy application of this gem
 
 == Getting started
 
