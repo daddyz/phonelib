@@ -475,6 +475,14 @@ describe Phonelib do
     it { expect(valid_belarus_national_number).to be_valid }
   end
 
+  context 'issue #51, outdated data' do
+    it 'should return TT as country' do
+      Phonelib.default_country = nil
+      phone = Phonelib.parse('+18682739106')
+      expect(phone.country).to eq('TT')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
