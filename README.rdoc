@@ -122,7 +122,7 @@ Possible types:
 * <tt>:sms_services</tt>
 * <tt>:expanded_emergency</tt>
 * <tt>:no_international_dialling</tt>
-* <tt>:carrier_services
+* <tt>:carrier_services</tt>
 * <tt>:directory_services</tt>
 * <tt>:standard_rate</tt>
 * <tt>:carrier_selection_codes</tt>
