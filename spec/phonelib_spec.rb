@@ -483,6 +483,15 @@ describe Phonelib do
     end
   end
 
+  context 'issue #54' do
+    it 'should be fixed_or_mobile when phone valid for both but different patterns' do
+      phone = Phonelib.parse '+15146591112'
+      expect(phone.valid?).to be_true
+      expect(phone.type).to eq(:fixed_or_mobile)
+      expect(phone.types).to eq([:fixed_or_mobile])
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

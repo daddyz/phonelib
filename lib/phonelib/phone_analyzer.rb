@@ -186,7 +186,19 @@ module Phonelib
         response[:valid] << type if valid_and_possible
       end
 
-      response
+      sanitize_fixed_mobile(response)
+    end
+
+    # checks if types has both :mobile and :fixed_line and replaces it with
+    # :fixed_or_mobile in case both present
+    def sanitize_fixed_mobile(types)
+      fixed_mobile = [Core::FIXED_LINE, Core::MOBILE]
+      [:possible, :valid].each do |key|
+        if (fixed_mobile - types[key]).empty?
+          types[key] = types[key] - fixed_mobile + [Core::FIXED_OR_MOBILE]
+        end
+      end
+      types
     end
 
     # returns array of phone types for check for current country data
