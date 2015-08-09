@@ -145,7 +145,7 @@ module Phonelib
       prefix_length = data[Core::COUNTRY_CODE].length
       prefix_length += [1, 2].map { |i| country_match[i].to_s.size }.inject(:+)
       result = data.select { |k, v| k != :types && k != :formats }
-      result[:national] = phone[prefix_length..-1]
+      result[:national] = phone[prefix_length..-1] || ''
       result[:format] = get_number_format(result[:national],
                                           data[Core::FORMATS])
       result.merge! all_number_types(result[:national], data[Core::TYPES])

@@ -492,6 +492,13 @@ describe Phonelib do
     end
   end
 
+  context 'issue #55' do
+    it 'should not throw error' do
+      phone = Phonelib.parse('119660086441')
+      expect(phone.valid?).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
