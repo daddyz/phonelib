@@ -69,13 +69,14 @@ module Phonelib
       end
     end
 
+    # Return valid country
+    def valid_country
+      @valid_country ||= get_main_valid_country || valid_countries.first
+    end
+
     # Returns first country that matched valid patterns
     def country
-      @country ||= begin
-        valid_countries.find do |iso2|
-          @data[iso2][Core::MAIN_COUNTRY_FOR_CODE] == 'true'
-        end || valid_countries.first || countries.first
-      end
+      @country ||= valid_country || get_main_any_country || countries.first
     end
 
     # Returns the country code from the original phone number.
@@ -194,6 +195,20 @@ module Phonelib
     end
 
     private
+
+    # get main country for code among valid countries
+    def get_main_valid_country
+      valid_countries.find do |iso2|
+        @data[iso2][Core::MAIN_COUNTRY_FOR_CODE] == 'true'
+      end
+    end
+
+    # get main country for code among all matched valid and possible countries
+    def get_main_any_country
+      countries.find do |iso2|
+        @data[iso2][Core::MAIN_COUNTRY_FOR_CODE] == 'true'
+      end
+    end
 
     # get name from extended phone data by keys
     #

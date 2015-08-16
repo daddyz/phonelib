@@ -499,6 +499,16 @@ describe Phonelib do
     end
   end
 
+  context 'issue #57' do
+    it 'should return US as country' do
+      phone = Phonelib.parse('+17295470713')
+      expect(phone.valid?).to be_false
+      expect(phone.possible?).to be_true
+      expect(phone.country).to eq('US')
+      expect(phone.valid_country).to be_nil
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

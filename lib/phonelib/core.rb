@@ -158,6 +158,7 @@ module Phonelib
       area_code_optional: 'Are code optional'
     }
 
+    # short codes types keys
     SHORT_CODES = [
         :short_code, :emergency, :carrier_specific, :sms_services,
         :expanded_emergency, :no_international_dialling, :carrier_services,
