@@ -29,7 +29,7 @@ module Phonelib
 
     # method to get sanitized phone number (only numbers)
     def sanitized
-      @original && @original.gsub(/[^0-9]+/, '') || ''
+      @sanitized ||= @original && @original.gsub(/[^0-9]+/, '') || ''
     end
 
     # Returns all phone types that matched valid patterns
@@ -71,12 +71,12 @@ module Phonelib
 
     # Return valid country
     def valid_country
-      @valid_country ||= get_main_valid_country || valid_countries.first
+      @valid_country ||= get_main_country(valid_countries)
     end
 
     # Returns first country that matched valid patterns
     def country
-      @country ||= valid_country || get_main_any_country || countries.first
+      @country ||= valid_country || get_main_country(countries)
     end
 
     # Returns the country code from the original phone number.
@@ -109,11 +109,9 @@ module Phonelib
     # returns area code of parsed number
     def area_code
       return nil unless possible?
-
       format_match, format_string = get_formatting_data
-      return nil if format_string =~ /^[^0-9]?\$1/
 
-      if format_match
+      if format_string =~ /^.*[0-9]+.*\$1/ && format_match
         format_string.gsub(/\$1.*$/, format_match[1]).gsub(/[^\d]+/, '')
       end
     end
@@ -121,11 +119,9 @@ module Phonelib
     # returns local number
     def local_number
       return national unless possible?
-
       format_match, format_string = get_formatting_data
-      return national if format_string =~ /^[^0-9]?\$1/
 
-      if format_match
+      if format_string =~ /^.*[0-9]+.*\$1/ && format_match
         format_string.gsub(/^.*\$2/, '$2').
             gsub(/\$\d/) { |el| format_match[el[1].to_i] }
       else
@@ -147,7 +143,6 @@ module Phonelib
 
     # Returns e164 formatted phone number
     def international
-      sanitized = self.sanitized
       return nil if sanitized.nil? || sanitized.empty?
       return "+#{sanitized}" unless valid?
 
@@ -178,9 +173,9 @@ module Phonelib
     #
     def valid_for_country?(country)
       country = country.to_s.upcase
-      @data.select do |iso2, data|
+      @data.find do |iso2, data|
         country == iso2 && data[:valid].any?
-      end.any?
+      end.is_a? Array
     end
 
     # Returns whether a current parsed phone number is invalid for specified
@@ -218,18 +213,11 @@ module Phonelib
 
     private
 
-    # get main country for code among valid countries
-    def get_main_valid_country
-      valid_countries.find do |iso2|
+    # get main country for code among provided countries
+    def get_main_country(countries_array)
+      countries_array.find do |iso2|
         @data[iso2][Core::MAIN_COUNTRY_FOR_CODE] == 'true'
-      end
-    end
-
-    # get main country for code among all matched valid and possible countries
-    def get_main_any_country
-      countries.find do |iso2|
-        @data[iso2][Core::MAIN_COUNTRY_FOR_CODE] == 'true'
-      end
+      end || countries_array.first
     end
 
     # get name from extended phone data by keys

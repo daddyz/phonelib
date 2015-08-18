@@ -135,14 +135,18 @@ Or you can get human representation of matched types
 
 Also you can fetch all matched countries
 
-  phone.countries    # returns array of all matched countries
-  phone.country      # returns first element from array of all matched countries
-  phone.country_code # returns country phone prefix
+  phone.countries       # returns array of all matched countries
+  phone.country         # returns first element from array of all matched countries
+  phone.valid_countries # returns array of countries where phone was matched against valid pattern
+  phone.valid_country   # returns first valid country from array of valid countries
+  phone.country_code    # returns country phone prefix
 
 Also it is possible to get formatted phone number
 
   phone.international # returns formatted e164 international phone number
   phone.national      # returns formatted national number with country prefix
+  phone.area_code     # returns area code of parsed number or nil
+  phone.local_numer   # returns local number
 
 You can get E164 formatted number
 
