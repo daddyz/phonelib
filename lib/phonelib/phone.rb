@@ -106,18 +106,40 @@ module Phonelib
       !possible?
     end
 
+    # returns area code of parsed number
+    def area_code
+      return nil unless possible?
+
+      format_match, format_string = get_formatting_data
+      return nil if format_string =~ /^[^0-9]?\$1/
+
+      if format_match
+        format_string.gsub(/\$1.*$/, format_match[1]).gsub(/[^\d]+/, '')
+      end
+    end
+
+    # returns local number
+    def local_number
+      return national unless possible?
+
+      format_match, format_string = get_formatting_data
+      return national if format_string =~ /^[^0-9]?\$1/
+
+      if format_match
+        format_string.gsub(/^.*\$2/, '$2').
+            gsub(/\$\d/) { |el| format_match[el[1].to_i] }
+      else
+        national
+      end
+    end
+
     # Returns formatted national number
     def national
       return @national_number unless valid?
-      format, prefix, rule = get_formatting_data
+      format_match, format_string = get_formatting_data
 
-      # add space to format groups, change first group to rule,
-      # change rule's constants to values
-      format_string = format[:format].gsub(/(\d)\$/, '\\1 $').gsub('$1', rule)
-          .gsub(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
-
-      if matches = @national_number.match(/#{format[Core::PATTERN]}/)
-        format_string.gsub(/\$\d/) { |el| matches[el[1].to_i] }
+      if format_match
+        format_string.gsub(/\$\d/) { |el| format_match[el[1].to_i] }
       else
         @national_number
       end
@@ -258,7 +280,13 @@ module Phonelib
       rule = (format[Core::NATIONAL_PREFIX_RULE] ||
           @data[country][Core::NATIONAL_PREFIX_RULE] || '$1')
 
-      [format, prefix, rule]
+      # change rule's constants to values
+      rule.gsub!(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
+
+      # add space to format groups, change first group to rule,
+      format_string = format[:format].gsub(/(\d)\$/, '\\1 $').gsub('$1', rule)
+
+      [@national_number.match(/#{format[Core::PATTERN]}/), format_string]
     end
   end
 end

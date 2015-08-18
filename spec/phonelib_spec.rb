@@ -509,6 +509,22 @@ describe Phonelib do
     end
   end
 
+  context 'area_code method' do
+    it 'should return area code' do
+      expect(Phonelib.parse('+61 3 9876 0010').area_code).to eq('03')
+      expect(Phonelib.parse('+44 (0) 20-7031-3000').area_code).to eq('020')
+      expect(Phonelib.parse('+852 2699 2838').area_code).to be_nil
+    end
+  end
+
+  context 'local_number method' do
+    it 'should return local number' do
+      expect(Phonelib.parse('+61 3 9876 0010').local_number).to eq('9876 0010')
+      expect(Phonelib.parse('+44 (0) 20-7031-3000').local_number).to eq('7031 3000')
+    expect(Phonelib.parse('+852 2699 2838').local_number).to eq('2699 2838')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
