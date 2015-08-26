@@ -521,7 +521,32 @@ describe Phonelib do
     it 'should return local number' do
       expect(Phonelib.parse('+61 3 9876 0010').local_number).to eq('9876 0010')
       expect(Phonelib.parse('+44 (0) 20-7031-3000').local_number).to eq('7031 3000')
-    expect(Phonelib.parse('+852 2699 2838').local_number).to eq('2699 2838')
+      expect(Phonelib.parse('+852 2699 2838').local_number).to eq('2699 2838')
+    end
+  end
+
+  context 'phone with extension' do
+    it 'should parse phone as valid' do
+      %w(972541234567#123 972541234567#ext=123 972541234567;123
+         972541234567;ext=123 972541234567#12;3 972541234567;1#23).each do |p|
+
+        phone = Phonelib.parse(p)
+        expect(phone.valid?).to be_true
+        expect(phone.e164).to eq('+972541234567')
+        expect(phone.extension).to eq('123')
+      end
+    end
+
+    it 'should return nil if extension was not passed' do
+      phone = Phonelib.parse('972541234567')
+      expect(phone.valid?).to be_true
+      expect(phone.extension).to eq('')
+    end
+
+    it 'should sanitize extension' do
+      phone = Phonelib.parse('972541234567#sdfsdf')
+      expect(phone.valid?).to be_true
+      expect(phone.extension).to eq('')
     end
   end
 

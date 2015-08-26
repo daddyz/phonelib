@@ -3,6 +3,7 @@
 - Changed behavior of method ```country```, now it returns main country for international code in case there is such country, or first country from array
 - Added ```local_number``` method to ```Phone```, returns local number without area code
 - Added ```area_code``` method to ```Phone```, returns area code of phone or nil if none present for parsed number
+- Added ```extension``` method to ```Phone```, returns extension passed for parsing after "#" or ";" signs
 
 ## 0.4.9 - July 28, 2015
 
