@@ -86,6 +86,8 @@ Additionally you can run:
 
   phone = Phonelib.parse('123456789')
 
+You can pass phone number with extension, it should be separated with <tt>;</tt> or <tt>#</tt> signs from the phone number.
+
 Returned value is object of <tt>Phonelib::Phone</tt> class which have following methods:
 
   # basic validation methods
@@ -147,6 +149,7 @@ Also it is possible to get formatted phone number
   phone.national      # returns formatted national number with country prefix
   phone.area_code     # returns area code of parsed number or nil
   phone.local_numer   # returns local number
+  phone.extension     # returns extension provided with phone
 
 You can get E164 formatted number
 

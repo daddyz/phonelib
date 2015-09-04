@@ -1,4 +1,5 @@
 module Phonelib
+  # module provides extended data methods for parsed phone
   module PhoneExtendedData
     # Returns geo name of parsed phone number or nil if number is invalid or
     # there is no geo name specified in db for this number
