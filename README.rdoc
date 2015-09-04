@@ -12,6 +12,10 @@ But it still doesn't include all Google's library functionality.
 
 == Information
 
+=== Change Log
+
+Change log can be found
+
 === RDoc
 
 RDoc documentation can be found here
