@@ -38,6 +38,19 @@ module Phonelib
       @@default_country = country
     end
 
+    # flag identifies whether to use special phone types, like short code
+    @@parse_special = false
+
+    # getter for flag for special phone types parsing
+    def parse_special
+      @@parse_special
+    end
+
+    # setter for flag for special phone types parsing
+    def parse_special=(special)
+      @@parse_special = special
+    end
+
     # gem constants definition
 
     # Main data file

@@ -207,8 +207,9 @@ module Phonelib
     #
     # * +data+  - country data hash
     def types_for_check(data)
-      Core::TYPES_DESC.keys - PhoneAnalyzer::NOT_FOR_CHECK +
-          fixed_and_mobile_keys(data)
+      exclude_list = PhoneAnalyzer::NOT_FOR_CHECK
+      exclude_list += Phonelib::Core::SHORT_CODES unless Phonelib.parse_special
+      Core::TYPES_DESC.keys - exclude_list + fixed_and_mobile_keys(data)
     end
 
     # Gets matched number formatting rule or default one

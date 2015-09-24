@@ -234,7 +234,7 @@ describe Phonelib do
 
     it 'returns [:mobile] as all types and possible_types' do
       expect(@phone.types).to eq([:mobile])
-      possible_types = [:premium_rate, :toll_free, :voip, :no_international_dialling, :mobile]
+      possible_types = [:premium_rate, :toll_free, :voip, :mobile]
       expect(@phone.possible_types).to eq(possible_types)
     end
 
@@ -547,6 +547,19 @@ describe Phonelib do
       phone = Phonelib.parse('972541234567#sdfsdf')
       expect(phone.valid?).to be_true
       expect(phone.extension).to eq('')
+    end
+  end
+
+  context 'issue #59' do
+    it 'should be invalid if parse_special is false' do
+      expect(Phonelib.parse_special).to be_false
+      expect(Phonelib.valid?("really1511@now.com")).to be_false
+    end
+
+    it 'should be valid if parse_special is true' do
+      Phonelib.parse_special = true
+      expect(Phonelib.parse_special).to be_true
+      expect(Phonelib.valid?("really1511@now.com")).to be_true
     end
   end
 

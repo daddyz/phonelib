@@ -43,6 +43,10 @@ To set the default country (country names are {ISO 3166-1 Alpha-2}[http://en.wik
 
   Phonelib.default_country = "CN"
 
+To use the ability to parse special numbers (Short Codes, Emergency etc.) you can set ```Phonelib.parse_special```. This is disabled by default
+
+  Phonelib.parse_special = true
+
 In case phone number that was passed for parsing has "+" sign in the beginning, library will try to detect a country regarding the provided one.
 
 === ActiveRecord Integration
