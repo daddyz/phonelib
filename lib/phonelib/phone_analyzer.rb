@@ -79,9 +79,25 @@ module Phonelib
       result = {}
       Phonelib.phone_data.each do |key, data|
         parsed = parse_single_country(phone, data)
+        if allows_double_prefix(data, phone, parsed && parsed[key])
+          parsed = parse_single_country("#{data[:country_code]}#{phone}", data)
+        end
         result.merge!(parsed) unless parsed.nil?
       end
       result
+    end
+
+    # checks if country can have numbers with double country prefixes
+    #
+    # ==== Attributes
+    #
+    # * +data+ - country data used for parsing
+    # * +phone+ - phone number being parsed
+    # * +parsed+ - parsed regex match for phone
+    def allows_double_prefix(data, phone, parsed)
+      data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
+          phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
+          parsed && (parsed[:valid].nil? || parsed[:valid].empty?)
     end
 
     # Get country that was provided or default country in needable format

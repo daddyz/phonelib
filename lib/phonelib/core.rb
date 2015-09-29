@@ -131,6 +131,8 @@ module Phonelib
     INTERNATIONAL_PREFIX = :international_prefix
     # Main country for code key
     MAIN_COUNTRY_FOR_CODE = :main_country_for_code
+    # Double country prefix flag key
+    DOUBLE_COUNTRY_PREFIX_FLAG = :double_prefix
     # Types key
     TYPES = :types
     # Formats key

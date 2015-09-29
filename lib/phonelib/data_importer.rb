@@ -17,6 +17,9 @@ module Phonelib
     class Importer
       include Phonelib::DataImporterHelper
 
+      # countries that can have double country prefix in number
+      DOUBLE_COUNTRY_CODES_COUNTRIES = %w(IN DE BR)
+
       # main data file in repo
       MAIN_FILE = 'resources/PhoneNumberMetadata.xml'
       # short number metadata
@@ -93,6 +96,7 @@ module Phonelib
           country[:types] = {}
 
           country.merge! get_types_and_formats(el.children)
+          country = add_double_country_flag country
           @data[country[:id]] = country
         end
       end
@@ -156,6 +160,14 @@ module Phonelib
         import_raw_files_data("#{@destination}#{CARRIER_DIR}*",
                               @carriers,
                               :c)
+      end
+
+      # adds double country code flag in case country allows
+      def add_double_country_flag(country)
+        if DOUBLE_COUNTRY_CODES_COUNTRIES.include?(country[:id])
+          country[:double_prefix] = true
+        end
+        country
       end
 
       # method extracts formats and types from xml data

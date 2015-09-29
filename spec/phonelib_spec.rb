@@ -563,6 +563,25 @@ describe Phonelib do
     end
   end
 
+  context 'issue #61' do
+    it 'should be valid number in India' do
+      phone = Phonelib.parse('9111844757')
+      expect(phone.valid?).to be_true
+      expect(phone.sanitized).to eq('9111844757')
+      expect(phone.e164).to eq('+919111844757')
+      expect(Phonelib.valid?('919111844757')).to be_true
+
+      phone = Phonelib.parse('49266444201')
+      expect(phone.valid?).to be_true
+      expect(phone.sanitized).to eq('49266444201')
+      expect(phone.e164).to eq('+49266444201')
+      phone = Phonelib.parse('4949266444201')
+      expect(phone.valid?).to be_true
+      expect(phone.sanitized).to eq('4949266444201')
+      expect(phone.e164).to eq('+4949266444201')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
