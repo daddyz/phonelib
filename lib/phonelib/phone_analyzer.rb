@@ -1,13 +1,11 @@
 module Phonelib
   # phone analyzing methods module
   module PhoneAnalyzer
+    # extending with helper methods for analyze
+    include Phonelib::PhoneAnalyzerHelper
+
     # array of types not included for validation check in cycle
     NOT_FOR_CHECK = [:general_desc, :fixed_line, :mobile, :fixed_or_mobile]
-
-    # caches regular expression, reusing it for later lookups
-    def cr(regexp)
-      Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(regexp)
-    end
 
     # parses provided phone if it is valid for  country data and returns result of
     # analyze
@@ -87,29 +85,6 @@ module Phonelib
       result
     end
 
-    # checks if country can have numbers with double country prefixes
-    #
-    # ==== Attributes
-    #
-    # * +data+ - country data used for parsing
-    # * +phone+ - phone number being parsed
-    # * +parsed+ - parsed regex match for phone
-    def allows_double_prefix(data, phone, parsed)
-      data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
-          phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
-          parsed && (parsed[:valid].nil? || parsed[:valid].empty?)
-    end
-
-    # Get country that was provided or default country in needable format
-    #
-    # ==== Attributes
-    #
-    # * +country+ - country passed for parsing
-    def country_or_default_country(country)
-      country = country || Phonelib.default_country
-      country && country.to_s.upcase
-    end
-
     # Create phone representation in e164 format
     #
     # ==== Attributes
@@ -129,27 +104,6 @@ module Phonelib
       end
     end
 
-    # constructs full regex for phone validation for provided phone data
-    # (international prefix, country code, national prefix, valid number)
-    #
-    # ==== Attributes
-    #
-    # * +data+ - country data hash
-    # * +country_optional+ - whether to put country code as optional group
-    def full_regex_for_data(data, type, country_optional = true)
-      regex = []
-      regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      regex << if country_optional
-                 "(#{data[Core::COUNTRY_CODE]})?"
-               else
-                 data[Core::COUNTRY_CODE]
-               end
-      regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
-      regex << "(#{data[Core::TYPES][Core::GENERAL][type]})"
-
-      cr("^#{regex.join}$")
-    end
-
     # returns national number and analyzing results for provided phone number
     #
     # ==== Attributes
@@ -166,21 +120,6 @@ module Phonelib
                                           data[Core::FORMATS])
       result.merge! all_number_types(result[:national], data[Core::TYPES])
       { result[:id] => result }
-    end
-
-    # Check if phone match country data
-    #
-    # ==== Attributes
-    #
-    # * +phone+ - phone number for parsing
-    # * +data+  - country data
-    def phone_match_data?(phone, data, possible = false)
-      country_code = "#{data[Core::COUNTRY_CODE]}"
-      inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      return unless phone.match cr("^#{inter_prefix}#{country_code}")
-
-      type = possible ? Core::POSSIBLE_PATTERN : Core::VALID_PATTERN
-      phone.match full_regex_for_data(data, type, false)
     end
 
     # Returns all valid and possible phone number types for currently parsed
@@ -205,29 +144,6 @@ module Phonelib
       sanitize_fixed_mobile(response)
     end
 
-    # checks if types has both :mobile and :fixed_line and replaces it with
-    # :fixed_or_mobile in case both present
-    def sanitize_fixed_mobile(types)
-      fixed_mobile = [Core::FIXED_LINE, Core::MOBILE]
-      [:possible, :valid].each do |key|
-        if (fixed_mobile - types[key]).empty?
-          types[key] = types[key] - fixed_mobile + [Core::FIXED_OR_MOBILE]
-        end
-      end
-      types
-    end
-
-    # returns array of phone types for check for current country data
-    #
-    # ==== Attributes
-    #
-    # * +data+  - country data hash
-    def types_for_check(data)
-      exclude_list = PhoneAnalyzer::NOT_FOR_CHECK
-      exclude_list += Phonelib::Core::SHORT_CODES unless Phonelib.parse_special
-      Core::TYPES_DESC.keys - exclude_list + fixed_and_mobile_keys(data)
-    end
-
     # Gets matched number formatting rule or default one
     #
     # ==== Attributes
@@ -240,20 +156,6 @@ module Phonelib
             || national.match(cr("^(#{format[Core::LEADING_DIGITS]})"))) \
         && national.match(cr("^(#{format[Core::PATTERN]})$"))
       end || Core::DEFAULT_NUMBER_FORMAT
-    end
-
-    # Checks if fixed line pattern and mobile pattern are the same and returns
-    # appropriate keys
-    #
-    # ==== Attributes
-    #
-    # * +data+  - country data
-    def fixed_and_mobile_keys(data)
-      if data[Core::FIXED_LINE] == data[Core::MOBILE]
-        [Core::FIXED_OR_MOBILE]
-      else
-        [Core::FIXED_LINE, Core::MOBILE]
-      end
     end
 
     # Returns possible and valid patterns for validation for provided type
@@ -271,28 +173,6 @@ module Phonelib
       else
         [patterns[Core::POSSIBLE_PATTERN], patterns[Core::VALID_PATTERN]]
       end
-    end
-
-    # Checks if passed number matches valid and possible patterns
-    #
-    # ==== Attributes
-    #
-    # * +number+ - phone number for validation
-    # * +possible_pattern+ - possible pattern for validation
-    # * +national_pattern+ - valid pattern for validation
-    def number_valid_and_possible?(number, possible_pattern, national_pattern)
-      possible_match = number.match(cr("^(?:#{possible_pattern})$"))
-      possible = possible_match && possible_match.to_s.length == number.length
-
-      return [possible, possible] if possible_pattern == national_pattern
-      valid = false
-      if possible
-        # doing national pattern match only in case possible matches
-        national_match = number.match(cr("^(?:#{national_pattern})$"))
-        valid = national_match && national_match.to_s.length == number.length
-      end
-
-      [valid && possible, possible]
     end
   end
 end
