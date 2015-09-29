@@ -1,5 +1,6 @@
 ## Upcoming Changes (unreleased)
-- Added setting to use special numbers types for phone parsing. Disabled by default. In order to enable use ```Phonelib.parse_special = true``` in initializer. 
+- Added setting to use special numbers types for phone parsing. Disabled by default. In order to enable use ```Phonelib.parse_special = true``` in initializer.
+- Fixed behaviour of double country codes in phones for IN, DE, BR
 
 ## 0.5.0 - September 04, 2015
 - Added method ```valid_country``` for returning country for parsed phone just in case phone number was valid
