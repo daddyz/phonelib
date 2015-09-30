@@ -1,7 +1,7 @@
 == Phonelib
 
 {<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
-{<img src="https://badge.fury.io/rb/phonelib.png" alt="Gem Version" />}[http://badge.fury.io/rb/phonelib]
+{<img src="https://badge.fury.io/rb/phonelib.svg" alt="Gem Version" />}[http://badge.fury.io/rb/phonelib]
 {<img src="https://codeclimate.com/github/daddyz/phonelib/badges/gpa.svg" />}[https://codeclimate.com/github/daddyz/phonelib]
 {<img src="https://codeclimate.com/github/daddyz/phonelib/badges/coverage.svg" />}[https://codeclimate.com/github/daddyz/phonelib/coverage]
 {<img src="http://inch-ci.org/github/daddyz/phonelib.svg?branch=master" alt="Inline docs" />}[http://inch-ci.org/github/daddyz/phonelib]
