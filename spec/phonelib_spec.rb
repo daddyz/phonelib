@@ -1,5 +1,8 @@
 require 'phonelib'
 
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
+
 describe Phonelib do
 
   it 'must be a Module' do
