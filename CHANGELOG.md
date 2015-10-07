@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.5.2 - October 07, 2015
+- Fixed parsing with national code for CN
+
 ## 0.5.1 - October 07, 2015
 - Added setting to use special numbers types for phone parsing. Disabled by default. In order to enable use ```Phonelib.parse_special = true``` in initializer.
 - Fixed behaviour of double country codes in phones for IN, DE, BR
