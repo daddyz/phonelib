@@ -95,7 +95,7 @@ module Phonelib
       match = phone.match full_regex_for_data(data, Core::VALID_PATTERN)
       case
       when match
-        national_start = (1..3).map { |i| match[i].to_s.length }.inject(:+)
+        national_start = phone.length - match.to_a.last.size
         "#{data[Core::COUNTRY_CODE]}#{phone[national_start..-1]}"
       when phone.match(cr("^#{data[Core::INTERNATIONAL_PREFIX]}"))
         phone.sub(cr("^#{data[Core::INTERNATIONAL_PREFIX]}"), '+')

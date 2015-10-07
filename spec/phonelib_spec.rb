@@ -585,6 +585,13 @@ describe Phonelib do
     end
   end
 
+  context 'issue #60' do
+    it 'should be valid for CN with national prefix' do
+      expect(Phonelib.valid_for_country?('2987388888', 'CN')).to be_true
+      expect(Phonelib.valid_for_country?('02987388888', 'CN')).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
