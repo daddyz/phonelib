@@ -1,4 +1,4 @@
-== Phonelib
+== Phonelib rdoc-image:https://img.shields.io/gem/dt/phonelib/stable.svg
 
 {<img src="https://badge.fury.io/rb/phonelib.svg" alt="Gem Version" />}[http://badge.fury.io/rb/phonelib]
 {<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
