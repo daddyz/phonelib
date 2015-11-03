@@ -1,11 +1,12 @@
 == Phonelib
 
-{<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
 {<img src="https://badge.fury.io/rb/phonelib.svg" alt="Gem Version" />}[http://badge.fury.io/rb/phonelib]
-{<img src="https://codeclimate.com/github/daddyz/phonelib/badges/gpa.svg" />}[https://codeclimate.com/github/daddyz/phonelib]
+{<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
 {<img src="https://codeclimate.com/github/daddyz/phonelib/badges/coverage.svg" />}[https://codeclimate.com/github/daddyz/phonelib/coverage]
+{<img src="https://codeclimate.com/github/daddyz/phonelib/badges/gpa.svg" />}[https://codeclimate.com/github/daddyz/phonelib]
+{<img src="https://gemnasium.com/daddyz/phonelib.svg" alt="Dependency Status" />}[https://gemnasium.com/daddyz/phonelib]
 {<img src="http://inch-ci.org/github/daddyz/phonelib.svg?branch=master" alt="Inline docs" />}[http://inch-ci.org/github/daddyz/phonelib]
-{<img src="https://www.omniref.com/ruby/gems/phonelib.png" alt="phonelib API Documentation" />}[https://www.omniref.com/ruby/gems/phonelib]
+{<img src="https://img.shields.io/gem/dt/phonelib/stable.svg" alt="Total Downloads" />}[https://rubygems.org/gems/phonelib]
 
 Phonelib is a gem allowing you to validate phone number. All validations are based on {Google libphonenumber}[http://code.google.com/p/libphonenumber/].
 Currently it can make basic validations and formatting to e164 international number format and national number format with prefix.
