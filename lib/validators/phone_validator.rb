@@ -48,7 +48,11 @@ class PhoneValidator < ActiveModel::EachValidator
     phone = parse(value)
     if options[:types]
       method = options[:possible] ? :possible_types : :types
-      valid = (phone.send(method) & types).size > 0
+      phone_types = phone.send(method)
+      if (phone_types & [ Core::FIXED_OR_MOBILE ]).size > 0
+        phone_types += [ Core::FIXED_LINE, Core::MOBILE ]
+      end
+      valid = (phone_types & types).size > 0
     else
       method = options[:possible] ? :possible? : :valid?
       valid = phone.send(method)
