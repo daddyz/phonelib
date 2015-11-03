@@ -1,4 +1,4 @@
-== Phonelib <img src="https://img.shields.io/gem/dt/phonelib/stable.svg" alt="Total Downloads" />
+== Phonelib {<img src="https://img.shields.io/gem/dt/phonelib/stable.svg" alt="Total Downloads" />}
 
 {<img src="https://badge.fury.io/rb/phonelib.svg" alt="Gem Version" />}[http://badge.fury.io/rb/phonelib]
 {<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
