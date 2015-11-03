@@ -605,6 +605,13 @@ describe Phonelib do
     end
   end
 
+  context 'issue #67' do
+    it 'should parse CA numbers as valid numbers' do
+      expect(Phonelib.parse('3065555555', 'CA').valid?).to be_true
+      expect(Phonelib.parse('4165555555', 'CA').valid?).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
