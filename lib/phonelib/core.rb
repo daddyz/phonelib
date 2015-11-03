@@ -38,6 +38,32 @@ module Phonelib
       @@default_country = country
     end
 
+    # extension separator
+    @@extension_separator = ';'
+
+    # getter method for extension_separator variable
+    def extension_separator
+      @@extension_separator
+    end
+
+    # setter method for extension_separator variable
+    def extension_separator=(separator)
+      @@extension_separator = separator
+    end
+
+    # extension separator symbols for parsing
+    @@extension_separate_symbols = '#;'
+
+    # getter method for extension_separate_symbols variable
+    def extension_separate_symbols
+      @@extension_separate_symbols
+    end
+
+    # setter method for extension_separate_symbols variable
+    def extension_separate_symbols=(separator)
+      @@extension_separate_symbols = separator
+    end
+
     # flag identifies whether to use special phone types, like short code
     @@parse_special = false
 

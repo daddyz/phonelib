@@ -162,6 +162,16 @@ module Phonelib
       "+#{@data[country][Core::COUNTRY_CODE]} #{national}"
     end
 
+    # returns international formatted number with extension added
+    def full_international
+      "#{international}#{formatted_extension}"
+    end
+
+    # returns e164 format of phone with extension added
+    def full_e164
+      "#{e164}#{formatted_extension}"
+    end
+
     # Returns e164 unformatted phone number
     def e164
       international = self.international
@@ -197,10 +207,18 @@ module Phonelib
 
     private
 
+    # returns extension with separator defined
+    def formatted_extension
+      return '' unless @extension
+
+      "#{Phonelib.extension_separator}#{@extension}"
+    end
+
     # extracts extension from passed phone number if provided
     def separate_extension(original)
-      splitted = (original || '').split /[;#]/
-      [splitted.first, splitted[1..-1] && splitted[1..-1].join]
+      regex = cr("[#{Phonelib.extension_separate_symbols}]")
+      split = (original || '').split regex
+      [split.first, split[1..-1] && split[1..-1].join]
     end
 
     # get main country for code among provided countries

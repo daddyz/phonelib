@@ -537,6 +537,8 @@ describe Phonelib do
         expect(phone.valid?).to be_true
         expect(phone.e164).to eq('+972541234567')
         expect(phone.extension).to eq('123')
+        expect(phone.full_e164).to eq('+972541234567;123')
+        expect(phone.full_international).to eq('+972 54-123-4567;123')
       end
     end
 
@@ -550,6 +552,17 @@ describe Phonelib do
       phone = Phonelib.parse('972541234567#sdfsdf')
       expect(phone.valid?).to be_true
       expect(phone.extension).to eq('')
+    end
+
+    it 'should set different extension separator' do
+      Phonelib.extension_separator = '#'
+
+      phone = Phonelib.parse('972541234567#123')
+      expect(phone.valid?).to be_true
+      expect(phone.e164).to eq('+972541234567')
+      expect(phone.extension).to eq('123')
+      expect(phone.full_e164).to eq('+972541234567#123')
+      expect(phone.full_international).to eq('+972 54-123-4567#123')
     end
   end
 

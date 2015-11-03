@@ -48,6 +48,14 @@ To use the ability to parse special numbers (Short Codes, Emergency etc.) you ca
 
   Phonelib.parse_special = true
 
+To set different extension separator on formatting, this setting doesn't affect parsing. Default setting is ```';'```
+
+  Phonelib.extension_separator = ';'
+
+To set symbols that are used for separating extension from phone number for parsing use ```Phonelib.extension_separate_symbols``` method. Default value is ```'#;'```.
+
+  extension_separate_symbols = '#;'
+
 In case phone number that was passed for parsing has "+" sign in the beginning, library will try to detect a country regarding the provided one.
 
 === ActiveRecord Integration
