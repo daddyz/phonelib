@@ -1,5 +1,11 @@
 ## Upcoming Changes (unreleased)
 
+## 0.5.3 - November 03, 2015
+- fixed bug in validator for types when type is ```:fixed_or_mobile```
+- added ```full_e164``` and ```full_international``` methods to return phone number with extensions
+- added ```Phonelib.extension_separator=``` method to define extension separator while formatting
+- added ```Phonelib.extension_separate_symbols=``` method to define extension separating symbols for parsing
+
 ## 0.5.2 - October 07, 2015
 - Fixed parsing with national code for CN
 
