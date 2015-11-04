@@ -166,7 +166,7 @@ Also it is possible to get formatted phone number
   phone.international # returns formatted e164 international phone number
   phone.national      # returns formatted national number with country prefix
   phone.area_code     # returns area code of parsed number or nil
-  phone.local_numer   # returns local number
+  phone.local_number  # returns local number
   phone.extension     # returns extension provided with phone
 
 You can get E164 formatted number
