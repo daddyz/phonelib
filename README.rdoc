@@ -163,11 +163,13 @@ Also you can fetch all matched countries
 
 Also it is possible to get formatted phone number
 
-  phone.international # returns formatted e164 international phone number
-  phone.national      # returns formatted national number with country prefix
-  phone.area_code     # returns area code of parsed number or nil
-  phone.local_number  # returns local number
-  phone.extension     # returns extension provided with phone
+  phone.international      # returns formatted e164 international phone number
+  phone.national           # returns formatted national number with country prefix
+  phone.area_code          # returns area code of parsed number or nil
+  phone.local_number       # returns local number
+  phone.extension          # returns extension provided with phone
+  phone.full_e164          # returns e164 phone representation with extension
+  phone.full_international # returns formatted international number with extension
 
 You can get E164 formatted number
 
