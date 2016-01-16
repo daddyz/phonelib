@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.5.5 - January 16, 2016
+- updated data
+
 ## 0.5.4 - November 03, 2015
 - fixed bug in validator for types when type is ```:fixed_or_mobile```
 - added ```full_e164``` and ```full_international``` methods to return phone number with extensions
