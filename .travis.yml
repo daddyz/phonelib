@@ -15,6 +15,7 @@ gemfile:
   - gemfiles/Gemfile.rails-3.2.x
   - gemfiles/Gemfile.rails-4.0.x
   - gemfiles/Gemfile.rails-4.1.x
+  - gemfiles/Gemfile.rails-4.2.x
   - Gemfile
 
 script:
@@ -29,6 +30,8 @@ matrix:
       gemfile: gemfiles/Gemfile.rails-4.0.x
     - rvm: 1.9.2
       gemfile: gemfiles/Gemfile.rails-4.1.x
+    - rvm: 1.9.2
+      gemfile: gemfiles/Gemfile.rails-4.2.x
     - rvm: 2.2.0
       gemfile: gemfiles/Gemfile.rails-3.1.x
     - rvm: 2.2.0
