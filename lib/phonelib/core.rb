@@ -77,6 +77,19 @@ module Phonelib
       @@parse_special = special
     end
 
+    # strict check for validator, doesn't sanitize number
+    @@strict_check = false
+
+    # getter for strict check flag
+    def strict_check
+      @@strict_check
+    end
+
+    # setter for strict check flag
+    def strict_check=(strict)
+      @@strict_check = strict
+    end
+
     # gem constants definition
 
     # Main data file

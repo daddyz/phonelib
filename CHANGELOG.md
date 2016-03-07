@@ -1,5 +1,10 @@
 ## Upcoming Changes (unreleased)
 
+## 0.5.6 - March 7, 2016
+- updated data
+- added flag ```Phonelib.strict_check``` to disable sanitizing of phone number being passed for parsing
+- added boolean param for ```national``` and ```international``` methods, if ```false``` passed, it will return unformatted phone representation
+
 ## 0.5.5 - January 16, 2016
 - updated data
 

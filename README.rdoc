@@ -48,13 +48,17 @@ To use the ability to parse special numbers (Short Codes, Emergency etc.) you ca
 
   Phonelib.parse_special = true
 
+To disable sanitizing of passed phone number (keeping digits only)
+
+  Phonelib.strict_check = true
+
 To set different extension separator on formatting, this setting doesn't affect parsing. Default setting is ';'
 
   Phonelib.extension_separator = ';'
 
 To set symbols that are used for separating extension from phone number for parsing use ```Phonelib.extension_separate_symbols``` method. Default value is '#;'.
 
-  extension_separate_symbols = '#;'
+  Phonelib.extension_separate_symbols = '#;'
 
 In case phone number that was passed for parsing has "+" sign in the beginning, library will try to detect a country regarding the provided one.
 
@@ -164,12 +168,17 @@ Also you can fetch all matched countries
 Also it is possible to get formatted phone number
 
   phone.international      # returns formatted e164 international phone number
-  phone.national           # returns formatted national number with country prefix
+  phone.national           # returns formatted national number with national prefix
   phone.area_code          # returns area code of parsed number or nil
   phone.local_number       # returns local number
   phone.extension          # returns extension provided with phone
   phone.full_e164          # returns e164 phone representation with extension
   phone.full_international # returns formatted international number with extension
+
+You can pass <tt>false</tt> to <tt>national</tt> and <tt>international</tt> methods in order to get unformatted representaions
+
+  phone.international(false) # returns unformatted international phone
+  phone.national(false)      # returns unformatted national phone
 
 You can get E164 formatted number
 

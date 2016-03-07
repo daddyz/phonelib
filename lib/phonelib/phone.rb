@@ -34,7 +34,11 @@ module Phonelib
 
     # method to get sanitized phone number (only numbers)
     def sanitized
-      @sanitized ||= @original && @original.gsub(/[^0-9]+/, '') || ''
+      @sanitized = if Phonelib.strict_check
+                     @original
+                   else
+                     @original && @original.gsub(/[^0-9]+/, '') || ''
+                   end
     end
 
     # Returns all phone types that matched valid patterns
@@ -135,21 +139,23 @@ module Phonelib
     end
 
     # Returns formatted national number
-    def national
+    def national(formatted = true)
       return @national_number unless valid?
       format_match, format_string = get_formatting_data
 
       if format_match
-        format_string.gsub(/\$\d/) { |el| format_match[el[1].to_i] }
+        out = format_string.gsub(/\$\d/) { |el| format_match[el[1].to_i] }
+        formatted ? out : out.gsub(/[^0-9]/, '')
       else
         @national_number
       end
     end
 
     # Returns e164 formatted phone number
-    def international
+    def international(formatted = true)
       return nil if sanitized.nil? || sanitized.empty?
       return "+#{sanitized}" unless valid?
+      return "#{@data[country][Core::COUNTRY_CODE]}#{@national_number}" unless formatted
 
       format = @data[country][:format]
       if matches = @national_number.match(/#{format[Core::PATTERN]}/)

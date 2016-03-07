@@ -172,6 +172,11 @@ describe Phonelib do
       expect(phone.international).to eq('+972 54-123-4567')
     end
 
+    it 'returns unformatted when false passed' do
+      phone = Phonelib.parse('972541234567')
+      expect(phone.international(false)).to eq('972541234567')
+    end
+
     it 'returns sanitized when number invalid but possible' do
       phone = Phonelib.parse('9721234567')
       expect(phone.international).to eq('+9721234567')
@@ -190,6 +195,11 @@ describe Phonelib do
     it 'returns right formatting' do
       phone = Phonelib.parse('972541234567')
       expect(phone.national).to eq('054-123-4567')
+    end
+
+    it 'returns unformatted when false passed' do
+      phone = Phonelib.parse('972541234567')
+      expect(phone.national(false)).to eq('0541234567')
     end
 
     it 'returns sanitized national when number invalid but possible' do
@@ -609,6 +619,27 @@ describe Phonelib do
     it 'should parse CA numbers as valid numbers' do
       expect(Phonelib.parse('3065555555', 'CA').valid?).to be_true
       expect(Phonelib.parse('4165555555', 'CA').valid?).to be_true
+    end
+  end
+
+  context 'issue #70' do
+    after :each do
+      Phonelib.strict_check = false
+    end
+
+    it 'should be invalid if strict_check is true' do
+      Phonelib.strict_check = true
+      expect(Phonelib.valid?("1212a5551234")).to be_false
+    end
+
+    it 'should be valid if strict_check is false' do
+      expect(Phonelib.strict_check).to be_false
+      expect(Phonelib.valid?("1212a5551234")).to be_true
+    end
+
+    it 'should be valid if strict_check is true' do
+      Phonelib.strict_check = true
+      expect(Phonelib.valid?("12125551234")).to be_true
     end
   end
 
