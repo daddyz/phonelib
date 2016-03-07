@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phonelib (0.5.5)
+    phonelib (0.5.6)
 
 GEM
   remote: http://rubygems.org/
@@ -50,3 +50,6 @@ DEPENDENCIES
   rack-cache (= 1.2)
   rake
   rspec (= 2.14.1)
+
+BUNDLED WITH
+   1.11.2
