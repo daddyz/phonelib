@@ -1,5 +1,10 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.0 - April 20, 2016
+- updated data
+- fixed bad behaviour, when country valid regex didn't match, but some type's regex was matching
+- added more strict behaviour when country passed - don't try to detect country when it was specified for parsing
+
 ## 0.5.6 - March 7, 2016
 - updated data
 - added flag ```Phonelib.strict_check``` to disable sanitizing of phone number being passed for parsing

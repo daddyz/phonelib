@@ -1,5 +1,5 @@
 # :nodoc:
 module Phonelib
   # :nodoc:
-  VERSION = '0.5.6'
+  VERSION = '0.6.0'
 end
