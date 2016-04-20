@@ -508,7 +508,7 @@ describe Phonelib do
   context 'issue #55' do
     it 'should not throw error' do
       phone = Phonelib.parse('119660086441')
-      expect(phone.valid?).to be_true
+      expect(phone.possible?).to be_true
     end
   end
 
@@ -640,6 +640,33 @@ describe Phonelib do
     it 'should be valid if strict_check is true' do
       Phonelib.strict_check = true
       expect(Phonelib.valid?("12125551234")).to be_true
+    end
+  end
+
+  context 'issue #72' do
+    it 'should be invalid number' do
+      expect(Phonelib.parse('+49157123456789', 'de').international).to eq('+49157123456789')
+      expect(Phonelib.parse('+49157123456789', 'de').valid?).to be_false
+    end
+
+    it 'should try to detect double prefix and make valid' do
+      expect(Phonelib.parse('+491521234567', 'de').international).to eq('+49 491 521234567')
+      expect(Phonelib.parse('+491521234567', 'de').valid?).to be_true
+    end
+
+    it 'should be invalid numbers without + and when country passed' do
+      expect(Phonelib.parse('49157123456789', 'de').international).to eq('+49157123456789')
+      expect(Phonelib.parse('49157123456789', 'de').valid?).to be_false
+      expect(Phonelib.parse('491521234567', 'de').international).to eq('+491521234567')
+      expect(Phonelib.parse('491521234567', 'de').valid?).to be_false
+    end
+
+    it 'should try to detect when default country set but not passed' do
+      Phonelib.default_country = :de
+      expect(Phonelib.parse('49157123456789').international).to eq('+49157123456789')
+      expect(Phonelib.parse('49157123456789').valid?).to be_false
+      expect(Phonelib.parse('491521234567').international).to eq('+49 491 521234567')
+      expect(Phonelib.parse('491521234567').valid?).to be_true
     end
   end
 

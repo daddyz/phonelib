@@ -20,11 +20,11 @@ module Phonelib
 
       result = try_to_parse_single_country(phone, country)
       # if previous parsing failed, trying for all countries
-      if result.nil? || result.empty? || result.values.first[:valid].empty?
+      if passed_country.nil? && (result.nil? || result.empty? || result.values.first[:valid].empty?)
         detected = detect_and_parse phone
         result = detected.empty? ? result || {} : detected
       end
-      result
+      result || {}
     end
 
     private
@@ -64,7 +64,7 @@ module Phonelib
         get_national_and_data(e164, data, valid_match)
       else
         possible_match = phone_match_data?(e164, data, true)
-        possible_match && get_national_and_data(e164, data, possible_match)
+        possible_match && get_national_and_data(e164, data, possible_match, true)
       end
     end
 
@@ -111,14 +111,17 @@ module Phonelib
     # * +phone+ - phone number for parsing
     # * +data+ - country data
     # * +country_match+ - result of match of phone within full regex
-    def get_national_and_data(phone, data, country_match)
+    # * +not_valid+ - specifies that number is not valid by general desc pattern
+    def get_national_and_data(phone, data, country_match, not_valid = false)
       prefix_length = data[Core::COUNTRY_CODE].length
       prefix_length += [1, 2].map { |i| country_match[i].to_s.size }.inject(:+)
       result = data.select { |k, v| k != :types && k != :formats }
       result[:national] = phone[prefix_length..-1] || ''
       result[:format] = get_number_format(result[:national],
                                           data[Core::FORMATS])
-      result.merge! all_number_types(result[:national], data[Core::TYPES])
+      result.merge! all_number_types(result[:national], data[Core::TYPES], not_valid)
+      result[:valid] = [] if not_valid
+
       { result[:id] => result }
     end
 
@@ -129,14 +132,15 @@ module Phonelib
     #
     # * +phone+ - phone number for parsing
     # * +data+  - country data
-    def all_number_types(phone, data)
+    # * +not_valid+ - specifies that number is not valid by general desc pattern
+    def all_number_types(phone, data, not_valid = false)
       response = { valid: [], possible: [] }
 
       types_for_check(data).each do |type|
         possible, valid = get_patterns(data, type)
 
         valid_and_possible, possible_result =
-            number_valid_and_possible?(phone, possible, valid)
+            number_valid_and_possible?(phone, possible, valid, not_valid)
         response[:possible] << type if possible_result
         response[:valid] << type if valid_and_possible
       end

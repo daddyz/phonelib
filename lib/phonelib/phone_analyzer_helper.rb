@@ -111,13 +111,14 @@ module Phonelib
     # * +number+ - phone number for validation
     # * +possible_pattern+ - possible pattern for validation
     # * +national_pattern+ - valid pattern for validation
-    def number_valid_and_possible?(number, possible_pattern, national_pattern)
+    # * +not_valid+ - specifies that number is not valid by general desc pattern
+    def number_valid_and_possible?(number, possible_pattern, national_pattern, not_valid = false)
       possible_match = number.match(cr("^(?:#{possible_pattern})$"))
       possible = possible_match && possible_match.to_s.length == number.length
 
-      return [possible, possible] if possible_pattern == national_pattern
+      return [!not_valid && possible, possible] if possible_pattern == national_pattern
       valid = false
-      if possible
+      if !not_valid && possible
         # doing national pattern match only in case possible matches
         national_match = number.match(cr("^(?:#{national_pattern})$"))
         valid = national_match && national_match.to_s.length == number.length
