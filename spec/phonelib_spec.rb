@@ -649,9 +649,14 @@ describe Phonelib do
       expect(Phonelib.parse('+49157123456789', 'de').valid?).to be_false
     end
 
-    it 'should try to detect double prefix and make valid' do
-      expect(Phonelib.parse('+491521234567', 'de').international).to eq('+49 491 521234567')
-      expect(Phonelib.parse('+491521234567', 'de').valid?).to be_true
+    it 'should not try to detect double prefix and keep invalid' do
+      expect(Phonelib.parse('+491521234567', 'de').international).to eq('+491521234567')
+      expect(Phonelib.parse('+491521234567', 'de').valid?).to be_false
+    end
+
+    it 'should try to detect country and change it' do
+      expect(Phonelib.parse('+521234567', 'de').international).to eq('+521234567')
+      expect(Phonelib.parse('+521234567', 'de').country).to eq('MX')
     end
 
     it 'should be invalid numbers without + and when country passed' do

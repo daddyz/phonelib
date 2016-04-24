@@ -3,6 +3,22 @@ module Phonelib
   module PhoneAnalyzerHelper
     private
 
+    # defines if to validate against single country or not
+    def passed_country(country)
+      country_code = country_prefix(country)
+      if @original.start_with?('+') && country_code && !sanitized.start_with?(country_code)
+        # in case number passed with + but it doesn't start with passed country prefix
+        country = nil
+      end
+      country
+    end
+
+    # returns country prefix for provided country or nil
+    def country_prefix(country)
+      country = country.to_s.upcase
+      Phonelib.phone_data[country] && Phonelib.phone_data[country][Core::COUNTRY_CODE]
+    end
+
     # caches regular expression, reusing it for later lookups
     def cr(regexp)
       Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(regexp)

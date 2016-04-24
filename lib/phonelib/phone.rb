@@ -26,7 +26,7 @@ module Phonelib
       if sanitized.empty?
         @data = {}
       else
-        @data = analyze(sanitized, @original.start_with?('+') ? nil : country)
+        @data = analyze(sanitized, passed_country(country))
         first = @data.values.first
         @national_number = first ? first[:national] : sanitized
       end
