@@ -549,6 +549,7 @@ describe Phonelib do
         expect(phone.extension).to eq('123')
         expect(phone.full_e164).to eq('+972541234567;123')
         expect(phone.full_international).to eq('+972 54-123-4567;123')
+        expect(phone.full_national).to eq('054-123-4567;123')
       end
     end
 
@@ -556,6 +557,7 @@ describe Phonelib do
       phone = Phonelib.parse('972541234567')
       expect(phone.valid?).to be_true
       expect(phone.extension).to eq('')
+      expect(phone.full_e164).to eq('+972541234567')
     end
 
     it 'should sanitize extension' do
@@ -672,6 +674,14 @@ describe Phonelib do
       expect(Phonelib.parse('49157123456789').valid?).to be_false
       expect(Phonelib.parse('491521234567').international).to eq('+49 491 521234567')
       expect(Phonelib.parse('491521234567').valid?).to be_true
+    end
+  end
+
+  context 'issue #75' do
+    it 'should return e164 with country code' do
+      Phonelib.default_country = :us
+      expect(Phonelib.parse('7876711234').e164).to eq('+17876711234')
+      expect(Phonelib.parse('7876711234').valid?).to be false
     end
   end
 

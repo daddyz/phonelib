@@ -1,5 +1,11 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.1 - June 4, 2016
+- updated data
+- added method ```full_national``` which returns national number with extension
+- fixed methods returning formatted numbers with extension not to put ";" sign in case extension is empty
+- fixed ```international``` and ```e164``` methods to return number with country code if it's not present in number
+
 ## 0.6.0 - April 20, 2016
 - updated data
 - fixed bad behaviour, when country valid regex didn't match, but some type's regex was matching

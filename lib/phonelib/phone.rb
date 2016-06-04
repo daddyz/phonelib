@@ -154,7 +154,7 @@ module Phonelib
     # Returns e164 formatted phone number
     def international(formatted = true)
       return nil if sanitized.nil? || sanitized.empty?
-      return "+#{sanitized}" unless valid?
+      return "+#{sanitized.start_with?(country_code) ? '' : country_code}#{sanitized}" unless valid?
       return "#{@data[country][Core::COUNTRY_CODE]}#{@national_number}" unless formatted
 
       format = @data[country][:format]
@@ -165,7 +165,12 @@ module Phonelib
         national = @national_number
       end
 
-      "+#{@data[country][Core::COUNTRY_CODE]} #{national}"
+      "+#{country_code} #{national}"
+    end
+
+    # returns national formatted number with extension added
+    def full_national
+      "#{national}#{formatted_extension}"
     end
 
     # returns international formatted number with extension added
@@ -215,7 +220,7 @@ module Phonelib
 
     # returns extension with separator defined
     def formatted_extension
-      return '' unless @extension
+      return '' if @extension.nil? || @extension.empty?
 
       "#{Phonelib.extension_separator}#{@extension}"
     end
