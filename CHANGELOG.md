@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.2 - June 14, 2016
+- fixed bug in ```international``` method when no country can be defined
+
 ## 0.6.1 - June 4, 2016
 - updated data
 - added method ```full_national``` which returns national number with extension

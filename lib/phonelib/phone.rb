@@ -218,6 +218,7 @@ module Phonelib
 
     private
 
+    # defines whether to put country prefix or not
     def country_prefix_or_not
       return '' unless country_code
       sanitized.start_with?(country_code) ? '' : country_code
