@@ -691,6 +691,16 @@ describe Phonelib do
     end
   end
 
+  context 'issues #76 and #78' do
+    it 'should parse with right countries with default country' do
+      Phonelib.default_country = :us
+
+      expect(Phonelib.parse('+6465550123').e164).to eq('+6465550123')
+      expect(Phonelib.parse('+47 904 48 617').country).to eq('NO')
+      expect(Phonelib.parse('+47 924 48 617').country).to eq('NO')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

@@ -37,13 +37,18 @@ module Phonelib
           parsed && (parsed[:valid].nil? || parsed[:valid].empty?)
     end
 
+    # Returns original number passed if it's a string or empty string otherwise
+    def original_string
+      @original.is_a?(String) ? @original : ''
+    end
+
     # Get country that was provided or default country in needable format
     #
     # ==== Attributes
     #
     # * +country+ - country passed for parsing
     def country_or_default_country(country)
-      country = country || Phonelib.default_country
+      country = country || (original_string.start_with?('+') ? nil : Phonelib.default_country)
       country && country.to_s.upcase
     end
 
