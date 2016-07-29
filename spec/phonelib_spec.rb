@@ -701,6 +701,14 @@ describe Phonelib do
     end
   end
 
+  context 'issues ##81' do
+    it 'should not raise errors for non-string inputs' do
+      Phonelib.default_country = :nz
+
+      expect{Phonelib.parse(6421555444)}.to_not raise_error
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

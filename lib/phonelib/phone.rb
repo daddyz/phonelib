@@ -20,7 +20,7 @@ module Phonelib
     #   country (2 letters) like 'US', 'us' or :us for United States
     #
     def initialize(original, country = nil)
-      @original, @extension = separate_extension(original)
+      @original, @extension = separate_extension(original.to_s)
       @extension.gsub!(/[^0-9]/, '') if @extension
 
       if sanitized.empty?
