@@ -235,7 +235,7 @@ module Phonelib
     def separate_extension(original)
       regex = cr("[#{Phonelib.extension_separate_symbols}]")
       split = (original || '').split regex
-      [split.first, split[1..-1] && split[1..-1].join]
+      [split.first || '', split[1..-1] && split[1..-1].join || '']
     end
 
     # get main country for code among provided countries
