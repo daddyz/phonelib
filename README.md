@@ -1,132 +1,155 @@
-== Phonelib
+## Phonelib
 
-{<img src="https://badge.fury.io/rb/phonelib.svg" alt="Gem Version" />}[http://badge.fury.io/rb/phonelib]
-{<img src="https://travis-ci.org/daddyz/phonelib.png?branch=master" alt="Build Status" />}[http://travis-ci.org/daddyz/phonelib]
-{<img src="https://codeclimate.com/github/daddyz/phonelib/badges/coverage.svg" />}[https://codeclimate.com/github/daddyz/phonelib/coverage]
-{<img src="https://codeclimate.com/github/daddyz/phonelib/badges/gpa.svg" />}[https://codeclimate.com/github/daddyz/phonelib]
-{<img src="https://gemnasium.com/daddyz/phonelib.svg" alt="Dependency Status" />}[https://gemnasium.com/daddyz/phonelib]
-{<img src="http://inch-ci.org/github/daddyz/phonelib.svg?branch=master" alt="Inline docs" />}[http://inch-ci.org/github/daddyz/phonelib]
+[![Gem Version](https://badge.fury.io/rb/phonelib.svg)](http://badge.fury.io/rb/phonelib)
+[![Build Status](https://travis-ci.org/daddyz/phonelib.png?branch=master)](http://travis-ci.org/daddyz/phonelib)
+[![](https://codeclimate.com/github/daddyz/phonelib/badges/coverage.svg)](https://codeclimate.com/github/daddyz/phonelib/coverage)
+[![](https://codeclimate.com/github/daddyz/phonelib/badges/gpa.svg)](https://codeclimate.com/github/daddyz/phonelib)
+[![Dependency Status](https://gemnasium.com/daddyz/phonelib.svg)](https://gemnasium.com/daddyz/phonelib)
+[![Inline docs](http://inch-ci.org/github/daddyz/phonelib.svg?branch=master)](http://inch-ci.org/github/daddyz/phonelib)
 
-Phonelib is a gem allowing you to validate phone number. All validations are based on {Google libphonenumber}[http://code.google.com/p/libphonenumber/].
+Phonelib is a gem allowing you to validate phone number. All validations are based on [Google libphonenumber](http://code.google.com/p/libphonenumber/).
 Currently it can make basic validations and formatting to e164 international number format and national number format with prefix.
 But it still doesn't include all Google's library functionality.
 
-== Information
+## Information
 
-=== Change Log
+### Change Log
 
 Change log can be found in repo's wiki
 https://github.com/daddyz/phonelib/wiki/Change-Log
 
-=== RDoc
-
-RDoc documentation can be found here
-http://rubydoc.info/gems/phonelib/frames
-
-=== Bug reports
+### Bug reports
 
 If you discover a problem with Phonelib gem, let us know about it.
 https://github.com/daddyz/phonelib/issues
 
-=== Example application
+### Example application
 
 You can see an example of ActiveRecord validation by phonelib working in spec/dummy application of this gem
 
-== Getting started
+## Getting started
 
 Phonelib was written and tested on Rails >= 3.1. You can install it by adding in to your Gemfile with:
 
-  gem 'phonelib'
+``` ruby
+gem 'phonelib'
+```
 
 Run the bundle command to install it.
 
-To set the default country (country names are {ISO 3166-1 Alpha-2}[http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2] codes), create a initializer in <tt>config/initializers/phonelib.rb</tt>:
+To set the default country (country names are [ISO 3166-1 Alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes), create a initializer in <tt>config/initializers/phonelib.rb</tt>:
 
-  Phonelib.default_country = "CN"
+``` ruby
+Phonelib.default_country = "CN"
+```
 
 To use the ability to parse special numbers (Short Codes, Emergency etc.) you can set ```Phonelib.parse_special```. This is disabled by default
 
-  Phonelib.parse_special = true
+``` ruby
+Phonelib.parse_special = true
+```
 
 To disable sanitizing of passed phone number (keeping digits only)
 
-  Phonelib.strict_check = true
+``` ruby
+Phonelib.strict_check = true
+```
 
 To set different extension separator on formatting, this setting doesn't affect parsing. Default setting is ';'
 
-  Phonelib.extension_separator = ';'
+``` ruby
+Phonelib.extension_separator = ';'
+```
 
 To set symbols that are used for separating extension from phone number for parsing use ```Phonelib.extension_separate_symbols``` method. Default value is '#;'.
 
-  Phonelib.extension_separate_symbols = '#;'
+``` ruby
+Phonelib.extension_separate_symbols = '#;'
+```
 
 In case phone number that was passed for parsing has "+" sign in the beginning, library will try to detect a country regarding the provided one.
 
-=== ActiveRecord Integration
+### ActiveRecord Integration
 
 This gem adds validator for active record.
 Basic usage:
 
-  validates :attribute, phone: true
+``` ruby
+validates :attribute, phone: true
+```
 
 This will enable Phonelib validator for field "attribute". This validator checks that passed value is valid phone number.
 Please note that passing blank value also fails.
 
 Additional options:
 
-  validates :attribute, phone: { possible: true, allow_blank: true, types: [:voip, :mobile] }
+``` ruby
+validates :attribute, phone: { possible: true, allow_blank: true, types: [:voip, :mobile] }
+```
 
 <tt>possible: true</tt> - enables validation to check whether the passed number is a possible phone number (not strict check).
-Refer to {Google libphonenumber}[http://code.google.com/p/libphonenumber/] for more information on it.
+Refer to [Google libphonenumber](http://code.google.com/p/libphonenumber/) for more information on it.
 
 <tt>allow_blank: true</tt> - when no value passed then validation passes
 
 <tt>types: :mobile</tt> or <tt>types: [:voip, :mobile]</tt> - allows to validate against specific phone types patterns,
 if mixed with <tt>possible</tt> will check if number is possible for specified type
 
-=== Basic usage
+### Basic usage
 
 To check if phone number is valid simply run:
 
-  Phonelib.valid?('123456789') # returns true or false
+``` ruby
+Phonelib.valid?('123456789') # returns true or false
+```
 
 Additional methods:
 
-  Phonelib.valid? '123456789'      # checks if passed value is valid number
-  Phonelib.invalid? '123456789'    # checks if passed value is invalid number
-  Phonelib.possible? '123456789'   # checks if passed value is possible number
-  Phonelib.impossible? '123456789' # checks if passed value is impossible number
+``` ruby
+Phonelib.valid? '123456789'      # checks if passed value is valid number
+Phonelib.invalid? '123456789'    # checks if passed value is invalid number
+Phonelib.possible? '123456789'   # checks if passed value is possible number
+Phonelib.impossible? '123456789' # checks if passed value is impossible number
+```
 
 There is also option to check if provided phone is valid for specified country.
 Country should be specified as two letters country code (like "US" for United States).
 Country can be specified as String <tt>'US'</tt> or <tt>'us'</tt> as well as symbol <tt>:us</tt>.
 
-  Phonelib.valid_for_country? '123456789', 'XX'   # checks if passed value is valid number for specified country
-  Phonelib.invalid_for_country? '123456789', 'XX' # checks if passed value is invalid number for specified country
+``` ruby
+Phonelib.valid_for_country? '123456789', 'XX'   # checks if passed value is valid number for specified country
+Phonelib.invalid_for_country? '123456789', 'XX' # checks if passed value is invalid number for specified country
+```
 
 Additionally you can run:
 
-  phone = Phonelib.parse('123456789')
+``` ruby
+phone = Phonelib.parse('123456789')
+```
 
 You can pass phone number with extension, it should be separated with <tt>;</tt> or <tt>#</tt> signs from the phone number.
 
 Returned value is object of <tt>Phonelib::Phone</tt> class which have following methods:
 
-  # basic validation methods
-  phone.valid?
-  phone.invalid?
-  phone.possible?
-  phone.impossible?
+``` ruby
+# basic validation methods
+phone.valid?
+phone.invalid?
+phone.possible?
+phone.impossible?
 
-  # validations for countries
-  phone.valid_for_country? 'XX'
-  phone.invalid_for_country? 'XX'
+# validations for countries
+phone.valid_for_country? 'XX'
+phone.invalid_for_country? 'XX'
+```
 
 You can also fetch matched valid phone types
 
-  phone.types          # returns array of all valid types
-  phone.type           # returns first element from array of all valid types
-  phone.possible_types # returns array of all possible types
+``` ruby
+phone.types          # returns array of all valid types
+phone.type           # returns first element from array of all valid types
+phone.possible_types # returns array of all possible types
+```
 
 Possible types:
 * <tt>:premium_rate</tt> - Premium Rate
@@ -154,64 +177,82 @@ Possible types:
 
 Or you can get human representation of matched types
 
-  phone.human_types # return array of human representations of valid types
-  phone.human_type  # return human representation of first valid type
+``` ruby
+phone.human_types # return array of human representations of valid types
+phone.human_type  # return human representation of first valid type
+```
 
 Also you can fetch all matched countries
 
-  phone.countries       # returns array of all matched countries
-  phone.country         # returns first element from array of all matched countries
-  phone.valid_countries # returns array of countries where phone was matched against valid pattern
-  phone.valid_country   # returns first valid country from array of valid countries
-  phone.country_code    # returns country phone prefix
+``` ruby
+phone.countries       # returns array of all matched countries
+phone.country         # returns first element from array of all matched countries
+phone.valid_countries # returns array of countries where phone was matched against valid pattern
+phone.valid_country   # returns first valid country from array of valid countries
+phone.country_code    # returns country phone prefix
+```
 
 Also it is possible to get formatted phone number
 
-  phone.international      # returns formatted e164 international phone number
-  phone.national           # returns formatted national number with national prefix
-  phone.area_code          # returns area code of parsed number or nil
-  phone.local_number       # returns local number
-  phone.extension          # returns extension provided with phone
-  phone.full_e164          # returns e164 phone representation with extension
-  phone.full_international # returns formatted international number with extension
+``` ruby
+phone.international      # returns formatted e164 international phone number
+phone.national           # returns formatted national number with national prefix
+phone.area_code          # returns area code of parsed number or nil
+phone.local_number       # returns local number
+phone.extension          # returns extension provided with phone
+phone.full_e164          # returns e164 phone representation with extension
+phone.full_international # returns formatted international number with extension
+```
 
 You can pass <tt>false</tt> to <tt>national</tt> and <tt>international</tt> methods in order to get unformatted representaions
 
-  phone.international(false) # returns unformatted international phone
-  phone.national(false)      # returns unformatted national phone
+``` ruby
+phone.international(false) # returns unformatted international phone
+phone.national(false)      # returns unformatted national phone
+```
 
 You can get E164 formatted number
 
-  phone.e164 # returns number in E164 format
+``` ruby
+phone.e164 # returns number in E164 format
+```
 
 There is extended data available for numbers. It will return <tt>nil</tt> in case there is no data or phone is impossible.
 Can return array of values in case there are some results for specified number
 
-  phone.geo_name # returns geo name of parsed phone
-  phone.timezone # returns timezone name of parsed phone
-  phone.carrier  # returns carrier name of parsed phone
+``` ruby
+phone.geo_name # returns geo name of parsed phone
+phone.timezone # returns timezone name of parsed phone
+phone.carrier  # returns carrier name of parsed phone
+```
 
 Phone class has following attributes
 
-  phone.original        # string that was passed as phone number
-  phone.sanitized       # sanitized phone number (only digits left)
+``` ruby
+phone.original        # string that was passed as phone number
+phone.sanitized       # sanitized phone number (only digits left)
+```
 
-=== How it works
+### How it works
 
 Gem includes data from Google libphonenumber which has regex patterns for validations.
 Valid patterns are more specific to phone type and country.
 Possible patterns as usual are patterns with number of digits in number.
 
-=== Development and tests
+### Development and tests
 
 Everyone can do whatever he wants, the only limit is your imagination.
 Just don't forget to write test before the pull request.
 In order to run test without Rails functionality simply use
 
-  bundle exec rake spec
+```
+bundle exec rake spec
+```
 
 If you want to run including Rails environment, you need to set <tt>BUNDLE_GEMFILE</tt> while running the spec task, for example:
 
-  BUNDLE_GEMFILE=gemfiles/Gemfile.rails-3.2.x bundle exec rake spec
+```
+BUNDLE_GEMFILE=gemfiles/Gemfile.rails-3.2.x bundle exec rake spec
+```
 
 Gemfiles can be found in <tt>gemfiles</tt> folder, there are gemfiles for Rails 3.1, 3.2 and 4.
