@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
     Example: ":tollFree" changed to ":toll_free".
     Please update your app in case you are checking types!
   EOS
-  s.files = Dir['{data,lib,tasks}/**/*'] + %w(MIT-LICENSE Rakefile README.rdoc)
+  s.files = Dir['{data,lib,tasks}/**/*'] + %w(MIT-LICENSE Rakefile README.md)
   s.test_files = Dir['test/**/*']
 
   s.add_development_dependency 'rake'
