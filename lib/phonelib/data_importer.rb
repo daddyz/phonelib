@@ -31,18 +31,25 @@ module Phonelib
       # carrier data dir in repo
       CARRIER_DIR = 'resources/carrier/en/'
       # timezones data dir in repo
-      TIMEZONES_DIR= 'resources/timezones/'
+      TIMEZONES_DIR = 'resources/timezones/'
 
       # class initialization method
       def initialize
         @destination = File.path(
-            "#{File.dirname(__FILE__)}/../../data/libphonenumber/")
+          "#{File.dirname(__FILE__)}/../../data/libphonenumber/")
         @data = {}
         @prefixes = {}
         @geo_names = []
         @timezones = []
         @carriers = []
 
+        run_import
+      end
+
+      private
+
+      # running import method
+      def run_import
         clone_repo
         import_main_data
         import_short_data
@@ -52,8 +59,6 @@ module Phonelib
         import_carrier_data
         save_data_file
       end
-
-      private
 
       # method saves parsed data to data files
       def save_data_file
@@ -84,7 +89,7 @@ module Phonelib
 
         system("rm -rf #{@destination}")
         cloned = system("git clone #{repo} #{@destination} --depth 1 -b master")
-        raise 'Could not clone repo' unless cloned
+        fail 'Could not clone repo' unless cloned
       end
 
       # method parses main data file
@@ -125,15 +130,14 @@ module Phonelib
       def import_alternate_formats
         puts 'IMPORTING ALTERNATE FORMATS'
 
-
         main_from_xml("#{@destination}#{FORMATS_FILE}").elements.each do |el|
-          el.children.each do | phone_type |
-            if phone_type.name == 'availableFormats'
-              formats = parse_formats(phone_type.children)
+          el.children.each do |phone_type|
+            next unless phone_type.name == 'availableFormats'
 
-              country_code = el.attribute('countryCode').value
-              @data[get_country_by_code(country_code)][:formats] += formats
-            end
+            formats = parse_formats(phone_type.children)
+
+            country_code = el.attribute('countryCode').value
+            @data[get_country_by_code(country_code)][:formats] += formats
           end
         end
       end
@@ -175,7 +179,7 @@ module Phonelib
         types = {}
         formats = []
 
-        without_comments(children).each do | phone_type |
+        without_comments(children).each do |phone_type|
           if phone_type.name == 'availableFormats'
             formats = parse_formats(phone_type.children)
           else
@@ -218,7 +222,7 @@ module Phonelib
 
           without_comments(format.children).each do |f|
             current_format[name2sym(f.name)] =
-                str_clean(f.children.first, is_not_format(f.name))
+                str_clean(f.children.first, not_format?(f.name))
           end
 
           current_format
@@ -242,9 +246,9 @@ module Phonelib
 
       # method finds country by country prefix
       def get_country_by_code(country_code)
-        match = @data.select { |k, v| v[:country_code] == country_code }
+        match = @data.select { |_k, v| v[:country_code] == country_code }
         if match.size > 1
-          match = match.select { |k, v| v[:main_country_for_code] == 'true' }
+          match = match.select { |_k, v| v[:main_country_for_code] == 'true' }
         end
 
         match.keys.first

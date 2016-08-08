@@ -6,7 +6,7 @@ module Phonelib
     # @return [String] formatted national number
     def national(formatted = true)
       return @national_number unless valid?
-      format_match, format_string = get_formatting_data
+      format_match, format_string = formatting_data
 
       if format_match
         out = format_string.gsub(/\$\d/) { |el| format_match[el[1].to_i] }
@@ -16,16 +16,23 @@ module Phonelib
       end
     end
 
+    # Returns the country code from the original phone number.
+    # @return [String] matched country phone code
+    def country_code
+      Phonelib.phone_data[country] && \
+        Phonelib.phone_data[country][Core::COUNTRY_CODE]
+    end
+
     # Returns e164 formatted phone number
     # @param formatted [Boolean] whether to return numbers only or formatted
     # @return [String] formatted international number
     def international(formatted = true)
       return nil if sanitized.nil? || sanitized.empty?
       return "+#{country_prefix_or_not}#{sanitized}" unless valid?
-      return "#{@data[country][Core::COUNTRY_CODE]}#{@national_number}" unless formatted
+      return "#{country_code}#{@national_number}" unless formatted
 
       format = @data[country][:format]
-      if matches = @national_number.match(/#{format[Core::PATTERN]}/)
+      if (matches = @national_number.match(/#{format[Core::PATTERN]}/))
         fmt = format[:intl_format] || format[:format]
         national = fmt.gsub(/\$\d/) { |el| matches[el[1].to_i] }
       else
@@ -57,31 +64,37 @@ module Phonelib
     # @return [String] phone formatted in E164 format
     def e164
       international = self.international
-      international and international.gsub /[^+0-9]/, ''
+      international && international.gsub(/[^+0-9]/, '')
     end
 
-    # Returns whether a current parsed phone number is valid for specified
-    # country
-    # @param country [String|Symbol] ISO code of country (2 letters) like 'US', 'us' or :us
-    #   for United States
-    # @return [Boolean] parsed phone number is valid
-    def valid_for_country?(country)
-      country = country.to_s.upcase
-      @data.find do |iso2, data|
-        country == iso2 && data[:valid].any?
-      end.is_a? Array
-    end
+    # returns area code of parsed number
+    # @return [String|nil] parsed phone area code if available
+    def area_code
+      return nil unless area_code_possible?
 
-    # Returns whether a current parsed phone number is invalid for specified
-    # country
-    # @param country [String|Symbol] ISO code of country (2 letters) like 'US', 'us' or :us
-    #   for United States
-    # @return [Boolean] parsed phone number is invalid
-    def invalid_for_country?(country)
-      !valid_for_country?(country)
+      format_match, _format_string = formatting_data
+      take_group = 1
+      if type == Core::MOBILE && Core::AREA_CODE_MOBILE_TOKENS[country] && \
+        format_match[1] == Core::AREA_CODE_MOBILE_TOKENS[country]
+        take_group = 2
+      end
+      format_match[take_group]
     end
 
     private
+
+    # @private defines if phone can have area code
+    def area_code_possible?
+      return false unless possible?
+
+      # has national prefix
+      return false unless @data[country][Core::NATIONAL_PREFIX] || country == 'IT'
+      # fixed or mobile
+      return false unless Core::AREA_CODE_TYPES.include?(type)
+      # mobile && mexico, argentina, brazil
+      return false if type == Core::MOBILE && !Core::AREA_CODE_MOBILE_COUNTRIES.include?(country)
+      true
+    end
 
     # @private defines whether to put country prefix or not
     def country_prefix_or_not
@@ -97,7 +110,7 @@ module Phonelib
     end
 
     # @private Get needable data for formatting phone as national number
-    def get_formatting_data
+    def formatting_data
       return @formatting_data if @formatting_data
 
       format = @data[country][:format]

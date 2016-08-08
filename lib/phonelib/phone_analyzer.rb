@@ -7,8 +7,8 @@ module Phonelib
     # array of types not included for validation check in cycle
     NOT_FOR_CHECK = [:general_desc, :fixed_line, :mobile, :fixed_or_mobile]
 
-    # parses provided phone if it is valid for  country data and returns result of
-    # analyze
+    # parses provided phone if it is valid for  country data and
+    # returns result of analyze
     #
     # ==== Attributes
     #
@@ -20,7 +20,9 @@ module Phonelib
 
       result = try_to_parse_single_country(phone, country)
       # if previous parsing failed, trying for all countries
-      if passed_country.nil? && (result.nil? || result.empty? || result.values.first[:valid].empty?)
+      if passed_country.nil? && \
+        (result.nil? || result.empty? || result.values.first[:valid].empty?)
+
         detected = detect_and_parse phone
         result = detected.empty? ? result || {} : detected
       end
@@ -38,18 +40,18 @@ module Phonelib
     # * +country+ - country to parse phone with
     def try_to_parse_single_country(phone, country)
       data = Phonelib.phone_data[country]
-      if country && data
-        # if country was provided and it's a valid country, trying to
-        # create e164 representation of phone number,
-        # kind of normalization for parsing
-        e164 = convert_to_e164 phone, data
-        # if phone starts with international prefix of provided
-        # country try to reanalyze without international prefix for
-        # all countries
-        return analyze(e164.gsub('+', ''), nil) if e164[0] == '+'
-        # trying to parse number for provided country
-        parse_single_country e164, data
-      end
+      return nil unless country && data
+
+      # if country was provided and it's a valid country, trying to
+      # create e164 representation of phone number,
+      # kind of normalization for parsing
+      e164 = convert_to_e164 phone, data
+      # if phone starts with international prefix of provided
+      # country try to reanalyze without international prefix for
+      # all countries
+      return analyze(e164.delete('+'), nil) if e164[0] == '+'
+      # trying to parse number for provided country
+      parse_single_country e164, data
     end
 
     # method checks if phone is valid against single provided country data
@@ -61,10 +63,10 @@ module Phonelib
     def parse_single_country(e164, data)
       valid_match = phone_match_data?(e164, data)
       if valid_match
-        get_national_and_data(e164, data, valid_match)
+        national_and_data(e164, data, valid_match)
       else
         possible_match = phone_match_data?(e164, data, true)
-        possible_match && get_national_and_data(e164, data, possible_match, true)
+        possible_match && national_and_data(e164, data, possible_match, true)
       end
     end
 
@@ -112,14 +114,14 @@ module Phonelib
     # * +data+ - country data
     # * +country_match+ - result of match of phone within full regex
     # * +not_valid+ - specifies that number is not valid by general desc pattern
-    def get_national_and_data(phone, data, country_match, not_valid = false)
+    def national_and_data(phone, data, country_match, not_valid = false)
       prefix_length = data[Core::COUNTRY_CODE].length
       prefix_length += [1, 2].map { |i| country_match[i].to_s.size }.inject(:+)
-      result = data.select { |k, v| k != :types && k != :formats }
+      result = data.select { |k, _v| k != :types && k != :formats }
       result[:national] = phone[prefix_length..-1] || ''
-      result[:format] = get_number_format(result[:national],
-                                          data[Core::FORMATS])
-      result.merge! all_number_types(result[:national], data[Core::TYPES], not_valid)
+      result[:format] = number_format(result[:national], data[Core::FORMATS])
+      result.merge! all_number_types(result[:national], data[Core::TYPES],
+                                     not_valid)
       result[:valid] = [] if not_valid
 
       { result[:id] => result }
@@ -154,10 +156,10 @@ module Phonelib
     #
     # * +national+ - national phone number
     # * +format_data+  - formatting data from country data
-    def get_number_format(national, format_data)
+    def number_format(national, format_data)
       format_data && format_data.find do |format|
         (format[Core::LEADING_DIGITS].nil? \
-            || national.match(cr("^(#{format[Core::LEADING_DIGITS]})"))) \
+          || national.match(cr("^(#{format[Core::LEADING_DIGITS]})"))) \
         && national.match(cr("^(#{format[Core::PATTERN]})$"))
       end || Core::DEFAULT_NUMBER_FORMAT
     end

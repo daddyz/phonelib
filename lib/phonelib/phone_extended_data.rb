@@ -1,6 +1,13 @@
 module Phonelib
   # module provides extended data methods for parsed phone
   module PhoneExtendedData
+    # @private keys for extended data
+    EXT_KEYS = [
+      Phonelib::Core::EXT_GEO_NAME_KEY,
+      Phonelib::Core::EXT_TIMEZONE_KEY,
+      Phonelib::Core::EXT_CARRIER_KEY
+    ]
+
     # Returns geo name of parsed phone number or nil if number is invalid or
     # there is no geo name specified in db for this number
     # @return [String|nil] geo name for parsed phone
@@ -35,37 +42,37 @@ module Phonelib
     # * +id_key+   - parameter id key in resolved extended data for number
     #
     def get_ext_name(names_key, id_key)
-      if ext_data[id_key] > 0
-        res = Phonelib.phone_ext_data[names_key][ext_data[id_key]]
-        res.size == 1 ? res.first : res
-      end
+      return nil unless ext_data[id_key] > 0
+
+      res = Phonelib.phone_ext_data[names_key][ext_data[id_key]]
+      res.size == 1 ? res.first : res
     end
 
     # @private returns extended data ids for current number
     def ext_data
       return @ext_data if @ext_data
 
-      ext_keys = [
-          Phonelib::Core::EXT_GEO_NAME_KEY,
-          Phonelib::Core::EXT_TIMEZONE_KEY,
-          Phonelib::Core::EXT_CARRIER_KEY
-      ]
-      result = {}
-      ext_keys.each { |key| result[key] = 0 }
-
+      result = default_ext_data
       return result unless possible?
 
       drill = Phonelib.phone_ext_data[Phonelib::Core::EXT_PREFIXES]
 
-      e164.gsub('+', '').each_char do |num|
+      e164.delete('+').each_char do |num|
         drill = drill[num.to_i] || break
 
-        ext_keys.each do |key|
+        EXT_KEYS.each do |key|
           result[key] = drill[key] if drill[key]
         end
       end
 
       @ext_data = result
+    end
+
+    # @private default extended data
+    def default_ext_data
+      result = {}
+      EXT_KEYS.each { |key| result[key] = 0 }
+      result
     end
   end
 end

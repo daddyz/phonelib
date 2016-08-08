@@ -20,7 +20,7 @@ module Phonelib
     end
 
     # method for checking if element name is not a format element
-    def is_not_format(name)
+    def not_format?(name)
       !XML_FORMAT_NAMES.include? name
     end
 
@@ -35,18 +35,18 @@ module Phonelib
     def get_hash_from_xml(data, type)
       hash = {}
       case type
-        when :attributes
-          data.attributes.each do |k, v|
-            hash[name2sym(k)] = str_clean(v)
-          end
-        when :children
-          data.each do |f|
-            hash[name2sym(f[0])] = f[1]
-          end
-        when :element
-          data.elements.each do |child|
-            hash[name2sym(child.name)] = str_clean(child.children.first)
-          end
+      when :attributes
+        data.attributes.each do |k, v|
+          hash[name2sym(k)] = str_clean(v)
+        end
+      when :children
+        data.each do |f|
+          hash[name2sym(f[0])] = f[1]
+        end
+      when :element
+        data.elements.each do |child|
+          hash[name2sym(child.name)] = str_clean(child.children.first)
+        end
       end
       hash
     end
@@ -66,7 +66,7 @@ module Phonelib
     # get main body from parsed xml document
     def main_from_xml(file)
       xml_data = File.read(file)
-      xml_data.force_encoding("utf-8")
+      xml_data.force_encoding('utf-8')
 
       doc = Nokogiri::XML(xml_data)
       doc.elements.first.elements.first

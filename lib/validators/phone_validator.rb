@@ -36,7 +36,6 @@
 #     validates :mobile, phone: { possible: true, types: :mobile  }
 #   end
 #
-
 class PhoneValidator < ActiveModel::EachValidator
   # Include all core methods
   include Phonelib::Core
@@ -46,17 +45,12 @@ class PhoneValidator < ActiveModel::EachValidator
     return if options[:allow_blank] && value.blank?
 
     phone = parse(value)
-    if options[:types]
-      method = options[:possible] ? :possible_types : :types
-      phone_types = phone.send(method)
-      if (phone_types & [ Phonelib::Core::FIXED_OR_MOBILE ]).size > 0
-        phone_types += [ Phonelib::Core::FIXED_LINE, Phonelib::Core::MOBILE ]
-      end
-      valid = (phone_types & types).size > 0
-    else
-      method = options[:possible] ? :possible? : :valid?
-      valid = phone.send(method)
-    end
+    valid = if simple_validation?
+              method = options[:possible] ? :possible? : :valid?
+              phone.send(method)
+            else
+              (phone_types(phone) & types).size > 0
+            end
 
     record.errors.add(attribute, options[:message] || :invalid) unless valid
   end
@@ -64,9 +58,24 @@ class PhoneValidator < ActiveModel::EachValidator
   private
 
   # @private
-  def types
-    types = options[:types].is_a?(Array) ? options[:types] : [options[:types]]
-    types.map &:to_sym
+  def simple_validation?
+    options[:types].nil?
   end
 
+  # @private
+  # @param phone [Phonelib::Phone] parsed phone
+  def phone_types(phone)
+    method = options[:possible] ? :possible_types : :types
+    phone_types = phone.send(method)
+    if (phone_types & [Phonelib::Core::FIXED_OR_MOBILE]).size > 0
+      phone_types += [Phonelib::Core::FIXED_LINE, Phonelib::Core::MOBILE]
+    end
+    phone_types
+  end
+
+  # @private
+  def types
+    types = options[:types].is_a?(Array) ? options[:types] : [options[:types]]
+    types.map(&:to_sym)
+  end
 end

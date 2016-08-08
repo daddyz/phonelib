@@ -11,4 +11,6 @@ module Phonelib
   extend Core
 end
 
-autoload :PhoneValidator, 'validators/phone_validator' if defined?(ActiveModel) || defined?(Rails)
+if defined?(ActiveModel) || defined?(Rails)
+  autoload :PhoneValidator, 'validators/phone_validator'
+end

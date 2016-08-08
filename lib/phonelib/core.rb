@@ -36,7 +36,7 @@ module Phonelib
     end
 
     # setter method for default_country variable
-    # @param country [String|Symbol] ISO2 code of default country used for parsing
+    # @param country [String|Symbol] default country ISO2 code used for parsing
     # @return [String|nil] Default country set for parsing or nil
     def default_country=(country)
       @@default_country = country
@@ -74,7 +74,8 @@ module Phonelib
       @@extension_separate_symbols = separator
     end
 
-    # @private flag identifies whether to use special phone types, like short code
+    # @private flag identifies whether to use special phone types, \
+    #   like short code
     @@parse_special = false
 
     # getter for flag for special phone types parsing
@@ -122,19 +123,20 @@ module Phonelib
     PREMIUM_RATE = :premium_rate
     # @private Freephone line pattern key
     TOLL_FREE = :toll_free
-    # @private Shared cost pattern key. The cost of this call is shared between caller
-    # and recipient, and is hence typically less than PREMIUM_RATE calls
+    # @private Shared cost pattern key. The cost of this call is shared
+    # between caller and recipient, and is hence typically less than
+    # PREMIUM_RATE calls
     SHARED_COST = :shared_cost
     # @private VoIP pattern key. This includes TSoIP (Telephony Service over IP)
     VOIP = :voip
-    # @private A personal number is associated with a particular person, and may be
-    # routed to either a MOBILE or FIXED_LINE number.
+    # @private A personal number is associated with a particular person,
+    # and may be routed to either a MOBILE or FIXED_LINE number.
     PERSONAL_NUMBER = :personal_number
     # @private Pager phone number pattern key
     PAGER = :pager
-    # @private Used for 'Universal Access Numbers' or 'Company Numbers'. They may be
-    # further routed to specific offices, but allow one number to be used for a
-    # company.
+    # @private Used for 'Universal Access Numbers' or 'Company Numbers'.
+    #   They may be further routed to specific offices, but allow one number
+    #   to be used for a company.
     UAN = :uan
     # @private Used for 'Voice Mail Access Numbers'.
     VOICEMAIL = :voicemail
@@ -142,7 +144,8 @@ module Phonelib
     FIXED_LINE = :fixed_line
     # @private Mobile phone number pattern key
     MOBILE = :mobile
-    # @private In case MOBILE and FIXED patterns are the same, this type is returned
+    # @private In case MOBILE and FIXED patterns are the same,
+    #   this type is returned
     FIXED_OR_MOBILE = :fixed_or_mobile
     # @private Short code
     SHORT_CODE = :short_code
@@ -203,8 +206,8 @@ module Phonelib
 
     # @private Area code mobile phone token
     AREA_CODE_MOBILE_TOKENS = {
-        'MX' => '1',
-        'AR' => '9'
+      'MX' => '1',
+      'AR' => '9'
     }
 
     # @private Default number formatting data hash
@@ -242,10 +245,10 @@ module Phonelib
 
     # @private short codes types keys
     SHORT_CODES = [
-        :short_code, :emergency, :carrier_specific, :sms_services,
-        :expanded_emergency, :no_international_dialling, :carrier_services,
-        :directory_services, :standard_rate, :carrier_selection_codes,
-        :area_code_optional
+      :short_code, :emergency, :carrier_specific, :sms_services,
+      :expanded_emergency, :no_international_dialling, :carrier_services,
+      :directory_services, :standard_rate, :carrier_selection_codes,
+      :area_code_optional
     ]
 
     # @private Extended data prefixes hash key

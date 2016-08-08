@@ -5,9 +5,10 @@ module Phonelib
 
     # defines if to validate against single country or not
     def passed_country(country)
-      country_code = country_prefix(country)
-      if @original.start_with?('+') && country_code && !sanitized.start_with?(country_code)
-        # in case number passed with + but it doesn't start with passed country prefix
+      code = country_prefix(country)
+      if @original.start_with?('+') && code && !sanitized.start_with?(code)
+        # in case number passed with + but it doesn't start with passed
+        # country prefix
         country = nil
       end
       country
@@ -16,7 +17,8 @@ module Phonelib
     # returns country prefix for provided country or nil
     def country_prefix(country)
       country = country.to_s.upcase
-      Phonelib.phone_data[country] && Phonelib.phone_data[country][Core::COUNTRY_CODE]
+      Phonelib.phone_data[country] && \
+        Phonelib.phone_data[country][Core::COUNTRY_CODE]
     end
 
     # caches regular expression, reusing it for later lookups
@@ -33,8 +35,8 @@ module Phonelib
     # * +parsed+ - parsed regex match for phone
     def allows_double_prefix(data, phone, parsed)
       data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
-          phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
-          parsed && (parsed[:valid].nil? || parsed[:valid].empty?)
+        phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
+        parsed && (parsed[:valid].nil? || parsed[:valid].empty?)
     end
 
     # Returns original number passed if it's a string or empty string otherwise
@@ -48,7 +50,7 @@ module Phonelib
     #
     # * +country+ - country passed for parsing
     def country_or_default_country(country)
-      country = country || (original_string.start_with?('+') ? nil : Phonelib.default_country)
+      country ||= (original_string.start_with?('+') ? nil : Phonelib.default_country)
       country && country.to_s.upcase
     end
 

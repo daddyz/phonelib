@@ -1,5 +1,4 @@
 namespace :phonelib do
-
   desc 'Create database for tests in Rails dummy application'
   task :create_test_db do
     exit unless defined? Rails
@@ -13,5 +12,4 @@ namespace :phonelib do
     require 'phonelib/data_importer'
     Phonelib::DataImporter.import
   end
-
 end
