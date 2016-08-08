@@ -2,7 +2,8 @@
 - fixing to override default country when + passed in the beginning of phone
 - fixed error when int passed as phone number
 - fixed error when ```";"``` passed as phone number
-
+- fixed ```area_code``` method behaviour
+- changed documentation to yard
 
 ## 0.6.2 - June 14, 2016
 - fixed bug in ```international``` method when no country can be defined

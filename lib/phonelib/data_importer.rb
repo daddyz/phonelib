@@ -1,7 +1,7 @@
 require 'phonelib/data_importer_helper'
 
 module Phonelib
-  # module processes creation of data files needed for this gem
+  # @private module processes creation of data files needed for this gem
   module DataImporter
     require 'nokogiri'
 
@@ -13,7 +13,7 @@ module Phonelib
       Importer.new
     end
 
-    # class with functionality for importing data
+    # @private class with functionality for importing data
     class Importer
       include Phonelib::DataImporterHelper
 

@@ -63,6 +63,7 @@ class PhoneValidator < ActiveModel::EachValidator
 
   private
 
+  # @private
   def types
     types = options[:types].is_a?(Array) ? options[:types] : [options[:types]]
     types.map &:to_sym

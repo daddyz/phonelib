@@ -1,5 +1,5 @@
 module Phonelib
-  # helper module for parsing raw libphonenumber data
+  # @private helper module for parsing raw libphonenumber data
   module DataImporterHelper
     # xml comments attributes names that should not be parsed
     XML_COMMENT_ATTRIBUTES = %w(text comment)

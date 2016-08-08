@@ -3,6 +3,7 @@ module Phonelib
   module PhoneExtendedData
     # Returns geo name of parsed phone number or nil if number is invalid or
     # there is no geo name specified in db for this number
+    # @return [String|nil] geo name for parsed phone
     def geo_name
       get_ext_name Phonelib::Core::EXT_GEO_NAMES,
                    Phonelib::Core::EXT_GEO_NAME_KEY
@@ -10,6 +11,7 @@ module Phonelib
 
     # Returns timezone of parsed phone number or nil if number is invalid or
     # there is no timezone specified in db for this number
+    # @return [String|nil] timezone for parsed phone
     def timezone
       get_ext_name Phonelib::Core::EXT_TIMEZONES,
                    Phonelib::Core::EXT_TIMEZONE_KEY
@@ -17,6 +19,7 @@ module Phonelib
 
     # Returns carrier of parsed phone number or nil if number is invalid or
     # there is no carrier specified in db for this number
+    # @return [String|nil] carrier for parsed phone
     def carrier
       get_ext_name Phonelib::Core::EXT_CARRIERS,
                    Phonelib::Core::EXT_CARRIER_KEY
@@ -24,7 +27,7 @@ module Phonelib
 
     private
 
-    # get name from extended phone data by keys
+    # @private get name from extended phone data by keys
     #
     # ==== Attributes
     #
@@ -38,7 +41,7 @@ module Phonelib
       end
     end
 
-    # returns extended data ids for current number
+    # @private returns extended data ids for current number
     def ext_data
       return @ext_data if @ext_data
 

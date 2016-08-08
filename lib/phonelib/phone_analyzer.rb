@@ -1,5 +1,5 @@
 module Phonelib
-  # phone analyzing methods module
+  # @private phone analyzing methods module
   module PhoneAnalyzer
     # extending with helper methods for analyze
     include Phonelib::PhoneAnalyzerHelper

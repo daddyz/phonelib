@@ -1,5 +1,5 @@
 module Phonelib
-  # helper methods for analyser
+  # @private helper methods for analyser
   module PhoneAnalyzerHelper
     private
 

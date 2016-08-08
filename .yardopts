@@ -1,0 +1,1 @@
+lib/**/*.rb --no-private - CHANGELOG.md --readme README.md

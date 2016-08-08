@@ -524,9 +524,25 @@ describe Phonelib do
 
   context 'area_code method' do
     it 'should return area code' do
-      expect(Phonelib.parse('+61 3 9876 0010').area_code).to eq('03')
-      expect(Phonelib.parse('+44 (0) 20-7031-3000').area_code).to eq('020')
+      expect(Phonelib.parse('+61 3 9876 0010').area_code).to eq('3')
+      expect(Phonelib.parse('+44 (0) 20-7031-3000').area_code).to eq('20')
       expect(Phonelib.parse('+852 2699 2838').area_code).to be_nil
+    end
+
+    it 'should return area code if number is geo' do
+      expect(Phonelib.parse('+16502530000').area_code).to eq('650')
+      expect(Phonelib.parse('+18002530000').area_code).to be_nil
+      expect(Phonelib.parse('+442070313000').area_code).to eq('20')
+      expect(Phonelib.parse('+447912345678').area_code).to be_nil
+      expect(Phonelib.parse('+541187654321').area_code).to eq('11')
+      expect(Phonelib.parse('+61236618300').area_code).to eq('2')
+      expect(Phonelib.parse('+390236618300').area_code).to eq('02')
+      expect(Phonelib.parse('+6565218000').area_code).to be_nil
+      expect(Phonelib.parse('+1650253000').area_code).to be_nil
+      expect(Phonelib.parse('+80012345678').area_code).to be_nil
+      expect(Phonelib.parse('+61236618300').area_code).to eq('2')
+      expect(Phonelib.parse('+5491132277150').area_code).to eq('11')
+
     end
   end
 
@@ -713,6 +729,13 @@ describe Phonelib do
     it 'should not throw error' do
       Phonelib.strict_check = true
       expect{Phonelib.parse(';')}.not_to raise_error
+      Phonelib.strict_check = false
+    end
+  end
+
+  context 'issue #80' do
+    it 'should return right area code' do
+      expect(Phonelib.parse('+15306355653').area_code).to eq('530')
     end
   end
 

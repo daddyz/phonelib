@@ -1,5 +1,4 @@
-# :nodoc:
 module Phonelib
-  # :nodoc:
+  # @private
   VERSION = '0.6.2'
 end

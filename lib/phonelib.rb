@@ -1,15 +1,14 @@
-# main module definition
+# main Phonelib module definition
 module Phonelib
-  # load gem classes
+  # load phonelib classes/modules
   autoload :Core, 'phonelib/core'
   autoload :Phone, 'phonelib/phone'
+  autoload :PhoneFormatter, 'phonelib/phone_formatter'
   autoload :PhoneAnalyzer, 'phonelib/phone_analyzer'
   autoload :PhoneAnalyzerHelper, 'phonelib/phone_analyzer_helper'
   autoload :PhoneExtendedData, 'phonelib/phone_extended_data'
 
-  extend Module.new {
-    include Core
-  }
+  extend Core
 end
 
 autoload :PhoneValidator, 'validators/phone_validator' if defined?(ActiveModel) || defined?(Rails)

@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
     this gem. Gem uses its data file for validations and number formatting.
   EOS
   s.license = 'MIT'
+  s.has_rdoc = 'yard'
 
   s.post_install_message = <<-EOS
     IMPORTANT NOTICE!
