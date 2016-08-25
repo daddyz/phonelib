@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.4 - August 25, 2016
+- updated data
+
 ## 0.6.3 - August 8, 2016
 - fixing to override default country when + passed in the beginning of phone
 - fixed error when int passed as phone number
