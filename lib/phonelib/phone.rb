@@ -36,7 +36,7 @@ module Phonelib
     # @return [String] Sanitized phone number
     def sanitized
       @sanitized = if Phonelib.strict_check
-                     @original
+                     @original || ''
                    else
                      @original && @original.gsub(/[^0-9]+/, '') || ''
                    end

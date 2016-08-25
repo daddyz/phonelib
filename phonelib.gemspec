@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   EOS
   s.license = 'MIT'
   s.has_rdoc = 'yard'
+  s.rdoc_options << ' --no-private - CHANGELOG.md --readme README.md'
 
   s.post_install_message = <<-EOS
     IMPORTANT NOTICE!

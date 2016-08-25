@@ -739,6 +739,13 @@ describe Phonelib do
     end
   end
 
+  context 'issue #79' do
+    it 'should be valid number for claro colombia' do
+      expect(Phonelib.parse('+573234827533').valid?).to be_true
+      expect(Phonelib.parse('+573202605272').valid?).to be_true
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
