@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.5 - August 25, 2016
+- allowing + in the beginning of number when strict check is on
+
 ## 0.6.4 - August 25, 2016
 - updated data
 
