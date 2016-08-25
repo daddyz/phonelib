@@ -746,6 +746,28 @@ describe Phonelib do
     end
   end
 
+  context 'issue #85' do
+    it 'should validate without strict and sanitize non numbers' do
+      expect(Phonelib.valid?('441684291707')).to be_true
+      expect(Phonelib.valid?('+441684291707')).to be_true
+      expect(Phonelib.valid?('+4416842917076')).to be_false
+      expect(Phonelib.valid?('+441684291707x')).to be_true
+      expect(Phonelib.valid?('+441684291707xxxxxxxxxxxxxxxxxasdasadadas')).to be_true
+    end
+
+    it 'should validate right with strict and sanitize only first +' do
+      Phonelib.strict_check = true
+
+      expect(Phonelib.valid?('441684291707')).to be_true
+      expect(Phonelib.valid?('+441684291707')).to be_true
+      expect(Phonelib.valid?('+4416842917076')).to be_false
+      expect(Phonelib.valid?('+441684291707x')).to be_false
+      expect(Phonelib.valid?('+441684291707xxxxxxxxxxxxxxxxxasdasadadas')).to be_false
+
+      Phonelib.strict_check = false
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
