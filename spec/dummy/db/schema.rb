@@ -9,17 +9,18 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140318165956) do
+ActiveRecord::Schema.define(version: 20161009182201) do
 
-  create_table "phones", :force => true do |t|
+  create_table "phones", force: :cascade do |t|
     t.string   "number"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "possible_number"
     t.string   "type_number"
     t.string   "possible_type_number"
+    t.string   "strict_number"
   end
 
 end

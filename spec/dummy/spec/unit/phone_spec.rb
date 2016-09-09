@@ -68,4 +68,10 @@ describe Phone do
     expect(phone.save).to be_false
     expect(phone.errors.any?).to be_true
   end
+
+  it 'should raise ActiveModel::StrictValidationFailed on strict fields' do
+    phone = phones(:invalid_strict)
+    expect{phone.valid?}.to raise_error(ActiveModel::StrictValidationFailed)
+  end
+
 end
