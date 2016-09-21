@@ -52,7 +52,7 @@ class PhoneValidator < ActiveModel::EachValidator
               (phone_types(phone) & types).size > 0
             end
 
-    record.errors.add(attribute, options[:message] || :invalid) unless valid
+    record.errors.add(attribute, options[:message] || :invalid, options) unless valid
   end
 
   private
