@@ -70,8 +70,12 @@ describe Phone do
   end
 
   it 'should raise ActiveModel::StrictValidationFailed on strict fields' do
-    phone = phones(:invalid_strict)
-    expect{phone.valid?}.to raise_error(ActiveModel::StrictValidationFailed)
+    if Rails::VERSION::STRING >= '3.2'
+      phone = phones(:invalid_strict)
+      expect{phone.valid?}.to raise_error(ActiveModel::StrictValidationFailed)
+    else
+      # this test is suitable for rails >= 3.2 only
+    end
   end
 
 end
