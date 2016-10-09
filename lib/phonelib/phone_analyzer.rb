@@ -19,20 +19,19 @@ module Phonelib
       country = country_or_default_country passed_country
 
       result = try_to_parse_country(phone, country)
-      if result.nil? || result.empty? || result.values.find {|e| e[:valid].any? }.nil?
-        # if previous parsing failed to be valid
-        case
+      case
+      when result && !result.values.find {|e| e[:valid].any? }.nil?
+        # all is good, return result
+        d_result = nil
+      when passed_country.nil?
         # trying for all countries if no country was passed
-        when passed_country.nil?
-          detected = detect_and_parse phone
-          d_result = detected.empty? ? result || {} : detected
+        detected = detect_and_parse phone
+        d_result = detected.empty? ? result || {} : detected
+      when !original_string.start_with?('+') && country_can_double_prefix?(country)
         # if country allows double prefix trying modified phone
-        when !original_string.start_with?('+') && country_can_double_prefix?(country)
-          d_result = try_to_parse_country(changed_double_prefixed_phone(country, phone), country)
-        end
-        result = better_result(result, d_result)
+        d_result = try_to_parse_country(changed_double_prefixed_phone(country, phone), country)
       end
-      result || {}
+      better_result(result, d_result)
     end
 
     private
@@ -40,7 +39,7 @@ module Phonelib
     # method checks which result is better to return
     def better_result(base_result, result = nil)
       if result.nil?
-        return base_result
+        return base_result || {}
       end
 
       if base_result.nil? || base_result.empty? || base_result.values.find {|e| e[:possible].any? }.nil?
@@ -51,7 +50,7 @@ module Phonelib
         return result
       end
 
-      base_result
+      base_result || {}
     end
 
     # trying to parse phone for single country including international prefix

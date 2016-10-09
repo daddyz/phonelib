@@ -782,6 +782,9 @@ describe Phonelib do
       expect(Phonelib.parse('3921234567', 'IT').type).to eq(:mobile)
       expect(Phonelib.parse('3921234567', 'IT').national(false)).to eq('3921234567')
       expect(Phonelib.parse('3921234567', 'IT').valid?).to be_true
+
+      expect(Phonelib.parse('393912345', 'IT').valid?).to be_false
+      expect(Phonelib.parse('393912345', 'IT').possible?).to be_true
     end
   end
 
