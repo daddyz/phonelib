@@ -18,7 +18,7 @@ module Phonelib
       include Phonelib::DataImporterHelper
 
       # countries that can have double country prefix in number
-      DOUBLE_COUNTRY_CODES_COUNTRIES = %w(IN DE BR)
+      DOUBLE_COUNTRY_CODES_COUNTRIES = %w(IN DE BR IT)
 
       # main data file in repo
       MAIN_FILE = 'resources/PhoneNumberMetadata.xml'

@@ -1,4 +1,6 @@
 ## Upcoming Changes (unreleased)
+- allowing to pass ```strict: true``` to validator
+- added ```raw_national``` method for returning unformatted national number part of international number
 
 ## 0.6.5 - August 25, 2016
 - allowing + in the beginning of number when strict check is on

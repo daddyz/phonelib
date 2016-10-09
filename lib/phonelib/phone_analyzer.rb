@@ -18,18 +18,41 @@ module Phonelib
     def analyze(phone, passed_country)
       country = country_or_default_country passed_country
 
-      result = try_to_parse_single_country(phone, country)
-      # if previous parsing failed, trying for all countries
-      if passed_country.nil? && \
-        (result.nil? || result.empty? || result.values.first[:valid].empty?)
-
-        detected = detect_and_parse phone
-        result = detected.empty? ? result || {} : detected
+      result = try_to_parse_country(phone, country)
+      if result.nil? || result.empty? || result.values.find {|e| e[:valid].any? }.nil?
+        # if previous parsing failed to be valid
+        case
+        # trying for all countries if no country was passed
+        when passed_country.nil?
+          detected = detect_and_parse phone
+          d_result = detected.empty? ? result || {} : detected
+        # if country allows double prefix trying modified phone
+        when !original_string.start_with?('+') && country_can_double_prefix?(country)
+          d_result = try_to_parse_country(changed_double_prefixed_phone(country, phone), country)
+        end
+        result = better_result(result, d_result)
       end
       result || {}
     end
 
     private
+
+    # method checks which result is better to return
+    def better_result(base_result, result = nil)
+      if result.nil?
+        return base_result
+      end
+
+      if base_result.nil? || base_result.empty? || base_result.values.find {|e| e[:possible].any? }.nil?
+        return result
+      end
+
+      if result && result.values.find {|e| e[:valid].any? }
+        return result
+      end
+
+      base_result
+    end
 
     # trying to parse phone for single country including international prefix
     # check for provided country
@@ -38,7 +61,7 @@ module Phonelib
     #
     # * +phone+ - phone for parsing
     # * +country+ - country to parse phone with
-    def try_to_parse_single_country(phone, country)
+    def try_to_parse_country(phone, country)
       data = Phonelib.phone_data[country]
       return nil unless country && data
 
@@ -79,8 +102,8 @@ module Phonelib
       result = {}
       Phonelib.phone_data.each do |key, data|
         parsed = parse_single_country(phone, data)
-        if allows_double_prefix(data, phone, parsed && parsed[key])
-          parsed = parse_single_country("#{data[:country_code]}#{phone}", data)
+        if double_prefix_allowed?(data, phone, parsed && parsed[key])
+          parsed = parse_single_country(changed_double_prefixed_phone(key, phone), data)
         end
         result.merge!(parsed) unless parsed.nil?
       end

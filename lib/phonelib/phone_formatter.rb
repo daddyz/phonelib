@@ -16,6 +16,19 @@ module Phonelib
       end
     end
 
+    # Returns the raw national number that was defined during parsing
+    # @return [String] raw national number
+    def raw_national
+      return nil if sanitized.nil? || sanitized.empty?
+      if valid?
+        @national_number
+      elsif country_code && sanitized.start_with?(country_code)
+        sanitized[country_code.size..-1]
+      else
+        sanitized
+      end
+    end
+
     # Returns the country code from the original phone number.
     # @return [String] matched country phone code
     def country_code

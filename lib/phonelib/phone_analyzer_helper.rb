@@ -26,6 +26,25 @@ module Phonelib
       Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(regexp)
     end
 
+    # defines whether country can have double country prefix in number
+    def country_can_double_prefix?(country)
+      Phonelib.phone_data[country] &&
+        Phonelib.phone_data[country][Core::DOUBLE_COUNTRY_PREFIX_FLAG]
+    end
+
+    # changes phone to with/without double country prefix
+    def changed_double_prefixed_phone(country, phone)
+      data = Phonelib.phone_data[country]
+      return if data.nil? || data[Core::DOUBLE_COUNTRY_PREFIX_FLAG].nil?
+
+      country_code = Phonelib.phone_data[country][Core::COUNTRY_CODE]
+      if phone.start_with? country_code * 2
+        phone.gsub(cr("^#{country_code}"), '')
+      else
+        "#{country_code}#{phone}"
+      end
+    end
+
     # checks if country can have numbers with double country prefixes
     #
     # ==== Attributes
@@ -33,8 +52,8 @@ module Phonelib
     # * +data+ - country data used for parsing
     # * +phone+ - phone number being parsed
     # * +parsed+ - parsed regex match for phone
-    def allows_double_prefix(data, phone, parsed)
-      data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
+    def double_prefix_allowed?(data, phone, parsed = {})
+      data && data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
         phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
         parsed && (parsed[:valid].nil? || parsed[:valid].empty?)
     end

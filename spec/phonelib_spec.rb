@@ -313,6 +313,7 @@ describe Phonelib do
       Phonelib.default_country = :CN
       phone = Phonelib.parse('+41 44 668 18 00')
       expect(phone.valid?).to be_true
+      Phonelib.default_country = nil
     end
   end
 
@@ -680,8 +681,8 @@ describe Phonelib do
     it 'should be invalid numbers without + and when country passed' do
       expect(Phonelib.parse('49157123456789', 'de').international).to eq('+49157123456789')
       expect(Phonelib.parse('49157123456789', 'de').valid?).to be_false
-      expect(Phonelib.parse('491521234567', 'de').international).to eq('+491521234567')
-      expect(Phonelib.parse('491521234567', 'de').valid?).to be_false
+      expect(Phonelib.parse('491521234567', 'de').international).to eq('+49 491 521234567')
+      expect(Phonelib.parse('491521234567', 'de').valid?).to be_true
     end
 
     it 'should try to detect when default country set but not passed' do
@@ -765,6 +766,52 @@ describe Phonelib do
       expect(Phonelib.valid?('+441684291707xxxxxxxxxxxxxxxxxasdasadadas')).to be_false
 
       Phonelib.strict_check = false
+    end
+  end
+
+  context 'issue #87' do
+    it 'should parse double IT country prefix' do
+      expect(Phonelib.parse('3911234567', 'IT').national(false)).to eq('3911234567')
+      expect(Phonelib.parse('3911234567', 'IT').valid?).to be_true
+      expect(Phonelib.parse('3911234567', 'IT').type).to eq(:mobile)
+
+      expect(Phonelib.parse('+393911234567', 'IT').national(false)).to eq('3911234567')
+      expect(Phonelib.parse('+393911234567', 'IT').valid?).to be_true
+      expect(Phonelib.parse('+393911234567', 'IT').type).to eq(:mobile)
+
+      expect(Phonelib.parse('3921234567', 'IT').type).to eq(:mobile)
+      expect(Phonelib.parse('3921234567', 'IT').national(false)).to eq('3921234567')
+      expect(Phonelib.parse('3921234567', 'IT').valid?).to be_true
+    end
+  end
+
+  context 'issue #88' do
+    it 'should return raw national number when valid' do
+      phone = Phonelib.parse('+97221234567')
+      expect(phone.raw_national).to eq('21234567')
+      expect(phone.national).to eq('02-123-4567')
+    end
+
+    it 'should return raw national number when invalid' do
+      phone = Phonelib.parse('+97221')
+      expect(phone.raw_national).to eq('97221')
+      expect(phone.national).to eq('97221')
+    end
+
+    it 'should return raw national number when possible' do
+      phone = Phonelib.parse('+97221111')
+      expect(phone.raw_national).to eq('21111')
+      expect(phone.national).to eq('21111')
+    end
+  end
+
+  context 'issue #90' do
+    it 'should return same results' do
+      Phonelib.default_country = 'US'
+      number = '4035566466'
+      expect(Phonelib.possible?(number)).to be_true
+      expect(Phonelib.parse(number).possible?).to be_true
+      expect(Phonelib.parse(number, Phonelib.default_country).possible?).to be_true
     end
   end
 
