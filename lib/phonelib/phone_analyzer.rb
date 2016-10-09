@@ -19,18 +19,16 @@ module Phonelib
       country = country_or_default_country passed_country
 
       result = try_to_parse_country(phone, country)
-      case
-      when result && !result.values.find {|e| e[:valid].any? }.nil?
-        # all is good, return result
-        d_result = nil
-      when passed_country.nil?
-        # trying for all countries if no country was passed
-        detected = detect_and_parse phone
-        d_result = detected.empty? ? result || {} : detected
-      when !original_string.start_with?('+') && country_can_double_prefix?(country)
-        # if country allows double prefix trying modified phone
-        d_result = try_to_parse_country(changed_double_prefixed_phone(country, phone), country)
-      end
+      d_result = case
+                 when result && result.values.find {|e| e[:valid].any? }
+                   # all is good, return result
+                 when passed_country.nil?
+                   # trying for all countries if no country was passed
+                   detect_and_parse phone
+                 when !original_string.start_with?('+') && country_can_double_prefix?(country)
+                   # if country allows double prefix trying modified phone
+                   try_to_parse_country(changed_double_prefixed_phone(country, phone), country)
+                 end
       better_result(result, d_result)
     end
 
