@@ -7,7 +7,7 @@
 [![Dependency Status](https://gemnasium.com/daddyz/phonelib.svg)](https://gemnasium.com/daddyz/phonelib)
 [![Inline docs](http://inch-ci.org/github/daddyz/phonelib.svg?branch=master)](http://inch-ci.org/github/daddyz/phonelib)
 
-Phonelib is a gem allowing you to validate phone number. All validations are based on [Google libphonenumber](http://code.google.com/p/libphonenumber/).
+Phonelib is a gem allowing you to validate phone number. All validations are based on [Google libphonenumber](https://github.com/googlei18n/libphonenumber).
 Currently it can make basic validations and formatting to e164 international number format and national number format with prefix.
 But it still doesn't include all Google's library functionality.
 
