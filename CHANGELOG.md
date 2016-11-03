@@ -1,4 +1,6 @@
 ## Upcoming Changes (unreleased)
+
+## 0.6.6 - November 3, 2016
 - allowing to pass ```strict: true``` to validator
 - added ```raw_national``` method for returning unformatted national number part of international number
 
