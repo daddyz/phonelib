@@ -11,3 +11,4 @@ spec/dummy/tmp/
 spec/dummy/.sass-cache
 data/libphonenumber
 gemfiles/*.lock
+coverage/
