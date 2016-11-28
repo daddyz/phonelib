@@ -29,7 +29,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'nokogiri', '= 1.6.0'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
-  s.add_development_dependency 'codeclimate-test-reporter'
+  s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
+  s.add_development_dependency 'simplecov'
   # fixing CI tests
   s.add_development_dependency 'rack-cache', '= 1.2'
 end

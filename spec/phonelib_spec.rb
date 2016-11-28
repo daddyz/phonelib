@@ -1,7 +1,10 @@
 require 'phonelib'
 
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
+# deprecated code climate
+#require 'codeclimate-test-reporter'
+#CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 describe Phonelib do
 

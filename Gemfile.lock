@@ -6,8 +6,8 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    codeclimate-test-reporter (0.4.8)
-      simplecov (>= 0.7.1, < 1.0.0)
+    codeclimate-test-reporter (1.0.3)
+      simplecov
     coderay (1.0.9)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -43,13 +43,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  codeclimate-test-reporter
+  codeclimate-test-reporter (~> 1.0.0)
   nokogiri (= 1.6.0)
   phonelib!
   pry
   rack-cache (= 1.2)
   rake
   rspec (= 2.14.1)
+  simplecov
 
 BUNDLED WITH
    1.11.2
