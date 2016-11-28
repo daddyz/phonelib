@@ -1,6 +1,6 @@
 ## Upcoming Changes (unreleased)
 
-## 0.6.7 - November 28, 2016
+## 0.6.8 - November 28, 2016
 - updated data
 
 ## 0.6.6 - November 3, 2016
