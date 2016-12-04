@@ -323,7 +323,7 @@ describe Phonelib do
   context 'extended data' do
     it 'should have geo_name' do
       phone = Phonelib.parse('12015551234')
-      expect(phone.geo_name).to eq('NewJersey')
+      expect(phone.geo_name).to eq('New Jersey')
     end
 
     it 'should have timezone' do

@@ -55,10 +55,10 @@ module Phonelib
     def parse_raw_file(file)
       data = {}
       File.readlines(file).each do |line|
-        line = str_clean line
+        line = str_clean line, false
         next if line.empty? || line[0] == '#'
         prefix, line_data = line.split('|')
-        data[prefix] = line_data && line_data.split('&')
+        data[prefix] = line_data && line_data.strip.split('&')
       end
       data
     end

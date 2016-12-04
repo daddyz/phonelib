@@ -1,4 +1,5 @@
 ## Upcoming Changes (unreleased)
+- fixed missing spaces in ```geo_name``` method results
 
 ## 0.6.8 - November 28, 2016
 - updated data
