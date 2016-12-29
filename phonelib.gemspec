@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{lib,tasks}/**/*'] + Dir['data/*.dat'] + %w(MIT-LICENSE Rakefile README.md)
   s.test_files = Dir['test/**/*']
 
-  s.add_development_dependency 'rake'
+  s.add_development_dependency 'rake', '< 11.0'
   s.add_development_dependency 'nokogiri', '= 1.6.0'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
