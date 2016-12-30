@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161009182201) do
+ActiveRecord::Schema.define(version: 20161230181632) do
 
   create_table "phones", force: :cascade do |t|
     t.string   "number"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20161009182201) do
     t.string   "type_number"
     t.string   "possible_type_number"
     t.string   "strict_number"
+    t.string   "country"
   end
 
 end

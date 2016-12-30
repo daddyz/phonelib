@@ -15,6 +15,20 @@ describe Phone do
     expect(phone.errors.any?).to be_true
   end
 
+  it "is invalid when phone is invalid and country is specified" do
+    phone = Phone.new(number: '1305558858', country: 'us')
+
+    expect(phone.valid?).to be_false
+    expect(phone.errors.any?).to be_true
+  end
+
+  it "is valid when phone is valid and country is specified" do
+    phone = Phone.new(number: '3175082248', country: 'us')
+
+    expect(phone.valid?).to be_true
+    expect(phone.errors.any?).to be_false
+  end
+
   it 'passes when valid' do
     phone = phones(:valid_and_possible)
     expect(phone.save).to be_true
