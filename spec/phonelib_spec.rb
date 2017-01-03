@@ -7,6 +7,9 @@ require 'simplecov'
 SimpleCov.start
 
 describe Phonelib do
+  before(:all) do
+    Phonelib.override_phone_data = "spec/dummy/lib/override_phone_data.dat"
+  end
 
   it 'must be a Module' do
     expect(Phonelib).to be_a_kind_of(Module)
@@ -120,6 +123,20 @@ describe Phonelib do
             it 'should be true' do
               expect(Phonelib.valid_for_country?('541234567', country)).to\
                   be_true
+            end
+          end
+        end
+      end
+
+      context 'with entry in overidden data file' do
+        ['UG', 'ug', :ug].each do |country|
+          context "with #{country} as country" do
+            context 'with correct data' do
+              it 'should be true' do
+                # the number provided would be invalid if it weren't for the override file
+                expect(Phonelib.valid_for_country?('812345678', country)).to\
+                    be_true
+              end
             end
           end
         end

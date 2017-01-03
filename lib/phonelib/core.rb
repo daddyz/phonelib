@@ -107,6 +107,16 @@ module Phonelib
       @@strict_check = strict
     end
 
+    @@override_phone_data = nil
+    # setter for data file to use
+    def override_phone_data=(file_path)
+      @@override_phone_data = file_path
+    end
+
+    def override_phone_data
+      @@override_phone_data
+    end
+
     # gem constants definition
 
     # @private Main data file
@@ -324,7 +334,12 @@ module Phonelib
     # @private Load data file into memory
     def load_data
       data_file = "#{File.dirname(__FILE__)}/../../#{FILE_MAIN_DATA}"
-      Marshal.load(File.binread(data_file))
+      default_data = Marshal.load(File.binread(data_file))
+      if override_phone_data
+        override_data_file = Marshal.load(File.binread(override_phone_data))
+        default_data.merge!(override_data_file)
+      end
+      default_data
     end
 
     # @private Load extended data file into memory
