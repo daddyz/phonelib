@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 - fixed missing spaces in ```geo_name``` method results
+- added ```:country_specifier``` parameter to validator, allows to specify country for validation (PR #97)
+- added ```Phonelib.override_phone_data``` for defining a file holding exceptions for google's libphonenumber library's data (PR #96)
+
 
 ## 0.6.8 - November 28, 2016
 - updated data

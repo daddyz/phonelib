@@ -1,5 +1,6 @@
 ## Phonelib
 
+[![Built in integration with JetBrains RubyMine](https://www.jetbrains.com/ruby/)](icon_RubyMine.png)
 [![Gem Version](https://badge.fury.io/rb/phonelib.svg)](http://badge.fury.io/rb/phonelib)
 [![Build Status](https://travis-ci.org/daddyz/phonelib.png?branch=master)](http://travis-ci.org/daddyz/phonelib)
 [![](https://codeclimate.com/github/daddyz/phonelib/badges/coverage.svg)](https://codeclimate.com/github/daddyz/phonelib/coverage)
@@ -67,6 +68,12 @@ To set symbols that are used for separating extension from phone number for pars
 Phonelib.extension_separate_symbols = '#;'
 ```
 
+In case you need to overwrite some Google's libphonenumber library data, you need to assign file path to this setter. File should be Marshal.dump'ed with existing structure like in ```Phonelib.phone_data```. Gem is simply doing ```merge``` between hashes.
+
+``` ruby
+Phonelib.override_phone_data = '/path/to/override_phone_data.dat'
+```
+
 In case phone number that was passed for parsing has "+" sign in the beginning, library will try to detect a country regarding the provided one.
 
 ### ActiveRecord Integration
@@ -84,7 +91,7 @@ Please note that passing blank value also fails.
 Additional options:
 
 ``` ruby
-validates :attribute, phone: { possible: true, allow_blank: true, types: [:voip, :mobile] }
+validates :attribute, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], country_specifier: -> phone { phone.country.try(:upcase) } }
 ```
 
 <tt>possible: true</tt> - enables validation to check whether the passed number is a possible phone number (not strict check).
@@ -94,6 +101,8 @@ Refer to [Google libphonenumber](http://code.google.com/p/libphonenumber/) for m
 
 <tt>types: :mobile</tt> or <tt>types: [:voip, :mobile]</tt> - allows to validate against specific phone types patterns,
 if mixed with <tt>possible</tt> will check if number is possible for specified type
+
+<tt>country_specifier: -> phone { phone.country.try(:upcase) }</tt> - allows to specify country for validation dynamically for each validation. 
 
 ### Basic usage
 

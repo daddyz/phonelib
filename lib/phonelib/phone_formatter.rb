@@ -124,7 +124,7 @@ module Phonelib
 
     # @private Get needable data for formatting phone as national number
     def formatting_data
-      return @formatting_data if @formatting_data
+      return @formatting_data if defined?(@formatting_data)
 
       format = @data[country][:format]
       prefix = @data[country][Core::NATIONAL_PREFIX]
