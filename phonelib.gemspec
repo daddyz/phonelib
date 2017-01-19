@@ -15,13 +15,6 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
   s.has_rdoc = 'yard'
   s.rdoc_options << ' --no-private - CHANGELOG.md --readme README.md'
-
-  s.post_install_message = <<-EOS
-    IMPORTANT NOTICE!
-    Phone types were changed from camel case to snake case!
-    Example: ":tollFree" changed to ":toll_free".
-    Please update your app in case you are checking types!
-  EOS
   s.files = Dir['{lib,tasks}/**/*'] + Dir['data/*.dat'] + %w(MIT-LICENSE Rakefile README.md)
   s.test_files = Dir['test/**/*']
 
