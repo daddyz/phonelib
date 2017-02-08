@@ -838,6 +838,38 @@ describe Phonelib do
     end
   end
 
+  context 'issue #100 - for country NO' do
+    cell_numbers = [
+        # Control examples
+        '95098471', '41044927', '92859554',
+        # Numbers starting with 47 without problems
+        '47465724', '47944424', '47898180',
+        # Numers starting with 471 with problems
+        '47144752', '47152183', '47140633'
+    ].freeze
+
+    cell_numbers.each do |number|
+      context "with phone number #{number}" do
+        before :all do
+          @number = number
+          @phone = Phonelib.parse(@number, 'NO')
+        end
+
+        it 'should be valid' do
+          expect(@phone.valid?).to be_true
+        end
+
+        it 'should have right national' do
+          expect(@phone.national(false)).to eq(@number)
+        end
+
+        it 'should have right e164' do
+          expect(@phone.e164).to eq("+47#{@number}")
+        end
+      end
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
