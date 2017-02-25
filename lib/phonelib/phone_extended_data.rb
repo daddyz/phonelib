@@ -45,6 +45,7 @@ module Phonelib
       return nil unless ext_data[id_key] > 0
 
       res = Phonelib.phone_ext_data[names_key][ext_data[id_key]]
+      return nil unless res
       res.size == 1 ? res.first : res
     end
 
