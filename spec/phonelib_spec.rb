@@ -368,6 +368,12 @@ describe Phonelib do
       expect(phone.timezone).to be_nil
       expect(phone.carrier).to be_nil
     end
+
+    it 'should be nil when not exist geo name' do
+      phone = Phonelib.parse('0145-61-1234', 'JP')
+      expect(phone.valid?).to be_true
+      expect(phone.geo_name).to be_nil
+    end
   end
 
   context 'issue #16' do
