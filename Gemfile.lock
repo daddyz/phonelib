@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phonelib (0.6.9)
+    phonelib (0.6.10)
 
 GEM
   remote: http://rubygems.org/

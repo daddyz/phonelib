@@ -1,4 +1,6 @@
 ## Upcoming Changes (unreleased)
+
+## 0.6.10 - March 1, 2017
 - updated data
 - added ```Phone.to_s``` method, it will return ```e164``` in case number is valid or ```original``` otherwise
 - added ```Phonelib.vanity_conversion``` setting, that defines whether to convert chars in phone number to appropriate numbers. Default is ```false```
