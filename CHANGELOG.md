@@ -1,4 +1,7 @@
 ## Upcoming Changes (unreleased)
+- updated data
+- added ```Phone.to_s``` method, it will return ```e164``` in case number is valid or ```original``` otherwise
+- added ```Phonelib.vanity_conversion``` setting, that defines whether to convert chars in phone number to appropriate numbers. Default is ```false```
 
 ## 0.6.9 - January 18, 2017
 - fixed missing spaces in ```geo_name``` method results

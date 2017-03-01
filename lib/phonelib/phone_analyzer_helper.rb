@@ -3,6 +3,20 @@ module Phonelib
   module PhoneAnalyzerHelper
     private
 
+    def vanity_converted(phone)
+      return phone unless Phonelib.vanity_conversion
+
+      (phone || '').gsub(/[a-z]/i.freeze) do |c|
+        c.upcase!
+        # subtract "A"
+        n = (c.ord - 65) / 3
+        # account for #7 & #9 which have 4 chars
+        n -= 1 if c == 'S'.freeze || c == 'V'.freeze || c >= 'Y'.freeze
+        (n + 2).to_s
+      end
+    end
+
+
     # defines if to validate against single country or not
     def passed_country(country)
       code = country_prefix(country)

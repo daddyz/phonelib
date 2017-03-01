@@ -50,6 +50,12 @@ To use the ability to parse special numbers (Short Codes, Emergency etc.) you ca
 Phonelib.parse_special = true
 ```
 
+To allow vanity phone numbers conversion you can set ```Phonelib.vanity_conversion``` to ```true```. This will convert characters in passed phone number to their numeric representation (800-CALL-NOW will be 800-225-5669).
+
+``` ruby
+Phonelib.vanity_conversion = true
+```
+
 To disable sanitizing of passed phone number (keeping digits only)
 
 ``` ruby
@@ -224,6 +230,12 @@ You can get E164 formatted number
 
 ``` ruby
 phone.e164 # returns number in E164 format
+```
+
+There is a ```to_s``` method, it will return ```e164``` in case number is valid and ```original``` otherwise
+
+``` ruby
+phone.to_s # returns number in E164 format if number is valid or original otherwise
 ```
 
 There is extended data available for numbers. It will return <tt>nil</tt> in case there is no data or phone is impossible.

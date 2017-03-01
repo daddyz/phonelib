@@ -117,6 +117,16 @@ module Phonelib
       @@override_phone_data
     end
 
+    @@vanity_conversion = false
+    # setter for vanity phone numbers chars replacement
+    def vanity_conversion=(value)
+      @@vanity_conversion = value
+    end
+
+    def vanity_conversion
+      @@vanity_conversion
+    end
+
     # gem constants definition
 
     # @private Main data file

@@ -11,6 +11,15 @@ describe Phonelib do
     Phonelib.override_phone_data = "spec/dummy/lib/override_phone_data.dat"
   end
 
+  before(:each) do
+    Phonelib.default_country = nil
+    Phonelib.extension_separator = ';'
+    Phonelib.extension_separate_symbols = '#;'
+    Phonelib.parse_special = false
+    Phonelib.strict_check = false
+    Phonelib.vanity_conversion = false
+  end
+
   it 'must be a Module' do
     expect(Phonelib).to be_a_kind_of(Module)
   end
@@ -267,7 +276,7 @@ describe Phonelib do
 
     it 'returns [:mobile] as all types and possible_types' do
       expect(@phone.types).to eq([:mobile])
-      possible_types = [:premium_rate, :toll_free, :voip, :mobile]
+      possible_types = [:premium_rate, :toll_free, :voip, :fixed_or_mobile]
       expect(@phone.possible_types).to eq(possible_types)
     end
 
@@ -873,6 +882,33 @@ describe Phonelib do
           expect(@phone.e164).to eq("+47#{@number}")
         end
       end
+    end
+  end
+
+  context 'issue #102 vanity numbers' do
+    it 'should be invalid' do
+      expect(Phonelib.vanity_conversion).to be_false
+
+      p = Phonelib.parse('800-44-STERN', 'US')
+      expect(p.valid?).to be_false
+    end
+
+    it 'should be invalid' do
+      Phonelib.vanity_conversion = true
+
+      p = Phonelib.parse('800-44-STERN', 'US')
+      expect(p.valid?).to be_true
+      expect(p.e164).to eq('+18004478376')
+    end
+  end
+
+  context 'issue #103 to_s method' do
+    it 'should return e164 if valid' do
+      expect(Phonelib.parse('441684291707').to_s).to eq('+441684291707')
+    end
+
+    it 'should return original if invalid' do
+      expect(Phonelib.parse('+442244').to_s).to eq('+442244')
     end
   end
 

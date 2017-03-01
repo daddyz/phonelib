@@ -32,14 +32,18 @@ module Phonelib
       end
     end
 
+    # method returns string representation of parsed phone
+    def to_s
+      valid? ? e164 : original
+    end
+
     # method to get sanitized phone number (only numbers)
     # @return [String] Sanitized phone number
     def sanitized
-      @sanitized = if Phonelib.strict_check
-                     @original && @original.gsub(/^\+/, '') || ''
-                   else
-                     @original && @original.gsub(/[^0-9]+/, '') || ''
-                   end
+      @sanitized ||=
+          vanity_converted(@original).gsub(
+              Phonelib.strict_check ? /^\+/.freeze : /[^0-9]+/.freeze,
+              '')
     end
 
     # Returns all phone types that matched valid patterns
