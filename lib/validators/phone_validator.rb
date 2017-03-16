@@ -44,7 +44,7 @@ class PhoneValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return if options[:allow_blank] && value.blank?
 
-    phone = parse(value, specified_country)
+    phone = parse(value, specified_country(record))
     valid = if simple_validation?
               phone.send(validate_method)
             else
@@ -64,7 +64,7 @@ class PhoneValidator < ActiveModel::EachValidator
     options[:possible] ? :possible? : :valid?
   end
 
-  def specified_country
+  def specified_country(record)
     return unless options[:country_specifier]
     options[:country_specifier].call(record)
   end
