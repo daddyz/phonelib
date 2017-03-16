@@ -4,7 +4,7 @@ RUNS = Integer(ENV['RUNS'] || 10)
 
 def run_benchmark(test_numbers)
   start = Time.now
-  100.times do
+  2.times do
     test_numbers.each do |country, numbers|
       numbers.each do |number|
         Phonelib.parse(number, country)

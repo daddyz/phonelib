@@ -42,20 +42,20 @@ module Phonelib
     def sanitized
       @sanitized ||=
           vanity_converted(@original).gsub(
-              Phonelib.strict_check ? /^\+/.freeze : /[^0-9]+/.freeze,
+              Phonelib.strict_check ? cr('^\+') : cr('[^0-9]+'),
               '')
     end
 
     # Returns all phone types that matched valid patterns
     # @return [Array] all valid phone types
     def types
-      @data.flat_map { |_iso2, data| data[:valid] }.uniq
+      @types ||= @data.flat_map { |_iso2, data| data[:valid] }.uniq
     end
 
     # Returns all possible types that matched possible patterns
     # @return [Array] all possible phone types
     def possible_types
-      @data.flat_map { |_iso2, data| data[:possible] }.uniq
+      @possible_types ||= @data.flat_map { |_iso2, data| data[:possible] }.uniq
     end
 
     # Returns first phone type that matched
@@ -105,7 +105,7 @@ module Phonelib
     # Returns whether a current parsed phone number is valid
     # @return [Boolean] parsed phone is valid
     def valid?
-      @data.select { |_iso2, data| data[:valid].any? }.any?
+      @valid ||= @data.select { |_iso2, data| data[:valid].any? }.any?
     end
 
     # Returns whether a current parsed phone number is invalid
@@ -117,7 +117,7 @@ module Phonelib
     # Returns whether a current parsed phone number is possible
     # @return [Boolean] parsed phone is possible
     def possible?
-      @data.select { |_iso2, data| data[:possible].any? }.any?
+      @possible ||= @data.select { |_iso2, data| data[:possible].any? }.any?
     end
 
     # Returns whether a current parsed phone number is impossible

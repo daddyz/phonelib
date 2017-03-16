@@ -32,24 +32,23 @@ module Phonelib
     # Returns the country code from the original phone number.
     # @return [String] matched country phone code
     def country_code
-      Phonelib.phone_data[country] && \
-        Phonelib.phone_data[country][Core::COUNTRY_CODE]
+      @country_code ||= Phonelib.phone_data[country] && \
+                        Phonelib.phone_data[country][Core::COUNTRY_CODE]
     end
 
     # Returns e164 formatted phone number
     # @param formatted [Boolean] whether to return numbers only or formatted
     # @return [String] formatted international number
     def international(formatted = true)
-      return nil if sanitized.nil? || sanitized.empty?
+      return nil if sanitized.empty?
       return "+#{country_prefix_or_not}#{sanitized}" unless valid?
-      return "#{country_code}#{@national_number}" unless formatted
+      return country_code + @national_number unless formatted
 
-      format = @data[country][:format]
-      if (matches = @national_number.match(/#{format[Core::PATTERN]}/))
-        fmt = format[:intl_format] || format[:format]
+      fmt = @data[country][:format]
+      national = @national_number
+      if (matches = @national_number.match(cr(fmt[Core::PATTERN])))
+        fmt = fmt[:intl_format] || fmt[:format]
         national = fmt.gsub(/\$\d/) { |el| matches[el[1].to_i] }
-      else
-        national = @national_number
       end
 
       "+#{country_code} #{national}"
@@ -88,7 +87,7 @@ module Phonelib
       format_match, _format_string = formatting_data
       take_group = 1
       if type == Core::MOBILE && Core::AREA_CODE_MOBILE_TOKENS[country] && \
-        format_match[1] == Core::AREA_CODE_MOBILE_TOKENS[country]
+         format_match[1] == Core::AREA_CODE_MOBILE_TOKENS[country]
         take_group = 2
       end
       format_match[take_group]
@@ -98,7 +97,7 @@ module Phonelib
 
     # @private defines if phone can have area code
     def area_code_possible?
-      return false unless possible?
+      return false if impossible?
 
       # has national prefix
       return false unless @data[country][Core::NATIONAL_PREFIX] || country == 'IT'
@@ -126,10 +125,11 @@ module Phonelib
     def formatting_data
       return @formatting_data if defined?(@formatting_data)
 
-      format = @data[country][:format]
-      prefix = @data[country][Core::NATIONAL_PREFIX]
-      rule = (format[Core::NATIONAL_PREFIX_RULE] ||
-          @data[country][Core::NATIONAL_PREFIX_RULE] || '$1')
+      data = @data[country]
+      format = data[:format]
+      prefix = data[Core::NATIONAL_PREFIX]
+      rule = format[Core::NATIONAL_PREFIX_RULE] ||
+             data[Core::NATIONAL_PREFIX_RULE] || '$1'
 
       # change rule's constants to values
       rule.gsub!(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')

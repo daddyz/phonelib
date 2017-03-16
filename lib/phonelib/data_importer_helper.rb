@@ -6,12 +6,38 @@ module Phonelib
     # xml format attributes names
     XML_FORMAT_NAMES = %w(intlFormat format)
 
+    def file_path(file)
+      "#{File.dirname(__FILE__)}/../../#{file}"
+    end
+
+    # method saves parsed data to data files
+    def save_data_file
+      File.open(file_path(Phonelib::Core::FILE_MAIN_DATA), 'wb+') do |f|
+        Marshal.dump(@data, f)
+      end
+    end
+
+    # method saves extended data file
+    def save_extended_data_file
+      extended = {
+        Phonelib::Core::EXT_PREFIXES => @prefixes,
+        Phonelib::Core::EXT_GEO_NAMES => @geo_names,
+        Phonelib::Core::EXT_TIMEZONES => @timezones,
+        Phonelib::Core::EXT_CARRIERS => @carriers
+      }
+      File.open(file_path(Phonelib::Core::FILE_EXT_DATA), 'wb+') do |f|
+        Marshal.dump(extended, f)
+      end
+      puts 'DATA SAVED'
+    end
+
     # method updates prefixes hash recursively
     def fill_prefixes(key, value, prefix, prefixes)
       prefixes = {} if prefixes.nil?
       if prefix.size == 1
-        prefixes[prefix.to_i] = {} unless prefixes[prefix.to_i]
-        prefixes[prefix.to_i][key] = value
+        pr = prefix.to_i
+        prefixes[pr] ||= {}
+        prefixes[pr][key] = value
       else
         pr = prefix[0].to_i
         prefixes[pr] = fill_prefixes(key, value, prefix[1..-1], prefixes[pr])
@@ -32,7 +58,7 @@ module Phonelib
     end
 
     # method creates hash from xml elements/element attributes
-    def get_hash_from_xml(data, type)
+    def hash_from_xml(data, type)
       hash = {}
       case type
       when :attributes

@@ -58,29 +58,7 @@ module Phonelib
         import_timezone_data
         import_carrier_data
         save_data_file
-      end
-
-      # method saves parsed data to data files
-      def save_data_file
-        data_file =
-            "#{File.dirname(__FILE__)}/../../#{Phonelib::Core::FILE_MAIN_DATA}"
-
-        File.open(data_file, 'wb+') do |f|
-          Marshal.dump(@data, f)
-        end
-
-        ext_file =
-            "#{File.dirname(__FILE__)}/../../#{Phonelib::Core::FILE_EXT_DATA}"
-        extended = {
-          Phonelib::Core::EXT_PREFIXES => @prefixes,
-          Phonelib::Core::EXT_GEO_NAMES => @geo_names,
-          Phonelib::Core::EXT_TIMEZONES => @timezones,
-          Phonelib::Core::EXT_CARRIERS => @carriers
-        }
-        File.open(ext_file, 'wb+') do |f|
-          Marshal.dump(extended, f)
-        end
-        puts 'DATA SAVED'
+        save_extended_data_file
       end
 
       # method clones libphonenumber repo to local dir
@@ -97,10 +75,8 @@ module Phonelib
         puts 'IMPORTING MAIN DATA'
         main_from_xml("#{@destination}#{MAIN_FILE}").elements.each do |el|
           # each country
-          country = get_hash_from_xml(el, :attributes)
-          country[:types] = {}
-
-          country.merge! get_types_and_formats(el.children)
+          country = hash_from_xml(el, :attributes)
+          country.merge! types_and_formats(el.children)
           country = add_double_country_flag country
           @data[country[:id]] = country
         end
@@ -111,17 +87,11 @@ module Phonelib
         puts 'IMPORTING SHORT NUMBER DATA'
         main_from_xml("#{@destination}#{SHORT_DATA_FILE}").elements.each do |el|
           # each country
-          country = get_hash_from_xml(el, :attributes)
-          country[:types] = {}
-
-          country.merge! get_types_and_formats(el.children)
+          country = hash_from_xml(el, :attributes)
+          country.merge! types_and_formats(el.children)
 
           country[:types].each do |type, data|
-            if @data[country[:id]][:types][type]
-              merge_short_with_main_type(country[:id], type, data)
-            else
-              @data[country[:id]][:types][type] = data
-            end
+            merge_short_with_main_type(country[:id], type, data)
           end
         end
       end
@@ -134,10 +104,8 @@ module Phonelib
           el.children.each do |phone_type|
             next unless phone_type.name == 'availableFormats'
 
-            formats = parse_formats(phone_type.children)
-
-            country_code = el.attribute('countryCode').value
-            @data[get_country_by_code(country_code)][:formats] += formats
+            country_code = country_by_code(el.attribute('countryCode').value)
+            @data[country_code][:formats] += parse_formats(phone_type.children)
           end
         end
       end
@@ -175,26 +143,24 @@ module Phonelib
       end
 
       # method extracts formats and types from xml data
-      def get_types_and_formats(children)
-        types = {}
-        formats = []
+      def types_and_formats(children)
+        result = { types: {}, formats: [] }
 
         without_comments(children).each do |phone_type|
           if phone_type.name == 'availableFormats'
-            formats = parse_formats(phone_type.children)
+            result[:formats] = parse_formats(phone_type.children)
           else
-            types[name2sym(phone_type.name)] =
-                get_hash_from_xml(phone_type, :element)
+            result[:types][name2sym(phone_type.name)] =
+                hash_from_xml(phone_type, :element)
           end
         end
 
-        types = add_possible_if_not_exists(types)
-
-        { types: types, formats: formats }
+        fill_possible_to_types_if_nil(result)
       end
 
       # method adds short number patterns to main data parsed from main xml
       def merge_short_with_main_type(country_id, type, data)
+        @data[country_id][:types][type] ||= {}
         data.each do |k, v|
           if @data[country_id][:types][type][k]
             @data[country_id][:types][type][k] += "|#{v}"
@@ -205,20 +171,20 @@ module Phonelib
       end
 
       # adds possible pattern in case it doesn't exists
-      def add_possible_if_not_exists(types)
-        types.each do |type, data|
+      def fill_possible_to_types_if_nil(result)
+        result[:types].each do |type, data|
           if data[Core::VALID_PATTERN] && !data[Core::POSSIBLE_PATTERN]
-            types[type][Core::POSSIBLE_PATTERN] =
+            result[:types][type][Core::POSSIBLE_PATTERN] =
                 data[Core::VALID_PATTERN]
           end
         end
-        types
+        result
       end
 
       # method parses xml for formats data
       def parse_formats(formats_children)
         without_comments(formats_children).map do |format|
-          current_format = get_hash_from_xml(format, :children)
+          current_format = hash_from_xml(format, :children)
 
           without_comments(format.children).each do |f|
             current_format[name2sym(f.name)] =
@@ -226,7 +192,7 @@ module Phonelib
           end
 
           current_format
-        end.compact
+        end
       end
 
       # method updates data from raw files
@@ -245,7 +211,7 @@ module Phonelib
       end
 
       # method finds country by country prefix
-      def get_country_by_code(country_code)
+      def country_by_code(country_code)
         match = @data.select { |_k, v| v[:country_code] == country_code }
         if match.size > 1
           match = match.select { |_k, v| v[:main_country_for_code] == 'true' }

@@ -912,6 +912,18 @@ describe Phonelib do
     end
   end
 
+  context 'issue #105' do
+    it 'should be valid when original without +' do
+      expect(Phonelib.valid?('9183082081')).to be_true
+      expect(Phonelib.valid_for_country?('9183082081', 'IN')).to be_true
+    end
+
+    it 'should be invalid when original starts with +' do
+      expect(Phonelib.valid?('+9183082081')).to be_false
+      expect(Phonelib.valid_for_country?('+9183082081', 'IN')).to be_false
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

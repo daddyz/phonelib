@@ -3,24 +3,28 @@ module Phonelib
   module PhoneAnalyzerHelper
     private
 
+    def original_starts_with_plus?
+      original_s[0] == Core::PLUS_SIGN
+    end
+
+    # converts symbols in phone to numbers
     def vanity_converted(phone)
       return phone unless Phonelib.vanity_conversion
 
-      (phone || '').gsub(/[a-z]/i.freeze) do |c|
+      (phone || '').gsub(cr('[a-zA-Z]')) do |c|
         c.upcase!
         # subtract "A"
         n = (c.ord - 65) / 3
         # account for #7 & #9 which have 4 chars
-        n -= 1 if c == 'S'.freeze || c == 'V'.freeze || c >= 'Y'.freeze
+        n -= 1 if c.match(Core::VANITY_4_LETTERS_KEYS_REGEX)
         (n + 2).to_s
       end
     end
 
-
     # defines if to validate against single country or not
     def passed_country(country)
       code = country_prefix(country)
-      if @original.start_with?('+') && code && !sanitized.start_with?(code)
+      if Core::PLUS_SIGN == @original[0] && code && !sanitized.start_with?(code)
         # in case number passed with + but it doesn't start with passed
         # country prefix
         country = nil
@@ -37,17 +41,18 @@ module Phonelib
 
     # caches regular expression, reusing it for later lookups
     def cr(regexp)
-      Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(regexp)
+      Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(regexp).freeze
     end
 
     # defines whether country can have double country prefix in number
-    def country_can_double_prefix?(country)
+    def country_can_dp?(country)
       Phonelib.phone_data[country] &&
-        Phonelib.phone_data[country][Core::DOUBLE_COUNTRY_PREFIX_FLAG]
+        Phonelib.phone_data[country][Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
+        !original_starts_with_plus?
     end
 
     # changes phone to with/without double country prefix
-    def changed_double_prefixed_phone(country, phone)
+    def changed_dp_phone(country, phone)
       data = Phonelib.phone_data[country]
       return if data.nil? || data[Core::DOUBLE_COUNTRY_PREFIX_FLAG].nil?
 
@@ -67,14 +72,15 @@ module Phonelib
     # * +phone+ - phone number being parsed
     # * +parsed+ - parsed regex match for phone
     def double_prefix_allowed?(data, phone, parsed = {})
-      data && data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
+      data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
         phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
-        parsed && (parsed[:valid].nil? || parsed[:valid].empty?)
+        parsed && (parsed[:valid].nil? || parsed[:valid].empty?) &&
+        !original_starts_with_plus?
     end
 
     # Returns original number passed if it's a string or empty string otherwise
-    def original_string
-      @original.is_a?(String) ? @original : ''
+    def original_s
+      @original_s ||= @original.is_a?(String) ? @original : ''
     end
 
     # Get country that was provided or default country in needable format
@@ -83,7 +89,7 @@ module Phonelib
     #
     # * +country+ - country passed for parsing
     def country_or_default_country(country)
-      country ||= (original_string.start_with?('+') ? nil : Phonelib.default_country)
+      country ||= (original_starts_with_plus? ? nil : Phonelib.default_country)
       country && country.to_s.upcase
     end
 
@@ -97,11 +103,7 @@ module Phonelib
     def full_regex_for_data(data, type, country_optional = true)
       regex = []
       regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      regex << if country_optional
-                 "(#{data[Core::COUNTRY_CODE]})?"
-               else
-                 data[Core::COUNTRY_CODE]
-               end
+      regex << "(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}"
       regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
       regex << "(#{data[Core::TYPES][Core::GENERAL][type]})"
 
@@ -165,22 +167,27 @@ module Phonelib
     # ==== Attributes
     #
     # * +number+ - phone number for validation
-    # * +possible_pattern+ - possible pattern for validation
-    # * +national_pattern+ - valid pattern for validation
+    # * +p_regex+ - possible regex pattern for validation
+    # * +v_regex+ - valid regex pattern for validation
     # * +not_valid+ - specifies that number is not valid by general desc pattern
-    def number_valid_and_possible?(number, possible_pattern, national_pattern, not_valid = false)
-      possible_match = number.match(cr("^(?:#{possible_pattern})$"))
-      possible = possible_match && possible_match.to_s.length == number.length
+    def number_valid_and_possible?(number, p_regex, v_regex, not_valid = false)
+      possible = number_match?(number, p_regex)
 
-      return [!not_valid && possible, possible] if possible_pattern == national_pattern
-      valid = false
-      if !not_valid && possible
-        # doing national pattern match only in case possible matches
-        national_match = number.match(cr("^(?:#{national_pattern})$"))
-        valid = national_match && national_match.to_s.length == number.length
-      end
+      return [!not_valid && possible, possible] if p_regex == v_regex
+      valid = !not_valid && possible && number_match?(number, v_regex)
 
       [valid && possible, possible]
+    end
+
+    # Checks number against regex and compares match length
+    #
+    # ==== Attributes
+    #
+    # * +number+ - phone number for validation
+    # * +regex+ - regex for perfoming a validation
+    def number_match?(number, regex)
+      match = number.match(cr("^(?:#{regex})$"))
+      match && match.to_s.length == number.length
     end
   end
 end

@@ -218,23 +218,28 @@ module Phonelib
     # @private Pattern key
     PATTERN = :pattern
 
+    PLUS_SIGN = '+'.freeze
+
+    # @private vanity numbers 4 keys letters
+    VANITY_4_LETTERS_KEYS_REGEX = /[SVYZ]/.freeze
+
     # @private Area code possible types
-    AREA_CODE_TYPES = [FIXED_LINE, FIXED_OR_MOBILE, MOBILE]
+    AREA_CODE_TYPES = [FIXED_LINE, FIXED_OR_MOBILE, MOBILE].freeze
 
     # @private Area code countries for mobile type
-    AREA_CODE_MOBILE_COUNTRIES = %w(AR MX BR)
+    AREA_CODE_MOBILE_COUNTRIES = %w(AR MX BR).freeze
 
     # @private Area code mobile phone token
     AREA_CODE_MOBILE_TOKENS = {
       'MX' => '1',
       'AR' => '9'
-    }
+    }.freeze
 
     # @private Default number formatting data hash
     DEFAULT_NUMBER_FORMAT = {
       pattern: '(\\d+)(\\d{3})(\\d{4})',
       format: '$1 $2 $3'
-    }
+    }.freeze
 
     # @private hash of all phone types with human representation
     TYPES_DESC = {
@@ -261,7 +266,7 @@ module Phonelib
       standard_rate: 'Standard Rate Destination',
       carrier_selection_codes: 'Carrier Selection codes',
       area_code_optional: 'Are code optional'
-    }
+    }.freeze
 
     # @private short codes types keys
     SHORT_CODES = [
@@ -269,7 +274,7 @@ module Phonelib
       :expanded_emergency, :no_international_dialling, :carrier_services,
       :directory_services, :standard_rate, :carrier_selection_codes,
       :area_code_optional
-    ]
+    ].freeze
 
     # @private Extended data prefixes hash key
     EXT_PREFIXES = :prefixes
