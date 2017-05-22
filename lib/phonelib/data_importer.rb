@@ -174,11 +174,20 @@ module Phonelib
       def fill_possible_to_types_if_nil(result)
         result[:types].each do |type, data|
           if data[Core::VALID_PATTERN] && !data[Core::POSSIBLE_PATTERN]
-            result[:types][type][Core::POSSIBLE_PATTERN] =
-                data[Core::VALID_PATTERN]
+            result[:types][type][Core::POSSIBLE_PATTERN] = case type
+                  when Core::GENERAL
+                    national_possible result[:types]
+                  else
+                    data[Core::VALID_PATTERN]
+                  end
           end
         end
         result
+      end
+
+      def national_possible(types)
+        types.map { |k, v| v[:possible_number_pattern] }.
+            compact.map { |e| e.split('|') }.flatten.uniq.join('|')
       end
 
       # method parses xml for formats data

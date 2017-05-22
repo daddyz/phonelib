@@ -276,7 +276,7 @@ describe Phonelib do
 
     it 'returns [:mobile] as all types and possible_types' do
       expect(@phone.types).to eq([:mobile])
-      possible_types = [:premium_rate, :toll_free, :voip, :fixed_or_mobile]
+      possible_types = [:premium_rate, :voip, :mobile]
       expect(@phone.possible_types).to eq(possible_types)
     end
 
@@ -709,8 +709,8 @@ describe Phonelib do
     end
 
     it 'should try to detect country and change it' do
-      expect(Phonelib.parse('+521234567', 'de').international).to eq('+521234567')
-      expect(Phonelib.parse('+521234567', 'de').country).to eq('MX')
+      expect(Phonelib.parse('+5212345', 'de').international).to eq('+5212345')
+      expect(Phonelib.parse('+5212345', 'de').country).to eq('MX')
     end
 
     it 'should be invalid numbers without + and when country passed' do

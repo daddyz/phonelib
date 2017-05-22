@@ -71,10 +71,37 @@ module Phonelib
         end
       when :element
         data.elements.each do |child|
-          hash[name2sym(child.name)] = str_clean(child.children.first)
+          if child.name == 'possibleLengths'
+            hash[Core::POSSIBLE_PATTERN] =
+                possible_length_regex(hash_from_xml(child, :attributes))
+          else
+            hash[name2sym(child.name)] = str_clean(child.children.first)
+          end
         end
       end
       hash
+    end
+
+    def possible_length_regex(attributes)
+      return '' unless attributes[:national]
+      attributes[:national].split(',').map do |m|
+        if m.include? '-'
+          "\\d{#{m.gsub(/[\[\]]/, '').gsub('-', ',')}}"
+        else
+          "\\d{#{m}}"
+        end
+      end.join('|')
+=begin
+      attributes.map do |k, v|
+        v.split(',').map do |m|
+          if m.include? '-'
+            "\\d{#{m.gsub(/[\[\]]/, '').gsub('-', ',')}}"
+          else
+            "\\d{#{m}}"
+          end
+        end.join('|')
+      end.join('|')
+=end
     end
 
     # method parses raw data file
