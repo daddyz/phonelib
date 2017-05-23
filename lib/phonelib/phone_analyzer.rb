@@ -187,10 +187,13 @@ module Phonelib
       type = Core::FIXED_LINE if type == Core::FIXED_OR_MOBILE
       patterns = all_patterns[type]
 
-      if patterns.nil?
-        [nil, nil]
+      if patterns
+        [
+          type_regex(patterns, Core::POSSIBLE_PATTERN),
+          type_regex(patterns, Core::VALID_PATTERN)
+        ]
       else
-        [patterns[Core::POSSIBLE_PATTERN], patterns[Core::VALID_PATTERN]]
+        [nil, nil]
       end
     end
   end

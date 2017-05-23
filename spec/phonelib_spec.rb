@@ -709,8 +709,8 @@ describe Phonelib do
     end
 
     it 'should try to detect country and change it' do
-      expect(Phonelib.parse('+5212345', 'de').international).to eq('+5212345')
-      expect(Phonelib.parse('+5212345', 'de').country).to eq('MX')
+      expect(Phonelib.parse('+521234567891', 'de').international).to eq('+521234567891')
+      expect(Phonelib.parse('+521234567891', 'de').country).to eq('MX')
     end
 
     it 'should be invalid numbers without + and when country passed' do
@@ -837,9 +837,9 @@ describe Phonelib do
     end
 
     it 'should return raw national number when possible' do
-      phone = Phonelib.parse('+97221111')
-      expect(phone.raw_national).to eq('21111')
-      expect(phone.national).to eq('21111')
+      phone = Phonelib.parse('+9721111')
+      expect(phone.raw_national).to eq('1111')
+      expect(phone.national).to eq('1111')
     end
   end
 

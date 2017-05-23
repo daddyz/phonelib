@@ -217,7 +217,10 @@ module Phonelib
     FORMATS = :formats
     # @private Pattern key
     PATTERN = :pattern
+    # @private Short key
+    SHORT = :short
 
+    # @private Plus sign
     PLUS_SIGN = '+'.freeze
 
     # @private vanity numbers 4 keys letters

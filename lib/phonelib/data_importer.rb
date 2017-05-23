@@ -50,7 +50,7 @@ module Phonelib
 
       # running import method
       def run_import
-        clone_repo
+        #clone_repo
         import_main_data
         import_short_data
         import_alternate_formats
@@ -147,7 +147,9 @@ module Phonelib
         result = { types: {}, formats: [] }
 
         without_comments(children).each do |phone_type|
-          if phone_type.name == 'availableFormats'
+          if phone_type.name == 'references'
+            next
+          elsif phone_type.name == 'availableFormats'
             result[:formats] = parse_formats(phone_type.children)
           else
             result[:types][name2sym(phone_type.name)] =
@@ -161,11 +163,12 @@ module Phonelib
       # method adds short number patterns to main data parsed from main xml
       def merge_short_with_main_type(country_id, type, data)
         @data[country_id][:types][type] ||= {}
+        @data[country_id][:types][type][Core::SHORT] ||= {}
         data.each do |k, v|
-          if @data[country_id][:types][type][k]
-            @data[country_id][:types][type][k] += "|#{v}"
+          if @data[country_id][:types][type][Core::SHORT][k]
+            @data[country_id][:types][type][Core::SHORT][k] += "|#{v}"
           else
-            @data[country_id][:types][type][k] = v
+            @data[country_id][:types][type][Core::SHORT][k] = v
           end
         end
       end
@@ -185,6 +188,7 @@ module Phonelib
         result
       end
 
+      # take all possible patters from all types
       def national_possible(types)
         types.map { |k, v| v[:possible_number_pattern] }.
             compact.map { |e| e.split('|') }.flatten.uniq.join('|')

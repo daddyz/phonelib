@@ -105,9 +105,23 @@ module Phonelib
       regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
       regex << "(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}"
       regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
-      regex << "(#{data[Core::TYPES][Core::GENERAL][type]})"
+      regex << "(#{type_regex(data[Core::TYPES][Core::GENERAL], type)})"
 
       cr("^#{regex.join}$")
+    end
+
+    # Returns regex for type with special types if needed
+    #
+    # ==== Attributes
+    #
+    # * +data+ - country types data for single type
+    # * +type+ - possible or valid regex type needed
+    def type_regex(data, type)
+      regex = [data[type]]
+      if Phonelib.parse_special && data[Core::SHORT] && data[Core::SHORT][type]
+        regex << data[Core::SHORT][type]
+      end
+      regex.join('|')
     end
 
     # Check if phone match country data
