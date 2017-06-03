@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.12 - June 3, 2017
+- fixed ```Phonelib.parse_special``` behavior, now there is a real separation of checks
+- updated data
+
 ## 0.6.11 - April 17, 2017
 - updated data
 
