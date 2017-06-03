@@ -1,6 +1,6 @@
 require File.expand_path('../../spec_helper.rb',  __FILE__)
 
-describe PhonesController do
+describe PhonesController, :type => :controller do
 
   before(:all) do
     @phone = phones(:valid_and_possible)
@@ -21,30 +21,50 @@ describe PhonesController do
 
   it 'should create phone' do
     assert_difference(Phone, :count) do
-      post :create, phone: { number: @phone.number }
+      if Rails::VERSION::MAJOR == 5
+        post :create, params: { phone: { number: @phone.number } }
+      else
+        post :create, phone: { number: @phone.number }
+      end
     end
 
     expect(response).to redirect_to(phone_path(assigns(:phone)))
   end
 
   it 'should show phone' do
-    get :show, id: @phone
+    if Rails::VERSION::MAJOR == 5
+      get :show, params: { id: @phone }
+    else
+      get :show, id: @phone
+    end
     expect(response).to be_success
   end
 
   it 'should get edit' do
-    get :edit, id: @phone
+    if Rails::VERSION::MAJOR == 5
+      get :edit, params: { id: @phone }
+    else
+      get :edit, id: @phone
+    end
     expect(response).to be_success
   end
 
   it 'should update phone' do
-    put :update, id: @phone, phone: { number: @phone.number }
+    if Rails::VERSION::MAJOR == 5
+      put :update, params: { id: @phone, phone: { number: @phone.number } }
+    else
+      put :update, id: @phone, phone: { number: @phone.number }
+    end
     expect(response).to redirect_to(phone_path(assigns(:phone)))
   end
 
   it 'should destroy phone' do
     assert_difference(Phone, :count, -1) do
-      delete :destroy, id: @phone
+      if Rails::VERSION::MAJOR == 5
+        delete :destroy, params: { id: @phone }
+      else
+        delete :destroy, id: @phone
+      end
     end
 
     expect(response).to redirect_to(phones_path)

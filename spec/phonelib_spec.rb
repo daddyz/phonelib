@@ -32,8 +32,8 @@ describe Phonelib do
     end
 
     it 'must be possible but not valid phone number' do
-      expect(@phone.valid?).to be_false
-      expect(@phone.possible?).to be_true
+      expect(@phone.valid?).to be false
+      expect(@phone.possible?).to be true
     end
 
     context 'with international formatting' do
@@ -47,19 +47,19 @@ describe Phonelib do
   context '.valid?' do
     context 'with malformed phone number' do
       it 'should be false' do
-        expect(Phonelib.valid?('sdffsd')).to be_false
+        expect(Phonelib.valid?('sdffsd')).to be false
       end
     end
 
     context 'with valid phone number' do
       it 'should be true' do
-        expect(Phonelib.valid?('972541234567')).to be_true
+        expect(Phonelib.valid?('972541234567')).to be true
       end
     end
 
     context 'with invalid phone number' do
       it 'should be false' do
-        expect(Phonelib.valid?('97254123')).to be_false
+        expect(Phonelib.valid?('97254123')).to be false
       end
     end
   end
@@ -67,19 +67,19 @@ describe Phonelib do
   context '.invalid?' do
     context 'with malformed phone number' do
       it 'should be true' do
-        expect(Phonelib.invalid?('sdffsd')).to be_true
+        expect(Phonelib.invalid?('sdffsd')).to be true
       end
     end
 
     context 'with valid phone number' do
       it 'should be false' do
-        expect(Phonelib.invalid?('972541234567')).to be_false
+        expect(Phonelib.invalid?('972541234567')).to be false
       end
     end
 
     context 'with invalid phone number' do
       it 'should be true' do
-        expect(Phonelib.invalid?('97254123')).to be_true
+        expect(Phonelib.invalid?('97254123')).to be true
       end
     end
   end
@@ -87,13 +87,13 @@ describe Phonelib do
   context '.possible?' do
     context 'with valid phone number' do
       it 'should be true' do
-        expect(Phonelib.possible?('972541234567')).to be_true
+        expect(Phonelib.possible?('972541234567')).to be true
       end
     end
 
     context 'with invalid phone number' do
       it 'should be false' do
-        expect(Phonelib.possible?('97254')).to be_false
+        expect(Phonelib.possible?('97254')).to be false
       end
     end
   end
@@ -101,13 +101,13 @@ describe Phonelib do
   context '.impossible?' do
     context 'with valid phone number' do
       it 'should be false' do
-        expect(Phonelib.impossible?('972541234567')).to be_false
+        expect(Phonelib.impossible?('972541234567')).to be false
       end
     end
 
     context 'with invalid phone number' do
       it 'should be true' do
-        expect(Phonelib.impossible?('97254')).to be_true
+        expect(Phonelib.impossible?('97254')).to be true
       end
     end
   end
@@ -118,20 +118,20 @@ describe Phonelib do
         context "with #{country} as country" do
           it 'should be true' do
             expect(Phonelib.valid_for_country?('972541234567', country)).to\
-                be_true
+                be true
           end
 
           context 'and national number' do
             it 'should be true' do
               expect(Phonelib.valid_for_country?('0541234567', country)).to\
-                  be_true
+                  be true
             end
           end
 
           context 'and without prefix' do
             it 'should be true' do
               expect(Phonelib.valid_for_country?('541234567', country)).to\
-                  be_true
+                  be true
             end
           end
         end
@@ -144,7 +144,7 @@ describe Phonelib do
               it 'should be true' do
                 # the number provided would be invalid if it weren't for the override file
                 expect(Phonelib.valid_for_country?('812345678', country)).to\
-                    be_true
+                    be true
               end
             end
           end
@@ -157,13 +157,13 @@ describe Phonelib do
         context 'with incorrect data' do
           it 'should be false' do
             expect(Phonelib.valid_for_country?('972541234567', country)).to\
-                be_false
+                be false
           end
 
           context 'and without prefix' do
             it 'should be false' do
               expect(Phonelib.valid_for_country?('541234567', country)).to\
-                  be_false
+                  be false
             end
           end
         end
@@ -177,7 +177,7 @@ describe Phonelib do
         context "with #{country} as country" do
           it 'should be false' do
             expect(Phonelib.invalid_for_country?('972541234567', country)).to\
-                be_false
+                be false
           end
         end
       end
@@ -188,7 +188,7 @@ describe Phonelib do
         context "with #{country} as country" do
           it 'should be true' do
             expect(Phonelib.invalid_for_country?('972541234567', country)).to\
-                be_true
+                be true
           end
         end
       end
@@ -233,8 +233,8 @@ describe Phonelib do
 
     it 'returns sanitized national when number invalid but possible' do
       phone = Phonelib.parse('9721234567')
-      expect(phone.valid?).to be_false
-      expect(phone.possible?).to be_true
+      expect(phone.valid?).to be false
+      expect(phone.possible?).to be true
       expect(phone.national).to eq('1234567')
     end
 
@@ -317,31 +317,31 @@ describe Phonelib do
   context 'default_country' do
     it 'should be invalid with no default country set' do
       phone = Phonelib.parse('541234567')
-      expect(phone.valid?).to be_false
+      expect(phone.valid?).to be false
     end
 
     it 'should be valid with default country set' do
       Phonelib.default_country = :IL
       phone = Phonelib.parse('541234567')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
     end
 
     it 'should be valid with wrong default country set' do
       Phonelib.default_country = :UA
       phone = Phonelib.parse('972541234567')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
     end
 
     it 'should not fail when no phone passed and default country set' do
       Phonelib.default_country = :UA
       phone = Phonelib.parse(nil)
-      expect(phone.invalid?).to be_true
+      expect(phone.invalid?).to be true
     end
 
     it 'should be valid when number invalid for default country' do
       Phonelib.default_country = :CN
       phone = Phonelib.parse('+41 44 668 18 00')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       Phonelib.default_country = nil
     end
   end
@@ -364,15 +364,15 @@ describe Phonelib do
 
     it 'should be present when invalid but possible' do
       phone = Phonelib.parse('9721234567', :il)
-      expect(phone.valid?).to be_false
-      expect(phone.possible?).to be_true
+      expect(phone.valid?).to be false
+      expect(phone.possible?).to be true
       expect(phone.timezone).to eq('Asia/Jerusalem')
     end
 
     it 'should not have ext data when impossible' do
       phone = Phonelib.parse('71')
-      expect(phone.valid?).to be_false
-      expect(phone.possible?).to be_false
+      expect(phone.valid?).to be false
+      expect(phone.possible?).to be false
       expect(phone.geo_name).to be_nil
       expect(phone.timezone).to be_nil
       expect(phone.carrier).to be_nil
@@ -380,7 +380,7 @@ describe Phonelib do
 
     it 'should be nil when not exist geo name' do
       phone = Phonelib.parse('0145-61-1234', 'JP')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.geo_name).to be_nil
     end
   end
@@ -410,27 +410,27 @@ describe Phonelib do
       phone1 = Phonelib.parse('0049032123456789', 'GB')
       phone2 = Phonelib.parse('81049032123456789', 'RU')
       phone3 = Phonelib.parse('81049032123456789', 'GB')
-      expect(phone1.valid?).to be_true
+      expect(phone1.valid?).to be true
       expect(phone1.country).to eq('DE')
-      expect(phone2.valid?).to be_true
+      expect(phone2.valid?).to be true
       expect(phone2.country).to eq('DE')
-      expect(phone3.valid?).to be_false
+      expect(phone3.valid?).to be false
     end
   end
 
   context 'issue #20' do
     it 'should parse with special characters' do
-      expect(Phonelib.parse('(202) 867-5309', 'US').valid?).to be_true
-      expect(Phonelib.parse('2028675309', 'US').valid?).to be_true
+      expect(Phonelib.parse('(202) 867-5309', 'US').valid?).to be true
+      expect(Phonelib.parse('2028675309', 'US').valid?).to be true
     end
   end
 
   context 'issue #21' do
     it 'should parse without country code' do
       phone1 = Phonelib.parse '+81 90 1234 5678', 'JP'
-      expect(phone1.valid_for_country?('JP')).to be_true
+      expect(phone1.valid_for_country?('JP')).to be true
       phone2 = Phonelib.parse '90 1234 5678', 'JP'
-      expect(phone2.valid_for_country?('JP')).to be_true
+      expect(phone2.valid_for_country?('JP')).to be true
     end
   end
 
@@ -444,7 +444,7 @@ describe Phonelib do
       test_cases.each_with_index do |test_case, i|
         number, country = test_case
         phone = Phonelib.parse number, country
-        expect(phone.valid_for_country?(country)).to be_false
+        expect(phone.valid_for_country?(country)).to be false
       end
     end
   end
@@ -452,21 +452,21 @@ describe Phonelib do
   context 'issue #33' do
     it 'should be valid for mexico numbers' do
       number = Phonelib.parse('+5215545258448', 'mx')
-      expect(number.valid?).to be_true
+      expect(number.valid?).to be true
       expect(number.international).to eq('+52 1 55 4525 8448')
       expect(number.national).to eq('044 55 4525 8448')
 
       intl = number.international
 
-      expect(Phonelib.valid?(intl)).to be_true
-      expect(Phonelib.valid_for_country?(intl, 'mx')).to be_true
+      expect(Phonelib.valid?(intl)).to be true
+      expect(Phonelib.valid_for_country?(intl, 'mx')).to be true
     end
   end
 
   context 'issue #43' do
     it 'should parse german five-digit area codes correctly' do
       number = Phonelib.parse('+492304973401', 'de')
-      expect(number.valid?).to be_true
+      expect(number.valid?).to be true
       expect(number.international).to eq('+49 2304 973401')
       expect(number.national).to eq('02304 973401')
       expect(number.geo_name).to eq('Schwerte')
@@ -476,8 +476,8 @@ describe Phonelib do
   context 'issue #45' do
     it 'should parse possible finish number' do
       number = Phonelib.parse('030710', :fi)
-      expect(number.valid?).to be_false
-      expect(number.possible?).to be_true
+      expect(number.valid?).to be false
+      expect(number.possible?).to be true
     end
   end
 
@@ -489,32 +489,32 @@ describe Phonelib do
       # this library works in a different way, it should now the type of phone,
       # so this library can't determine number as possible
       number = Phonelib.parse('2503019', :us)
-      expect(number.valid?).to be_false
-      expect(number.possible?).to be_false
+      expect(number.valid?).to be false
+      expect(number.possible?).to be false
     end
 
     it '026875105 should be possible number for hk' do
       number = Phonelib.parse('026875105', :hk)
-      expect(number.valid?).to be_false
-      expect(number.possible?).to be_true
+      expect(number.valid?).to be false
+      expect(number.possible?).to be true
     end
   end
 
   context 'issue #49' do
     it 'should be invalid for countries if + present' do
-      expect(Phonelib.valid_for_country?('+591 3 3466166', 'DE')).to be_false
-      expect(Phonelib.valid_for_country?('+55 11 2606-1011', 'DE')).to be_false
-      expect(Phonelib.valid_for_country?('+7 926 398-00-95', 'DE')).to be_false
-      expect(Phonelib.valid_for_country?('+55 1 5551234', 'AT')).to be_false
-      expect(Phonelib.valid_for_country?('+57 1 2265858', 'DE')).to be_false
+      expect(Phonelib.valid_for_country?('+591 3 3466166', 'DE')).to be false
+      expect(Phonelib.valid_for_country?('+55 11 2606-1011', 'DE')).to be false
+      expect(Phonelib.valid_for_country?('+7 926 398-00-95', 'DE')).to be false
+      expect(Phonelib.valid_for_country?('+55 1 5551234', 'AT')).to be false
+      expect(Phonelib.valid_for_country?('+57 1 2265858', 'DE')).to be false
     end
 
     it 'should be valid for countries if no + in number' do
-      expect(Phonelib.valid_for_country?('591 3 3466166', 'DE')).to be_true
-      expect(Phonelib.valid_for_country?('55 11 2606-1011', 'DE')).to be_true
-      expect(Phonelib.valid_for_country?('7 926 398-00-95', 'DE')).to be_true
-      expect(Phonelib.valid_for_country?('55 1 5551234', 'AT')).to be_true
-      expect(Phonelib.valid_for_country?('57 1 2265858', 'DE')).to be_true
+      expect(Phonelib.valid_for_country?('591 3 3466166', 'DE')).to be true
+      expect(Phonelib.valid_for_country?('55 11 2606-1011', 'DE')).to be true
+      expect(Phonelib.valid_for_country?('7 926 398-00-95', 'DE')).to be true
+      expect(Phonelib.valid_for_country?('55 1 5551234', 'AT')).to be true
+      expect(Phonelib.valid_for_country?('57 1 2265858', 'DE')).to be true
     end
   end
 
@@ -535,7 +535,7 @@ describe Phonelib do
   context 'issue #54' do
     it 'should be fixed_or_mobile when phone valid for both but different patterns' do
       phone = Phonelib.parse '+15146591112'
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.type).to eq(:fixed_or_mobile)
       expect(phone.types).to eq([:fixed_or_mobile])
     end
@@ -544,15 +544,15 @@ describe Phonelib do
   context 'issue #55' do
     it 'should not throw error' do
       phone = Phonelib.parse('119660086441')
-      expect(phone.possible?).to be_true
+      expect(phone.possible?).to be true
     end
   end
 
   context 'issue #57' do
     it 'should return US as country' do
       phone = Phonelib.parse('+17295470713')
-      expect(phone.valid?).to be_false
-      expect(phone.possible?).to be_true
+      expect(phone.valid?).to be false
+      expect(phone.possible?).to be true
       expect(phone.country).to eq('US')
       expect(phone.valid_country).to be_nil
     end
@@ -596,7 +596,7 @@ describe Phonelib do
          972541234567;ext=123 972541234567#12;3 972541234567;1#23).each do |p|
 
         phone = Phonelib.parse(p)
-        expect(phone.valid?).to be_true
+        expect(phone.valid?).to be true
         expect(phone.e164).to eq('+972541234567')
         expect(phone.extension).to eq('123')
         expect(phone.full_e164).to eq('+972541234567;123')
@@ -607,14 +607,14 @@ describe Phonelib do
 
     it 'should return nil if extension was not passed' do
       phone = Phonelib.parse('972541234567')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.extension).to eq('')
       expect(phone.full_e164).to eq('+972541234567')
     end
 
     it 'should sanitize extension' do
       phone = Phonelib.parse('972541234567#sdfsdf')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.extension).to eq('')
     end
 
@@ -622,7 +622,7 @@ describe Phonelib do
       Phonelib.extension_separator = '#'
 
       phone = Phonelib.parse('972541234567#123')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.e164).to eq('+972541234567')
       expect(phone.extension).to eq('123')
       expect(phone.full_e164).to eq('+972541234567#123')
@@ -632,31 +632,31 @@ describe Phonelib do
 
   context 'issue #59' do
     it 'should be invalid if parse_special is false' do
-      expect(Phonelib.parse_special).to be_false
-      expect(Phonelib.valid?("really1511@now.com")).to be_false
+      expect(Phonelib.parse_special).to be false
+      expect(Phonelib.valid?("really1511@now.com")).to be false
     end
 
     it 'should be valid if parse_special is true' do
       Phonelib.parse_special = true
-      expect(Phonelib.parse_special).to be_true
-      expect(Phonelib.valid?("really1511@now.com")).to be_true
+      expect(Phonelib.parse_special).to be true
+      expect(Phonelib.valid?("really1511@now.com")).to be true
     end
   end
 
   context 'issue #61' do
     it 'should be valid number in India' do
       phone = Phonelib.parse('9111844757')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('9111844757')
       expect(phone.e164).to eq('+919111844757')
-      expect(Phonelib.valid?('919111844757')).to be_true
+      expect(Phonelib.valid?('919111844757')).to be true
 
       phone = Phonelib.parse('49266444201')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('49266444201')
       expect(phone.e164).to eq('+49266444201')
       phone = Phonelib.parse('4949266444201')
-      expect(phone.valid?).to be_true
+      expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('4949266444201')
       expect(phone.e164).to eq('+4949266444201')
     end
@@ -664,15 +664,15 @@ describe Phonelib do
 
   context 'issue #60' do
     it 'should be valid for CN with national prefix' do
-      expect(Phonelib.valid_for_country?('2987388888', 'CN')).to be_true
-      expect(Phonelib.valid_for_country?('02987388888', 'CN')).to be_true
+      expect(Phonelib.valid_for_country?('2987388888', 'CN')).to be true
+      expect(Phonelib.valid_for_country?('02987388888', 'CN')).to be true
     end
   end
 
   context 'issue #67' do
     it 'should parse CA numbers as valid numbers' do
-      expect(Phonelib.parse('3065555555', 'CA').valid?).to be_true
-      expect(Phonelib.parse('4165555555', 'CA').valid?).to be_true
+      expect(Phonelib.parse('3065555555', 'CA').valid?).to be true
+      expect(Phonelib.parse('4165555555', 'CA').valid?).to be true
     end
   end
 
@@ -683,29 +683,29 @@ describe Phonelib do
 
     it 'should be invalid if strict_check is true' do
       Phonelib.strict_check = true
-      expect(Phonelib.valid?("1212a5551234")).to be_false
+      expect(Phonelib.valid?("1212a5551234")).to be false
     end
 
     it 'should be valid if strict_check is false' do
-      expect(Phonelib.strict_check).to be_false
-      expect(Phonelib.valid?("1212a5551234")).to be_true
+      expect(Phonelib.strict_check).to be false
+      expect(Phonelib.valid?("1212a5551234")).to be true
     end
 
     it 'should be valid if strict_check is true' do
       Phonelib.strict_check = true
-      expect(Phonelib.valid?("12125551234")).to be_true
+      expect(Phonelib.valid?("12125551234")).to be true
     end
   end
 
   context 'issue #72' do
     it 'should be invalid number' do
       expect(Phonelib.parse('+49157123456789', 'de').international).to eq('+49157123456789')
-      expect(Phonelib.parse('+49157123456789', 'de').valid?).to be_false
+      expect(Phonelib.parse('+49157123456789', 'de').valid?).to be false
     end
 
     it 'should not try to detect double prefix and keep invalid' do
       expect(Phonelib.parse('+491521234567', 'de').international).to eq('+491521234567')
-      expect(Phonelib.parse('+491521234567', 'de').valid?).to be_false
+      expect(Phonelib.parse('+491521234567', 'de').valid?).to be false
     end
 
     it 'should try to detect country and change it' do
@@ -715,17 +715,17 @@ describe Phonelib do
 
     it 'should be invalid numbers without + and when country passed' do
       expect(Phonelib.parse('49157123456789', 'de').international).to eq('+49157123456789')
-      expect(Phonelib.parse('49157123456789', 'de').valid?).to be_false
+      expect(Phonelib.parse('49157123456789', 'de').valid?).to be false
       expect(Phonelib.parse('491521234567', 'de').international).to eq('+49 491 521234567')
-      expect(Phonelib.parse('491521234567', 'de').valid?).to be_true
+      expect(Phonelib.parse('491521234567', 'de').valid?).to be true
     end
 
     it 'should try to detect when default country set but not passed' do
       Phonelib.default_country = :de
       expect(Phonelib.parse('49157123456789').international).to eq('+49157123456789')
-      expect(Phonelib.parse('49157123456789').valid?).to be_false
+      expect(Phonelib.parse('49157123456789').valid?).to be false
       expect(Phonelib.parse('491521234567').international).to eq('+49 491 521234567')
-      expect(Phonelib.parse('491521234567').valid?).to be_true
+      expect(Phonelib.parse('491521234567').valid?).to be true
     end
   end
 
@@ -777,28 +777,28 @@ describe Phonelib do
 
   context 'issue #79' do
     it 'should be valid number for claro colombia' do
-      expect(Phonelib.parse('+573234827533').valid?).to be_true
-      expect(Phonelib.parse('+573202605272').valid?).to be_true
+      expect(Phonelib.parse('+573234827533').valid?).to be true
+      expect(Phonelib.parse('+573202605272').valid?).to be true
     end
   end
 
   context 'issue #85' do
     it 'should validate without strict and sanitize non numbers' do
-      expect(Phonelib.valid?('441684291707')).to be_true
-      expect(Phonelib.valid?('+441684291707')).to be_true
-      expect(Phonelib.valid?('+4416842917076')).to be_false
-      expect(Phonelib.valid?('+441684291707x')).to be_true
-      expect(Phonelib.valid?('+441684291707xxxxxxxxxxxxxxxxxasdasadadas')).to be_true
+      expect(Phonelib.valid?('441684291707')).to be true
+      expect(Phonelib.valid?('+441684291707')).to be true
+      expect(Phonelib.valid?('+4416842917076')).to be false
+      expect(Phonelib.valid?('+441684291707x')).to be true
+      expect(Phonelib.valid?('+441684291707xxxxxxxxxxxxxxxxxasdasadadas')).to be true
     end
 
     it 'should validate right with strict and sanitize only first +' do
       Phonelib.strict_check = true
 
-      expect(Phonelib.valid?('441684291707')).to be_true
-      expect(Phonelib.valid?('+441684291707')).to be_true
-      expect(Phonelib.valid?('+4416842917076')).to be_false
-      expect(Phonelib.valid?('+441684291707x')).to be_false
-      expect(Phonelib.valid?('+441684291707xxxxxxxxxxxxxxxxxasdasadadas')).to be_false
+      expect(Phonelib.valid?('441684291707')).to be true
+      expect(Phonelib.valid?('+441684291707')).to be true
+      expect(Phonelib.valid?('+4416842917076')).to be false
+      expect(Phonelib.valid?('+441684291707x')).to be false
+      expect(Phonelib.valid?('+441684291707xxxxxxxxxxxxxxxxxasdasadadas')).to be false
 
       Phonelib.strict_check = false
     end
@@ -807,19 +807,19 @@ describe Phonelib do
   context 'issue #87' do
     it 'should parse double IT country prefix' do
       expect(Phonelib.parse('3911234567', 'IT').national(false)).to eq('3911234567')
-      expect(Phonelib.parse('3911234567', 'IT').valid?).to be_true
+      expect(Phonelib.parse('3911234567', 'IT').valid?).to be true
       expect(Phonelib.parse('3911234567', 'IT').type).to eq(:mobile)
 
       expect(Phonelib.parse('+393911234567', 'IT').national(false)).to eq('3911234567')
-      expect(Phonelib.parse('+393911234567', 'IT').valid?).to be_true
+      expect(Phonelib.parse('+393911234567', 'IT').valid?).to be true
       expect(Phonelib.parse('+393911234567', 'IT').type).to eq(:mobile)
 
       expect(Phonelib.parse('3921234567', 'IT').type).to eq(:mobile)
       expect(Phonelib.parse('3921234567', 'IT').national(false)).to eq('3921234567')
-      expect(Phonelib.parse('3921234567', 'IT').valid?).to be_true
+      expect(Phonelib.parse('3921234567', 'IT').valid?).to be true
 
-      expect(Phonelib.parse('393912345', 'IT').valid?).to be_false
-      expect(Phonelib.parse('393912345', 'IT').possible?).to be_true
+      expect(Phonelib.parse('393912345', 'IT').valid?).to be false
+      expect(Phonelib.parse('393912345', 'IT').possible?).to be true
     end
   end
 
@@ -847,9 +847,9 @@ describe Phonelib do
     it 'should return same results' do
       Phonelib.default_country = 'US'
       number = '4035566466'
-      expect(Phonelib.possible?(number)).to be_true
-      expect(Phonelib.parse(number).possible?).to be_true
-      expect(Phonelib.parse(number, Phonelib.default_country).possible?).to be_true
+      expect(Phonelib.possible?(number)).to be true
+      expect(Phonelib.parse(number).possible?).to be true
+      expect(Phonelib.parse(number, Phonelib.default_country).possible?).to be true
     end
   end
 
@@ -871,7 +871,7 @@ describe Phonelib do
         end
 
         it 'should be valid' do
-          expect(@phone.valid?).to be_true
+          expect(@phone.valid?).to be true
         end
 
         it 'should have right national' do
@@ -887,17 +887,17 @@ describe Phonelib do
 
   context 'issue #102 vanity numbers' do
     it 'should be invalid' do
-      expect(Phonelib.vanity_conversion).to be_false
+      expect(Phonelib.vanity_conversion).to be false
 
       p = Phonelib.parse('800-44-STERN', 'US')
-      expect(p.valid?).to be_false
+      expect(p.valid?).to be false
     end
 
     it 'should be invalid' do
       Phonelib.vanity_conversion = true
 
       p = Phonelib.parse('800-44-STERN', 'US')
-      expect(p.valid?).to be_true
+      expect(p.valid?).to be true
       expect(p.e164).to eq('+18004478376')
     end
   end
@@ -914,13 +914,13 @@ describe Phonelib do
 
   context 'issue #105' do
     it 'should be valid when original without +' do
-      expect(Phonelib.valid?('9183082081')).to be_true
-      expect(Phonelib.valid_for_country?('9183082081', 'IN')).to be_true
+      expect(Phonelib.valid?('9183082081')).to be true
+      expect(Phonelib.valid_for_country?('9183082081', 'IN')).to be true
     end
 
     it 'should be invalid when original starts with +' do
-      expect(Phonelib.valid?('+9183082081')).to be_false
-      expect(Phonelib.valid_for_country?('+9183082081', 'IN')).to be_false
+      expect(Phonelib.valid?('+9183082081')).to be false
+      expect(Phonelib.valid_for_country?('+9183082081', 'IN')).to be false
     end
   end
 
@@ -945,13 +945,13 @@ describe Phonelib do
     end
 
     def phone_assertions(phone, type, country, msg)
-      expect(phone.valid?).to be_true, "#{msg} not valid"
-      expect(phone.invalid?).to be_false, "#{msg} not valid"
-      expect(phone.possible?).to be_true, "#{msg} not possible"
-      expect(phone.impossible?).to be_false, "#{msg} not possible"
-      expect(phone.valid_for_country?(country)).to be_true,
+      expect(phone.valid?).to be(true), "#{msg} not valid"
+      expect(phone.invalid?).to be(false), "#{msg} not valid"
+      expect(phone.possible?).to be(true), "#{msg} not possible"
+      expect(phone.impossible?).to be(false), "#{msg} not possible"
+      expect(phone.valid_for_country?(country)).to be(true),
              "#{msg} not valid for country"
-      expect(phone.invalid_for_country?(country)).to be_false,
+      expect(phone.invalid_for_country?(country)).to be(false),
              "#{msg} not valid for country"
 
       expect(phone.country).to eq(country), "#{msg} wrong country "

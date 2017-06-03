@@ -1,6 +1,8 @@
 class Phone < ActiveRecord::Base
-  attr_accessible :number, :possible_number, :type_number,
-                  :possible_type_number, :strict_number, :country
+  if Rails::VERSION::MAJOR != 5
+    attr_accessible :number, :possible_number, :type_number,
+                    :possible_type_number, :strict_number, :country
+  end
 
   validates :number, phone: { country_specifier: -> phone { phone.country.try(:upcase) } }
   validates :possible_number, phone: { possible: true, allow_blank: true }

@@ -40,7 +40,7 @@ class PhonesController < ApplicationController
   # POST /phones
   # POST /phones.json
   def create
-    @phone = Phone.new(params[:phone])
+    @phone = Phone.new(phone_params)
 
     respond_to do |format|
       if @phone.save
@@ -59,7 +59,7 @@ class PhonesController < ApplicationController
     @phone = Phone.find(params[:id])
 
     respond_to do |format|
-      if @phone.update_attributes(params[:phone])
+      if @phone.update_attributes(phone_params)
         format.html { redirect_to @phone, notice: 'Phone was successfully updated.' }
         format.json { head :no_content }
       else
@@ -78,6 +78,16 @@ class PhonesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to phones_url }
       format.json { head :no_content }
+    end
+  end
+
+  private
+
+  def phone_params
+    if Rails::VERSION::MAJOR == 3
+      params[:phone]
+    else 
+      params.require(:phone).permit(:number)
     end
   end
 end
