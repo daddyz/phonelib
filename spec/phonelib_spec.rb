@@ -924,6 +924,17 @@ describe Phonelib do
     end
   end
 
+  context 'issue #107' do
+    it 'should return consistent results for `valid_for_country?` when using the ' +
+       'instance method or the class method given the same country and phone number' do
+      Phonelib.phone_data.keys.each do |country|
+        expect(Phonelib.valid_for_country?('+9183082081', country)).to(
+          eq(Phonelib.parse('+9183082081').valid_for_country?(country))
+        )
+      end
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
