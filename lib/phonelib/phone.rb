@@ -147,7 +147,8 @@ module Phonelib
     # @return [Boolean] parsed phone number is valid
     def valid_for_country?(country)
       country = country.to_s.upcase
-      @data.find do |iso2, data|
+      tdata = analyze(sanitized, passed_country(country))
+      tdata.find do |iso2, data|
         country == iso2 && data[:valid].any?
       end.is_a? Array
     end
