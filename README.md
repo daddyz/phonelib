@@ -108,7 +108,7 @@ Refer to [Google libphonenumber](http://code.google.com/p/libphonenumber/) for m
 <tt>types: :mobile</tt> or <tt>types: [:voip, :mobile]</tt> - allows to validate against specific phone types patterns,
 if mixed with <tt>possible</tt> will check if number is possible for specified type
 
-<tt>country_specifier: -> phone { phone.country.try(:upcase) }</tt> - allows to specify country for validation dynamically for each validation. 
+<tt>country_specifier: -> phone { phone.country.try(:upcase) }</tt> - allows to specify country for validation dynamically for each validation.
 
 ### Basic usage
 
@@ -276,4 +276,4 @@ If you want to run including Rails environment, you need to set <tt>BUNDLE_GEMFI
 BUNDLE_GEMFILE=gemfiles/Gemfile.rails-3.2.x bundle exec rake spec
 ```
 
-Gemfiles can be found in <tt>gemfiles</tt> folder, there are gemfiles for Rails 3.1, 3.2 and 4.
+Gemfiles can be found in <tt>gemfiles</tt> folder, there are gemfiles for Rails 3.1, 3.2, 4, 5 and 5.1.
