@@ -26,6 +26,9 @@ gemfile:
   - gemfiles/Gemfile.rails-5.1.x
   - Gemfile
 
+before_install:
+  - gem install bundler
+
 script:
   - bundle exec rake spec
 
