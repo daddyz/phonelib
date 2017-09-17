@@ -51,7 +51,7 @@ class PhoneValidator < ActiveModel::EachValidator
   # Validation method
   def validate_each(record, attribute, value)
     return if options[:allow_blank] && value.blank?
-    options[:extensions] ||= true
+    allowed_extensions = options.has_key?(:extensions) ? options[:extensions] : true
 
     phone = parse(value, specified_country(record))
     valid = if simple_validation?
@@ -61,7 +61,7 @@ class PhoneValidator < ActiveModel::EachValidator
             end
 
     # We default to not-allowing extensions for fax numbers
-    if valid && options[:extensions] === false && !phone.extension.empty?
+    if valid && !allowed_extensions && !phone.extension.empty?
       valid = false
     end
 
