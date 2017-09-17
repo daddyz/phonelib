@@ -36,7 +36,6 @@
 #     validates :mobile, phone: { possible: true, types: :mobile  }
 #   end
 #
-
 # Validates that attribute does not include an extension.
 # The default setting is to allow extensions
 #
@@ -58,12 +57,11 @@ class PhoneValidator < ActiveModel::EachValidator
     valid = if simple_validation?
               phone.send(validate_method)
             else
-              (phone_types(phone) & types).size >
+              (phone_types(phone) & types).size > 0
             end
 
     # We default to not-allowing extensions for fax numbers
-    if !options[:extensions] && phone&.extension&.present?
-      record.errors.add(attribute, message, options)
+    if valid && options[:extensions] === false && !phone.extension.empty?
       valid = false
     end
 
