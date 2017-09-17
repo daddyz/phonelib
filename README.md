@@ -110,6 +110,8 @@ if mixed with <tt>possible</tt> will check if number is possible for specified t
 
 <tt>country_specifier: -> phone { phone.country.try(:upcase) }</tt> - allows to specify country for validation dynamically for each validation.
 
+<tt>extensions: false</tt> - set to perform check for phone extension to be blank
+
 ### Basic usage
 
 To check if phone number is valid simply run:
