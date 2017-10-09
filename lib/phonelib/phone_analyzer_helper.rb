@@ -105,7 +105,7 @@ module Phonelib
       regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
       regex << "(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}"
       regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
-      regex << "(#{type_regex(data[Core::TYPES][Core::GENERAL], type)})"
+      regex << "(#{type_regex(data[Core::TYPES][Core::GENERAL], type)})" if data[Core::TYPES]
 
       cr("^#{regex.join}$")
     end
