@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.16 - October 9, 2017
+- updated data
+
 ## 0.6.15 - September 17, 2017
 - updated data
 - ```:extensions``` option added to validator, once set to ```false``` will perform additional check if parsed phone has extension
