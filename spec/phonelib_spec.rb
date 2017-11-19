@@ -734,6 +734,9 @@ describe Phonelib do
       Phonelib.default_country = :us
       expect(Phonelib.parse('7876711234').e164).to eq('+17876711234')
       expect(Phonelib.parse('7876711234').valid?).to be false
+      Phonelib.default_country = :pr
+      expect(Phonelib.parse('7876711234').e164).to eq('+17876711234')
+      expect(Phonelib.parse('7876711234').valid?).to be true
     end
   end
 
