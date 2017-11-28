@@ -20,7 +20,7 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    rack (1.6.1)
+    rack (2.0.3)
     rack-cache (1.2)
       rack (>= 0.4)
     rake (10.1.0)
