@@ -26,5 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov'
   # fixing CI tests
   s.add_development_dependency 'rack-cache', '= 1.2'
+  s.add_development_dependency 'rack', '= 1.6.2'
   s.add_development_dependency 'json', '= 1.8.6'
 end
