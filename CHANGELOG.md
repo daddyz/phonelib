@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.17 - November 28, 2017
+- updated data
+
 ## 0.6.16 - October 9, 2017
 - updated data
 
