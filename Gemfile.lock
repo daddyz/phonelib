@@ -17,13 +17,13 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     pry (0.9.12)
-      coderay (~> 1.0.5)
-      method_source (~> 0.8)
-      slop (~> 3.4)
-    rack (1.6.2)
-    rack-cache (1.2)
-      rack (>= 0.4)
-    rake (10.1.0)
+       coderay (~> 1.0.5)
+       method_source (~> 0.8)
+       slop (~> 3.4)
+     rack (1.6.1)
+     rack-cache (1.2)
+       rack (>= 0.4)
+     rake (10.1.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -41,18 +41,6 @@ GEM
 
 PLATFORMS
   ruby
-
+ 
 DEPENDENCIES
   codeclimate-test-reporter (~> 1.0.0)
-  json (= 1.8.6)
-  nokogiri (= 1.6.0)
-  phonelib!
-  pry
-  rack (= 1.6.2)
-  rack-cache (= 1.2)
-  rake (< 11.0)
-  rspec (= 2.14.1)
-  simplecov
-
-BUNDLED WITH
-   1.15.4
