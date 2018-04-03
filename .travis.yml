@@ -7,12 +7,14 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1.10
-  - 2.2.9
-  - 2.3.6
-  - 2.4.3
-  - 2.5.0
+  - 2.2.10
+  - 2.3.7
+  - 2.4.4
+  - 2.5.1
 
 gemfile:
+  - gemfiles/Gemfile.ruby-1.9.x
+  - gemfiles/Gemfile.ruby-2.0.x
   - gemfiles/Gemfile.rails-3.1.x
   - gemfiles/Gemfile.rails-3.2.x
   - gemfiles/Gemfile.rails-4.0.x
@@ -40,47 +42,75 @@ matrix:
       gemfile: gemfiles/Gemfile.rails-5.0.x
     - rvm: 1.9.3
       gemfile: gemfiles/Gemfile.rails-5.1.x
+    - rvm: 1.9.3
+      gemfile: gemfiles/Gemfile.ruby-2.0.x
+    - rvm: 1.9.3
+      gemfile: Gemfile
     - rvm: 2.0.0
       gemfile: gemfiles/Gemfile.rails-5.0.x
     - rvm: 2.0.0
       gemfile: gemfiles/Gemfile.rails-5.1.x
+    - rvm: 2.0.0
+      gemfile: gemfiles/Gemfile.ruby-1.9.x
+    - rvm: 2.0.0
+      gemfile: Gemfile
     - rvm: 2.1.10
       gemfile: gemfiles/Gemfile.rails-5.0.x
     - rvm: 2.1.10
       gemfile: gemfiles/Gemfile.rails-5.1.x
-    - rvm: 2.2.9
+    - rvm: 2.1.10
+      gemfile: gemfiles/Gemfile.ruby-1.9.x
+    - rvm: 2.1.10
+      gemfile: gemfiles/Gemfile.ruby-2.0.x
+    - rvm: 2.2.10
       gemfile: gemfiles/Gemfile.rails-3.1.x
-    - rvm: 2.2.9
+    - rvm: 2.2.10
       gemfile: gemfiles/Gemfile.rails-3.2.x
-    - rvm: 2.2.9
+    - rvm: 2.2.10
       gemfile: gemfiles/Gemfile.rails-4.0.x
-    - rvm: 2.2.9
+    - rvm: 2.2.10
       gemfile: gemfiles/Gemfile.rails-5.0.x
-    - rvm: 2.2.9
+    - rvm: 2.2.10
       gemfile: gemfiles/Gemfile.rails-5.1.x
-    - rvm: 2.3.6
+    - rvm: 2.2.10
+      gemfile: gemfiles/Gemfile.ruby-1.9.x
+    - rvm: 2.2.10
+      gemfile: gemfiles/Gemfile.ruby-2.0.x
+    - rvm: 2.3.7
       gemfile: gemfiles/Gemfile.rails-3.1.x
-    - rvm: 2.3.6
+    - rvm: 2.3.7
       gemfile: gemfiles/Gemfile.rails-3.2.x
-    - rvm: 2.3.6
+    - rvm: 2.3.7
       gemfile: gemfiles/Gemfile.rails-4.0.x
-    - rvm: 2.4.3
+    - rvm: 2.3.7
+      gemfile: gemfiles/Gemfile.ruby-1.9.x
+    - rvm: 2.3.7
+      gemfile: gemfiles/Gemfile.ruby-2.0.x
+    - rvm: 2.4.4
       gemfile: gemfiles/Gemfile.rails-3.1.x
-    - rvm: 2.4.3
+    - rvm: 2.4.4
       gemfile: gemfiles/Gemfile.rails-3.2.x
-    - rvm: 2.4.3
+    - rvm: 2.4.4
       gemfile: gemfiles/Gemfile.rails-4.0.x
-    - rvm: 2.4.3
+    - rvm: 2.4.4
       gemfile: gemfiles/Gemfile.rails-4.1.x
-    - rvm: 2.4.3
+    - rvm: 2.4.4
       gemfile: gemfiles/Gemfile.rails-4.2.x
-    - rvm: 2.5.0
+    - rvm: 2.4.4
+      gemfile: gemfiles/Gemfile.ruby-1.9.x
+    - rvm: 2.4.4
+      gemfile: gemfiles/Gemfile.ruby-2.0.x
+    - rvm: 2.5.1
       gemfile: gemfiles/Gemfile.rails-3.1.x
-    - rvm: 2.5.0
+    - rvm: 2.5.1
       gemfile: gemfiles/Gemfile.rails-3.2.x
-    - rvm: 2.5.0
+    - rvm: 2.5.1
       gemfile: gemfiles/Gemfile.rails-4.0.x
-    - rvm: 2.5.0
+    - rvm: 2.5.1
       gemfile: gemfiles/Gemfile.rails-4.1.x
-    - rvm: 2.5.0
+    - rvm: 2.5.1
       gemfile: gemfiles/Gemfile.rails-4.2.x
+    - rvm: 2.5.1
+      gemfile: gemfiles/Gemfile.ruby-1.9.x
+    - rvm: 2.5.1
+      gemfile: gemfiles/Gemfile.ruby-2.0.x
