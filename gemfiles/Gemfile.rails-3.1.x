@@ -5,5 +5,6 @@ gem "i18n", "~> 0.6.11"
 gem 'rake', '~> 10.5.0'
 gem 'rspec-rails'
 gem "sqlite3"
+gem "nokogiri", "~> 1.6.0"
 
 gemspec :path=>"../"

@@ -6,5 +6,6 @@ gem "sqlite3"
 gem "mail", "~> 2.6.3"
 gem "mime-types", "~> 2.99"
 gem "protected_attributes"
+gem "nokogiri", "~> 1.6.0"
 
 gemspec :path=>"../"
