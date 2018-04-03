@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.20 - April 3, 2018
+- added national prefix transformation rule to parsing process
+- updated data
+
 ## 0.6.19 - March 4, 2018
 - updated data
 

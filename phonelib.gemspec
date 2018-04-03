@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_development_dependency 'rake', '< 11.0'
-  s.add_development_dependency 'nokogiri', '= 1.6.0'
+  s.add_development_dependency 'nokogiri', '~> 1.8.1'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
   s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
