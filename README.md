@@ -16,8 +16,8 @@ But it still doesn't include all Google's library functionality.
 
 ### Change Log
 
-Change log can be found in repo's wiki
-https://github.com/daddyz/phonelib/wiki/Change-Log
+Change log can be found in repo's releases page
+https://github.com/daddyz/phonelib/releases
 
 ### Bug reports
 
