@@ -199,6 +199,8 @@ module Phonelib
     NATIONAL_PREFIX = :national_prefix
     # @private National prefix for parsing key
     NATIONAL_PREFIX_FOR_PARSING = :national_prefix_for_parsing
+    # @private National prefix transform rule key
+    NATIONAL_PREFIX_TRANSFORM_RULE = :national_prefix_transform_rule
     # @private National prefix rule key
     NATIONAL_PREFIX_RULE = :national_prefix_formatting_rule
     # @private Country code key

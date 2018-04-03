@@ -78,6 +78,9 @@ module Phonelib
           country = hash_from_xml(el, :attributes)
           country.merge! types_and_formats(el.children)
           country = add_double_country_flag country
+          if country[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
+            country[Core::NATIONAL_PREFIX_TRANSFORM_RULE].gsub!('$', '\\')
+          end
           @data[country[:id]] = country
         end
       end

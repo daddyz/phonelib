@@ -91,17 +91,6 @@ module Phonelib
           "\\d{#{m}}"
         end
       end.join('|')
-=begin
-      attributes.map do |k, v|
-        v.split(',').map do |m|
-          if m.include? '-'
-            "\\d{#{m.gsub(/[\[\]]/, '').gsub('-', ',')}}"
-          else
-            "\\d{#{m}}"
-          end
-        end.join('|')
-      end.join('|')
-=end
     end
 
     # method parses raw data file

@@ -46,6 +46,18 @@ module Phonelib
       base_result
     end
 
+    # replacing national prefix to simplified format
+    def with_replaced_national_prefix(phone, data)
+      return phone unless data[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
+      pattern = cr("^(?:#{data[Core::NATIONAL_PREFIX_FOR_PARSING]})")
+      match = phone.match pattern
+      if match && match.captures.compact.size > 0
+        phone.gsub(pattern, data[Core::NATIONAL_PREFIX_TRANSFORM_RULE])
+      else
+        phone
+      end
+    end
+
     # trying to parse phone for single country including international prefix
     # check for provided country
     #
@@ -60,7 +72,7 @@ module Phonelib
       # if country was provided and it's a valid country, trying to
       # create e164 representation of phone number,
       # kind of normalization for parsing
-      e164 = convert_to_e164 phone, data
+      e164 = convert_to_e164 with_replaced_national_prefix(phone, data), data
       # if phone starts with international prefix of provided
       # country try to reanalyze without international prefix for
       # all countries
