@@ -939,6 +939,15 @@ describe Phonelib do
     end
   end
 
+  context 'issue #132' do
+    it 'should simplify national prefix and make phone valid' do
+      phone = Phonelib.parse '0445532231113', 'MX'
+      expect(phone.valid?).to be true
+      expect(phone.international).to eq('+52 1 55 3223 1113')
+      expect(phone.country).to eq('MX')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
