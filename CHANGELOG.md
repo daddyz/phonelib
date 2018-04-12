@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.21 - April 12, 2018
+- added option to set multiple strings to ```Phonelib.extension_separate_symbols``` by passing an array. Refer to README.
+- updated data
+
 ## 0.6.20 - April 3, 2018
 - added national prefix transformation rule to parsing process
 - updated data
