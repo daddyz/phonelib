@@ -68,10 +68,11 @@ To set different extension separator on formatting, this setting doesn't affect 
 Phonelib.extension_separator = ';'
 ```
 
-To set symbols that are used for separating extension from phone number for parsing use ```Phonelib.extension_separate_symbols``` method. Default value is '#;'.
+To set symbols that are used for separating extension from phone number for parsing use ```Phonelib.extension_separate_symbols``` method. Default value is '#;'. In case string is passed each one of the symbols in the string will be treated as possible separator, in case array was passed each string in array will be treated as possible separator.
 
 ``` ruby
-Phonelib.extension_separate_symbols = '#;'
+Phonelib.extension_separate_symbols = '#;'           # for single symbol separator
+Phonelib.extension_separator = %w(ext # ; extension) # each string will be treated as separator
 ```
 
 In case you need to overwrite some Google's libphonenumber library data, you need to assign file path to this setter. File should be Marshal.dump'ed with existing structure like in ```Phonelib.phone_data```. Gem is simply doing ```merge``` between hashes.
