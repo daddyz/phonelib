@@ -948,6 +948,20 @@ describe Phonelib do
     end
   end
 
+  context 'issue #133' do
+    it 'should parse all numbers with extensions correctly' do
+      Phonelib.extension_separate_symbols = %w(ext ; # extension)
+      ['+1 212-555-5555 ext. 5555', '+1 212-555-5555;5555', '+1 212-555-5555#5555',
+       '+1 212-555-5555 extension 5555'].each do |num|
+
+        phone = Phonelib.parse(num)
+        expect(phone.valid?).to be true
+        expect(phone.international).to eq('+1 212-555-5555')
+        expect(phone.extension).to eq('5555')
+      end
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
