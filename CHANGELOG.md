@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.22 - May 23, 2018
+- added ```:countries``` validator key that checks whether validated phone is within specified countries
+- updated data
+
 ## 0.6.21 - April 12, 2018
 - added option to set multiple strings to ```Phonelib.extension_separate_symbols``` by passing an array. Refer to README.
 - updated data

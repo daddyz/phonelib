@@ -963,7 +963,7 @@ describe Phonelib do
   end
 
   context 'issue #135' do
-    it 'should be valid numbers' do
+    it 'should be valid numbers for poland with double country prefix' do
       Phonelib.default_country = 'PL'
 
       %w(716287061 486287061).each do |phone|
@@ -971,6 +971,13 @@ describe Phonelib do
         expect(Phonelib.parse("+48#{phone}").valid?).to be true
       end
       Phonelib.default_country = nil
+    end
+  end
+
+  context 'issue #127' do
+    it 'should be valid numbers for india starting with 6' do
+      expect(Phonelib.parse('916000123456').valid?).to be true
+      expect(Phonelib.parse('916000123456').valid?).to be true
     end
   end
 
