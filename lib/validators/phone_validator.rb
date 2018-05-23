@@ -36,6 +36,13 @@
 #     validates :mobile, phone: { possible: true, types: :mobile  }
 #   end
 #
+# validates that phone is valid and it is from specified country or countries
+#
+#   class Phone < ActiveRecord::Base
+#     attr_accessible :number
+#     validates :number, phone: { countries: [:us, :ca] }
+#   end
+#
 # Validates that attribute does not include an extension.
 # The default setting is to allow extensions
 #
@@ -51,19 +58,9 @@ class PhoneValidator < ActiveModel::EachValidator
   # Validation method
   def validate_each(record, attribute, value)
     return if options[:allow_blank] && value.blank?
-    allowed_extensions = options.has_key?(:extensions) ? options[:extensions] : true
 
-    phone = parse(value, specified_country(record))
-    valid = if simple_validation?
-              phone.send(validate_method)
-            else
-              (phone_types(phone) & types).size > 0
-            end
-
-    # We default to not-allowing extensions for fax numbers
-    if valid && !allowed_extensions && !phone.extension.empty?
-      valid = false
-    end
+    @phone = parse(value, specified_country(record))
+    valid = phone_valid? && valid_types? && valid_country? && valid_extensions?
 
     record.errors.add(attribute, message, options) unless valid
   end
@@ -74,8 +71,23 @@ class PhoneValidator < ActiveModel::EachValidator
     options[:message] || :invalid
   end
 
-  def validate_method
-    options[:possible] ? :possible? : :valid?
+  def phone_valid?
+    @phone.send(options[:possible] ? :possible? : :valid?)
+  end
+
+  def valid_types?
+    return true unless options[:types]
+    (phone_types & types).size > 0
+  end
+
+  def valid_country?
+    return true unless options[:countries]
+    (phone_countries & countries).size > 0
+  end
+
+  def valid_extensions?
+    return true if !options.has_key?(:extensions) || options[:extensions]
+    @phone.extension.empty?
   end
 
   def specified_country(record)
@@ -84,15 +96,9 @@ class PhoneValidator < ActiveModel::EachValidator
   end
 
   # @private
-  def simple_validation?
-    options[:types].nil?
-  end
-
-  # @private
-  # @param phone [Phonelib::Phone] parsed phone
-  def phone_types(phone)
+  def phone_types
     method = options[:possible] ? :possible_types : :types
-    phone_types = phone.send(method)
+    phone_types = @phone.send(method)
     if (phone_types & [Phonelib::Core::FIXED_OR_MOBILE]).size > 0
       phone_types += [Phonelib::Core::FIXED_LINE, Phonelib::Core::MOBILE]
     end
@@ -100,8 +106,20 @@ class PhoneValidator < ActiveModel::EachValidator
   end
 
   # @private
+  def phone_countries
+    method = options[:possible] ? :countries : :valid_countries
+    @phone.send(method)
+  end
+
+  # @private
   def types
     types = options[:types].is_a?(Array) ? options[:types] : [options[:types]]
     types.map(&:to_sym)
+  end
+
+  # @private
+  def countries
+    countries = options[:countries].is_a?(Array) ? options[:countries] : [options[:countries]]
+    countries.map { |c| c.to_s.upcase }
   end
 end

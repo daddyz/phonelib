@@ -2,7 +2,7 @@ require File.expand_path('../../spec_helper.rb',  __FILE__)
 
 describe Phone do
   it 'saves with valid phone' do
-    phone = Phone.new(number: '972541234567')
+    phone = Phone.new(number: '972542234567')
 
     expect(phone.save).to be true
     expect(phone.errors.empty?).to be true
@@ -91,5 +91,18 @@ describe Phone do
       # this test is suitable for rails >= 3.2 only
     end
   end
+
+  it 'should save with valid country phone' do
+    phone = phones(:valid_countries)
+    expect(phone.save).to be true
+    expect(phone.errors.any?).to be false
+  end
+
+  it 'should fail with impossible type' do
+    phone = phones(:invalid_countries)
+    expect(phone.save).to be false
+    expect(phone.errors.any?).to be true
+  end
+
 
 end
