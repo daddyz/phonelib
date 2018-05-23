@@ -109,6 +109,9 @@ Refer to [Google libphonenumber](http://code.google.com/p/libphonenumber/) for m
 <tt>types: :mobile</tt> or <tt>types: [:voip, :mobile]</tt> - allows to validate against specific phone types patterns,
 if mixed with <tt>possible</tt> will check if number is possible for specified type
 
+<tt>countries: :us</tt> or <tt>countries: [:us, :ca]</tt> - allows to validate against specific countries, 
+if mixed with <tt>possible</tt> will check if number is possible for specified countries
+
 <tt>country_specifier: -> phone { phone.country.try(:upcase) }</tt> - allows to specify country for validation dynamically for each validation.
 
 <tt>extensions: false</tt> - set to perform check for phone extension to be blank
