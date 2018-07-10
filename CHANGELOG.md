@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.23 - July 10, 2018
+- updated data
+
 ## 0.6.22 - May 23, 2018
 - added ```:countries``` validator key that checks whether validated phone is within specified countries
 - updated data
