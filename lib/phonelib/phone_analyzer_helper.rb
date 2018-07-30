@@ -102,6 +102,7 @@ module Phonelib
     # * +country_optional+ - whether to put country code as optional group
     def full_regex_for_data(data, type, country_optional = true)
       regex = []
+      regex << '0{2}?'
       regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
       regex << "(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}"
       regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
@@ -133,7 +134,7 @@ module Phonelib
     def phone_match_data?(phone, data, possible = false)
       country_code = "#{data[Core::COUNTRY_CODE]}"
       inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      return unless phone.match cr("^#{inter_prefix}#{country_code}")
+      return unless phone.match cr("^0{2}?#{inter_prefix}#{country_code}")
 
       type = possible ? Core::POSSIBLE_PATTERN : Core::VALID_PATTERN
       phone.match full_regex_for_data(data, type, false)
