@@ -821,8 +821,8 @@ describe Phonelib do
       expect(Phonelib.parse('3921234567', 'IT').national(false)).to eq('3921234567')
       expect(Phonelib.parse('3921234567', 'IT').valid?).to be true
 
-      expect(Phonelib.parse('393912345', 'IT').valid?).to be false
-      expect(Phonelib.parse('393912345', 'IT').possible?).to be true
+      expect(Phonelib.parse('39391234', 'IT').valid?).to be false
+      expect(Phonelib.parse('39391234', 'IT').possible?).to be true
     end
   end
 
@@ -978,6 +978,26 @@ describe Phonelib do
     it 'should be valid numbers for india starting with 6' do
       expect(Phonelib.parse('916000123456').valid?).to be true
       expect(Phonelib.parse('916000123456').valid?).to be true
+    end
+  end
+
+  context 'issue #138' do
+    it 'allowing 00 as international prefix' do
+      expect(Phonelib.parse('0012015550123').valid?).to be true
+      expect(Phonelib.parse('0012015550123').country).to eq('US')
+      expect(Phonelib.parse('00441684291707').valid?).to be true
+      expect(Phonelib.parse('00441684291707').country).to eq('GB')
+    end
+  end
+
+  context 'issue #140' do
+    it 'should be valid numbers for india with default country' do
+      Phonelib.default_country = 'IN'
+
+      expect(Phonelib.parse('8340412345').valid?).to be true
+      expect(Phonelib.parse('7970012345').valid?).to be true
+
+      Phonelib.default_country = nil
     end
   end
 
