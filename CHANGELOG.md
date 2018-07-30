@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.24 - July 30, 2018
+- added ```00``` as an international prefix
+- updated data
+
 ## 0.6.23 - July 10, 2018
 - updated data
 
