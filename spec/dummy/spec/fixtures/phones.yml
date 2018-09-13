@@ -41,3 +41,11 @@ valid_countries:
 invalid_countries:
   number: '972542234567'
   country_number: '972542234567'
+
+mobile_or_fixed_valid_type:
+  number: '972542234567'
+  type_mobile_number: '7879238675'
+
+fixed_valid_type:
+  number: '972542234567'
+  type_mobile_number: '7171774791'

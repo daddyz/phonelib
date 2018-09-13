@@ -104,5 +104,19 @@ describe Phone do
     expect(phone.errors.any?).to be true
   end
 
+  it 'should pass with mobile valid type' do
+    Phonelib.default_country = 'IN'
+    phone = phones(:mobile_or_fixed_valid_type)
+    expect(phone.save).to be true
+    Phonelib.default_country = nil
+  end
+
+  it 'should fail with fixed valid number but mobile type defined' do
+    Phonelib.default_country = 'IN'
+    phone = phones(:fixed_valid_type)
+    expect(phone.save).to be false
+    expect(phone.errors.any?).to be true
+    Phonelib.default_country = nil
+  end
 
 end

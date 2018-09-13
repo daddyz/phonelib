@@ -1,7 +1,7 @@
 class Phone < ActiveRecord::Base
   if Rails::VERSION::MAJOR != 5
     attr_accessible :number, :possible_number, :type_number, :country_number,
-                    :possible_type_number, :strict_number, :country
+                    :possible_type_number, :strict_number, :country, :type_mobile_number
   end
 
   validates :number, phone: { country_specifier: -> phone { phone.country.try(:upcase) } }
@@ -11,4 +11,5 @@ class Phone < ActiveRecord::Base
                                             types: [:voip, 'mobile'] }
   validates :strict_number, phone: { allow_blank: true, strict: true }
   validates :country_number, phone: { allow_blank: true, countries: [:us, :ca] }
+  validates :type_mobile_number, phone: { possible: false, allow_blank: true, types: [:mobile] }
 end
