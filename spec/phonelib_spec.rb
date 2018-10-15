@@ -840,9 +840,9 @@ describe Phonelib do
     end
 
     it 'should return raw national number when possible' do
-      phone = Phonelib.parse('+9721111')
-      expect(phone.raw_national).to eq('1111')
-      expect(phone.national).to eq('1111')
+      phone = Phonelib.parse('+9721111111')
+      expect(phone.raw_national).to eq('1111111')
+      expect(phone.national).to eq('1111111')
     end
   end
 
