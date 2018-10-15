@@ -32,6 +32,13 @@ module Phonelib
                    Phonelib::Core::EXT_CARRIER_KEY
     end
 
+    # returns valid country name
+    def valid_country_name
+      return unless valid?
+
+      Phonelib.phone_ext_data[Phonelib::Core::EXT_COUNTRY_NAMES][valid_country]
+    end
+
     private
 
     # @private get name from extended phone data by keys

@@ -42,6 +42,7 @@ module Phonelib
         @geo_names = []
         @timezones = []
         @carriers = []
+        @countries = {}
 
         run_import
       end
@@ -57,6 +58,7 @@ module Phonelib
         import_geocoding_data
         import_timezone_data
         import_carrier_data
+        import_country_names
         save_data_file
         save_extended_data_file
       end
@@ -135,6 +137,21 @@ module Phonelib
         import_raw_files_data("#{@destination}#{CARRIER_DIR}*",
                               @carriers,
                               :c)
+      end
+
+      # import country names
+      def import_country_names
+        puts 'IMPORTING COUNTRY NAMES'
+
+        require 'open-uri'
+        require 'csv'
+        io = open('http://download.geonames.org/export/dump/countryInfo.txt')
+        csv = CSV.new(io, {col_sep: "\t"})
+        csv.each do |row|
+          next if row[0].start_with?('#') || row[0].empty?
+
+          @countries[row[0]] = row[4]
+        end
       end
 
       # adds double country code flag in case country allows

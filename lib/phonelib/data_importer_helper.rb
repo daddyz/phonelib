@@ -22,6 +22,7 @@ module Phonelib
       extended = {
         Phonelib::Core::EXT_PREFIXES => @prefixes,
         Phonelib::Core::EXT_GEO_NAMES => @geo_names,
+        Phonelib::Core::EXT_COUNTRY_NAMES => @countries,
         Phonelib::Core::EXT_TIMEZONES => @timezones,
         Phonelib::Core::EXT_CARRIERS => @carriers
       }

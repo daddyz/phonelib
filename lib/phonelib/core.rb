@@ -285,6 +285,8 @@ module Phonelib
     EXT_PREFIXES = :prefixes
     # @private Extended data geo names array key
     EXT_GEO_NAMES = :geo_names
+    # @private Extended data country names array key
+    EXT_COUNTRY_NAMES = :country_names
     # @private Extended data timezones array key
     EXT_TIMEZONES = :timezones
     # @private Extended data carriers array key

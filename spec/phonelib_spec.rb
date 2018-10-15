@@ -1001,6 +1001,20 @@ describe Phonelib do
     end
   end
 
+  context 'valid_country_name method' do
+    it 'should not return name for invalid number' do
+      phone = Phonelib.parse('+12121231234')
+      expect(phone.valid?).to be false
+      expect(phone.valid_country_name).to be nil
+    end
+
+    it 'should return valid country name' do
+      phone = Phonelib.parse('+12125551234')
+      expect(phone.valid?).to be true
+      expect(phone.valid_country_name).to eq('United States')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
