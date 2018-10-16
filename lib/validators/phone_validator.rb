@@ -92,7 +92,12 @@ class PhoneValidator < ActiveModel::EachValidator
 
   def specified_country(record)
     return unless options[:country_specifier]
-    options[:country_specifier].call(record)
+
+    if options[:country_specifier].is_a?(Symbol)
+      record.send(options[:country_specifier])
+    else
+      options[:country_specifier].call(record)
+    end
   end
 
   # @private
