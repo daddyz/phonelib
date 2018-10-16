@@ -111,7 +111,7 @@ if mixed with <tt>possible</tt> will check if number is possible for specified t
 <tt>countries: :us</tt> or <tt>countries: [:us, :ca]</tt> - allows to validate against specific countries, 
 if mixed with <tt>possible</tt> will check if number is possible for specified countries
 
-<tt>country_specifier: -> phone { phone.country.try(:upcase) }</tt> - allows to specify country for validation dynamically for each validation. Usefull when phone is stored as national number without country prefix.
+<tt>country_specifier: :method_name</tt> or <tt>country_specifier: -> instance { instance.country.try(:upcase) }</tt> - allows to specify country for validation dynamically for each validation. Usefull when phone is stored as national number without country prefix.
 
 <tt>extensions: false</tt> - set to perform check for phone extension to be blank
 
