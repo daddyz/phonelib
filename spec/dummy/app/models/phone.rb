@@ -5,6 +5,7 @@ class Phone < ActiveRecord::Base
   end
 
   validates :number, phone: { country_specifier: :specify_country }
+  validates :country_specifier_proc_number, phone: { country_specifier: -> phone { phone.country.try(:upcase) }, allow_blank: true }
   validates :possible_number, phone: { possible: true, allow_blank: true }
   validates :type_number, phone: { types: :fixed_line, allow_blank: true }
   validates :possible_type_number, phone: { possible: true, allow_blank: true,

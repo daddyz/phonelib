@@ -1,5 +1,6 @@
 ## Upcoming Changes (unreleased)
 - added ```valid_country_name``` method to return country name where the parsed phone comes from (in case it's valid)
+- ```country_specifier``` in validator can now be set as symbol and not only proc, review the documentation
 
 ## 0.6.26 - October 15, 2018
 - updated data

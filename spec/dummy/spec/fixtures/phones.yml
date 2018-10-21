@@ -1,51 +1,65 @@
 valid_and_possible:
   number: '972542234567'
+  country_specifier_proc_number: '972542234567'
   possible_number: '972542234567'
 
 wrong:
   number: 'wrong'
+  country_specifier_proc_number: '972542234567'
 
 only_valid:
   number: '972542234567'
+  country_specifier_proc_number: '972542234567'
 
 only_possible:
   possible_number: '972542234567'
+  country_specifier_proc_number: '972542234567'
 
 valid_with_bad_possible:
   number: '972542234567'
   possible_number: 'wrong'
+  country_specifier_proc_number: '972542234567'
 
 valid_type:
   number: '972542234567'
   type_number: '97221234567'
+  country_specifier_proc_number: '972542234567'
 
 invalid_type:
   number: '972542234567'
   type_number: '972542234567'
+  country_specifier_proc_number: '972542234567'
 
 possible_type:
   number: '972542234567'
   possible_type_number: '972542234567'
+  country_specifier_proc_number: '972542234567'
 
 impossible_type:
   number: '972542234567'
   possible_type_number: '97221234567'
+  country_specifier_proc_number: '972542234567'
 
 invalid_strict:
   strict_number: '972347'
+  country_specifier_proc_number: '972542234567'
 
 valid_countries:
   number: '972542234567'
   country_number: '12015551234'
+  country_specifier_proc_number: '972542234567'
 
 invalid_countries:
   number: '972542234567'
   country_number: '972542234567'
+  country_specifier_proc_number: '972542234567'
 
 mobile_or_fixed_valid_type:
   number: '972542234567'
   type_mobile_number: '7879238675'
+  country_specifier_proc_number: '972542234567'
 
 fixed_valid_type:
   number: '972542234567'
+  country_specifier_proc_number: '972542234567'
   type_mobile_number: '7171774791'
