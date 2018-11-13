@@ -276,7 +276,7 @@ describe Phonelib do
 
     it 'returns [:mobile] as all types and possible_types' do
       expect(@phone.types).to eq([:mobile])
-      possible_types = [:premium_rate, :voip, :mobile]
+      possible_types = [:voip, :mobile]
       expect(@phone.possible_types).to eq(possible_types)
     end
 
@@ -1012,6 +1012,12 @@ describe Phonelib do
       phone = Phonelib.parse('+12125551234')
       expect(phone.valid?).to be true
       expect(phone.valid_country_name).to eq('United States')
+    end
+  end
+
+  context 'issue #143' do
+    it 'should be valid barbados number' do
+      expect(Phonelib.parse('1-246-753-8358', 'BB').valid?).to be true
     end
   end
 
