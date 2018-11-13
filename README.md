@@ -145,6 +145,7 @@ Additionally you can run:
 
 ``` ruby
 phone = Phonelib.parse('123456789')
+phone = Phonelib.parse('+1 (972) 123-4567', 'US')
 ```
 
 You can pass phone number with extension, it should be separated with <tt>;</tt> or <tt>#</tt> signs from the phone number.
