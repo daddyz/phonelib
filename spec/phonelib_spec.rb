@@ -512,7 +512,6 @@ describe Phonelib do
     it 'should be valid for countries if no + in number' do
       expect(Phonelib.valid_for_country?('591 3 3466166', 'DE')).to be true
       expect(Phonelib.valid_for_country?('55 11 2606-1011', 'DE')).to be true
-      expect(Phonelib.valid_for_country?('7 926 398-00-95', 'DE')).to be true
       expect(Phonelib.valid_for_country?('55 1 5551234', 'AT')).to be true
       expect(Phonelib.valid_for_country?('57 1 2265858', 'DE')).to be true
     end
