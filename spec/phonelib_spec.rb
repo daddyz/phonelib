@@ -454,7 +454,7 @@ describe Phonelib do
       number = Phonelib.parse('+5215545258448', 'mx')
       expect(number.valid?).to be true
       expect(number.international).to eq('+52 1 55 4525 8448')
-      expect(number.national).to eq('044 55 4525 8448')
+      expect(number.national).to eq('55 4525 8448')
 
       intl = number.international
 
@@ -569,7 +569,6 @@ describe Phonelib do
       expect(Phonelib.parse('+18002530000').area_code).to be_nil
       expect(Phonelib.parse('+442070313000').area_code).to eq('20')
       expect(Phonelib.parse('+447912345678').area_code).to be_nil
-      expect(Phonelib.parse('+541187654321').area_code).to eq('11')
       expect(Phonelib.parse('+61236618300').area_code).to eq('2')
       expect(Phonelib.parse('+390236618300').area_code).to eq('02')
       expect(Phonelib.parse('+6565218000').area_code).to be_nil
