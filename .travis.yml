@@ -25,7 +25,7 @@ gemfile:
   - Gemfile
 
 before_install:
-  - gem install bundleri -v '1.16.1'
+  - gem install bundler -v '1.16.1'
 
 script:
   - bundle exec rake spec
