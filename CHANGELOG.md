@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.30 - March 6, 2019
+- updated data
+
 ## 0.6.29 - February 10, 2019
 - updated data
 
