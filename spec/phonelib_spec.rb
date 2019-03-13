@@ -220,6 +220,26 @@ describe Phonelib do
     end
   end
 
+  context '#international_00' do
+    it 'returns the right formatting' do
+      phone = Phonelib.parse('+33601020304')
+      expect(phone.international_00).to eq('0033601020304')
+    end
+
+    it 'returns nil when passed nil' do
+      expect(Phonelib.parse(nil).international_00).to be_nil
+    end
+
+    it 'returns nil when number is empty' do
+      expect(Phonelib.parse('').international_00).to be_nil
+    end
+
+    it 'returns sanitized when number invalid but possible' do
+      phone = Phonelib.parse('9721234567')
+      expect(phone.international_00).to eq('009721234567')
+    end
+  end
+
   context '#national' do
     it 'returns right formatting' do
       phone = Phonelib.parse('972542234567')
