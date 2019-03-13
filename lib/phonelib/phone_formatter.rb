@@ -66,6 +66,12 @@ module Phonelib
       "#{international}#{formatted_extension}"
     end
 
+    # returns international formatted number with '00' as prefix (instead of '+')
+    # @returns [String] formatted international number with '00' as prefix
+    def international_00
+      e164 && e164.gsub(/[+]/, '00')
+    end
+
     # returns e164 format of phone with extension added
     # @return [String] phone formatted in E164 format with extension
     def full_e164
