@@ -1019,6 +1019,29 @@ describe Phonelib do
     end
   end
 
+  context 'prefix to international and e164 methods' do
+    it 'should accept prefix in international' do
+      phone = Phonelib.parse('+12125551234;99')
+      expect(phone.valid?).to be true
+      expect(phone.international).to eq('+1 212-555-1234')
+      expect(phone.international(true, '00')).to eq('001 212-555-1234')
+      expect(phone.international('00')).to eq('001 212-555-1234')
+      expect(phone.international_00).to eq('001 212-555-1234')
+      expect(phone.full_international('00')).to eq('001 212-555-1234;99')
+      expect(phone.full_international_00).to eq('001 212-555-1234;99')
+    end
+
+    it 'should accept prefix in e164' do
+      phone = Phonelib.parse('+12125551234;99')
+      expect(phone.valid?).to be true
+      expect(phone.e164).to eq('+12125551234')
+      expect(phone.e164('00')).to eq('0012125551234')
+      expect(phone.e164_00).to eq('0012125551234')
+      expect(phone.full_e164('00')).to eq('0012125551234;99')
+      expect(phone.full_e164_00).to eq('0012125551234;99')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

@@ -238,6 +238,17 @@ You can get E164 formatted number
 phone.e164 # returns number in E164 format
 ```
 
+You can define prefix for ```international``` and ```e164``` related methods to get formatted number prefixed with anything you need.
+
+``` ruby
+phone.international('00')      # returns formatted international number prefixed by 00 instead of +
+phone.e164('00')               # returns e164 represantation of a number prefixed by 00 instead of +
+phone.full_international('00') # returns formatted international number with extension prefixed by 00 instead of +
+phone.full_e164('00')          # returns e164 represantation of a number with extension prefixed by 00 instead of +
+phone.international_00         # same as phone.international('00'). 00 can be replaced with whatever you need
+phone.e164_00                  # same as phone.international('00') 
+```
+
 There is a ```to_s``` method, it will return ```e164``` in case number is valid and ```original``` otherwise
 
 ``` ruby
