@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.31 - March 27, 2019
+- added option for ```international``` and ```e164``` related methods to accept prefix parameter, which is "+" by default 
+- updated data
+
 ## 0.6.30 - March 6, 2019
 - updated data
 
