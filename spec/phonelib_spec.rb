@@ -999,6 +999,39 @@ describe Phonelib do
     end
   end
 
+  # https://github.com/daddyz/phonelib/issues/157
+  describe 'equality' do
+    let(:parsed_number) { Phonelib.parse(raw_number) }
+    let(:raw_number) { '281-330-8004' }
+
+    before { Phonelib.default_country = 'US' }
+    after { Phonelib.default_country = nil }
+
+    context 'when given a number as a string' do
+      it 'is equal' do
+        expect(parsed_number).to eq raw_number
+      end
+    end
+
+    context 'when given identical parsed numbers' do
+      it 'is equal' do
+        expect(parsed_number).to eq Phonelib.parse(raw_number)
+      end
+    end
+
+    context 'when given different representations of the same number' do
+      it 'is equal' do
+        expect(parsed_number).to eq raw_number.tr('-', '')
+      end
+    end
+
+    context 'when given different numbers' do
+      it 'is not equal' do
+        expect(parsed_number).not_to eq '281-330-8005'
+      end
+    end
+  end
+
   context 'valid_country_name method' do
     it 'should not return name for invalid number' do
       phone = Phonelib.parse('+12121231234')

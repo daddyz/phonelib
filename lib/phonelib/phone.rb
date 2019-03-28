@@ -37,6 +37,15 @@ module Phonelib
       valid? ? e164 : original
     end
 
+    # Compare a phone number against a string or other parsed number
+    # @param other [String|Phonelib::Phone] Phone number to compare against
+    # @return [Boolean] result of equality comparison
+    def ==(other)
+      other = Phonelib.parse(other) unless other.is_a?(Phonelib::Phone)
+      return (e164 == other.e164) if valid? && other.valid?
+      original == other.original
+    end
+
     # method to get sanitized phone number (only numbers)
     # @return [String] Sanitized phone number
     def sanitized
