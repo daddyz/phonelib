@@ -643,6 +643,7 @@ describe Phonelib do
 
   context 'issue #61' do
     it 'should be valid number in India' do
+      Phonelib.default_country = "IN"
       phone = Phonelib.parse('9111844757')
       expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('9111844757')
@@ -653,6 +654,20 @@ describe Phonelib do
       expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('49266444201')
       expect(phone.e164).to eq('+49266444201')
+      phone = Phonelib.parse('4949266444201')
+      expect(phone.valid?).to be true
+      expect(phone.sanitized).to eq('4949266444201')
+      expect(phone.e164).to eq('+4949266444201')
+    end
+
+    it 'should be invalid number outside India' do
+      Phonelib.default_country = nil
+      phone = Phonelib.parse('9111844757')
+      expect(phone.valid?).to be false
+      expect(Phonelib.valid?('919111844757')).to be true
+
+      phone = Phonelib.parse('49266444201')
+      expect(phone.valid?).to be true
       phone = Phonelib.parse('4949266444201')
       expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('4949266444201')
@@ -915,6 +930,7 @@ describe Phonelib do
 
   context 'issue #105' do
     it 'should be valid when original without +' do
+      Phonelib.default_country = :IN
       expect(Phonelib.valid?('9183082081')).to be true
       expect(Phonelib.valid_for_country?('9183082081', 'IN')).to be true
     end

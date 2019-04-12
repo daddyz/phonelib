@@ -106,7 +106,7 @@ module Phonelib
       result = {}
       Phonelib.phone_data.each do |key, data|
         parsed = parse_single_country(phone, data)
-        if double_prefix_allowed?(data, phone, parsed && parsed[key])
+        if double_prefix_allowed?(data, phone, parsed && parsed[key]) && key == Phonelib.default_country.to_s.upcase
           parsed = parse_single_country(changed_dp_phone(key, phone), data)
         end
         result.merge!(parsed) unless parsed.nil?
