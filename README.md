@@ -71,7 +71,7 @@ To set symbols that are used for separating extension from phone number for pars
 
 ``` ruby
 Phonelib.extension_separate_symbols = '#;'           # for single symbol separator
-Phonelib.extension_separator = %w(ext # ; extension) # each string will be treated as separator
+Phonelib.extension_separate_symbols = %w(ext # ; extension) # each string will be treated as separator
 ```
 
 In case you need to overwrite some Google's libphonenumber library data, you need to assign file path to this setter. File should be Marshal.dump'ed with existing structure like in ```Phonelib.phone_data```. Gem is simply doing ```merge``` between hashes.
