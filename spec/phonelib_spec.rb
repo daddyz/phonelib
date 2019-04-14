@@ -1030,6 +1030,13 @@ describe Phonelib do
         expect(parsed_number).not_to eq '281-330-8005'
       end
     end
+
+    context 'when numbers are invalid' do
+      it 'should not be equal' do
+        p1 = Phonelib.parse('+12121231234')
+        expect(parsed_number).not_to eq p1
+      end
+    end
   end
 
   context 'valid_country_name method' do
@@ -1072,6 +1079,11 @@ describe Phonelib do
       expect(phone.e164_00).to eq('0012125551234')
       expect(phone.full_e164('00')).to eq('0012125551234;99')
       expect(phone.full_e164_00).to eq('0012125551234;99')
+    end
+
+    it 'should raise error if bad method name passed' do
+      phone = Phonelib.parse('+12125551234;99')
+      expect { phone.fff_00 }.to raise_error(NameError)
     end
   end
 

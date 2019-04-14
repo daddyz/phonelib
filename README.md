@@ -255,6 +255,16 @@ There is a ```to_s``` method, it will return ```e164``` in case number is valid 
 phone.to_s # returns number in E164 format if number is valid or original otherwise
 ```
 
+You can compare 2 instances of ```Phonelib::Phone``` with ```==``` method or just use it with string
+
+```ruby 
+phone1 = Phonelib.parse('+12125551234') # Phonelib::Phone instance
+phone2 = Phonelib.parse('+12125551234') # Phonelib::Phone instance
+phone1 == phone2                        # returns true
+phone1 == '+12125551234'                # returns true
+phone1 == '12125551234;123'             # returns true
+```
+
 There is extended data available for numbers. It will return <tt>nil</tt> in case there is no data or phone is impossible.
 Can return array of values in case there are some results for specified number
 
