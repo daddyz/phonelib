@@ -50,7 +50,7 @@ module Phonelib
       national = @national_number
       if (matches = @national_number.match(cr(fmt[Core::PATTERN])))
         fmt = fmt[:intl_format] || fmt[:format]
-        national = fmt.gsub(/\$\d/) { |el| matches[el[1].to_i] }
+        national = fmt.gsub(/\$\d/) { |el| matches[el[1].to_i] } unless fmt == 'NA'
       end
 
       "#{prefix}#{country_code} #{national}"

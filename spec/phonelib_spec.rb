@@ -1075,6 +1075,21 @@ describe Phonelib do
     end
   end
 
+  context 'issue #160' do
+    it 'should return international number when intl_format is NA' do
+      n = Phonelib.parse('+61 13 12 21', 'au')
+      expect(n.valid?).to be(true)
+      expect(n.full_international).to eq('+61 131221')
+    end
+
+    it 'should use intl_format if it is good' do
+      p = Phonelib.parse('+12125551234')
+      expect(p.valid?).to be(true)
+      expect(p.international).to eq('+1 212-555-1234')
+      expect(p.national).to eq('(212) 555-1234')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
