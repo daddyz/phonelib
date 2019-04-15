@@ -107,6 +107,22 @@ module Phonelib
       @@strict_check = strict
     end
 
+    # @private strict double prefix check for validator, doesn't sanitize number
+    @@strict_double_prefix_check = false
+
+    # getter for strict double prefix check flag
+    # @return [Boolean] Flag defines whether to do strict double prefix parsing check
+    def strict_double_prefix_check
+      @@strict_double_prefix_check
+    end
+
+    # setter for strict double prefix check flag
+    # @param strict [Boolean] make a strict double prefix parsing or not
+    # @return [Boolean] Flag defines whether to do strict double prefix parsing check
+    def strict_double_prefix_check=(strict)
+      @@strict_double_prefix_check = strict
+    end
+
     @@override_phone_data = nil
     # setter for data file to use
     def override_phone_data=(file_path)

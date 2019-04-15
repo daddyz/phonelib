@@ -643,7 +643,6 @@ describe Phonelib do
 
   context 'issue #61' do
     it 'should be valid number in India' do
-      Phonelib.default_country = "IN"
       phone = Phonelib.parse('9111844757')
       expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('9111844757')
@@ -654,20 +653,6 @@ describe Phonelib do
       expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('49266444201')
       expect(phone.e164).to eq('+49266444201')
-      phone = Phonelib.parse('4949266444201')
-      expect(phone.valid?).to be true
-      expect(phone.sanitized).to eq('4949266444201')
-      expect(phone.e164).to eq('+4949266444201')
-    end
-
-    it 'should be invalid number outside India' do
-      Phonelib.default_country = nil
-      phone = Phonelib.parse('9111844757')
-      expect(phone.valid?).to be false
-      expect(Phonelib.valid?('919111844757')).to be true
-
-      phone = Phonelib.parse('49266444201')
-      expect(phone.valid?).to be true
       phone = Phonelib.parse('4949266444201')
       expect(phone.valid?).to be true
       expect(phone.sanitized).to eq('4949266444201')
@@ -930,7 +915,6 @@ describe Phonelib do
 
   context 'issue #105' do
     it 'should be valid when original without +' do
-      Phonelib.default_country = :IN
       expect(Phonelib.valid?('9183082081')).to be true
       expect(Phonelib.valid_for_country?('9183082081', 'IN')).to be true
     end
@@ -1012,6 +996,54 @@ describe Phonelib do
       expect(Phonelib.parse('7970012345').valid?).to be true
 
       Phonelib.default_country = nil
+    end
+  end
+
+  context 'issue #161' do
+    before do
+      Phonelib.strict_double_prefix_check = false
+    end
+
+    context 'when strict_double_prefix_check is false' do
+      it 'should be valid number outside the country' do
+        Phonelib.default_country = nil
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be true
+        expect(Phonelib.valid?('919111844757')).to be true
+      end
+
+      it 'should be valid number inside the country' do
+        phone = Phonelib.parse('9111844757', 'IN')
+        expect(phone.valid?).to be true
+        expect(Phonelib.valid?('919111844757')).to be true
+
+        Phonelib.default_country = 'IN'
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be true
+      end
+    end
+
+    context 'when strict_double_prefix_check is true' do
+      before do
+        Phonelib.strict_double_prefix_check = true
+      end
+
+      it 'should be invalid number outside the country' do
+        Phonelib.default_country = nil
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be false
+        expect(Phonelib.valid?('919111844757')).to be true
+      end
+
+      it 'should be valid number inside the country' do
+        phone = Phonelib.parse('9111844757', 'IN')
+        expect(phone.valid?).to be true
+        expect(Phonelib.valid?('919111844757')).to be true
+
+        Phonelib.default_country = 'IN'
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be true
+      end
     end
   end
 
