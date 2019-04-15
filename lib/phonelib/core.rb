@@ -107,7 +107,7 @@ module Phonelib
       @@strict_check = strict
     end
 
-    # @private strict double prefix check for validator, doesn't sanitize number
+    # @private strict double prefix check for validator, doesn't sanitize double prefix
     @@strict_double_prefix_check = false
 
     # getter for strict double prefix check flag
