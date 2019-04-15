@@ -102,7 +102,7 @@ module Phonelib
     # ==== Attributes
     #
     # * +phone+ - phone number for parsing
-    def detect_and_parse(phone, country = nil)
+    def detect_and_parse(phone, country)
       result = {}
       Phonelib.phone_data.each do |key, data|
         parsed = parse_single_country(phone, data)
