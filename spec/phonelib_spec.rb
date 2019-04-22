@@ -1039,6 +1039,54 @@ describe Phonelib do
     end
   end
 
+  context 'issue #161' do
+    before do
+      Phonelib.strict_double_prefix_check = false
+    end
+
+    context 'when strict_double_prefix_check is false' do
+      it 'should be valid number outside the country' do
+        Phonelib.default_country = nil
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be true
+        expect(Phonelib.valid?('919111844757')).to be true
+      end
+
+      it 'should be valid number inside the country' do
+        phone = Phonelib.parse('9111844757', 'IN')
+        expect(phone.valid?).to be true
+        expect(Phonelib.valid?('919111844757')).to be true
+
+        Phonelib.default_country = 'IN'
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be true
+      end
+    end
+
+    context 'when strict_double_prefix_check is true' do
+      before do
+        Phonelib.strict_double_prefix_check = true
+      end
+
+      it 'should be invalid number outside the country' do
+        Phonelib.default_country = nil
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be false
+        expect(Phonelib.valid?('919111844757')).to be true
+      end
+
+      it 'should be valid number inside the country' do
+        phone = Phonelib.parse('9111844757', 'IN')
+        expect(phone.valid?).to be true
+        expect(Phonelib.valid?('919111844757')).to be true
+
+        Phonelib.default_country = 'IN'
+        phone = Phonelib.parse('9111844757')
+        expect(phone.valid?).to be true
+      end
+    end
+  end
+
   context 'valid_country_name method' do
     it 'should not return name for invalid number' do
       phone = Phonelib.parse('+12121231234')

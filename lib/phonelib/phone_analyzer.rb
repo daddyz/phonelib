@@ -24,7 +24,7 @@ module Phonelib
                    # all is good, return result
                  when passed_country.nil?
                    # trying for all countries if no country was passed
-                   detect_and_parse phone
+                   detect_and_parse(phone, country)
                  when country_can_dp?(country)
                    # if country allows double prefix trying modified phone
                    parse_country(changed_dp_phone(country, phone), country)
@@ -102,11 +102,11 @@ module Phonelib
     # ==== Attributes
     #
     # * +phone+ - phone number for parsing
-    def detect_and_parse(phone)
+    def detect_and_parse(phone, country)
       result = {}
       Phonelib.phone_data.each do |key, data|
         parsed = parse_single_country(phone, data)
-        if double_prefix_allowed?(data, phone, parsed && parsed[key])
+        if (!Phonelib.strict_double_prefix_check || key == country) && double_prefix_allowed?(data, phone, parsed && parsed[key])
           parsed = parse_single_country(changed_dp_phone(key, phone), data)
         end
         result.merge!(parsed) unless parsed.nil?

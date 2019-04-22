@@ -61,6 +61,12 @@ To disable sanitizing of passed phone number (keeping digits only)
 Phonelib.strict_check = true
 ```
 
+To disable sanitizing of double prefix on passed phone number
+
+```ruby
+Phonelib.strict_double_prefix_check = true
+```
+
 To set different extension separator on formatting, this setting doesn't affect parsing. Default setting is ';'
 
 ``` ruby
