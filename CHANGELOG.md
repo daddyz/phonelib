@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.33 - April 22, 2019
+- adding ```Phonelib.strict_double_prefix_check``` configuration variable to disable sanitizing of double prefix on passed phone number
+
 ## 0.6.32 - April 14, 2019
 - added ```==``` method
 - updated data
