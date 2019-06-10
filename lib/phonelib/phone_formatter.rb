@@ -149,7 +149,12 @@ module Phonelib
       rule.gsub!(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
 
       # add space to format groups, change first group to rule,
-      format_string = format[:format].gsub(/(\d)\$/, '\\1 $').gsub('$1', rule)
+      format_string = format[:format].gsub(/(\d)\$/, '\\1 $')
+      if format_string.include? '$1'
+	format_string.gsub! '$1', rule
+      else
+	format_string = rule.gsub('$1', '') + format_string
+      end
 
       @formatting_data =
           [@national_number.match(/#{format[Core::PATTERN]}/), format_string]

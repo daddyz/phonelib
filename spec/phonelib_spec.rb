@@ -454,7 +454,7 @@ describe Phonelib do
       number = Phonelib.parse('+5215545258448', 'mx')
       expect(number.valid?).to be true
       expect(number.international).to eq('+52 1 55 4525 8448')
-      expect(number.national).to eq('55 4525 8448')
+      expect(number.national).to eq('044 55 4525 8448')
 
       intl = number.international
 
@@ -1147,6 +1147,13 @@ describe Phonelib do
       expect(p.valid?).to be(true)
       expect(p.international).to eq('+1 212-555-1234')
       expect(p.national).to eq('(212) 555-1234')
+    end
+  end
+
+  context 'issue #152' do
+    it 'should return correct format for MX' do
+      p = Phonelib.parse('0459991234567', 'MX')
+      expect(p.national).to eq('044 999 123 4567')
     end
   end
 
