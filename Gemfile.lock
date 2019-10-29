@@ -13,9 +13,9 @@ GEM
     docile (1.1.5)
     json (1.8.6)
     method_source (0.9.0)
-    mini_portile2 (2.3.0)
-    nokogiri (1.8.2)
-      mini_portile2 (~> 2.3.0)
+    mini_portile2 (2.4.0)
+    nokogiri (1.10.4)
+      mini_portile2 (~> 2.4.0)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -43,7 +43,7 @@ PLATFORMS
 DEPENDENCIES
   codeclimate-test-reporter (~> 1.0.0)
   json (= 1.8.6)
-  nokogiri (~> 1.8.1)
+  nokogiri (~> 1.10.4)
   phonelib!
   pry
   rack-cache (= 1.2)
