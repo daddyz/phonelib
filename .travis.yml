@@ -22,12 +22,11 @@ gemfile:
   - gemfiles/Gemfile.rails-4.2.x
   - gemfiles/Gemfile.rails-5.0.x
   - gemfiles/Gemfile.rails-5.1.x
-  - Gemfile
+  - gemfiles/Gemfile
 
 before_install:
   - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
   - gem install bundler -v '1.16.1'
-  - bundle install
 
 script:
   - bundle exec rake spec
@@ -47,7 +46,7 @@ matrix:
     - rvm: 1.9.3
       gemfile: gemfiles/Gemfile.ruby-2.0.x
     - rvm: 1.9.3
-      gemfile: Gemfile
+      gemfile: gemfiles/Gemfile
     - rvm: 2.0.0
       gemfile: gemfiles/Gemfile.rails-5.0.x
     - rvm: 2.0.0
@@ -55,7 +54,7 @@ matrix:
     - rvm: 2.0.0
       gemfile: gemfiles/Gemfile.ruby-1.9.x
     - rvm: 2.0.0
-      gemfile: Gemfile
+      gemfile: gemfiles/Gemfile
     - rvm: 2.1.10
       gemfile: gemfiles/Gemfile.rails-5.0.x
     - rvm: 2.1.10
