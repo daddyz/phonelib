@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{lib,tasks}/**/*'] + Dir['data/*.dat'] + %w(MIT-LICENSE Rakefile README.md)
   s.test_files = Dir['test/**/*']
 
-  s.add_development_dependency 'rake', '< 11.0'
+  s.add_development_dependency 'rake', '< 14.0'
   if RUBY_VERSION < '2.3.0'
     s.add_development_dependency 'nokogiri', '~> 1.8.2'
   else
