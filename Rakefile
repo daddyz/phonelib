@@ -22,6 +22,13 @@ end
 Bundler::GemHelper.install_tasks
 
 require 'rspec/core/rake_task'
+module TempFixForRakeLastComment
+  def last_comment
+    last_description
+  end
+end
+Rake::Application.send :include, TempFixForRakeLastComment
+
 RSpec::Core::RakeTask.new(:spec) do |t|
   if defined? Rails
     puts 'Rails found! Running tests with Rails'
