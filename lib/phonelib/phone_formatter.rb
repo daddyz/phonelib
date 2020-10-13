@@ -44,7 +44,7 @@ module Phonelib
       prefix = formatted if formatted.is_a?(String)
       return nil if sanitized.empty?
       return "#{prefix}#{country_prefix_or_not}#{sanitized}" unless valid?
-      return country_code + @national_number unless formatted
+      return "#{prefix}#{country_code}#{@national_number}" unless formatted
 
       fmt = @data[country][:format]
       national = @national_number
