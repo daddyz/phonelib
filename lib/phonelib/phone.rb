@@ -51,7 +51,7 @@ module Phonelib
     def sanitized
       @sanitized ||=
           vanity_converted(@original).gsub(
-              Phonelib.strict_check ? cr('^\+') : cr('[^0-9]+'),
+              Phonelib.strict_check ? cr('^\+') : cr(Phonelib.sanitize_regex),
               '')
     end
 

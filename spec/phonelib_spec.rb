@@ -203,7 +203,7 @@ describe Phonelib do
 
     it 'returns unformatted when false passed' do
       phone = Phonelib.parse('972542234567')
-      expect(phone.international(false)).to eq('972542234567')
+      expect(phone.international(false)).to eq('+972542234567')
     end
 
     it 'returns sanitized when number invalid but possible' do
@@ -1163,6 +1163,27 @@ describe Phonelib do
       expect(p.international).to eq('+84 90 296 22 07')
       p = Phonelib.parse('844666531', 'VN')
       expect(p.international).to eq('+84 844 666 531')
+    end
+  end
+
+  context 'issue #203' do
+    it 'should be valid when sanitize all symbols' do
+      p = Phonelib.parse('+1 (713) 555-1212 ; abc')
+      expect(p.valid?).to be(true)
+    end
+
+    it 'should be invalid when sanitize only valuable symbols' do
+      Phonelib.sanitize_regex = '[\.\-\(\) \;\+]'
+      p = Phonelib.parse('+1 (713) 555-1212 ; abc')
+      expect(p.valid?).to be(true)
+    end
+
+    it 'should be valid when sanitize only valuable symbols' do
+      old = Phonelib.sanitize_regex
+      Phonelib.sanitize_regex = '[\.\-\(\) \;\+]'
+      p = Phonelib.parse('+1 (713) 555-1212')
+      expect(p.valid?).to be(true)
+      Phonelib.sanitize_regex = old
     end
   end
 

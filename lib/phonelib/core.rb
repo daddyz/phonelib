@@ -107,6 +107,22 @@ module Phonelib
       @@strict_check = strict
     end
 
+    # @private sanitizing regex, matching symbols will get removed from parsed number, must be string
+    @@sanitize_regex = '[^0-9]+'
+
+    # getter for sanitize regex
+    # @return [String] regex of symbols to wipe from parsed number
+    def sanitize_regex
+      @@sanitize_regex
+    end
+
+    # setter for sanitize regex
+    # @param regex [String] symbols to wipe from parsed number
+    # @return [String] regex of symbols to wipe from parsed number
+    def sanitize_regex=(regex)
+      @@sanitize_regex = regex.is_a?(String) ? regex : regex.to_s
+    end
+
     # @private strict double prefix check for validator, doesn't sanitize number
     @@strict_double_prefix_check = false
 

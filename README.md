@@ -61,6 +61,12 @@ To disable sanitizing of passed phone number (keeping digits only)
 Phonelib.strict_check = true
 ```
 
+To change sanitized symbols on parsed number, so non-specified symbols won't be wiped and will fail the parsing
+
+``` ruby
+Phonelib.sanitize_regex = '[\.\-\(\) \;\+]'
+```
+
 To disable sanitizing of double prefix on passed phone number
 
 ```ruby
