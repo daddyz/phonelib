@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        ruby-version:
+          - 2.5.8
+          - 2.6.6
+          - 2.7.2
+          - 3.0.0
+        rails-version:
+          - "~> 5.2.0"
+          - "~> 6.0.0"
+          - "~> 6.1.0"
+
+    container:
+      image: ruby:${{ matrix.ruby-version }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+      - name: Install dependencies
+        run: |
+          gem update --system
+          gem install bundler
+          bundle config set path vendor/bundle
+          bundle install --jobs 4 --retry 3
+        env:
+          RAILS_VERSION: ${{ matrix.rails-version }}
+      - name: Setup
+        run: |
+          bundle exec rake phonelib:create_test_db
+      - name: Run tests
+        run: |
+          bundle exec rake spec
+      - name: Codeclimate
+        run: |
+          CODECLIMATE_REPO_TOKEN=230dc861ec831b64dc4818a2002de07fbd2a413cc460385eb05958564eb70687 bundle exec codeclimate-test-reporter

@@ -18,16 +18,9 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_development_dependency 'rake', '< 14.0'
-  if RUBY_VERSION < '2.3.0'
-    s.add_development_dependency 'nokogiri', '~> 1.8.2'
-  else
-    s.add_development_dependency 'nokogiri', '~> 1.10.8'
-  end
+  s.add_development_dependency 'nokogiri', '~> 1.10.8'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
   s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
   s.add_development_dependency 'simplecov'
-  # fixing CI tests
-  s.add_development_dependency 'rack-cache', '= 1.2'
-  s.add_development_dependency 'json', '= 2.3.1'
 end
