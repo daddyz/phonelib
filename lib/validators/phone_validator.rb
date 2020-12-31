@@ -62,7 +62,7 @@ class PhoneValidator < ActiveModel::EachValidator
     @phone = parse(value, specified_country(record))
     valid = phone_valid? && valid_types? && valid_country? && valid_extensions?
 
-    record.errors.add(attribute, message, options) unless valid
+    record.errors.add(attribute, message, **options) unless valid
   end
 
   private
