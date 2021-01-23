@@ -1,6 +1,14 @@
 module Phonelib
   # main module that includes all basic data and methods
   module Core
+    # @private is ruby 3 ?
+    @@ruby_v3 = (RUBY_VERSION >= '3.0.0').freeze
+
+    # @private
+    def is_ruby3?
+      @@ruby_v3
+    end
+
     # @private variable will include hash with data for validation
     @@phone_data = nil
 

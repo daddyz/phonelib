@@ -62,10 +62,10 @@ class PhoneValidator < ActiveModel::EachValidator
     @phone = parse(value, specified_country(record))
     valid = phone_valid? && valid_types? && valid_country? && valid_extensions?
 
-    if Rails::VERSION::MAJOR < 5
-      record.errors.add(attribute, message, options) unless valid
-    else
+    if is_ruby3? || Rails::VERSION::MAJOR > 5
       record.errors.add(attribute, message, **options) unless valid
+    else
+      record.errors.add(attribute, message, options) unless valid
     end
   end
 
