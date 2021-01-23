@@ -59,7 +59,7 @@ class PhonesController < ApplicationController
     @phone = Phone.find(params[:id])
 
     respond_to do |format|
-      if @phone.update_attributes(phone_params)
+      if @phone.update(phone_params)
         format.html { redirect_to @phone, notice: 'Phone was successfully updated.' }
         format.json { head :no_content }
       else

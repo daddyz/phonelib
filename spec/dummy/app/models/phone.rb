@@ -1,5 +1,5 @@
 class Phone < ActiveRecord::Base
-  if Rails::VERSION::MAJOR != 5
+  if Rails::VERSION::MAJOR < 5
     attr_accessible :number, :possible_number, :type_number, :country_number,
                     :possible_type_number, :strict_number, :country, :type_mobile_number
   end

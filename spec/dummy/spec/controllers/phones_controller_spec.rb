@@ -10,18 +10,18 @@ describe PhonesController, :type => :controller do
 
   it 'should get index' do
     get :index
-    expect(response).to be_success
+    expect(response).to have_http_status(:ok)
     expect(assigns(:phones)).not_to be_nil
   end
 
   it 'should get new' do
     get :new
-    expect(response).to be_success
+    expect(response).to have_http_status(:ok)
   end
 
   it 'should create phone' do
     assert_difference(Phone, :count) do
-      if Rails::VERSION::MAJOR == 5
+      if Rails::VERSION::MAJOR > 4
         post :create, params: { phone: { number: @phone.number } }
       else
         post :create, phone: { number: @phone.number }
@@ -32,25 +32,25 @@ describe PhonesController, :type => :controller do
   end
 
   it 'should show phone' do
-    if Rails::VERSION::MAJOR == 5
+    if Rails::VERSION::MAJOR > 4
       get :show, params: { id: @phone }
     else
       get :show, id: @phone
     end
-    expect(response).to be_success
+    expect(response).to have_http_status(:ok)
   end
 
   it 'should get edit' do
-    if Rails::VERSION::MAJOR == 5
+    if Rails::VERSION::MAJOR > 4
       get :edit, params: { id: @phone }
     else
       get :edit, id: @phone
     end
-    expect(response).to be_success
+    expect(response).to have_http_status(:ok)
   end
 
   it 'should update phone' do
-    if Rails::VERSION::MAJOR == 5
+    if Rails::VERSION::MAJOR > 4
       put :update, params: { id: @phone, phone: { number: @phone.number } }
     else
       put :update, id: @phone, phone: { number: @phone.number }
@@ -60,7 +60,7 @@ describe PhonesController, :type => :controller do
 
   it 'should destroy phone' do
     assert_difference(Phone, :count, -1) do
-      if Rails::VERSION::MAJOR == 5
+      if Rails::VERSION::MAJOR > 4
         delete :destroy, params: { id: @phone }
       else
         delete :destroy, id: @phone
