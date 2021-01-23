@@ -45,7 +45,11 @@ describe PhonesController, :type => :controller do
     else
       get :show, id: @phone
     end
-    expect(response).to have_http_status(:ok)
+    if Rails::VERSION::MAJOR > 5
+      expect(response).to have_http_status(:ok)
+    else
+      expect(response).to be_success
+    end
   end
 
   it 'should get edit' do
