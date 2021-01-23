@@ -142,6 +142,8 @@ matrix:
     - rvm: 3.0.0
       gemfile: gemfiles/Gemfile.rails-5.0.x
     - rvm: 3.0.0
+      gemfile: gemfiles/Gemfile.rails-5.1.x
+    - rvm: 3.0.0
       gemfile: gemfiles/Gemfile.ruby-1.9.x
     - rvm: 3.0.0
       gemfile: gemfiles/Gemfile.ruby-2.0.x
