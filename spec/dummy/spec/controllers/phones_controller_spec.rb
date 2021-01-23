@@ -10,13 +10,21 @@ describe PhonesController, :type => :controller do
 
   it 'should get index' do
     get :index
-    expect(response).to have_http_status(:ok)
+    if Rails::VERSION::MAJOR > 5
+      expect(response).to have_http_status(:ok)
+    else
+      expect(response).to be_success
+    end
     expect(assigns(:phones)).not_to be_nil
   end
 
   it 'should get new' do
     get :new
-    expect(response).to have_http_status(:ok)
+    if Rails::VERSION::MAJOR > 5
+      expect(response).to have_http_status(:ok)
+    else
+      expect(response).to be_success
+    end
   end
 
   it 'should create phone' do
@@ -46,7 +54,11 @@ describe PhonesController, :type => :controller do
     else
       get :edit, id: @phone
     end
-    expect(response).to have_http_status(:ok)
+    if Rails::VERSION::MAJOR > 5
+      expect(response).to have_http_status(:ok)
+    else
+      expect(response).to be_success
+    end
   end
 
   it 'should update phone' do
