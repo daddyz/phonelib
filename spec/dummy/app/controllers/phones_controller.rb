@@ -57,9 +57,14 @@ class PhonesController < ApplicationController
   # PUT /phones/1.json
   def update
     @phone = Phone.find(params[:id])
+    if Rails::VERSION::MAJOR > 5
+      mtd = :update
+    else
+      mtd = :update_attributes
+    end
 
     respond_to do |format|
-      if @phone.update_attributes(phone_params)
+      if @phone.send(mtd, phone_params)
         format.html { redirect_to @phone, notice: 'Phone was successfully updated.' }
         format.json { head :no_content }
       else
