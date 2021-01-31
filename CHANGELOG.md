@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.48 - 31 Jan 2021
+- updated data
+- added ruby 3 support
+
 ## 0.6.47 - 21 Dec 2020
 - updated data
 - added `Phonelib.sanitize_regex` config variable to control symbols for sanitizing during phone parsing
