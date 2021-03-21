@@ -58,7 +58,7 @@ module Phonelib
 
     # @private returns extended data ids for current number
     def ext_data
-      return @ext_data if @ext_data
+      return @ext_data if defined?(@ext_data) && @ext_data
 
       result = default_ext_data
       return result unless possible?

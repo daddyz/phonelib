@@ -92,6 +92,21 @@ In case you need to overwrite some Google's libphonenumber library data, you nee
 Phonelib.override_phone_data = '/path/to/override_phone_data.dat'
 ```
 
+In case you want to add some custom or still not updated regex patterns for certain type you can use additional regexes feature in a following way:
+
+``` ruby
+Phonelib.add_additional_regex :us, Phonelib::Core::MOBILE, '[5]{10}' # this will add number 1-555-555-5555 to be valid
+Phonelib.add_additional_regex :gb, Phonelib::Core::MOBILE, '[1]{5}' # this will add number 44-11-111 to be valid
+# you can also specify all regexes using this method
+Phonelib.additional_regexes = [[:us, :mobile, "[5]{10}"], [:gb, :mobile, "[1]{5}"]]
+# or just use dump method to keep them altogether
+Phonelib.dump_additional_regexes # => [["US", :mobile, "[5]{10}"], ["GB", :mobile, "[1]{5}"]
+```
+
+(!) For a list of available types refer to this readme.
+
+(!) Please note that regex should be added as string
+
 In case phone number that was passed for parsing has "+" sign in the beginning, library will try to detect a country regarding the provided one.
 
 ### ActiveRecord Integration

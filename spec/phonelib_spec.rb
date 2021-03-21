@@ -1187,6 +1187,43 @@ describe Phonelib do
     end
   end
 
+  context 'additional_regexes' do
+    before(:each) do
+      Phonelib.additional_regexes = []
+    end
+
+    after(:each) do
+      Phonelib.additional_regexes = []
+    end
+
+    it 'should parse number as valid' do
+      phone = '+1-000-000-0000'
+      expect(Phonelib.additional_regexes).to eq({})
+      p1 = Phonelib.parse(phone)
+      expect(p1.valid?).to be(false)
+      Phonelib.add_additional_regex :us, Phonelib::Core::MOBILE, '0{10}'
+      p2 = Phonelib.parse(phone)
+      expect(p2.valid?).to be(true)
+      expect(p2.possible?).to be(true)
+      expect(p2.international).to eq('+1 000 000 0000')
+      expect(p2.country).to eq('US')
+    end
+
+    it 'dump correct' do
+      Phonelib.additional_regexes = []
+      expect(Phonelib.additional_regexes).to eq({})
+      Phonelib.add_additional_regex :us, Phonelib::Core::MOBILE, '0{10}'
+      Phonelib.add_additional_regex :us, Phonelib::Core::MOBILE, '1{10}'
+      expect(Phonelib.dump_additional_regexes).to eq([['US', :mobile, '0{10}'], ['US', :mobile, '1{10}']])
+    end
+
+    it 'load correct' do
+      expect(Phonelib.additional_regexes).to eq({})
+      Phonelib.additional_regexes = [[:us, :mobile, '0{10}'], [:us, :mobile, '1{10}']]
+      expect(Phonelib.dump_additional_regexes).to eq([['US', :mobile, '0{10}'], ['US', :mobile, '1{10}']])
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

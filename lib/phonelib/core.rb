@@ -149,6 +149,42 @@ module Phonelib
       @@override_phone_data
     end
 
+    @@additional_regexes = {}
+    # setter for data file to use
+    def additional_regexes=(data)
+      return unless data.is_a?(Array)
+      @@additional_regexes = {}
+      data.each do |row|
+        next if row.size != 3
+        add_additional_regex(*row)
+      end
+    end
+
+    def add_additional_regex(country, type, national_regex)
+      return unless Phonelib::Core::TYPES_DESC.keys.include?(type.to_sym)
+      return unless national_regex.is_a?(String)
+      @@phone_data = nil
+      @@additional_regexes[country.to_s.upcase] ||= {}
+      @@additional_regexes[country.to_s.upcase][type] ||= []
+      @@additional_regexes[country.to_s.upcase][type] << national_regex
+    end
+
+    def dump_additional_regexes
+      rows = []
+      @@additional_regexes.each do |country, types|
+        types.each do |type, regexes|
+          regexes.each do |regex|
+            rows << [country, type, regex]
+          end
+        end
+      end
+      rows
+    end
+
+    def additional_regexes
+      @@additional_regexes
+    end
+
     @@vanity_conversion = false
     # setter for vanity phone numbers chars replacement
     def vanity_conversion=(value)
@@ -392,6 +428,21 @@ module Phonelib
       if override_phone_data
         override_data_file = Marshal.load(File.binread(override_phone_data))
         default_data.merge!(override_data_file)
+      end
+      additional_regexes.each do |country, types|
+        types.each do |type, regex|
+          default_data[country][Core::TYPES][type] ||= {}
+          [Core::VALID_PATTERN, Core::POSSIBLE_PATTERN].each do |key|
+            if default_data[country][Core::TYPES][type][key]
+              default_data[country][Core::TYPES][type][key] << "|#{regex.join('|')}"
+            else
+              default_data[country][Core::TYPES][type][key] = regex.join('|')
+            end
+            if type != Core::GENERAL
+              default_data[country][Core::TYPES][Core::GENERAL][key] << "|#{regex.join('|')}"
+            end
+          end
+        end
       end
       default_data
     end
