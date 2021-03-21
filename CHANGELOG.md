@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.49 - 21 March 2021
+- updated data
+- added ```Phonelib.additional_regexes``` feature allowing to add custom regex patterns for certain types. This should help to overcome an issue when pattern is still missing.
+
 ## 0.6.48 - 31 Jan 2021
 - updated data
 - added ruby 3 support
