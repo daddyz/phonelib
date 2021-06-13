@@ -1,5 +1,8 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.51 - 13 June 2021
+- updated data
+
 ## 0.6.50 - 1 May 2021
 - updated data
 
