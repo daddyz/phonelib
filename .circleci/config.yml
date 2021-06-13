@@ -1,0 +1,65 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2 
+
+commands:
+  rspec:
+    parameters:
+      rvm: 
+        default: "NA"
+        type: string
+    steps:
+      - run: "ruby --version"
+      #- run: "gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true"
+      - run: "gem install bundler -v '1.16.1'"
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - checkout
+      - run: "bundle install --jobs=3 --retry=3"
+      - run: "bundle exec rake phonelib:create_test_db"
+      - run: "bundle exec rake spec"
+
+jobs:
+  build:
+    parameters: 
+      version:
+        default: "latest"
+        type: "string"
+    docker:
+      - image: circleci/ruby:<< parameters.version >>
+    executor: ruby/default
+    environment:
+      CODECLIMATE_REPO_TOKEN: 230dc861ec831b64dc4818a2002de07fbd2a413cc460385eb05958564eb70687
+      BUNDLE_GEMFILE: gemfiles/Gemfile
+    steps:
+      - rspec:
+        rvm: << parameters.version >>
+      - run: "bundle exec codeclimate-test-reporter"
+  build-rails:
+    parameters: 
+      version:
+        default: "latest"
+        type: "string"
+    docker:
+      - image: circleci/ruby:<< parameters.version >>
+    environment:
+      RAILS_ENV: test
+      BUNDLE_GEMFILE: gemfiles/Gemfile.rails-6.1.x
+    steps:
+      - rspec:
+        rvm: << parameters.version >>
+
+workflows:
+  workflow:
+    jobs:
+      - build:
+          name: build-v<< matrix.version >>
+          matrix:
+            parameters:
+              version: ["2.5.9", "2.6.7", "2.7.3", "3.0.1"]
+      - build-rails:
+          name: build-rails-v<< matrix.version >>
+          matrix:
+            parameters:
+              version: ["2.5.9", "2.6.7", "2.7.3", "3.0.1"]
