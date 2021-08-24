@@ -60,7 +60,8 @@ class PhoneValidator < ActiveModel::EachValidator
     return if options[:allow_blank] && value.blank?
 
     @phone = parse(value, specified_country(record))
-    valid = phone_valid? && valid_types? && valid_country? && valid_extensions?
+    valid = countries.present? ? valid_country? : phone_valid?
+    valid = valid && valid_types? && valid_extensions?
 
     record.errors.add(attribute, message, options) unless valid
   end
@@ -82,7 +83,7 @@ class PhoneValidator < ActiveModel::EachValidator
 
   def valid_country?
     return true unless options[:countries]
-    (phone_countries & countries).size > 0
+    countries.any? { |country| @phone.valid_for_country?(country) }
   end
 
   def valid_extensions?
