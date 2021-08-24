@@ -148,7 +148,7 @@ module Phonelib
         io = open('http://api.geonames.org/countryInfoCSV?username=demo&style=full')
         csv = CSV.new(io, {col_sep: "\t"})
         csv.each do |row|
-          next if row[0].nil? || row[0].start_with?('#') || row[0].empty?
+          next if row[0].nil? || row[0].start_with?('#') || row[0].empty? || row[0].size != 2
 
           @countries[row[0]] = row[4]
         end
