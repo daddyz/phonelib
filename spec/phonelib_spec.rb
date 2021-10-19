@@ -999,6 +999,20 @@ describe Phonelib do
     end
   end
 
+  context 'issue #242' do
+    it 'recognizes Belarusian A1 carrier' do
+      %w(
+        375291000000
+        375293000000
+        375296000000
+        375299000000
+        375444000000
+        375445000000
+        375447000000
+      ).each { |phone_number| expect(Phonelib.parse(phone_number).carrier).to eq('A1') }
+    end
+  end
+
   # https://github.com/daddyz/phonelib/issues/157
   describe 'equality' do
     let(:parsed_number) { Phonelib.parse(raw_number) }
