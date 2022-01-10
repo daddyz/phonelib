@@ -35,7 +35,7 @@ jobs:
     steps:
       - rspec:
         rvm: << parameters.version >>
-      - run: "bundle exec codeclimate-test-reporter"
+        #- run: "bundle exec codeclimate-test-reporter"
   build-rails:
     parameters: 
       version:
