@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   if RUBY_VERSION < '2.3.0'
     s.add_development_dependency 'nokogiri', '~> 1.8.2'
   else
-    s.add_development_dependency 'nokogiri', '~> 1.11.7'
+    s.add_development_dependency 'nokogiri', '~> 1.13.0'
   end
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
