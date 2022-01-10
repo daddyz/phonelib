@@ -1,5 +1,9 @@
 ## Upcoming Changes (unreleased)
 
+## 0.6.55 - 10 January 2022
+- updated data
+- dropped support of ruby < 2
+
 ## 0.6.54 - 9 November 2021
 - updated data
 
