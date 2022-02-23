@@ -19,6 +19,47 @@ module Phonelib
 
       # countries that can have double country prefix in number
       DOUBLE_COUNTRY_CODES_COUNTRIES = %w(IN DE BR IT NO PL CU VN)
+      FORMAT_SHARING = {
+        'CA' => 'US',
+        'CC' => 'AU',
+        'CX' => 'AU',
+        'DM' => 'US',
+        'DO' => 'US',
+        'EH' => 'MA',
+        'GD' => 'US',
+        'GG' => 'GB',
+        'GU' => 'US',
+        'IM' => 'GB',
+        'JE' => 'GB',
+        'JM' => 'US',
+        'KN' => 'US',
+        'KY' => 'US',
+        'KZ' => 'RU',
+        'LC' => 'US',
+        'MF' => 'GP',
+        'MP' => 'US',
+        'MS' => 'US',
+        'PR' => 'US',
+        'SJ' => 'NO',
+        'SX' => 'US',
+        'TA' => 'SH',
+        'TC' => 'US',
+        'TT' => 'US',
+        'VA' => 'IT',
+        'VC' => 'US',
+        'VG' => 'US',
+        'VI' => 'US',
+        'YT' => 'RE',
+        'AG' => 'US',
+        'AI' => 'US',
+        'AS' => 'US',
+        'AX' => 'FI',
+        'BB' => 'US',
+        'BL' => 'GP',
+        'BM' => 'US',
+        'BQ' => 'CW',
+        'BS' => 'US',
+      }
 
       # main data file in repo
       MAIN_FILE = 'resources/PhoneNumberMetadata.xml'
@@ -55,6 +96,7 @@ module Phonelib
         import_main_data
         import_short_data
         import_alternate_formats
+        process_format_links
         import_geocoding_data
         import_timezone_data
         import_carrier_data
@@ -112,6 +154,14 @@ module Phonelib
             country_code = country_by_code(el.attribute('countryCode').value)
             @data[country_code][:formats] += parse_formats(phone_type.children)
           end
+        end
+      end
+
+      # some countries missing formats, and are linking them to another countries
+      def process_format_links
+        FORMAT_SHARING.each do |destination, source|
+          @data[destination][:formats] ||= []
+          @data[destination][:formats] = @data[destination][:formats] + @data[source][:formats]
         end
       end
 
