@@ -252,7 +252,7 @@ phone.full_e164          # returns e164 phone representation with extension
 phone.full_international # returns formatted international number with extension
 ```
 
-You can pass <tt>false</tt> to <tt>national</tt> and <tt>international</tt> methods in order to get unformatted representaions
+You can pass <tt>false</tt> to <tt>national</tt> and <tt>international</tt> methods in order to get unformatted representations
 
 ``` ruby
 phone.international(false) # returns unformatted international phone
