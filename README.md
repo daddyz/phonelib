@@ -42,10 +42,11 @@ gem 'phonelib'
 
 Run the bundle command to install it.
 
-To set the default country (country names are [ISO 3166-1 Alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes), create a initializer in <tt>config/initializers/phonelib.rb</tt>:
+To set the default country or several default countries for parsing (country names are [ISO 3166-1 Alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) codes), create a initializer in <tt>config/initializers/phonelib.rb</tt>:
 
 ``` ruby
 Phonelib.default_country = "CN"
+Phonelib.default_country = ['CN', 'FR']
 ```
 
 To use the ability to parse special numbers (Short Codes, Emergency etc.) you can set ```Phonelib.parse_special```. This is disabled by default
