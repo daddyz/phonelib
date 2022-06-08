@@ -16,8 +16,31 @@ module Phonelib
     # * +passed_country+ - Country provided for parsing. Must be ISO code of
     #   country (2 letters) like 'US', 'us' or :us for United States
     def analyze(phone, passed_country)
-      country = country_or_default_country passed_country
+      countries = country_or_default_country passed_country
 
+      return analyze_single_country(phone, countries.first, passed_country) if countries.size == 1
+
+      results = {}
+      countries.map do |country|
+        results.merge! analyze_single_country(phone, country, passed_country)
+      end
+
+      pick_results(results)
+    end
+
+    private
+
+    # pick best result when several countries specified
+    def pick_results(results)
+      [:valid, :possible].each do |key|
+        final = results.select { |_k, v| v[key].any? }
+        return decorate_analyze_result(final) if final.size > 0
+      end
+
+      decorate_analyze_result(results)
+    end
+
+    def analyze_single_country(phone, country, passed_country)
       result = parse_country(phone, country)
       d_result = case
                  when result && result.values.find { |e| e[:valid].any? }
@@ -31,8 +54,6 @@ module Phonelib
                  end
       better_result(result, d_result)
     end
-
-    private
 
     # method checks which result is better to return
     def better_result(base_result, result = nil)

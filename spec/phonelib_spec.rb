@@ -344,6 +344,30 @@ describe Phonelib do
       expect(phone.valid?).to be true
       Phonelib.default_country = nil
     end
+
+    it 'should be valid when number valid and several default countries' do
+      Phonelib.default_country = [:us, :pr, :as, :gu, :mp, :vi]
+      phone = Phonelib.parse('7876711234')
+      expect(phone.valid?).to be true
+      Phonelib.default_country = nil
+    end
+
+    it 'should be valid when number valid pr and several default countries without pr' do
+      Phonelib.default_country = [:us, :as, :gu, :mp, :vi]
+      phone = Phonelib.parse('7876711234')
+      expect(phone.possible?).to be true
+      expect(phone.valid?).to be false
+      expect(phone.countries).to eq(['US'])
+      Phonelib.default_country = nil
+    end
+
+    it 'should be valid when number not valid and several default countries' do
+      Phonelib.default_country = [:us, :as, :gu, :mp, :vi]
+      phone = Phonelib.parse('123123')
+      expect(phone.possible?).to be false
+      expect(phone.valid?).to be false
+      Phonelib.default_country = nil
+    end
   end
 
   context 'extended data' do
