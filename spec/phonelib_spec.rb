@@ -312,6 +312,12 @@ describe Phonelib do
       phone = Phonelib.parse('7731231234')
       expect(phone.country_code).to be_nil
     end
+
+    it 'returns correct country code for prefix 1 countries' do
+      expect(Phonelib.parse("+1 809-538-0020").country_code).to eq('1809')
+      expect(Phonelib.parse("+1 232-671-1234").country_code).to eq('1')
+      expect(Phonelib.parse("+1 787-671-1234").country_code).to eq('1787')
+    end
   end
 
   context 'default_country' do

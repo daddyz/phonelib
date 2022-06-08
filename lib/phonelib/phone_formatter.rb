@@ -22,8 +22,8 @@ module Phonelib
       return nil if sanitized.nil? || sanitized.empty?
       if valid?
         @national_number
-      elsif country_code && sanitized.start_with?(country_code)
-        sanitized[country_code.size..-1]
+      elsif data_country_code && sanitized.start_with?(data_country_code)
+        sanitized[data_country_code.size..-1]
       else
         sanitized
       end
@@ -32,8 +32,17 @@ module Phonelib
     # Returns the country code from the original phone number.
     # @return [String] matched country phone code
     def country_code
-      @country_code ||= Phonelib.phone_data[country] && \
-                        Phonelib.phone_data[country][Core::COUNTRY_CODE]
+      return @country_code if @country_code
+
+      code = Phonelib.phone_data[country] && Phonelib.phone_data[country][Core::COUNTRY_CODE]
+      return @country_code = code unless code == '1' && Phonelib.phone_data[country][Core::LEADING_DIGITS]
+
+      match = e164.match(/\A\+(1(#{Phonelib.phone_data[country][Core::LEADING_DIGITS]}))/)
+      if match
+        @country_code = match[1]
+      else
+        @country_code = '1'
+      end
     end
 
     # Returns e164 formatted phone number. Method can receive single string parameter that will be defined as prefix
@@ -44,7 +53,7 @@ module Phonelib
       prefix = formatted if formatted.is_a?(String)
       return nil if sanitized.empty?
       return "#{prefix}#{country_prefix_or_not}#{sanitized}" unless valid?
-      return "#{prefix}#{country_code}#{@national_number}" unless formatted
+      return "#{prefix}#{data_country_code}#{@national_number}" unless formatted
 
       fmt = @data[country][:format]
       national = @national_number
@@ -53,7 +62,7 @@ module Phonelib
         national = fmt.gsub(/\$\d/) { |el| matches[el[1].to_i] } unless fmt == 'NA'
       end
 
-      "#{prefix}#{country_code} #{national}"
+      "#{prefix}#{data_country_code} #{national}"
     end
 
     # returns national formatted number with extension added
@@ -109,6 +118,10 @@ module Phonelib
 
     private
 
+    def data_country_code
+      @data_country_code ||= Phonelib.phone_data[country] && Phonelib.phone_data[country][Core::COUNTRY_CODE]
+    end
+
     # @private defines if phone can have area code
     def area_code_possible?
       return false if impossible?
@@ -124,8 +137,8 @@ module Phonelib
 
     # @private defines whether to put country prefix or not
     def country_prefix_or_not
-      return '' unless country_code
-      sanitized.start_with?(country_code) ? '' : country_code
+      return '' unless data_country_code
+      sanitized.start_with?(data_country_code) ? '' : data_country_code
     end
 
     # @private returns extension with separator defined

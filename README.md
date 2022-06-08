@@ -2,7 +2,7 @@
 
 [![Built in integration with JetBrains RubyMine](https://github.com/daddyz/phonelib/blob/master/icon_RubyMine.png?raw=true)](https://www.jetbrains.com/ruby/)
 [![Gem Version](https://badge.fury.io/rb/phonelib.svg)](http://badge.fury.io/rb/phonelib)
-[![CircleCI](https://circleci.com/gh/daddyz/phonelib/tree/master.svg?style=shield)](https://circleci.com/gh/daddyz/phonelib/tree/master)
+[![CircleCI](https://circleci.com/gh/daddyz/phonelib/tree/master.svg?style=svg)](https://circleci.com/gh/daddyz/phonelib/tree/master)
 [![](https://codeclimate.com/github/daddyz/phonelib/badges/coverage.svg)](https://codeclimate.com/github/daddyz/phonelib/coverage)
 [![](https://codeclimate.com/github/daddyz/phonelib/badges/gpa.svg)](https://codeclimate.com/github/daddyz/phonelib)
 [![Inline docs](http://inch-ci.org/github/daddyz/phonelib.svg?branch=master)](http://inch-ci.org/github/daddyz/phonelib)
