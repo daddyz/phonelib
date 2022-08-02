@@ -1217,6 +1217,29 @@ describe Phonelib do
     end
   end
 
+  context 'issue #261' do
+    before(:each) do
+      Phonelib.ignore_plus = false
+    end
+
+    after(:each) do
+      Phonelib.ignore_plus = false
+    end
+
+    it 'should parse as valid and change country when plus is not ignored' do
+      p = Phonelib.parse("+850 2 381 7980", "US")
+      expect(p.valid?).to be(true)
+      expect(p.country).to eq('KP')
+    end
+
+    it 'should parse as invalid when plus is ignored' do
+      Phonelib.ignore_plus = true
+      p = Phonelib.parse("+850 2 381 7980", "US")
+      expect(p.valid?).to be(false)
+      expect(p.country).to be(nil)
+    end
+  end
+
   context 'additional_regexes' do
     before(:each) do
       Phonelib.additional_regexes = []

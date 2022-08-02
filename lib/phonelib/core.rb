@@ -107,6 +107,22 @@ module Phonelib
       @@strict_check = strict
     end
 
+    # @private don't use plus sign for automatic country change
+    @@ignore_plus = false
+
+    # getter for ignore plus flag
+    # @return [Boolean] Flag defines whether to reset country in case number has + and country prefix doesn't match
+    def ignore_plus
+      @@ignore_plus
+    end
+
+    # setter for ignore plus flag
+    # @param ignore_plus [Boolean] ignore plus sign or not
+    # @return [Boolean] Flag defines whether to ignore plus for country reset during validations in case country prefix doesn't match
+    def ignore_plus=(ignore_plus)
+      @@ignore_plus = ignore_plus
+    end
+
     # @private sanitizing regex, matching symbols will get removed from parsed number, must be string
     @@sanitize_regex = '[^0-9]+'
 

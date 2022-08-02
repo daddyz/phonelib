@@ -32,7 +32,7 @@ module Phonelib
     # defines if to validate against single country or not
     def passed_country(country)
       code = country_prefix(country)
-      if Core::PLUS_SIGN == @original[0] && code && !sanitized.start_with?(code)
+      if !Phonelib.ignore_plus && Core::PLUS_SIGN == @original[0] && code && !sanitized.start_with?(code)
         # in case number passed with + but it doesn't start with passed
         # country prefix
         country = nil
