@@ -124,6 +124,7 @@ module Phonelib
     #
     # * +phone+ - phone number for parsing
     def detect_and_parse(phone, country)
+      phone.gsub!(/^00/, '')
       result = {}
       Phonelib.phone_data.each do |key, data|
         parsed = parse_single_country(phone, data)

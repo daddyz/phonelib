@@ -81,7 +81,7 @@ module Phonelib
     # * +parsed+ - parsed regex match for phone
     def double_prefix_allowed?(data, phone, parsed = {})
       data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
-        phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
+        phone.start_with?(data[Core::COUNTRY_CODE]) &&
         parsed && (parsed[:valid].nil? || parsed[:valid].empty?) &&
         !original_starts_with_plus?
     end
@@ -114,7 +114,6 @@ module Phonelib
     # * +country_optional+ - whether to put country code as optional group
     def full_regex_for_data(data, type, country_optional = true)
       regex = []
-      regex << '0{2}?'
       regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
       regex << "(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}"
       regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
@@ -144,9 +143,7 @@ module Phonelib
     # * +phone+ - phone number for parsing
     # * +data+  - country data
     def phone_match_data?(phone, data, possible = false)
-      country_code = "#{data[Core::COUNTRY_CODE]}"
-      inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      return unless phone.match cr("^0{2}?#{inter_prefix}#{country_code}")
+      return unless phone.start_with?(data[Core::COUNTRY_CODE])
 
       type = possible ? Core::POSSIBLE_PATTERN : Core::VALID_PATTERN
       phone.match full_regex_for_data(data, type, false)
