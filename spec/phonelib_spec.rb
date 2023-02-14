@@ -656,6 +656,15 @@ describe Phonelib do
       expect(phone.full_e164).to eq('+972542234567#123')
       expect(phone.full_international).to eq('+972 54-223-4567#123')
     end
+
+    it 'should support nil separator' do
+      Phonelib.extension_separate_symbols = nil
+
+      phone = Phonelib.parse('972542234567#123')
+      expect(phone.original).to eq('972542234567#123')
+      expect(phone.sanitized).to eq('972542234567123')
+      expect(phone.extension).to eq('')
+    end
   end
 
   context 'issue #59' do

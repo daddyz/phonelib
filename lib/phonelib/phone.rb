@@ -178,6 +178,8 @@ module Phonelib
 
     # @private extracts extension from passed phone number if provided
     def separate_extension(original)
+      return [original, ''] unless Phonelib.extension_separate_symbols
+
       regex = if Phonelib.extension_separate_symbols.is_a?(Array)
                 cr("#{Phonelib.extension_separate_symbols.join('|')}")
               else
