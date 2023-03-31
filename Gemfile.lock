@@ -7,12 +7,15 @@ GEM
   remote: http://rubygems.org/
   specs:
     benchmark-ips (2.12.0)
+    benchmark-memory (0.2.0)
+      memory_profiler (~> 1)
     codeclimate-test-reporter (1.0.9)
       simplecov (<= 0.13)
     coderay (1.1.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
     json (2.3.1)
+    memory_profiler (1.0.1)
     method_source (0.9.0)
     mini_portile2 (2.8.0)
     nokogiri (1.13.6)
@@ -45,6 +48,7 @@ PLATFORMS
 
 DEPENDENCIES
   benchmark-ips
+  benchmark-memory
   codeclimate-test-reporter (~> 1.0.0)
   json (= 2.3.1)
   nokogiri (~> 1.13.0)

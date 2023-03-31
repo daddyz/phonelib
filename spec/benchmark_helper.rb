@@ -3,6 +3,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'benchmark/ips'
+require 'benchmark/memory'
 require 'benchmark'
 require 'phonelib'
 require 'rspec'
