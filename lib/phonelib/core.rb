@@ -12,7 +12,12 @@ module Phonelib
 
     # @private getter for phone data indexed by country code (internal use only)
     def data_by_country_codes
-      @@data_by_country_codes ||= phone_data.each_value.group_by { |d| d[COUNTRY_CODE] }
+      @@data_by_country_codes ||= phone_data.each_value.group_by { |d| d[COUNTRY_CODE] }.freeze
+    end
+
+    # @private getter for all international prefixes in phone_data
+    def phone_data_int_prefixes
+      @@all_int_prefixes ||= phone_data.map {|k,v| v[:international_prefix] }.select { |v| v != '' }.compact.uniq.join('|').freeze
     end
 
     # @private used to cache frequently-used regular expressions
