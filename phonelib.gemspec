@@ -29,6 +29,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '= 2.14.1'
   s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
   s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'benchmark-ips'
+  s.add_development_dependency 'benchmark-memory'
   # fixing CI tests
   s.add_development_dependency 'rack-cache', '= 1.2'
   s.add_development_dependency 'json', '= 2.3.1'
