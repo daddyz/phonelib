@@ -7,6 +7,8 @@ module Phonelib
       if result.size == 1
         result
       else
+        matched_countries = country_or_default_country(nil) & result.keys
+        result = result.keep_if {|k, _v| matched_countries.include?(k) } if matched_countries
         Hash[result.take(1)]
       end
     end
@@ -56,7 +58,7 @@ module Phonelib
     def country_can_dp?(country)
       Phonelib.phone_data[country] &&
         Phonelib.phone_data[country][Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
-        !original_starts_with_plus?
+        !original_starts_with_plus? && original_s.start_with?(Phonelib.phone_data[country][Core::COUNTRY_CODE])
     end
 
     # changes phone to with/without double country prefix
@@ -66,6 +68,7 @@ module Phonelib
 
       country_code = Phonelib.phone_data[country][Core::COUNTRY_CODE]
       if phone.start_with? country_code * 2
+        # remove double prefix in case it is there
         phone.gsub(cr("^#{country_code}"), '')
       else
         "#{country_code}#{phone}"

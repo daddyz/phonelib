@@ -1286,6 +1286,53 @@ describe Phonelib do
     end
   end
 
+  context 'issue #277 double prefix with country' do
+    it 'should be invalid unless number starts with country prefix' do
+      expect(Phonelib.valid_for_country?("88097679","IN")).to be(false)
+      expect(Phonelib.valid_for_country?("+9188097679","IN")).to be(false)
+    end
+
+    it 'should be valid if number starts with country prefix' do
+      expect(Phonelib.valid_for_country?("9188097679","IN")).to be(true)
+    end
+  end
+
+  context 'issue #278 multiple default countries' do
+    after(:each) do
+      Phonelib.default_country = nil
+    end
+
+    it 'should be valid if only ca as default country' do
+      Phonelib.default_country = :ca
+      p1 = Phonelib.parse('6478864691')
+      expect(p1.valid?).to be(true)
+      expect(p1.countries).to eq(['CA'])
+      p2 = Phonelib.parse('6047642951')
+      expect(p2.valid?).to be(true)
+      expect(p2.countries).to eq(['CA'])
+    end
+
+    it 'should be valid if only us and ca as default countries' do
+      Phonelib.default_country = [:us, :ca]
+      p1 = Phonelib.parse('6478864691')
+      expect(p1.valid?).to be(true)
+      expect(p1.countries).to eq(['CA'])
+      p2 = Phonelib.parse('6047642951')
+      expect(p2.valid?).to be(true)
+      expect(p2.countries).to eq(['CA'])
+    end
+
+    it 'should be valid if only ca and us as default countries' do
+      Phonelib.default_country = [:ca, :us]
+      p1 = Phonelib.parse('6478864691')
+      expect(p1.valid?).to be(true)
+      expect(p1.countries).to eq(['CA'])
+      p2 = Phonelib.parse('6047642951')
+      expect(p2.valid?).to be(true)
+      expect(p2.countries).to eq(['CA'])
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
