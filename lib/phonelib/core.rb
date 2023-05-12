@@ -40,14 +40,14 @@ module Phonelib
     @@default_country = nil
 
     # getter method for default_country variable
-    # @return [String|nil] Default country set for parsing or nil
+    # @return [String,Symbol,Array<String,Symbol>,nil] Default country ISO2 code or codes used for parsing
     def default_country
       @@default_country
     end
 
     # setter method for default_country variable
-    # @param country [String|Symbol] default country ISO2 code used for parsing
-    # @return [String|nil] Default country set for parsing or nil
+    # @param country [String,Symbol,Array<String,Symbol>] Default country ISO2 code or codes used for parsing
+    # @return [String,Symbol,Array<String,Symbol>] Default country ISO2 code or codes used for parsing
     def default_country=(country)
       @@default_country = country
     end
