@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake', '< 14.0'
   if RUBY_VERSION < '2.3.0'
-    s.add_development_dependency 'nokogiri', '~> 1.8.2'
+    s.add_development_dependency 'nokogiri', '~> 1.15.2'
   elsif RUBY_VERSION > '2.6.0'
-    s.add_development_dependency 'nokogiri', '~> 1.13.0'
+    s.add_development_dependency 'nokogiri', '~> 1.15.2'
   else
-    s.add_development_dependency 'nokogiri', '~> 1.10.10'
+    s.add_development_dependency 'nokogiri', '~> 1.15.2'
   end
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
