@@ -161,6 +161,7 @@ module Phonelib
       # some countries missing formats, and are linking them to another countries
       def process_format_links
         FORMAT_SHARING.each do |destination, source|
+          next unless @data[destination]
           @data[destination][:formats] ||= []
           @data[destination][:formats] = @data[destination][:formats] + @data[source][:formats]
         end
