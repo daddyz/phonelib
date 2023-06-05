@@ -45,6 +45,7 @@ module Phonelib
         'TA' => 'SH',
         'TC' => 'US',
         'TT' => 'US',
+        'UM' => 'US',
         'VA' => 'IT',
         'VC' => 'US',
         'VG' => 'US',
