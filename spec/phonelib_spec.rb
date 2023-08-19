@@ -1199,7 +1199,7 @@ describe Phonelib do
   context 'issue #171' do
     it 'should return correct format for VN' do
       p = Phonelib.parse('902962207', 'VN')
-      expect(p.international).to eq('+84 90 296 22 07')
+      expect(p.international).to eq('+84 902 962 207')
       p = Phonelib.parse('844666531', 'VN')
       expect(p.international).to eq('+84 844 666 531')
     end
