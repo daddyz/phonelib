@@ -17,14 +17,14 @@ GEM
     json (2.3.1)
     memory_profiler (1.0.1)
     method_source (0.9.0)
-    mini_portile2 (2.8.0)
-    nokogiri (1.13.6)
-      mini_portile2 (~> 2.8.0)
+    mini_portile2 (2.8.2)
+    nokogiri (1.15.2)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    racc (1.6.0)
+    racc (1.6.2)
     rack (3.0.7)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -51,7 +51,7 @@ DEPENDENCIES
   benchmark-memory
   codeclimate-test-reporter (~> 1.0.0)
   json (= 2.3.1)
-  nokogiri (~> 1.13.0)
+  nokogiri (~> 1.15.2)
   phonelib!
   pry
   rack-cache (= 1.2)
