@@ -60,6 +60,8 @@ module Phonelib
         'BM' => 'US',
         'BQ' => 'CW',
         'BS' => 'US',
+        'XI' => 'GB',
+        'XU' => 'GB'
       }
 
       # main data file in repo
