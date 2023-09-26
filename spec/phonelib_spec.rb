@@ -199,6 +199,7 @@ describe Phonelib do
     it 'returns right formatting when possible' do
       phone = Phonelib.parse('+15555555555')
       expect(phone.international).to eq('+1 555-555-5555')
+      expect(phone.national).to eq('(555) 555-5555')
     end
 
     it 'returns right formatting' do
