@@ -6,5 +6,5 @@ gem 'rspec', '3.10.0'
 gem "sqlite3", '~> 1.4.2'
 gem "mime-types", "~> 3.3.1"
 gem 'rails-controller-testing'
-
+gem 'nokogiri', '~> 1.8'
 gemspec :path=>"../"

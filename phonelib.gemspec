@@ -21,13 +21,13 @@ Gem::Specification.new do |s|
   if RUBY_VERSION < '2.3.0'
     s.add_development_dependency 'nokogiri', '~> 1.8.2'
   elsif RUBY_VERSION > '2.6.0'
-    s.add_development_dependency 'nokogiri', '~> 1.13.0'
+    s.add_development_dependency 'nokogiri', '~> 1.15'
   else
-    s.add_development_dependency 'nokogiri', '~> 1.10.10'
+    s.add_development_dependency 'nokogiri', '~> 1.10'
   end
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rspec', '= 2.14.1'
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.0'
+  s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.9'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'benchmark-ips'
   s.add_development_dependency 'benchmark-memory'

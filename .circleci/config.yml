@@ -27,7 +27,7 @@ jobs:
         default: "latest"
         type: "string"
     docker:
-      - image: circleci/ruby:<< parameters.version >>
+      - image: cimg/ruby:<< parameters.version >>
     executor: ruby/default
     environment:
       CODECLIMATE_REPO_TOKEN: 230dc861ec831b64dc4818a2002de07fbd2a413cc460385eb05958564eb70687
