@@ -196,6 +196,11 @@ describe Phonelib do
   end
 
   context '#international' do
+    it 'returns right formatting when possible' do
+      phone = Phonelib.parse('+15555555555')
+      expect(phone.international).to eq('+1 555-555-5555')
+    end
+
     it 'returns right formatting' do
       phone = Phonelib.parse('972542234567')
       expect(phone.international).to eq('+972 54-223-4567')
@@ -204,11 +209,6 @@ describe Phonelib do
     it 'returns unformatted when false passed' do
       phone = Phonelib.parse('972542234567')
       expect(phone.international(false)).to eq('+972542234567')
-    end
-
-    it 'returns sanitized when number invalid but possible' do
-      phone = Phonelib.parse('9721234567')
-      expect(phone.international).to eq('+9721234567')
     end
 
     it 'returns nil when number is nil' do
@@ -736,22 +736,22 @@ describe Phonelib do
 
   context 'issue #72' do
     it 'should be invalid number' do
-      expect(Phonelib.parse('+49157123456789', 'de').international).to eq('+49157123456789')
+      expect(Phonelib.parse('+49157123456789', 'de').international).to eq('+49 15712 345 6789')
       expect(Phonelib.parse('+49157123456789', 'de').valid?).to be false
     end
 
     it 'should not try to detect double prefix and keep invalid' do
-      expect(Phonelib.parse('+491521234567', 'de').international).to eq('+491521234567')
+      expect(Phonelib.parse('+491521234567', 'de').international).to eq('+49 152 123 4567')
       expect(Phonelib.parse('+491521234567', 'de').valid?).to be false
     end
 
     it 'should try to detect country and change it' do
-      expect(Phonelib.parse('+521234567891', 'de').international).to eq('+521234567891')
+      expect(Phonelib.parse('+521234567891', 'de').international).to eq('+52 123 456 7891')
       expect(Phonelib.parse('+521234567891', 'de').country).to eq('MX')
     end
 
     it 'should be invalid numbers without + and when country passed' do
-      expect(Phonelib.parse('49157123456789', 'de').international).to eq('+49157123456789')
+      expect(Phonelib.parse('49157123456789', 'de').international).to eq('+49 15712 345 6789')
       expect(Phonelib.parse('49157123456789', 'de').valid?).to be false
       expect(Phonelib.parse('491521234567', 'de').international).to eq('+49 491 521234567')
       expect(Phonelib.parse('491521234567', 'de').valid?).to be true
@@ -759,7 +759,7 @@ describe Phonelib do
 
     it 'should try to detect when default country set but not passed' do
       Phonelib.default_country = :de
-      expect(Phonelib.parse('49157123456789').international).to eq('+49157123456789')
+      expect(Phonelib.parse('49157123456789').international).to eq('+49 15712 345 6789')
       expect(Phonelib.parse('49157123456789').valid?).to be false
       expect(Phonelib.parse('491521234567').international).to eq('+49 491 521234567')
       expect(Phonelib.parse('491521234567').valid?).to be true
