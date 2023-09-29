@@ -84,7 +84,7 @@ module Phonelib
     # * +parsed+ - parsed regex match for phone
     def double_prefix_allowed?(data, phone, parsed = {})
       data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
-        phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
+        phone.start_with?(data[Core::COUNTRY_CODE]) &&
         parsed && (parsed[:valid].nil? || parsed[:valid].empty?) &&
         !original_starts_with_plus?
     end
