@@ -4,6 +4,13 @@ module Phonelib
     # @private variable will include hash with data for validation
     @@phone_data = nil
 
+    # eagerly initialize the gem, loads data into memory. not required, initialization is done lazily otherwise, but
+    # may be desirable in production enviroments to avoid initialization time on first use.
+    def eager_load!
+      phone_data
+      phone_ext_data
+    end
+
     # getter for phone data for other modules of gem, can be used outside
     # @return [Hash] all data for phone parsing
     def phone_data
