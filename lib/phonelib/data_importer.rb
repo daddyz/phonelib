@@ -197,7 +197,7 @@ module Phonelib
 
         require 'open-uri'
         require 'csv'
-        io = open('https://download.geonames.org/export/dump/countryInfo.txt')
+        io = URI.open('http://download.geonames.org/export/dump/countryInfo.txt')
         csv = CSV.new(io, {col_sep: "\t"})
         csv.each do |row|
           next if row[0].nil? || row[0].start_with?('#') || row[0].empty? || row[0].size != 2
