@@ -17,4 +17,12 @@ if defined?(ActiveModel) || defined?(Rails)
   else
     autoload :PhoneValidator, 'validators/phone_validator'
   end
+
+  if defined?(Rails)
+    class Phonelib::Railtie < Rails::Railtie
+      initializer 'phonelib' do |app|
+        app.config.eager_load_namespaces << Phonelib
+      end
+    end
+  end
 end

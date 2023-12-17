@@ -24,6 +24,10 @@ describe Phonelib do
     expect(Phonelib).to be_a_kind_of(Module)
   end
 
+  it 'responds to eager_load!' do
+    expect{Phonelib.eager_load!}.to_not raise_error
+  end
+
   context '.parse' do
     before(:each) { @phone = Phonelib.parse '9721234567' }
 
