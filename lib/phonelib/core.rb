@@ -7,8 +7,14 @@ module Phonelib
     # eagerly initialize the gem, loads data into memory. not required, initialization is done lazily otherwise, but
     # may be desirable in production enviroments to avoid initialization time on first use.
     def eager_load!
+      return if @@skip_eager_loading
       phone_data
       phone_ext_data
+    end
+
+    @@skip_eager_loading = false
+    def skip_eager_loading!
+      @@skip_eager_loading = true
     end
 
     # getter for phone data for other modules of gem, can be used outside

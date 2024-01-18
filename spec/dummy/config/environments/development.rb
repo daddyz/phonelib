@@ -22,6 +22,8 @@ Dummy::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
+  config.eager_load = true
+
   # Raise exception on mass assignment protection for Active Record models
   #config.active_record.mass_assignment_sanitizer = :strict
 
@@ -30,8 +32,8 @@ Dummy::Application.configure do
   #config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Do not compress assets
-  config.assets.compress = false
+  #config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  #config.assets.debug = true
 end
