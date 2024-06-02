@@ -159,7 +159,7 @@ module Phonelib
              data[Core::NATIONAL_PREFIX_RULE] || '$1'
 
       # change rule's constants to values
-      rule.gsub!(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
+      rule = rule.gsub(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
 
       # add space to format groups, change first group to rule,
       format_string = format[:format].gsub(/(\d)\$/, '\\1 $')
