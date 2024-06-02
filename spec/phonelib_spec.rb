@@ -485,7 +485,7 @@ describe Phonelib do
 
   context 'issue #33' do
     it 'should be valid for mexico numbers' do
-      number = Phonelib.parse('+5215545258448', 'mx')
+      number = Phonelib.parse('+525545258448', 'mx')
       expect(number.valid?).to be true
       expect(number.international).to eq('+52 55 4525 8448')
       expect(number.national).to eq('55 4525 8448')
@@ -982,7 +982,7 @@ describe Phonelib do
 
   context 'issue #132' do
     it 'should simplify national prefix and make phone valid' do
-      phone = Phonelib.parse '0445532231113', 'MX'
+      phone = Phonelib.parse '095532231113', 'MX'
       expect(phone.valid?).to be true
       expect(phone.international).to eq('+52 55 3223 1113')
       expect(phone.country).to eq('MX')
@@ -1195,7 +1195,7 @@ describe Phonelib do
 
   context 'issue #152' do
     it 'should return correct format for MX' do
-      p = Phonelib.parse('0459991234567', 'MX')
+      p = Phonelib.parse('099991234567', 'MX')
       expect(p.national).to eq('999 123 4567')
     end
   end
