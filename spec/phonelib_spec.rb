@@ -1347,6 +1347,20 @@ describe Phonelib do
     end
   end
 
+  context 'issue #303' do
+    it 'should parse possible numbers if countries array passed' do
+      p1 = Phonelib.parse('1212 111 1111', :us)
+      expect(p1.valid?).to be(false)
+      expect(p1.possible?).to be(true)
+
+      p2 = Phonelib.parse('1212 111 1111', %w(US CA))
+      expect(p2.valid?).to be(false)
+      expect(p2.possible?).to be(true)
+
+      expect(p1.e164).to eq(p2.e164)
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

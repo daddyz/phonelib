@@ -8,6 +8,7 @@ module Phonelib
         result
       else
         matched_countries = country_or_default_country(nil) & result.keys
+        matched_countries = result.keys.take(1) if matched_countries.size == 0
         result = result.keep_if {|k, _v| matched_countries.include?(k) } if matched_countries
         Hash[result.take(1)]
       end
