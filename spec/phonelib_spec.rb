@@ -1337,6 +1337,16 @@ describe Phonelib do
     end
   end
 
+  context 'issue #304' do
+    it 'should strip AR prefix' do
+      phone = Phonelib.parse('+540111557447700', 'AR')
+      expect(phone.valid_for_country?('AR')).to be(true)
+      expect(phone.e164).to eq('+5491157447700')
+      expect(phone.national).to eq('011 15-5744-7700')
+      expect(phone.international).to eq('+54 9 11 5744-7700')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
