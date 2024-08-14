@@ -23,7 +23,7 @@ module Phonelib
     #   for United States
     # @return [Phonelib::Phone] parsed phone instance
     def initialize(phone, country = nil)
-      @original, @extension = separate_extension(phone.to_s)
+      @original, @extension = separate_extension(phone.to_s).map { |e| +e }
       @extension.gsub!(/[^0-9]/, '') if @extension
 
       if sanitized.empty?

@@ -155,8 +155,8 @@ module Phonelib
       data = @data[country]
       format = data[:format]
       prefix = data[Core::NATIONAL_PREFIX]
-      rule = format[Core::NATIONAL_PREFIX_RULE] ||
-             data[Core::NATIONAL_PREFIX_RULE] || '$1'
+      rule = +(format[Core::NATIONAL_PREFIX_RULE] ||
+              data[Core::NATIONAL_PREFIX_RULE] || '$1')
 
       # change rule's constants to values
       rule.gsub!(/(\$NP|\$FG)/, '$NP' => prefix, '$FG' => '$1')
