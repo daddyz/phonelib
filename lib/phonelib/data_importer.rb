@@ -209,7 +209,7 @@ module Phonelib
       # adds double country code flag in case country allows
       def add_double_country_flag(country)
         if DOUBLE_COUNTRY_CODES_COUNTRIES.include?(country[:id])
-          country[:double_prefix] = true
+          country[Core::DOUBLE_COUNTRY_PREFIX_FLAG] = true
         end
         country
       end

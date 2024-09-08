@@ -70,7 +70,7 @@ module Phonelib
     # replacing national prefix to simplified format
     def with_replaced_national_prefix(phone, data)
       return phone unless data[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
-      phone = phone.gsub(/^#{data[Core::COUNTRY_CODE]}/, '') if phone.start_with?(data[Core::COUNTRY_CODE])
+      phone = phone.gsub(/^#{data[Core::COUNTRY_CODE]}/, '') if phone.start_with?(data[Core::COUNTRY_CODE]) && !data[Core::DOUBLE_COUNTRY_PREFIX_FLAG]
       pattern = cr("^(?:#{data[Core::NATIONAL_PREFIX_FOR_PARSING]})")
       match = phone.match pattern
       if match && match.captures.compact.size > 0

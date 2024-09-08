@@ -1373,6 +1373,15 @@ describe Phonelib do
     end
   end
 
+  context 'issue #309' do
+    it 'should return same result without specifying country' do
+      p1 = Phonelib.parse('+55 55 96722 8964', 'BR')
+      p2 = Phonelib.parse('+55 55 96722 8964')
+      expect(p1.valid?).to be(p2.valid?)
+      expect(p1.international).to eq(p2.international)
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
