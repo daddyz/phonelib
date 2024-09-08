@@ -32,10 +32,10 @@ jobs:
     environment:
       CODECLIMATE_REPO_TOKEN: 230dc861ec831b64dc4818a2002de07fbd2a413cc460385eb05958564eb70687
       BUNDLE_GEMFILE: gemfiles/Gemfile
+      RUBYOPT: "--enable-frozen-string-literal"
     steps:
       - rspec:
         rvm: << parameters.version >>
-        #- run: "bundle exec codeclimate-test-reporter"
   build-rails:
     parameters: 
       version:
@@ -46,6 +46,7 @@ jobs:
     environment:
       RAILS_ENV: test
       BUNDLE_GEMFILE: gemfiles/Gemfile.rails-6.1.x
+      RUBYOPT: "--enable-frozen-string-literal"
     steps:
       - rspec:
         rvm: << parameters.version >>
