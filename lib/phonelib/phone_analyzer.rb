@@ -141,7 +141,7 @@ module Phonelib
     end
 
     def country_code_candidates_for(phone)
-      stripped_phone = phone.gsub(/^(#{Phonelib.phone_data_int_prefixes})/, '')
+      stripped_phone = phone.gsub(cr("Phonelib.phone_data_int_prefixes") { /^(#{Phonelib.phone_data_int_prefixes})/ }, '')
       ((1..3).map { |length| phone[0, length] } + (1..3).map { |length| stripped_phone[0, length] }).uniq
     end
 

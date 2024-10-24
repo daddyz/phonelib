@@ -54,7 +54,7 @@ module Phonelib
 
     # caches regular expression, reusing it for later lookups
     def cr(regexp)
-      Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(regexp).freeze
+      Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(block_given? ? yield(regexp) : regexp).freeze
     end
 
     # defines whether country can have double country prefix in number
