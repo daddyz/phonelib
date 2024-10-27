@@ -126,6 +126,9 @@ module Phonelib
           if country[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
             country[Core::NATIONAL_PREFIX_TRANSFORM_RULE].gsub!('$', '\\')
           end
+          if country[:id] == '001'
+            country[:id] = 'International ' + country[:country_code]
+          end
           @data[country[:id]] = country
         end
       end
