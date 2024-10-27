@@ -22,11 +22,17 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'nokogiri', '~> 1.8.2'
   elsif RUBY_VERSION > '2.6.0'
     s.add_development_dependency 'nokogiri', '~> 1.15'
+  elsif RUBY_VERSION > '3.0.0'
+    s.add_development_dependency 'nokogiri', '~> 1.16'
   else
     s.add_development_dependency 'nokogiri', '~> 1.10'
   end
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'rspec', '= 2.14.1'
+  if RUBY_VERSION > '3.1.0'
+    s.add_development_dependency 'rspec'
+  else
+    s.add_development_dependency 'rspec', '= 2.14.1'
+  end
   s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.9'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'benchmark-ips'
