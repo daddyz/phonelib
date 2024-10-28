@@ -8,7 +8,7 @@ module Phonelib
     require 'nokogiri'
 
     # official libphonenumber repo for cloning
-    REPO = 'https://github.com/googlei18n/libphonenumber.git'
+    REPO = 'https://github.com/google/libphonenumber.git'
 
     # importing function
     def self.import
