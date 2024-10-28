@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
-require 'phonelib/version'
+require_relative 'lib/phonelib/version'
 
 Gem::Specification.new do |s|
   s.name = 'phonelib'
@@ -22,27 +21,4 @@ Gem::Specification.new do |s|
   s.metadata = {
     'changelog_uri' => "#{s.homepage}/releases/tag/v#{s.version}"
   }
-
-  s.add_development_dependency 'rake', '< 14.0'
-  if RUBY_VERSION < '2.3.0'
-    s.add_development_dependency 'nokogiri', '~> 1.8.2'
-  elsif RUBY_VERSION > '3.0.0'
-    s.add_development_dependency 'nokogiri', '~> 1.16'
-  elsif RUBY_VERSION > '2.7.0'
-    s.add_development_dependency 'nokogiri', '~> 1.15'
-  else
-    s.add_development_dependency 'nokogiri', '~> 1.10'
-  end
-  s.add_development_dependency 'pry'
-  if RUBY_VERSION > '3.1.0'
-    s.add_development_dependency 'rspec'
-  else
-    s.add_development_dependency 'rspec', '= 3.10.0'
-  end
-  s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'benchmark-ips'
-  s.add_development_dependency 'benchmark-memory'
-  # fixing CI tests
-  s.add_development_dependency 'rack-cache', '= 1.2'
-  s.add_development_dependency 'json', '= 2.3.1'
 end
