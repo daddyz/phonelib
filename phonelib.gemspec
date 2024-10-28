@@ -1,5 +1,6 @@
-$LOAD_PATH.push File.expand_path('../lib', __FILE__)
-require 'phonelib/version'
+# frozen_string_literal: true
+
+require_relative 'lib/phonelib/version'
 
 Gem::Specification.new do |s|
   s.name = 'phonelib'
@@ -16,28 +17,4 @@ Gem::Specification.new do |s|
   s.rdoc_options << ' --no-private - CHANGELOG.md --readme README.md'
   s.files = Dir['{lib,tasks}/**/*'] + Dir['data/*.dat'] + %w(MIT-LICENSE Rakefile README.md)
   s.test_files = Dir['test/**/*']
-
-  s.add_development_dependency 'rake', '< 14.0'
-  if RUBY_VERSION < '2.3.0'
-    s.add_development_dependency 'nokogiri', '~> 1.8.2'
-  elsif RUBY_VERSION > '2.6.0'
-    s.add_development_dependency 'nokogiri', '~> 1.15'
-  elsif RUBY_VERSION > '3.0.0'
-    s.add_development_dependency 'nokogiri', '~> 1.16'
-  else
-    s.add_development_dependency 'nokogiri', '~> 1.10'
-  end
-  s.add_development_dependency 'pry'
-  if RUBY_VERSION > '3.1.0'
-    s.add_development_dependency 'rspec'
-  else
-    s.add_development_dependency 'rspec', '= 2.14.1'
-  end
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 1.0.9'
-  s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'benchmark-ips'
-  s.add_development_dependency 'benchmark-memory'
-  # fixing CI tests
-  s.add_development_dependency 'rack-cache', '= 1.2'
-  s.add_development_dependency 'json', '= 2.3.1'
 end
