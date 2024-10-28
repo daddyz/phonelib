@@ -12,11 +12,7 @@ module Phonelib
 end
 
 if defined?(ActiveModel) || defined?(Rails)
-  if RUBY_VERSION >= '3.0.0'
-    autoload :PhoneValidator, 'validators/phone_validator3'
-  else
-    autoload :PhoneValidator, 'validators/phone_validator'
-  end
+  autoload :PhoneValidator, 'validators/phone_validator'
 
   if defined?(Rails)
     class Phonelib::Railtie < Rails::Railtie
