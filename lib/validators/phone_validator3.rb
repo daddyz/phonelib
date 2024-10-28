@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Validator class for phone validations
 #
 # ==== Examples

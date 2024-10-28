@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :phonelib do
   desc 'Create database for tests in Rails dummy application'
   task :create_test_db do

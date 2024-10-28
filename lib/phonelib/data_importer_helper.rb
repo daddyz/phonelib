@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phonelib
   # @private helper module for parsing raw libphonenumber data
   module DataImporterHelper

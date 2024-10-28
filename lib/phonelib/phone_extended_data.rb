@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phonelib
   # module provides extended data methods for parsed phone
   module PhoneExtendedData

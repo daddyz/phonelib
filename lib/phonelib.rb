@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # main Phonelib module definition
 module Phonelib
   # load phonelib classes/modules

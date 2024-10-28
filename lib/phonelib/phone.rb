@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phonelib
   # class for parsed phone number, includes validation and formatting methods
   class Phone
@@ -24,7 +26,7 @@ module Phonelib
     # @return [Phonelib::Phone] parsed phone instance
     def initialize(phone, country = nil)
       @original, @extension = separate_extension(phone.to_s)
-      @extension.gsub!(/[^0-9]/, '') if @extension
+      @extension = @extension.gsub(/[^0-9]/, '') if @extension
 
       if sanitized.empty?
         @data = {}
