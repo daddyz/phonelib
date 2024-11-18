@@ -9,6 +9,7 @@ commands:
         default: "NA"
         type: string
     steps:
+      - run: "apt-get install -y libxslt1-dev libxml2-dev"
       - run: "ruby --version"
       #- run: "gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true"
       - run: "gem install bundler -v '1.16.1'"
