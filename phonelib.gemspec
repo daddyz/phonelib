@@ -20,10 +20,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '< 14.0'
   if RUBY_VERSION < '2.3.0'
     s.add_development_dependency 'nokogiri', '~> 1.8.2'
-  elsif RUBY_VERSION > '2.6.0'
-    s.add_development_dependency 'nokogiri', '~> 1.15'
   elsif RUBY_VERSION > '3.0.0'
     s.add_development_dependency 'nokogiri', '~> 1.16'
+  elsif RUBY_VERSION > '2.6.0'
+    s.add_development_dependency 'nokogiri', '~> 1.15'
   else
     s.add_development_dependency 'nokogiri', '~> 1.10'
   end
