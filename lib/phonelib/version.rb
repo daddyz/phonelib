@@ -1,4 +1,4 @@
 module Phonelib
   # @private
-  VERSION = '0.8.8'
+  VERSION = '0.9.3'
 end

@@ -126,6 +126,9 @@ module Phonelib
           if country[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
             country[Core::NATIONAL_PREFIX_TRANSFORM_RULE].gsub!('$', '\\')
           end
+          if country[:id] == '001'
+            country[:id] = 'International ' + country[:country_code]
+          end
           @data[country[:id]] = country
         end
       end
@@ -209,7 +212,7 @@ module Phonelib
       # adds double country code flag in case country allows
       def add_double_country_flag(country)
         if DOUBLE_COUNTRY_CODES_COUNTRIES.include?(country[:id])
-          country[:double_prefix] = true
+          country[Core::DOUBLE_COUNTRY_PREFIX_FLAG] = true
         end
         country
       end

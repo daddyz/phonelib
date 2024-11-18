@@ -482,7 +482,7 @@ describe Phonelib do
 
   context 'issue #33' do
     it 'should be valid for mexico numbers' do
-      number = Phonelib.parse('+5215545258448', 'mx')
+      number = Phonelib.parse('+525545258448', 'mx')
       expect(number.valid?).to be true
       expect(number.international).to eq('+52 55 4525 8448')
       expect(number.national).to eq('55 4525 8448')
@@ -979,7 +979,7 @@ describe Phonelib do
 
   context 'issue #132' do
     it 'should simplify national prefix and make phone valid' do
-      phone = Phonelib.parse '0445532231113', 'MX'
+      phone = Phonelib.parse '095532231113', 'MX'
       expect(phone.valid?).to be true
       expect(phone.international).to eq('+52 55 3223 1113')
       expect(phone.country).to eq('MX')
@@ -1192,7 +1192,7 @@ describe Phonelib do
 
   context 'issue #152' do
     it 'should return correct format for MX' do
-      p = Phonelib.parse('0459991234567', 'MX')
+      p = Phonelib.parse('099991234567', 'MX')
       expect(p.national).to eq('999 123 4567')
     end
   end
@@ -1331,6 +1331,51 @@ describe Phonelib do
       p2 = Phonelib.parse('6047642951')
       expect(p2.valid?).to be(true)
       expect(p2.countries).to eq(['CA'])
+    end
+  end
+
+  context 'issue #304' do
+    it 'should strip AR prefix' do
+      phone = Phonelib.parse('+540111557447700', 'AR')
+      expect(phone.valid_for_country?('AR')).to be(true)
+      expect(phone.e164).to eq('+5491157447700')
+      expect(phone.national).to eq('011 15-5744-7700')
+      expect(phone.international).to eq('+54 9 11 5744-7700')
+    end
+  end
+
+  context 'issue #303' do
+    it 'should parse possible numbers if countries array passed' do
+      p1 = Phonelib.parse('1212 111 1111', :us)
+      expect(p1.valid?).to be(false)
+      expect(p1.possible?).to be(true)
+
+      p2 = Phonelib.parse('1212 111 1111', %w(US CA))
+      expect(p2.valid?).to be(false)
+      expect(p2.possible?).to be(true)
+
+      expect(p1.e164).to eq(p2.e164)
+    end
+
+    it 'should parse valid numbers if countries array passed' do
+      p1 = Phonelib.parse('16478864691', :ca)
+      expect(p1.valid?).to be(true)
+      expect(p1.possible?).to be(true)
+
+      p2 = Phonelib.parse('16478864691', %w(US CA))
+      expect(p2.valid?).to be(true)
+      expect(p2.possible?).to be(true)
+
+      expect(p1.e164).to eq(p2.e164)
+    end
+  end
+
+  context 'issue #309' do
+    it 'should return same result without specifying country' do
+      p1 = Phonelib.parse('+55 55 96722 8964', 'BR')
+      p2 = Phonelib.parse('+55 55 96722 8964')
+      expect(p1.valid?).to be(p2.valid?)
+      expect(p1.international).to eq(p2.international)
     end
   end
 

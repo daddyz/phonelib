@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    phonelib (0.8.8)
+    phonelib (0.9.3)
 
 GEM
   remote: http://rubygems.org/
@@ -58,4 +58,4 @@ DEPENDENCIES
   simplecov
 
 BUNDLED WITH
-   1.17.3
+   2.1.4
