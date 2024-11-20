@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   if RUBY_VERSION > '3.1.0'
     s.add_development_dependency 'rspec'
   else
-    s.add_development_dependency 'rspec', '= 2.14.1'
+    s.add_development_dependency 'rspec', '= 3.10.0'
   end
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'benchmark-ips'
