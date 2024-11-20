@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'phonelib/data_importer_helper'
 
 module Phonelib

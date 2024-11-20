@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phonelib
   # module includes all formatting methods
   module PhoneFormatter

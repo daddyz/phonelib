@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phonelib
   # @private phone analyzing methods module
   module PhoneAnalyzer

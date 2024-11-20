@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phonelib
   # main module that includes all basic data and methods
   module Core

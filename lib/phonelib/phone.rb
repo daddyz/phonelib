@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phonelib
   # class for parsed phone number, includes validation and formatting methods
   class Phone
