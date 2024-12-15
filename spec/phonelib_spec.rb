@@ -1379,6 +1379,55 @@ describe Phonelib do
     end
   end
 
+  context 'issue #324' do
+    before(:each) do
+      Phonelib.additional_regexes = []
+    end
+
+    after(:each) do
+      Phonelib.additional_regexes = []
+    end
+
+    it 'should not throw error and be valid without additional' do
+      expect(Phonelib.parse("+213 551234567").valid?).to be(true)
+    end
+
+    it 'should not throw error and be valid with additional' do
+      Phonelib.additional_regexes = [[:fr, :mobile, '07\d{8}'],[:dz, :mobile, '0(5|6)\d{8}'],]
+      p = Phonelib.parse("+213 551234567")
+      expect(p.valid?).to be(true)
+      expect(p.international).to eq('+213 551 23 45 67')
+    end
+
+    it 'should not throw error and be valid with additional full match' do
+      Phonelib.additional_regexes = [[:fr, :mobile, '^07\d{8}$'],[:dz, :mobile, '^0(5|6)\d{8}$'],]
+      p = Phonelib.parse("+213 551234567")
+      expect(p.valid?).to be(true)
+      expect(p.international).to eq('+213 551 23 45 67')
+    end
+
+    it 'should not throw error and be valid with several additional' do
+      Phonelib.additional_regexes = [[:fr, :mobile, '^07\d{8}$'],[:dz, :mobile, '^0(5|6)\d{18}$'],[:dz, :mobile, '^0(1|2)\d{18}$'],]
+      p = Phonelib.parse("+213 551234567")
+      expect(p.valid?).to be(true)
+      expect(p.international).to eq('+213 551 23 45 67')
+    end
+
+    it 'should not throw error and be valid with additional without (' do
+      Phonelib.additional_regexes = [[:fr, :mobile, '^07\d{8}$'],[:dz, :mobile, '^05|6\d{8}$'],]
+      p = Phonelib.parse("+213 551234567")
+      expect(p.valid?).to be(true)
+      expect(p.international).to eq('+213 551 23 45 67')
+    end
+
+    it 'should not throw error and be valid with several additional without (' do
+      Phonelib.additional_regexes = [[:fr, :mobile, '^07\d{8}$'],[:dz, :mobile, '^05|6\d{18}$'],[:dz, :mobile, '^01|2\d{18}$'],]
+      p = Phonelib.parse("+213 551234567")
+      expect(p.valid?).to be(true)
+      expect(p.international).to eq('+213 551 23 45 67')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'

@@ -174,7 +174,11 @@ module Phonelib
     # * +not_valid+ - specifies that number is not valid by general desc pattern
     def national_and_data(data, country_match, not_valid = false)
       result = data.select { |k, _v| k != :types && k != :formats }
-      phone = country_match.to_a.last
+      index = 0
+      if Phonelib.additional_regexes.is_a?(Hash) && Phonelib.additional_regexes[data[:id]]
+        index = Phonelib.additional_regexes[data[:id]].values.flatten.join('|').scan(/\(/).size
+      end
+      phone = country_match.to_a[-1 - index]
       result[:national] = phone
       result[:format] = number_format(phone, data[Core::FORMATS])
       result.merge! all_number_types(phone, data[Core::TYPES], not_valid)
