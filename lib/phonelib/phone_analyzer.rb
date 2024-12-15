@@ -19,7 +19,6 @@ module Phonelib
     #   country (2 letters) like 'US', 'us' or :us for United States
     def analyze(phone, passed_country)
       countries = country_or_default_country passed_country
-
       return analyze_single_country(phone, countries.first, passed_country) if countries.size == 1
 
       results = {}
@@ -134,7 +133,8 @@ module Phonelib
         key = data[:id]
         parsed = parse_single_country(phone, data)
         if (!Phonelib.strict_double_prefix_check || key == country) && double_prefix_allowed?(data, phone, parsed && parsed[key])
-          parsed = parse_single_country(changed_dp_phone(key, phone), data)
+          parsed2 = parse_single_country(changed_dp_phone(key, phone), data)
+          parsed = parsed2 if parsed2 && parsed2[key] && parsed2[key][:valid].size > 0
         end
         result.merge!(parsed) unless parsed.nil?
       end.compact
