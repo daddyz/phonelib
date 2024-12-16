@@ -1448,6 +1448,15 @@ describe Phonelib do
       end
     end
 
+    context 'issue #325' do
+      it 'should change number according to new format' do
+        p = Phonelib.parse("540111557447700")
+        expect(p.country).to eq('AR')
+        expect(p.e164).to eq('+5491157447700')
+        expect(p.valid?).to be(true)
+      end
+    end
+
     def phone_assertions(phone, type, country, msg)
       expect(phone.valid?).to be(true), "#{msg} not valid"
       expect(phone.invalid?).to be(false), "#{msg} not valid"
