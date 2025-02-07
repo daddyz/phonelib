@@ -226,7 +226,7 @@ module Phonelib
     def number_format(national, format_data)
       format_data && format_data.find do |format|
         (format[Core::LEADING_DIGITS].nil? || \
-            national.match(cr("^(#{format[Core::LEADING_DIGITS]})"))) && \
+            national.match?(cr("^(#{format[Core::LEADING_DIGITS]})"))) && \
           national.match(cr("^(#{format[Core::PATTERN]})$"))
       end || Core::DEFAULT_NUMBER_FORMAT
     end
