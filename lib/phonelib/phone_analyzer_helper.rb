@@ -178,7 +178,7 @@ module Phonelib
     def types_for_check(data)
       exclude_list = PhoneAnalyzer::NOT_FOR_CHECK
       exclude_list += Phonelib::Core::SHORT_CODES unless Phonelib.parse_special
-      Core::TYPES_DESC.keys - exclude_list + fixed_and_mobile_keys(data)
+      Core::TYPES_DESC_KEYS - exclude_list + fixed_and_mobile_keys(data)
     end
 
     # Checks if fixed line pattern and mobile pattern are the same and returns
