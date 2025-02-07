@@ -150,9 +150,7 @@ module Phonelib
     # * +phone+ - phone number for parsing
     # * +data+  - country data
     def phone_match_data?(phone, data, possible = false)
-      country_code = "#{data[Core::COUNTRY_CODE]}"
-      inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      return unless phone.match cr("^0{2}?#{inter_prefix}#{country_code}")
+      return unless phone.match?(cr("^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?#{data[Core::COUNTRY_CODE]}"))
 
       type = possible ? Core::POSSIBLE_PATTERN : Core::VALID_PATTERN
       phone.match full_regex_for_data(data, type, false)
