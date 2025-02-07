@@ -408,6 +408,10 @@ module Phonelib
     # @private Extended data key for carrier in prefixes hash
     EXT_CARRIER_KEY = :c
 
+    # @private Static arrays used to avoid allocations
+    FIXED_OR_MOBILE_ARRAY = [Core::FIXED_OR_MOBILE].freeze
+    FIXED_LINE_OR_MOBILE_ARRAY = [Core::FIXED_LINE, Core::MOBILE].freeze
+
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
     # @param phone [String] the phone number to be parsed
