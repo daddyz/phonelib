@@ -33,7 +33,7 @@ module Phonelib
 
     # pick best result when several countries specified
     def pick_results(results)
-      [:valid, :possible].each do |key|
+      Core::VALID_POSSIBLE_ARRAY.each do |key|
         final = results.select { |_k, v| v[key].any? }
         return decorate_analyze_result(final) if final.size > 0
       end
@@ -247,7 +247,7 @@ module Phonelib
           type_regex(patterns, Core::VALID_PATTERN)
         ]
       else
-        [nil, nil]
+        Core::NIL_RESULT_ARRAY
       end
     end
   end
