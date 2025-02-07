@@ -216,8 +216,9 @@ module Phonelib
     # * +number+ - phone number for validation
     # * +regex+ - regex for perfoming a validation
     def number_match?(number, regex)
+      return nil if regex.nil?
       match = number.match(cr("^(?:#{regex})$"))
-      match && match.to_s.length == number.length
+      match && match.match_length(0) == number.length
     end
   end
 end
