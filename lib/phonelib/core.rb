@@ -202,7 +202,7 @@ module Phonelib
     end
 
     def add_additional_regex(country, type, national_regex)
-      return unless Phonelib::Core::TYPES_DESC.keys.include?(type.to_sym)
+      return unless Phonelib::Core::TYPES_DESC.key?(type.to_sym)
       return unless national_regex.is_a?(String)
       @@phone_data = @@data_by_country_codes = nil
       @@additional_regexes[country.to_s.upcase] ||= {}
