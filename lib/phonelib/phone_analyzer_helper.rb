@@ -119,14 +119,15 @@ module Phonelib
     # * +data+ - country data hash
     # * +country_optional+ - whether to put country code as optional group
     def full_regex_for_data(data, type, country_optional = true)
-      regex = []
-      regex << '0{2}?'
-      regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      regex << "(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}"
-      regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
-      regex << "(#{type_regex(data[Core::TYPES][Core::GENERAL], type)})" if data[Core::TYPES]
+      regex = "^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
+      if data[Core::TYPES]
+        regex << "("
+        regex << type_regex(data[Core::TYPES][Core::GENERAL], type)
+        regex << ")"
+      end
+      regex << "$"
 
-      cr("^#{regex.join}$")
+      cr(regex)
     end
 
     # Returns regex for type with special types if needed
