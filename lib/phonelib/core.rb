@@ -381,6 +381,7 @@ module Phonelib
       carrier_selection_codes: 'Carrier Selection codes',
       area_code_optional: 'Are code optional'
     }.freeze
+    TYPES_DESC_KEYS = TYPES_DESC.keys.freeze
 
     # @private short codes types keys
     SHORT_CODES = [
