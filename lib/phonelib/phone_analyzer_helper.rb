@@ -161,10 +161,9 @@ module Phonelib
     # checks if types has both :mobile and :fixed_line and replaces it with
     # :fixed_or_mobile in case both present
     def sanitize_fixed_mobile(types)
-      fixed_mobile = [Core::FIXED_LINE, Core::MOBILE]
       [:possible, :valid].each do |key|
-        if (fixed_mobile - types[key]).empty?
-          types[key] = types[key] - fixed_mobile + [Core::FIXED_OR_MOBILE]
+        if (Core::FIXED_LINE_OR_MOBILE_ARRAY - types[key]).empty?
+          types[key] = types[key] - Core::FIXED_LINE_OR_MOBILE_ARRAY + Core::FIXED_OR_MOBILE_ARRAY
         end
       end
       types
@@ -189,9 +188,9 @@ module Phonelib
     # * +data+  - country data
     def fixed_and_mobile_keys(data)
       if data[Core::FIXED_LINE] == data[Core::MOBILE]
-        [Core::FIXED_OR_MOBILE]
+        Core::FIXED_OR_MOBILE_ARRAY
       else
-        [Core::FIXED_LINE, Core::MOBILE]
+        Core::FIXED_LINE_OR_MOBILE_ARRAY
       end
     end
 
