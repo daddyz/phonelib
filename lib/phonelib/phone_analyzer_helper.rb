@@ -136,11 +136,11 @@ module Phonelib
     # * +data+ - country types data for single type
     # * +type+ - possible or valid regex type needed
     def type_regex(data, type)
-      regex = [data[type]]
       if Phonelib.parse_special && data[Core::SHORT] && data[Core::SHORT][type]
-        regex << data[Core::SHORT][type]
+        "#{data[type]}|#{data[Core::SHORT][type]}"
+      else
+        data[type]
       end
-      regex.join('|')
     end
 
     # Check if phone match country data
