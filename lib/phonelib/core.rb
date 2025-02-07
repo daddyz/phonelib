@@ -411,6 +411,9 @@ module Phonelib
     # @private Static arrays used to avoid allocations
     FIXED_OR_MOBILE_ARRAY = [Core::FIXED_OR_MOBILE].freeze
     FIXED_LINE_OR_MOBILE_ARRAY = [Core::FIXED_LINE, Core::MOBILE].freeze
+    POSSIBLE_VALID_ARRAY = [:possible, :valid].freeze
+    VALID_POSSIBLE_ARRAY = [:valid, :possible].freeze
+    NIL_RESULT_ARRAY = [nil, nil].freeze
 
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
