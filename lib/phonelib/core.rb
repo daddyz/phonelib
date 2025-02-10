@@ -202,7 +202,7 @@ module Phonelib
     end
 
     def add_additional_regex(country, type, national_regex)
-      return unless Phonelib::Core::TYPES_DESC.keys.include?(type.to_sym)
+      return unless Phonelib::Core::TYPES_DESC.key?(type.to_sym)
       return unless national_regex.is_a?(String)
       @@phone_data = @@data_by_country_codes = nil
       @@additional_regexes[country.to_s.upcase] ||= {}
@@ -381,6 +381,7 @@ module Phonelib
       carrier_selection_codes: 'Carrier Selection codes',
       area_code_optional: 'Are code optional'
     }.freeze
+    TYPES_DESC_KEYS = TYPES_DESC.keys.freeze
 
     # @private short codes types keys
     SHORT_CODES = [
@@ -406,6 +407,13 @@ module Phonelib
     EXT_TIMEZONE_KEY = :t
     # @private Extended data key for carrier in prefixes hash
     EXT_CARRIER_KEY = :c
+
+    # @private Static arrays used to avoid allocations
+    FIXED_OR_MOBILE_ARRAY = [Core::FIXED_OR_MOBILE].freeze
+    FIXED_LINE_OR_MOBILE_ARRAY = [Core::FIXED_LINE, Core::MOBILE].freeze
+    POSSIBLE_VALID_ARRAY = [:possible, :valid].freeze
+    VALID_POSSIBLE_ARRAY = [:valid, :possible].freeze
+    NIL_RESULT_ARRAY = [nil, nil].freeze
 
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
