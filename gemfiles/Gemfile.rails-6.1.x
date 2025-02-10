@@ -26,3 +26,4 @@ gem 'benchmark-memory'
 # fixing CI tests
 gem 'rack-cache', '= 1.2'
 gem 'json', '= 2.3.1'
+gem 'concurrent-ruby', '1.3.4'
