@@ -69,9 +69,15 @@ module Phonelib
     end
 
     # replacing national prefix to simplified format
-    def with_replaced_national_prefix(phone, data)
-      return phone unless data[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
-      phone = phone.gsub(/^#{data[Core::COUNTRY_CODE]}/, '') if phone.start_with?(data[Core::COUNTRY_CODE]) && !data[Core::DOUBLE_COUNTRY_PREFIX_FLAG]
+    def with_replaced_national_prefix(passed_phone, data)
+      return passed_phone unless data[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
+      phone = if passed_phone.start_with?(data[Core::COUNTRY_CODE]) && !data[Core::DOUBLE_COUNTRY_PREFIX_FLAG]
+                passed_phone.gsub(/^#{data[Core::COUNTRY_CODE]}/, '')
+              else
+                passed_phone
+              end
+      return passed_phone unless phone.match? cr("^#{type_regex(data[Core::TYPES][Core::GENERAL], Core::POSSIBLE_PATTERN)}$")
+
       pattern = cr("^(?:#{data[Core::NATIONAL_PREFIX_FOR_PARSING]})")
       match = phone.match pattern
       if match && match.captures.compact.size > 0

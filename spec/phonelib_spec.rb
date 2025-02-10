@@ -1428,6 +1428,13 @@ describe Phonelib do
     end
   end
 
+  context 'issue #332' do
+    it 'should parse short number as invalid without replaced prefix' do
+      p = Phonelib.parse('+44008123')
+      expect(p.valid?).to be(false)
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
