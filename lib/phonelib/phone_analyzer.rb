@@ -72,7 +72,7 @@ module Phonelib
     def with_replaced_national_prefix(passed_phone, data)
       return passed_phone unless data[Core::NATIONAL_PREFIX_TRANSFORM_RULE]
       phone = if passed_phone.start_with?(data[Core::COUNTRY_CODE]) && !data[Core::DOUBLE_COUNTRY_PREFIX_FLAG]
-                passed_phone.gsub(/^#{data[Core::COUNTRY_CODE]}/, '')
+                passed_phone.delete_prefix(data[Core::COUNTRY_CODE])
               else
                 passed_phone
               end
