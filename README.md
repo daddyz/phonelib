@@ -13,7 +13,7 @@ But it still doesn't include all Google's library functionality.
 
 ## Incorrect parsing or validation
 
-In case your phone number is incorrectly parsed, you can check original libphonenumber for result [here](https://rawgit.com/googlei18n/libphonenumber/master/javascript/i18n/phonenumbers/demo-compiled.html) and in case of same parse result [open an issue for them](https://issuetracker.google.com/issues/new?component=192347&template=829703). This gem's data is based on it.
+In case your phone number is incorrectly parsed, you can check original libphonenumber for result [here](https://htmlpreview.github.io/?https://github.com/google/libphonenumber/blob/master/javascript/i18n/phonenumbers/demo-compiled.html) and in case of same parse result [open an issue for them](http://issuetracker.google.com/issues/new?component=192347). This gem's data is based on it.
 If you can't wait for libphonenumber to resolve the issue, try to use ```Phonelib.add_additional_regex``` and ```Phonelib.additional_regexes``` methods.
 
 ## Information
