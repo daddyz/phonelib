@@ -385,7 +385,14 @@ describe Phonelib do
 
     it 'should have timezone' do
       phone = Phonelib.parse('12015551234')
+      expect(phone.timezones).to eq(['America/New_York'])
       expect(phone.timezone).to eq('America/New_York')
+    end
+
+    it 'should have multiple timezones' do
+      phone = Phonelib.parse('+3911111111')
+      expect(phone.timezones).to eq(["Europe/Rome", "Europe/Vatican"])
+      expect(phone.timezone).to eq('Europe/Rome')
     end
 
     it 'should have carrier' do

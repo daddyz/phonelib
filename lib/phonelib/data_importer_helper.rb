@@ -103,7 +103,13 @@ module Phonelib
         line = str_clean line, false
         next if line.empty? || line[0] == '#'
         prefix, line_data = line.split('|')
-        data[prefix] = line_data && line_data.strip.split('&')
+        if line_data
+          data[prefix] = if line_data.strip =~ /[^ ]{3,}&[^ ]{3,}/
+                           line_data.strip.split('&')
+                         else
+                           line_data.strip
+                         end
+        end
       end
       data
     end

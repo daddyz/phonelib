@@ -18,12 +18,19 @@ module Phonelib
                    Phonelib::Core::EXT_GEO_NAME_KEY
     end
 
-    # Returns timezone of parsed phone number or nil if number is invalid or
-    # there is no timezone specified in db for this number
+    # Returns first timezone (in case several match) of parsed phone number or nil
+    # if number is invalid or there is no timezone specified in db for this number
     # @return [String|nil] timezone for parsed phone
     def timezone
-      get_ext_name Phonelib::Core::EXT_TIMEZONES,
-                   Phonelib::Core::EXT_TIMEZONE_KEY
+      timezones.first
+    end
+
+    # Returns timezones of parsed phone number or nil if number is invalid or
+    # there is no timezone specified in db for this number
+    # @return [Array] timezones for parsed phone
+    def timezones
+      res = get_ext_name Phonelib::Core::EXT_TIMEZONES, Phonelib::Core::EXT_TIMEZONE_KEY
+      res.is_a?(Array) ? res : [res]
     end
 
     # Returns carrier of parsed phone number or nil if number is invalid or
@@ -53,9 +60,7 @@ module Phonelib
     def get_ext_name(names_key, id_key)
       return nil unless ext_data[id_key]
 
-      res = Phonelib.phone_ext_data[names_key][ext_data[id_key]]
-      return nil unless res
-      res.size == 1 ? res.first : res
+      Phonelib.phone_ext_data[names_key][ext_data[id_key]]
     end
 
     # @private returns extended data ids for current number
