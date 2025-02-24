@@ -119,14 +119,15 @@ module Phonelib
     # * +data+ - country data hash
     # * +country_optional+ - whether to put country code as optional group
     def full_regex_for_data(data, type, country_optional = true)
-      regex = []
-      regex << '0{2}?'
-      regex << "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      regex << "(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}"
-      regex << "(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
-      regex << "(#{type_regex(data[Core::TYPES][Core::GENERAL], type)})" if data[Core::TYPES]
+      regex = +"^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
+      if data[Core::TYPES]
+        regex << "("
+        regex << type_regex(data[Core::TYPES][Core::GENERAL], type)
+        regex << ")"
+      end
+      regex << "$"
 
-      cr("^#{regex.join}$")
+      cr(regex)
     end
 
     # Returns regex for type with special types if needed
@@ -136,11 +137,11 @@ module Phonelib
     # * +data+ - country types data for single type
     # * +type+ - possible or valid regex type needed
     def type_regex(data, type)
-      regex = [data[type]]
       if Phonelib.parse_special && data[Core::SHORT] && data[Core::SHORT][type]
-        regex << data[Core::SHORT][type]
+        "#{data[type]}|#{data[Core::SHORT][type]}"
+      else
+        data[type]
       end
-      regex.join('|')
     end
 
     # Check if phone match country data
@@ -150,9 +151,7 @@ module Phonelib
     # * +phone+ - phone number for parsing
     # * +data+  - country data
     def phone_match_data?(phone, data, possible = false)
-      country_code = "#{data[Core::COUNTRY_CODE]}"
-      inter_prefix = "(#{data[Core::INTERNATIONAL_PREFIX]})?"
-      return unless phone.match cr("^0{2}?#{inter_prefix}#{country_code}")
+      return unless phone.match?(cr("^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?#{data[Core::COUNTRY_CODE]}"))
 
       type = possible ? Core::POSSIBLE_PATTERN : Core::VALID_PATTERN
       phone.match full_regex_for_data(data, type, false)
@@ -161,10 +160,9 @@ module Phonelib
     # checks if types has both :mobile and :fixed_line and replaces it with
     # :fixed_or_mobile in case both present
     def sanitize_fixed_mobile(types)
-      fixed_mobile = [Core::FIXED_LINE, Core::MOBILE]
-      [:possible, :valid].each do |key|
-        if (fixed_mobile - types[key]).empty?
-          types[key] = types[key] - fixed_mobile + [Core::FIXED_OR_MOBILE]
+      Core::POSSIBLE_VALID_ARRAY.each do |key|
+        if (Core::FIXED_LINE_OR_MOBILE_ARRAY - types[key]).empty?
+          types[key] = types[key] - Core::FIXED_LINE_OR_MOBILE_ARRAY + Core::FIXED_OR_MOBILE_ARRAY
         end
       end
       types
@@ -178,7 +176,7 @@ module Phonelib
     def types_for_check(data)
       exclude_list = PhoneAnalyzer::NOT_FOR_CHECK
       exclude_list += Phonelib::Core::SHORT_CODES unless Phonelib.parse_special
-      Core::TYPES_DESC.keys - exclude_list + fixed_and_mobile_keys(data)
+      Core::TYPES_DESC_KEYS - exclude_list + fixed_and_mobile_keys(data)
     end
 
     # Checks if fixed line pattern and mobile pattern are the same and returns
@@ -189,9 +187,9 @@ module Phonelib
     # * +data+  - country data
     def fixed_and_mobile_keys(data)
       if data[Core::FIXED_LINE] == data[Core::MOBILE]
-        [Core::FIXED_OR_MOBILE]
+        Core::FIXED_OR_MOBILE_ARRAY
       else
-        [Core::FIXED_LINE, Core::MOBILE]
+        Core::FIXED_LINE_OR_MOBILE_ARRAY
       end
     end
 
