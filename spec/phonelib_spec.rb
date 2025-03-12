@@ -1442,6 +1442,20 @@ describe Phonelib do
     end
   end
 
+  context 'issue #336' do
+    it 'should set country without country passed but with plus' do
+      p = Phonelib.parse('+813000000000')
+      expect(p.valid?).to be(false)
+      expect(p.country).to eq('JP')
+    end
+
+    it 'should set country with country passed' do
+      p = Phonelib.parse('+813000000000', :jp)
+      expect(p.valid?).to be(false)
+      expect(p.country).to eq('JP')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
