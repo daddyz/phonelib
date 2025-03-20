@@ -162,13 +162,13 @@ module Phonelib
     # * +phone+ - phone number for parsing
     # * +data+  - country data to be based on for creating e164 representation
     def convert_to_e164(phone, data)
-      match = phone.match full_regex_for_data(data, Core::VALID_PATTERN, !original_starts_with_plus?)
+      match = phone.match full_regex_for_data(data, Core::VALID_PATTERN, !original_starts_with_plus_or_double_zero?)
       case
       when match
         "#{data[Core::COUNTRY_CODE]}#{match.to_a.last}"
       when phone.match(cr("^#{data[Core::INTERNATIONAL_PREFIX]}"))
         phone.sub(cr("^#{data[Core::INTERNATIONAL_PREFIX]}"), Core::PLUS_SIGN)
-      when original_starts_with_plus? && phone.start_with?(data[Core::COUNTRY_CODE])
+      when original_starts_with_plus_or_double_zero? && phone.start_with?(data[Core::COUNTRY_CODE])
         phone
       else
         "#{data[Core::COUNTRY_CODE]}#{phone}"

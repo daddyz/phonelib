@@ -448,11 +448,13 @@ describe Phonelib do
       phone1 = Phonelib.parse('0049032123456789', 'GB')
       phone2 = Phonelib.parse('81049032123456789', 'RU')
       phone3 = Phonelib.parse('81049032123456789', 'GB')
+      phone4 = Phonelib.parse('00962796820700','DE')
       expect(phone1.valid?).to be true
       expect(phone1.country).to eq('DE')
       expect(phone2.valid?).to be true
       expect(phone2.country).to eq('DE')
       expect(phone3.valid?).to be false
+      expect(phone4.country).to eq('JO')
     end
   end
 
