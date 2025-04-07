@@ -16,8 +16,8 @@ module Phonelib
       end
     end
 
-    def original_starts_with_plus?
-      original_s[0] == Core::PLUS_SIGN
+    def original_starts_with_plus_or_double_zero?
+      original_s[0] == Core::PLUS_SIGN || original_s[0..1] == '00'
     end
 
     # converts symbols in phone to numbers
@@ -61,7 +61,8 @@ module Phonelib
     def country_can_dp?(country)
       Phonelib.phone_data[country] &&
         Phonelib.phone_data[country][Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
-        !original_starts_with_plus? && original_s.start_with?(Phonelib.phone_data[country][Core::COUNTRY_CODE])
+        !original_starts_with_plus_or_double_zero? &&
+        original_s.start_with?(Phonelib.phone_data[country][Core::COUNTRY_CODE])
     end
 
     # changes phone to with/without double country prefix
@@ -89,7 +90,7 @@ module Phonelib
       data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
         phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
         parsed && (parsed[:valid].nil? || parsed[:valid].empty?) &&
-        !original_starts_with_plus?
+        !original_starts_with_plus_or_double_zero?
     end
 
     # Returns original number passed if it's a string or empty string otherwise
@@ -103,7 +104,8 @@ module Phonelib
     #
     # * +country+ - country passed for parsing
     def country_or_default_country(country)
-      country ||= (original_starts_with_plus? ? nil : Phonelib.default_country)
+      country ||= (original_starts_with_plus_or_double_zero? ? nil : Phonelib.default_country)
+
       if country.is_a?(Array)
         country.compact.map { |e| e.to_s.upcase }
       else
