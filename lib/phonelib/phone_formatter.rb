@@ -37,7 +37,7 @@ module Phonelib
       return @country_code if @country_code
 
       code = Phonelib.phone_data[country] && Phonelib.phone_data[country][Core::COUNTRY_CODE]
-      return @country_code = code unless code == '1' && Phonelib.phone_data[country][Core::LEADING_DIGITS]
+      return @country_code = code unless code == '1' && Phonelib.phone_data[country][Core::LEADING_DIGITS] && Phonelib.phone_data[country][Core::LEADING_DIGITS] =~ /[\[\|]/
 
       match = e164.match(/\A\+(1(#{Phonelib.phone_data[country][Core::LEADING_DIGITS]}))/)
       if match

@@ -1458,6 +1458,22 @@ describe Phonelib do
     end
   end
 
+  context 'issue #343' do
+    it 'should show 1 for country prefix for TT' do
+      p = "18687034186"
+      phone = Phonelib.parse(p)
+      expect(phone.country).to eq('TT')
+      expect(phone.country_code).to eq('1')
+    end
+
+    it 'should match npanxx for DO' do
+      p = "18297034186"
+      phone = Phonelib.parse(p)
+      expect(phone.country).to eq('DO')
+      expect(phone.country_code).to eq('1829')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
