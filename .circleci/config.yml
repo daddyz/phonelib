@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@0.1.2 
+  qlty-orb: qltysh/qlty-orb@0.0
 
 commands:
   rspec:
@@ -21,7 +22,9 @@ commands:
       - run: "bundle install --jobs=3 --retry=3"
       - run: "bundle exec rake phonelib:create_test_db"
       - run: "bundle exec rake spec"
-
+      # Qlty Coverage Orb
+      - qlty-orb/coverage_publish:
+          files: coverage/coverage.json
 jobs:
   build:
     parameters: 
@@ -32,6 +35,7 @@ jobs:
       - image: cimg/ruby:<< parameters.version >>
     executor: ruby/default
     environment:
+      QLTY_COVERAGE_TOKEN: qltcp_GeOrna8NfEmATCPy
       CODECLIMATE_REPO_TOKEN: 230dc861ec831b64dc4818a2002de07fbd2a413cc460385eb05958564eb70687
       BUNDLE_GEMFILE: gemfiles/Gemfile
       RUBYOPT: "--enable-frozen-string-literal"
