@@ -48,7 +48,7 @@ jobs:
         default: "latest"
         type: "string"
     docker:
-      - image: circleci/ruby:<< parameters.version >>
+      - image: cimg/ruby:<< parameters.version >>
     environment:
       RAILS_ENV: test
       BUNDLE_GEMFILE: gemfiles/Gemfile.rails-6.1.x
