@@ -284,7 +284,7 @@ module Phonelib
     CARRIER_SPECIFIC = :carrier_specific
     # @private SMS Services only type
     SMS_SERVICES = :sms_services
-    # @private expendad emergency type
+    # @private expanded emergency type
     EXPANDED_EMERGENCY = :expanded_emergency
     # @private no international dialling type
     NO_INTERNATIONAL_DIALING = :no_international_dialling
