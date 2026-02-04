@@ -481,7 +481,7 @@ describe Phonelib do
         ['01114552586', 'US'], ['01148209679', 'CA'],
         ['000000000000000', 'CN'], ['0050016323', 'KR']
       ]
-      test_cases.each_with_index do |test_case, i|
+      test_cases.each do |test_case|
         number, country = test_case
         phone = Phonelib.parse number, country
         expect(phone.valid_for_country?(country)).to be false
@@ -1478,7 +1478,7 @@ describe Phonelib do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
       phone_data = Marshal.load(File.binread(data_file))
-      phone_data.each do |key, data|
+      phone_data.each_value do |data|
         country = data[:id]
         next unless country =~ /[A-Z]{2}/
         data[:types].each do |type, type_data|
