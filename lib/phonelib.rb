@@ -3,12 +3,12 @@
 # main Phonelib module definition
 module Phonelib
   # load phonelib classes/modules
-  autoload :Core, 'phonelib/core'
-  autoload :Phone, 'phonelib/phone'
-  autoload :PhoneFormatter, 'phonelib/phone_formatter'
-  autoload :PhoneAnalyzer, 'phonelib/phone_analyzer'
-  autoload :PhoneAnalyzerHelper, 'phonelib/phone_analyzer_helper'
-  autoload :PhoneExtendedData, 'phonelib/phone_extended_data'
+  require 'phonelib/core'
+  require 'phonelib/phone_formatter'
+  require 'phonelib/phone_analyzer_helper'
+  require 'phonelib/phone_analyzer'
+  require 'phonelib/phone_extended_data'
+  require 'phonelib/phone'
 
   extend Core
 end
