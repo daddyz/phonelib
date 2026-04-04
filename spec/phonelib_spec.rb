@@ -1503,6 +1503,13 @@ describe Phonelib do
       end
     end
 
+    context 'issue #352' do
+      it 'should not raise error for area_code' do
+        expect(Phonelib.parse("390212345678").area_code).to eq('02')
+        expect(Phonelib.parse("6191712222").area_code).to be_nil
+      end
+    end
+
     def phone_assertions(phone, type, country, msg)
       expect(phone.valid?).to be(true), "#{msg} not valid"
       expect(phone.invalid?).to be(false), "#{msg} not valid"

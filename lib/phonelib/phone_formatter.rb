@@ -106,7 +106,7 @@ module Phonelib
          format_match[1] == Core::AREA_CODE_MOBILE_TOKENS[country]
         take_group = 2
       end
-      format_match[take_group]
+      format_match && format_match[take_group]
     end
 
     def method_missing(method, *args)
