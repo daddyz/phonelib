@@ -57,7 +57,7 @@ module Phonelib
       return "#{prefix}#{sanitized}" unless possible?
       return "#{prefix}#{data_country_code}#{@national_number}" unless formatted
 
-      fmt = @data[country][:format]
+      fmt = country_data[:format]
       national = @national_number
       if (matches = @national_number.match(cr(fmt[Core::PATTERN])))
         fmt = fmt[:intl_format] || fmt[:format]
@@ -129,7 +129,7 @@ module Phonelib
       return false if impossible?
 
       # has national prefix
-      return false unless @data[country][Core::NATIONAL_PREFIX] || country == 'IT'
+      return false unless country_data[Core::NATIONAL_PREFIX] || country == 'IT'
       # fixed or mobile
       return false unless Core::AREA_CODE_TYPES.include?(type)
       # mobile && mexico, argentina, brazil
@@ -148,7 +148,7 @@ module Phonelib
     def formatting_data
       return @formatting_data if defined?(@formatting_data)
 
-      data = @data[country]
+      data = country_data
       format = data[:format]
       prefix = data[Core::NATIONAL_PREFIX]
       rule = format[Core::NATIONAL_PREFIX_RULE] ||

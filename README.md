@@ -246,10 +246,11 @@ Also you can fetch all matched countries
 
 ``` ruby
 phone.countries       # returns array of all matched countries
-phone.country         # returns first element from array of all matched countries
+phone.country         # returns valid_country when there is one, otherwise the main country for the code among all matched countries
 phone.valid_countries # returns array of countries where phone was matched against valid pattern
-phone.valid_country   # returns first valid country from array of valid countries
+phone.valid_country   # returns the main country for the code among valid countries, or the first of them
 phone.country_code    # returns country phone prefix
+phone.national_number # returns national number of the country returned by phone.country
 ```
 
 Also it is possible to get formatted phone number
