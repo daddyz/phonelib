@@ -17,7 +17,7 @@ module Phonelib
     end
 
     def original_starts_with_plus_or_double_zero?
-      original_s[0] == Core::PLUS_SIGN || original_s[0..1] == '00'
+      significant_original_s[0] == Core::PLUS_SIGN || significant_original_s[0..1] == '00'
     end
 
     # converts symbols in phone to numbers
@@ -37,8 +37,9 @@ module Phonelib
     # defines if to validate against single country or not
     def passed_country(country)
       code = country_prefix(country)
-      if !Phonelib.ignore_plus && Core::PLUS_SIGN == @original[0] && code && !sanitized.start_with?(code)
-        # in case number passed with + but it doesn't start with passed
+      if !Phonelib.ignore_plus && original_starts_with_plus_or_double_zero? && code &&
+         !sanitized.delete_prefix('00').start_with?(code)
+        # in case number passed with + or 00 but it doesn't start with passed
         # country prefix
         country = nil
       end
@@ -96,6 +97,15 @@ module Phonelib
     # Returns original number passed if it's a string or empty string otherwise
     def original_s
       @original_s ||= @original.is_a?(String) ? @original : ''
+    end
+
+    # Returns original number without the leading characters that libphonenumber
+    # drops in extractPossibleNumber, so a plus or 00 written behind punctuation
+    # like "(+501) 623-6848" is still recognized as leading. Vanity conversion
+    # runs first, the same way +sanitized+ applies it, so leading letters that
+    # convert to significant digits are not stripped as junk.
+    def significant_original_s
+      @significant_original_s ||= vanity_converted(original_s).sub(cr('\A[^0-9+]+'), '')
     end
 
     # Get country that was provided or default country in needable format

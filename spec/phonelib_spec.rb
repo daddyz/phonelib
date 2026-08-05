@@ -1474,6 +1474,67 @@ describe Phonelib do
     end
   end
 
+  context 'issue #356' do
+    it 'should respect plus sign written behind parenthesis when country passed' do
+      phone = Phonelib.parse('(+501) 623-6848', 'US')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('BZ')
+      expect(phone.e164).to eq('+5016236848')
+    end
+
+    it 'should respect plus sign written behind space when country passed' do
+      phone = Phonelib.parse(' +501 623-6848', 'US')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('BZ')
+      expect(phone.e164).to eq('+5016236848')
+    end
+
+    it 'should respect plus sign of passed country written behind parenthesis' do
+      phone = Phonelib.parse('(+1) 501 623-6848', 'BZ')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('US')
+      expect(phone.e164).to eq('+15016236848')
+    end
+
+    it 'should not use default country for plus sign behind parenthesis' do
+      Phonelib.default_country = 'US'
+      phone = Phonelib.parse('(+32) 12 34 56 78')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('BE')
+      expect(phone.e164).to eq('+3212345678')
+    end
+
+    it 'should not use default country for double zero behind parenthesis' do
+      Phonelib.default_country = 'US'
+      phone = Phonelib.parse('(0032) 12 34 56 78')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('BE')
+      expect(phone.e164).to eq('+3212345678')
+    end
+
+    it 'should use passed country for national number behind parenthesis' do
+      phone = Phonelib.parse('( 212 ) 555-1234', 'US')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('US')
+      expect(phone.e164).to eq('+12125551234')
+    end
+
+    it 'should not treat plus sign following a digit as leading' do
+      Phonelib.default_country = 'US'
+      phone = Phonelib.parse('1+3212345678')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('US')
+      expect(phone.e164).to eq('+13212345678')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
