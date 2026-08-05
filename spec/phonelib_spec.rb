@@ -1222,9 +1222,11 @@ describe Phonelib do
     end
 
     it 'should be invalid when sanitize only valuable symbols' do
+      old = Phonelib.sanitize_regex
       Phonelib.sanitize_regex = '[\.\-\(\) \;\+]'
       p = Phonelib.parse('+1 (713) 555-1212 ; abc')
       expect(p.valid?).to be(true)
+      Phonelib.sanitize_regex = old
     end
 
     it 'should be valid when sanitize only valuable symbols' do
