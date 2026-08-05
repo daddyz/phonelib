@@ -32,8 +32,11 @@ module Phonelib
         @data = {}
       else
         @data = analyze(sanitized, passed_country(country))
-        first = @data.values.first
-        @national_number = first ? first[:national] : sanitized
+        # first analyzed country can be a possible-only match while #country
+        # reports the valid one, and taking the national number from another
+        # entry makes e164 splice one country's code onto another's number
+        matched = @data[self.country]
+        @national_number = matched ? matched[:national] : sanitized
       end
     end
 

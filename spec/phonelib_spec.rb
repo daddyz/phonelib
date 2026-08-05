@@ -1476,6 +1476,71 @@ describe Phonelib do
     end
   end
 
+  context 'issue #355' do
+    it 'should not take national number from a country that only matched as possible' do
+      phone = Phonelib.parse('+81079460238401')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('RU')
+      expect(phone.country_code).to eq('7')
+      expect(phone.national_number).to eq('9460238401')
+      expect(phone.e164).to eq('+79460238401')
+      expect(phone.international).to eq('+7 946 023-84-01')
+    end
+
+    it 'should return e164 that parses back as valid' do
+      %w[+81079460238401 81079460238401 8~1079460238401].each do |number|
+        phone = Phonelib.parse(number)
+
+        expect(phone.valid?).to be true
+        expect(phone.e164).to eq('+79460238401')
+        expect(Phonelib.parse(phone.e164).valid?).to be true
+      end
+    end
+
+    it 'should keep country code out of national number for every country sharing 810' do
+      {
+        '81079123456789' => %w[RU +79123456789],
+        '81077710009998' => %w[KZ +77710009998],
+        '810375294911911' => %w[BY +375294911911],
+        '810992917123456' => %w[TJ +992917123456],
+        '81099366123456' => %w[TM +99366123456]
+      }.each do |number, (country, e164)|
+        phone = Phonelib.parse(number)
+
+        expect(phone.valid?).to be true
+        expect(phone.country).to eq(country)
+        expect(phone.e164).to eq(e164)
+      end
+    end
+
+    it 'should take national number from matched country without international prefix' do
+      phone = Phonelib.parse('610061412345678')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('CC')
+      expect(phone.national_number).to eq('412345678')
+      expect(phone.e164).to eq('+61412345678')
+    end
+
+    it 'should take national number from matched country when e164 stays valid' do
+      phone = Phonelib.parse('61611300123456')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('CC')
+      expect(phone.national_number).to eq('1300123456')
+      expect(phone.e164).to eq('+611300123456')
+      expect(phone.international).to eq('+61 1300 123 456')
+    end
+
+    it 'should keep sanitized number as national number when no country matched' do
+      phone = Phonelib.parse('1234')
+
+      expect(phone.countries).to eq([])
+      expect(phone.national_number).to eq('1234')
+    end
+  end
+
   context 'example numbers' do
     it 'are valid' do
       data_file = File.dirname(__FILE__) + '/../data/phone_data.dat'
@@ -1508,7 +1573,7 @@ describe Phonelib do
     context 'issue #352' do
       it 'should not raise error for area_code' do
         expect(Phonelib.parse("390212345678").area_code).to eq('02')
-        expect(Phonelib.parse("6191712222").area_code).to be_nil
+        expect(Phonelib.parse("6191712222").area_code).to eq('8')
       end
     end
 
