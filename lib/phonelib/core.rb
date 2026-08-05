@@ -195,6 +195,10 @@ module Phonelib
     def additional_regexes=(data)
       return unless data.is_a?(Array)
       @@additional_regexes = {}
+      # regexes are baked into the cached phone data, so it has to be dropped
+      # even when no new regex is added (add_additional_regex does it too),
+      # otherwise stale capture groups desync the national number offset
+      @@phone_data = @@data_by_country_codes = nil
       data.each do |row|
         next if row.size != 3
         add_additional_regex(*row)

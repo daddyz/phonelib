@@ -32,11 +32,10 @@ module Phonelib
         @data = {}
       else
         @data = analyze(sanitized, passed_country(country))
-        # first analyzed country can be a possible-only match while #country
-        # reports the valid one, and taking the national number from another
-        # entry makes e164 splice one country's code onto another's number
-        matched = @data[self.country]
-        @national_number = matched ? matched[:national] : sanitized
+        # the national number must come from the country #country reports:
+        # another entry can be a possible-only match, and mixing entries makes
+        # e164 splice one country's code onto another's number (issue #355)
+        @national_number = country_data ? country_data[:national] : sanitized
       end
     end
 
@@ -96,7 +95,7 @@ module Phonelib
     # Returns all countries that matched valid patterns
     # @return [Array] Possible ISO2 country codes array
     def countries
-      @data.map { |iso2, _data| iso2 }
+      @countries ||= @data.keys
     end
 
     # Return countries with valid patterns
@@ -110,19 +109,25 @@ module Phonelib
     # Return valid country
     # @return [String] valid ISO2 country code
     def valid_country
-      @valid_country ||= main_country(valid_countries)
+      return @valid_country if defined?(@valid_country)
+
+      @valid_country = main_country(valid_countries)
     end
 
     # Returns first country that matched valid patterns
     # @return [String] valid country ISO2 code or first matched country code
     def country
-      @country ||= valid_country || main_country(countries)
+      return @country if defined?(@country)
+
+      @country = valid_country || main_country(countries)
     end
 
     # Returns whether a current parsed phone number is valid
     # @return [Boolean] parsed phone is valid
     def valid?
-      @valid ||= @data.select { |_iso2, data| data[:valid].any? }.any?
+      return @valid if defined?(@valid)
+
+      @valid = @data.any? { |_iso2, data| data[:valid].any? }
     end
 
     # Returns whether a current parsed phone number is invalid
@@ -134,7 +139,9 @@ module Phonelib
     # Returns whether a current parsed phone number is possible
     # @return [Boolean] parsed phone is possible
     def possible?
-      @possible ||= @data.select { |_iso2, data| data[:possible].any? }.any?
+      return @possible if defined?(@possible)
+
+      @possible = @data.any? { |_iso2, data| data[:possible].any? }
     end
 
     # Returns whether a current parsed phone number is impossible
@@ -180,6 +187,13 @@ module Phonelib
     end
 
     private
+
+    # @private analyzing results of the country that #country resolved to.
+    # Every value derived from a single country (national number, format,
+    # national prefix) must be read through here so they cannot disagree.
+    def country_data
+      @data[country]
+    end
 
     # @private extracts extension from passed phone number if provided
     def separate_extension(original)

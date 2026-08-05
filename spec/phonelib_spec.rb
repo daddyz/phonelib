@@ -15,6 +15,9 @@ describe Phonelib do
     Phonelib.parse_special = false
     Phonelib.strict_check = false
     Phonelib.vanity_conversion = false
+    Phonelib.sanitize_regex = '[^0-9]+'
+    Phonelib.ignore_plus = false
+    Phonelib.strict_double_prefix_check = false
   end
 
   it 'must be a Module' do
@@ -1539,6 +1542,28 @@ describe Phonelib do
       expect(phone.countries).to eq([])
       expect(phone.national_number).to eq('1234')
     end
+
+    it 'should apply the matched country national prefix transform rule' do
+      # CC/CX map a bare [59]\d{7} local number onto the "8" area code, so the
+      # national number of the matched country is longer than what was dialed
+      phone = Phonelib.parse('6191712222')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('CX')
+      expect(phone.national_number).to eq('891712222')
+      expect(phone.e164).to eq('+61891712222')
+      expect(phone.area_code).to eq('8')
+    end
+
+    it 'should take national number from matched country for special types' do
+      Phonelib.parse_special = true
+      phone = Phonelib.parse('+44263381')
+
+      expect(phone.valid?).to be true
+      expect(phone.country).to eq('GG')
+      expect(phone.national_number).to eq('1481263381')
+      expect(phone.e164).to eq('+441481263381')
+    end
   end
 
   context 'example numbers' do
@@ -1574,6 +1599,10 @@ describe Phonelib do
       it 'should not raise error for area_code' do
         expect(Phonelib.parse("390212345678").area_code).to eq('02')
         expect(Phonelib.parse("6191712222").area_code).to eq('8')
+        # possible numbers that match no format still hit the nil format_match
+        # branch that originally raised, keep it covered
+        expect(Phonelib.parse("+686022497").area_code).to be_nil
+        expect(Phonelib.parse("49382924").area_code).to be_nil
       end
     end
 
