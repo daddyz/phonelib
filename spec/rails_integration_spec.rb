@@ -4,10 +4,23 @@ require 'open3'
 require 'rbconfig'
 
 describe 'Rails integration' do
+  def unbundled_environment
+    environment = {
+      'RUBYLIB' => nil,
+      'RUBYOPT' => nil,
+      'RUBYGEMS_GEMDEPS' => nil
+    }
+    ENV.each_key do |name|
+      environment[name] = nil if name.start_with?('BUNDLE_')
+    end
+    environment
+  end
+
   def run_phonelib_script(program)
     lib_path = File.expand_path('../lib', File.dirname(__FILE__))
 
     Open3.capture3(
+      unbundled_environment,
       RbConfig.ruby,
       "-I#{lib_path}",
       '-e',
