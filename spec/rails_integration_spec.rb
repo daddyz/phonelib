@@ -22,6 +22,7 @@ describe 'Rails integration' do
     Open3.capture3(
       unbundled_environment,
       RbConfig.ruby,
+      '--disable-gems',
       "-I#{lib_path}",
       '-e',
       program
