@@ -4,6 +4,7 @@
   and `Phone#validation`
 - Add opt-in detailed ActiveModel errors with `detailed_errors: true`
 - Preserve national and local-only possible lengths from libphonenumber data
+- Add validator options for requiring an international prefix or canonical E.164 input
 
 ## 0.6.55 - 10 January 2022
 - updated data

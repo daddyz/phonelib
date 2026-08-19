@@ -53,14 +53,38 @@
 #     validates :number, phone: { extensions: false }
 #   end
 #
+# Validates that the original value includes an explicit international prefix.
+# Both + and 00 prefixes are accepted.
+#
+#   class Phone < ActiveRecord::Base
+#     validates :number, phone: { require_international_prefix: true }
+#   end
+#
+# Validates that the original value uses canonical E.164 input format.
+#
+#   class Phone < ActiveRecord::Base
+#     validates :number, phone: { format: :e164 }
+#   end
+#
+
 if defined?(I18n)
   locale_files = Dir[File.expand_path('../phonelib/locale/*.yml', __dir__)]
   I18n.load_path = locale_files | I18n.load_path
 end
 
 class PhoneValidator < ActiveModel::EachValidator
+  E164_PATTERN = /\A\+[1-9][0-9]{1,14}\z/
+  SUPPORTED_FORMATS = [:e164, 'e164'].freeze
+
   # Include all core methods
   include Phonelib::Core
+
+  def check_validity!
+    return unless options.has_key?(:format)
+    return if SUPPORTED_FORMATS.include?(options[:format])
+
+    raise ArgumentError, "Unsupported phone format: #{options[:format]}"
+  end
 
   # Validation method
   def validate_each(record, attribute, value)
@@ -72,7 +96,7 @@ class PhoneValidator < ActiveModel::EachValidator
     end
 
     valid = phone_valid?(phone) && valid_types?(phone) && valid_country?(phone) &&
-            valid_extensions?(phone)
+            valid_extensions?(phone) && valid_input_format?(value)
     record.errors.add(attribute, message, **legacy_error_options) unless valid
   end
 
@@ -148,6 +172,18 @@ class PhoneValidator < ActiveModel::EachValidator
 
   def extensions_allowed?
     !options.has_key?(:extensions) || !!options[:extensions]
+  end
+
+  def valid_international_prefix?
+    return true unless options[:require_international_prefix]
+
+    @phone.explicit_international_prefix?
+  end
+
+  def valid_input_format?(value)
+    return true unless options[:format]
+
+    SUPPORTED_FORMATS.include?(options[:format]) && value.is_a?(String) && value.match?(E164_PATTERN)
   end
 
   def specified_country(record)
