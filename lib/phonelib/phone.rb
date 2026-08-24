@@ -62,6 +62,13 @@ module Phonelib
               '')
     end
 
+    # Returns whether the original input begins with an explicit + or 00
+    # international prefix after parser-recognized leading formatting.
+    # @return [Boolean] original input has an explicit international prefix
+    def explicit_international_prefix?
+      !!original_starts_with_plus_or_double_zero?
+    end
+
     # Returns all phone types that matched valid patterns
     # @return [Array] all valid phone types
     def types

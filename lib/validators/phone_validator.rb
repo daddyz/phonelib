@@ -53,16 +53,40 @@
 #     validates :number, phone: { extensions: false }
 #   end
 #
+# Validates that the original value includes an explicit international prefix.
+# Both + and 00 prefixes are accepted.
+#
+#   class Phone < ActiveRecord::Base
+#     validates :number, phone: { require_international_prefix: true }
+#   end
+#
+# Validates that the original value uses canonical E.164 input format.
+#
+#   class Phone < ActiveRecord::Base
+#     validates :number, phone: { format: :e164 }
+#   end
+#
 class PhoneValidator < ActiveModel::EachValidator
+  E164_PATTERN = /\A\+[1-9][0-9]{1,14}\z/
+  SUPPORTED_FORMATS = [:e164, 'e164'].freeze
+
   # Include all core methods
   include Phonelib::Core
+
+  def check_validity!
+    return unless options.has_key?(:format)
+    return if SUPPORTED_FORMATS.include?(options[:format])
+
+    raise ArgumentError, "Unsupported phone format: #{options[:format]}"
+  end
 
   # Validation method
   def validate_each(record, attribute, value)
     return if options[:allow_blank] && value.blank?
 
     @phone = parse(value, specified_country(record))
-    valid = phone_valid? && valid_types? && valid_country? && valid_extensions?
+    valid = phone_valid? && valid_types? && valid_country? && valid_extensions? &&
+            valid_international_prefix? && valid_input_format?(value)
 
     record.errors.add(attribute, message, **options) unless valid
   end
@@ -90,6 +114,18 @@ class PhoneValidator < ActiveModel::EachValidator
   def valid_extensions?
     return true if !options.has_key?(:extensions) || options[:extensions]
     @phone.extension.empty?
+  end
+
+  def valid_international_prefix?
+    return true unless options[:require_international_prefix]
+
+    @phone.explicit_international_prefix?
+  end
+
+  def valid_input_format?(value)
+    return true unless options[:format]
+
+    SUPPORTED_FORMATS.include?(options[:format]) && value.is_a?(String) && value.match?(E164_PATTERN)
   end
 
   def specified_country(record)

@@ -1,5 +1,6 @@
 ## Upcoming Changes (unreleased)
 - Deduplicate extended data to reduce runtime memory usage by ~41MB
+- Add validator options for requiring an international prefix or canonical E.164 input
 
 ## 0.6.55 - 10 January 2022
 - updated data
