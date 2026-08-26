@@ -96,7 +96,8 @@ class PhoneValidator < ActiveModel::EachValidator
     end
 
     valid = phone_valid?(phone) && valid_types?(phone) && valid_country?(phone) &&
-            valid_extensions?(phone) && valid_input_format?(value)
+            valid_extensions?(phone) && valid_international_prefix?(phone) &&
+            valid_input_format?(value)
     record.errors.add(attribute, message, **legacy_error_options) unless valid
   end
 
@@ -174,10 +175,10 @@ class PhoneValidator < ActiveModel::EachValidator
     !options.has_key?(:extensions) || !!options[:extensions]
   end
 
-  def valid_international_prefix?
+  def valid_international_prefix?(phone)
     return true unless options[:require_international_prefix]
 
-    @phone.explicit_international_prefix?
+    phone.explicit_international_prefix?
   end
 
   def valid_input_format?(value)
