@@ -1,6 +1,15 @@
 ## Upcoming Changes (unreleased)
 - Deduplicate extended data to reduce runtime memory usage by ~41MB
+<<<<<<< HEAD
 - Add validator options for requiring an international prefix or canonical E.164 input
+||||||| ec5e850
+=======
+- Add framework-independent phone validation diagnostics through `Phone#errors`
+  and `Phone#validation`
+- Add opt-in detailed ActiveModel errors with `detailed_errors: true`
+- Preserve national and local-only possible lengths from libphonenumber data
+- Add validator options for requiring an international prefix or canonical E.164 input
+>>>>>>> salasebas-salasebas/structured-validation-errors
 
 ## 0.6.55 - 10 January 2022
 - updated data

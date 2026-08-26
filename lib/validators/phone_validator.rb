@@ -66,6 +66,12 @@
 #     validates :number, phone: { format: :e164 }
 #   end
 #
+
+if defined?(I18n)
+  locale_files = Dir[File.expand_path('../phonelib/locale/*.yml', __dir__)]
+  I18n.load_path = locale_files | I18n.load_path
+end
+
 class PhoneValidator < ActiveModel::EachValidator
   E164_PATTERN = /\A\+[1-9][0-9]{1,14}\z/
   SUPPORTED_FORMATS = [:e164, 'e164'].freeze
@@ -84,11 +90,14 @@ class PhoneValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return if options[:allow_blank] && value.blank?
 
-    @phone = parse(value, specified_country(record))
-    valid = phone_valid? && valid_types? && valid_country? && valid_extensions? &&
-            valid_international_prefix? && valid_input_format?(value)
+    phone = parse(value, specified_country(record))
+    if detailed_errors?
+      return validate_with_details(record, attribute, phone)
+    end
 
-    record.errors.add(attribute, message, **options) unless valid
+    valid = phone_valid?(phone) && valid_types?(phone) && valid_country?(phone) &&
+            valid_extensions?(phone) && valid_input_format?(value)
+    record.errors.add(attribute, message, **legacy_error_options) unless valid
   end
 
   private
@@ -97,23 +106,72 @@ class PhoneValidator < ActiveModel::EachValidator
     options[:message] || :invalid
   end
 
-  def phone_valid?
-    @phone.send(options[:possible] ? :possible? : :valid?)
+  def detailed_errors?
+    options[:detailed_errors]
   end
 
-  def valid_types?
+  def legacy_error_options
+    options.reject { |key, _value| key == :detailed_errors }
+  end
+
+  def validate_with_details(record, attribute, phone)
+    result = phone.validation(
+      possible: !!options[:possible],
+      types: detailed_types,
+      countries: detailed_countries,
+      extensions: extensions_allowed?
+    )
+    return if result.valid?
+
+    result.errors.each do |error|
+      record.errors.add(
+        attribute,
+        "phone_#{error.code}".to_sym,
+        **detailed_error_options(error)
+      )
+    end
+  end
+
+  def detailed_error_options(error)
+    details = error.details.dup
+    details.delete(:error)
+    details.delete('error')
+    details[:message] = options[:message] if options.key?(:message)
+    details[:strict] = options[:strict] if options.key?(:strict)
+    details
+  end
+
+  def detailed_types
+    types.uniq if options[:types]
+  end
+
+  def detailed_countries
+    return unless options[:countries]
+
+    countries.uniq.select { |country| Phonelib.phone_data.key?(country) }
+  end
+
+  def phone_valid?(phone)
+    phone.send(options[:possible] ? :possible? : :valid?)
+  end
+
+  def valid_types?(phone)
     return true unless options[:types]
-    (phone_types & types).size > 0
+    (phone_types(phone) & types).size > 0
   end
 
-  def valid_country?
+  def valid_country?(phone)
     return true unless options[:countries]
-    (phone_countries & countries).size > 0
+    (phone_countries(phone) & countries).size > 0
   end
 
-  def valid_extensions?
-    return true if !options.has_key?(:extensions) || options[:extensions]
-    @phone.extension.empty?
+  def valid_extensions?(phone)
+    return true if extensions_allowed?
+    phone.extension.empty?
+  end
+
+  def extensions_allowed?
+    !options.has_key?(:extensions) || !!options[:extensions]
   end
 
   def valid_international_prefix?
@@ -139,9 +197,9 @@ class PhoneValidator < ActiveModel::EachValidator
   end
 
   # @private
-  def phone_types
+  def phone_types(phone)
     method = options[:possible] ? :possible_types : :types
-    phone_types = @phone.send(method)
+    phone_types = phone.send(method)
     if (phone_types & [Phonelib::Core::FIXED_OR_MOBILE]).size > 0
       phone_types += [Phonelib::Core::FIXED_LINE, Phonelib::Core::MOBILE]
     end
@@ -149,15 +207,17 @@ class PhoneValidator < ActiveModel::EachValidator
   end
 
   # @private
-  def phone_countries
+  def phone_countries(phone)
     method = options[:possible] ? :countries : :valid_countries
-    @phone.send(method)
+    phone.send(method)
   end
 
   # @private
   def types
     types = options[:types].is_a?(Array) ? options[:types] : [options[:types]]
-    types.map(&:to_sym)
+    types.map do |type|
+      Phonelib::Core::TYPES_DESC_KEYS.find { |known| known.to_s == type.to_s }
+    end.compact
   end
 
   # @private

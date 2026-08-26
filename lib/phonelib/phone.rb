@@ -17,6 +17,7 @@ module Phonelib
     include Phonelib::PhoneAnalyzer
     include Phonelib::PhoneExtendedData
     include Phonelib::PhoneFormatter
+    include Phonelib::PhoneValidation
 
     # class initialization method
     # @param phone [String] Phone number for parsing
@@ -30,12 +31,15 @@ module Phonelib
 
       if sanitized.empty?
         @data = {}
+        @diagnostic_possibility = :impossible
       else
-        @data = analyze(sanitized, passed_country(country))
+        @passed_country = passed_country(country)
+        @data = analyze(sanitized, @passed_country)
         # the national number must come from the country #country reports:
         # another entry can be a possible-only match, and mixing entries makes
         # e164 splice one country's code onto another's number (issue #355)
         @national_number = country_data ? country_data[:national] : sanitized
+        @diagnostic_possibility = diagnostic_possibility
       end
     end
 

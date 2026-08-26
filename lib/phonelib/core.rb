@@ -184,6 +184,8 @@ module Phonelib
     # setter for data file to use
     def override_phone_data=(file_path)
       @@override_phone_data = file_path
+      @@phone_data = @@data_by_country_codes = @@all_int_prefixes = nil
+      @@phone_regexp_cache.clear
     end
 
     def override_phone_data
@@ -308,6 +310,10 @@ module Phonelib
     VALID_PATTERN = :national_number_pattern
     # @private Possible regex pattern key
     POSSIBLE_PATTERN = :possible_number_pattern
+    # @private Possible national number lengths imported from libphonenumber
+    POSSIBLE_LENGTHS = :possible_lengths
+    # @private Possible local-only number lengths imported from libphonenumber
+    POSSIBLE_LOCAL_ONLY_LENGTHS = :possible_local_only_lengths
     # @private National prefix key
     NATIONAL_PREFIX = :national_prefix
     # @private National prefix for parsing key

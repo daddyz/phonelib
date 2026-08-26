@@ -1,0 +1,13 @@
+en:
+  errors:
+    messages:
+      phone_not_a_number: "is not a phone number"
+      phone_invalid_country_code: "has an invalid country calling code"
+      phone_too_short: "is too short"
+      phone_too_long: "is too long"
+      phone_invalid_length: "has an invalid length"
+      phone_not_possible: "is not a possible phone number"
+      phone_invalid: "is not a valid phone number"
+      phone_type_not_allowed: "has a phone type that is not allowed"
+      phone_country_not_allowed: "is from a country that is not allowed"
+      phone_extension_not_allowed: "must not include an extension"

@@ -243,11 +243,20 @@ module Phonelib
         @data[country_id][:types][type][Core::SHORT] ||= {}
         data.each do |k, v|
           if @data[country_id][:types][type][Core::SHORT][k]
-            @data[country_id][:types][type][Core::SHORT][k] += "|#{v}"
+            if possible_lengths_key?(k)
+              @data[country_id][:types][type][Core::SHORT][k] =
+                  (@data[country_id][:types][type][Core::SHORT][k] + v).uniq.sort
+            else
+              @data[country_id][:types][type][Core::SHORT][k] += "|#{v}"
+            end
           else
             @data[country_id][:types][type][Core::SHORT][k] = v
           end
         end
+      end
+
+      def possible_lengths_key?(key)
+        [Core::POSSIBLE_LENGTHS, Core::POSSIBLE_LOCAL_ONLY_LENGTHS].include?(key)
       end
 
       # adds possible pattern in case it doesn't exists
@@ -256,6 +265,7 @@ module Phonelib
           if data[Core::VALID_PATTERN] && !data[Core::POSSIBLE_PATTERN]
             result[:types][type][Core::POSSIBLE_PATTERN] = case type
                   when Core::GENERAL
+                    fill_general_possible_lengths(result[:types], data)
                     national_possible result[:types]
                   else
                     data[Core::VALID_PATTERN]
@@ -265,10 +275,33 @@ module Phonelib
         result
       end
 
+      def fill_general_possible_lengths(types, general)
+        national = concrete_possible_lengths(types, Core::POSSIBLE_LENGTHS)
+        local_only = concrete_possible_lengths(
+          types,
+          Core::POSSIBLE_LOCAL_ONLY_LENGTHS
+        ) - national
+        general[Core::POSSIBLE_LENGTHS] = national unless national.empty?
+        unless local_only.empty?
+          general[Core::POSSIBLE_LOCAL_ONLY_LENGTHS] = local_only
+        end
+      end
+
+      def concrete_possible_lengths(types, key)
+        lengths = []
+        types.each do |type, data|
+          next if type == Core::GENERAL || !data[key]
+
+          lengths.concat(data[key].select { |length| length > 0 })
+        end
+        lengths.uniq.sort
+      end
+
       # take all possible patters from all types
       def national_possible(types)
         types.map { |k, v| v[:possible_number_pattern] }.
-            compact.map { |e| e.split('|') }.flatten.uniq.join('|')
+            compact.reject { |pattern| pattern == '(?!)' }.
+            map { |e| e.split('|') }.flatten.uniq.join('|')
       end
 
       # method parses xml for formats data

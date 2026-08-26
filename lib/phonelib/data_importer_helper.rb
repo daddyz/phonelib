@@ -7,6 +7,8 @@ module Phonelib
     XML_COMMENT_ATTRIBUTES = %w(text comment)
     # xml format attributes names
     XML_FORMAT_NAMES = %w(intlFormat format)
+    # libphonenumber's maximum supported national significant number length
+    MAX_POSSIBLE_LENGTH = 17
 
     def file_path(file)
       "#{File.dirname(__FILE__)}/../../#{file}"
@@ -83,8 +85,16 @@ module Phonelib
       when :element
         data.elements.each do |child|
           if child.name == 'possibleLengths'
-            hash[Core::POSSIBLE_PATTERN] =
-                possible_length_regex(hash_from_xml(child, :attributes))
+            attributes = hash_from_xml(child, :attributes)
+            hash[Core::POSSIBLE_PATTERN] = possible_length_regex(attributes)
+
+            national_lengths = possible_lengths(attributes[:national])
+            hash[Core::POSSIBLE_LENGTHS] = national_lengths unless national_lengths.empty?
+
+            local_only_lengths = possible_lengths(attributes[:local_only])
+            unless local_only_lengths.empty?
+              hash[Core::POSSIBLE_LOCAL_ONLY_LENGTHS] = local_only_lengths
+            end
           else
             hash[name2sym(child.name)] = str_clean(child.children.first)
           end
@@ -95,13 +105,56 @@ module Phonelib
 
     def possible_length_regex(attributes)
       return '' unless attributes[:national]
-      attributes[:national].split(',').map do |m|
-        if m.include? '-'
-          "\\d{#{m.gsub(/[\[\]]/, '').gsub('-', ',')}}"
+
+      possible_length_ranges(attributes[:national]).map do |first, last|
+        if first == -1
+          '(?!)'
+        elsif first == last
+          "\\d{#{first}}"
         else
-          "\\d{#{m}}"
+          "\\d{#{first},#{last}}"
         end
       end.join('|')
+    end
+
+    def possible_lengths(lengths)
+      return [] unless lengths
+
+      possible_length_ranges(lengths).flat_map do |first, last|
+        first == -1 ? [-1] : (first..last).to_a
+      end.uniq.sort
+    end
+
+    def possible_length_ranges(lengths)
+      lengths.split(',').map do |length|
+        raw_token = length
+        token = if raw_token.include?('[') || raw_token.include?(']')
+                  unless raw_token =~ /\A\[\d+(?:-\d+)?\]\z/
+                    raise ArgumentError, "invalid possible length: #{raw_token}"
+                  end
+                  raw_token[1..-2]
+                else
+                  raw_token
+                end
+        unless token =~ /\A(?:-1|\d+(?:-\d+)?)\z/
+          raise ArgumentError, "invalid possible length: #{raw_token}"
+        end
+
+        next [-1, -1] if token == '-1'
+
+        first, last = token.split('-').map(&:to_i)
+        last ||= first
+        [first, last].each do |value|
+          unless (1..MAX_POSSIBLE_LENGTH).include?(value)
+            raise ArgumentError, "possible length out of range: #{value}"
+          end
+        end
+        if first > last
+          raise ArgumentError, "invalid possible length range: #{token}"
+        end
+
+        [first, last]
+      end
     end
 
     # method parses raw data file

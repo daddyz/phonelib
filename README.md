@@ -154,10 +154,59 @@ if mixed with <tt>possible</tt> will check if number is possible for specified c
 
 <tt>extensions: false</tt> - set to perform check for phone extension to be blank
 
+<<<<<<< HEAD
 <tt>require_international_prefix: true</tt> - requires the original value to use <tt>+</tt> or <tt>00</tt> as its explicit international marker. The marker may follow leading formatting characters recognized by the parser. This option does not change the parser or the formatted output.
 
 <tt>format: :e164</tt> - requires the original value to match Phonelib's canonical <tt>+</tt>-prefixed E.164 representation: 2 to 15 total ASCII digits, beginning with 1-9, with no spaces, punctuation, or extension. Unsupported formats raise an <tt>ArgumentError</tt> when the validator is configured.
 
+||||||| ec5e850
+=======
+<tt>require_international_prefix: true</tt> - requires the original value to use <tt>+</tt> or <tt>00</tt> as its explicit international marker. The marker may follow leading formatting characters recognized by the parser. This option does not change the parser or the formatted output.
+
+<tt>format: :e164</tt> - requires the original value to match Phonelib's canonical <tt>+</tt>-prefixed E.164 representation: 2 to 15 total ASCII digits, beginning with 1-9, with no spaces, punctuation, or extension. Unsupported formats raise an <tt>ArgumentError</tt> when the validator is configured.
+
+<tt>detailed_errors: true</tt> - adds a specific, namespaced ActiveModel error
+for each failed phone rule. It is opt-in; without it the validator keeps adding
+the single <tt>:invalid</tt> error used by previous Phonelib versions. Enabling
+it changes error reporting only, not which values the existing validator
+accepts.
+
+``` ruby
+validates :phone, phone: {
+  types: :mobile,
+  countries: :us,
+  extensions: false,
+  detailed_errors: true
+}
+
+record.errors.details[:phone] # ActiveModel 5+
+# [{ error: :phone_type_not_allowed, allowed_types: [:mobile], ... }]
+
+record.errors.messages[:phone]
+# ["has a phone type that is not allowed"]
+
+record.errors.full_messages
+# ["Phone has a phone type that is not allowed"]
+```
+
+On older ActiveModel versions, the detailed types still drive translated
+<tt>errors.messages</tt>, but <tt>Errors#details</tt> is not provided by the
+framework.
+
+Detailed ActiveModel error types are prefixed with <tt>phone_</tt> so they do
+not collide with generic Rails errors such as <tt>:too_short</tt>. Phonelib
+ships English defaults for every detailed error. Applications can override
+them through the normal I18n hierarchy, for example:
+
+``` yaml
+es:
+  errors:
+    messages:
+      phone_too_short: "es demasiado corto"
+      phone_invalid: "no es un número telefónico válido"
+```
+
+>>>>>>> salasebas-salasebas/structured-validation-errors
 ### Basic usage
 
 To check if phone number is valid simply run:
@@ -189,6 +238,73 @@ Additionally you can run:
 ``` ruby
 phone = Phonelib.parse('123456789')
 phone = Phonelib.parse('+1 (972) 123-4567', 'US')
+```
+
+Parsed phones expose immutable validation diagnostics without requiring Rails:
+
+``` ruby
+phone = Phonelib.parse('+1 253000')
+
+phone.errors.details
+# [{ error: :too_short, actual_length: 6, expected_lengths: [10] }]
+
+phone.errors.messages
+# ["is too short"]
+
+phone.errors.full_messages
+# ["is too short"] # no model attribute exists in the core API
+```
+
+Use <tt>validation</tt> when the result or a validation policy is also needed:
+
+``` ruby
+result = phone.validation(
+  possible: true,
+  types: :mobile,
+  countries: [:us, :ca],
+  extensions: false
+)
+
+result.valid?       # whether all requested rules passed
+result.invalid?
+result.phone        # the same parsed Phone instance
+result.errors       # Phonelib::Errors
+result.error        # first ValidationError, or nil
+result.possibility  # :possible, :possible_local_only, or :impossible
+```
+
+<tt>possible_local_only</tt> means the number has a length that can be dialed
+within its local area but lacks the information required for general dialing.
+It is exposed as diagnostic context; <tt>validation(possible: true)</tt> still
+follows the existing <tt>Phone#possible?</tt> result and therefore reports
+<tt>:not_possible</tt> for a local-only number.
+
+Core diagnostic codes are deliberately short because they already live in
+<tt>Phonelib::ValidationError</tt>:
+
+* <tt>:not_a_number</tt>
+* <tt>:invalid_country_code</tt>
+* <tt>:too_short</tt>
+* <tt>:too_long</tt>
+* <tt>:invalid_length</tt>
+* <tt>:not_possible</tt>
+* <tt>:invalid</tt>
+* <tt>:type_not_allowed</tt>
+* <tt>:country_not_allowed</tt>
+* <tt>:extension_not_allowed</tt>
+
+Successful validity and possibility are represented by the result, not by
+error codes.
+
+Messages can be translated in plain Ruby without adding an I18n dependency to
+Phonelib. Pass any callable that accepts an I18n-style key and keyword values:
+
+``` ruby
+translator = -> key, default:, **values do
+  I18n.t(key, default: default, **values)
+end
+
+phone.errors.messages(translator: translator)
 ```
 
 You can pass phone number with extension, it should be separated with <tt>;</tt> or <tt>#</tt> signs from the phone number.

@@ -3,3 +3,6 @@
 
 en:
   hello: "Hello world"
+  errors:
+    messages:
+      phone_type_not_allowed: "application phone type override"
