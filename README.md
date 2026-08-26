@@ -154,13 +154,6 @@ if mixed with <tt>possible</tt> will check if number is possible for specified c
 
 <tt>extensions: false</tt> - set to perform check for phone extension to be blank
 
-<<<<<<< HEAD
-<tt>require_international_prefix: true</tt> - requires the original value to use <tt>+</tt> or <tt>00</tt> as its explicit international marker. The marker may follow leading formatting characters recognized by the parser. This option does not change the parser or the formatted output.
-
-<tt>format: :e164</tt> - requires the original value to match Phonelib's canonical <tt>+</tt>-prefixed E.164 representation: 2 to 15 total ASCII digits, beginning with 1-9, with no spaces, punctuation, or extension. Unsupported formats raise an <tt>ArgumentError</tt> when the validator is configured.
-
-||||||| ec5e850
-=======
 <tt>require_international_prefix: true</tt> - requires the original value to use <tt>+</tt> or <tt>00</tt> as its explicit international marker. The marker may follow leading formatting characters recognized by the parser. This option does not change the parser or the formatted output.
 
 <tt>format: :e164</tt> - requires the original value to match Phonelib's canonical <tt>+</tt>-prefixed E.164 representation: 2 to 15 total ASCII digits, beginning with 1-9, with no spaces, punctuation, or extension. Unsupported formats raise an <tt>ArgumentError</tt> when the validator is configured.
@@ -206,7 +199,6 @@ es:
       phone_invalid: "no es un número telefónico válido"
 ```
 
->>>>>>> salasebas-salasebas/structured-validation-errors
 ### Basic usage
 
 To check if phone number is valid simply run:
