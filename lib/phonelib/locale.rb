@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'yaml'
-
 module Phonelib
   module Locale
     FILES = Dir[File.expand_path('locale/*.yml', __dir__)].freeze
 
     def self.register
+      require 'yaml'
+
       # Look up application translations before registering the default files:
       # the lookup initializes a lazy backend using its existing load path.
       FILES.each do |file|
