@@ -38,7 +38,7 @@ module Phonelib
     def passed_country(country)
       code = country_prefix(country)
       if !Phonelib.ignore_plus && original_starts_with_plus_or_double_zero? && code &&
-         !sanitized.delete_prefix('00').start_with?(code)
+         !country_international_prefix?(country) && !sanitized.delete_prefix('00').start_with?(code)
         # in case number passed with + or 00 but it doesn't start with passed
         # country prefix
         country = nil
@@ -114,12 +114,26 @@ module Phonelib
     #
     # * +country+ - country passed for parsing
     def country_or_default_country(country)
-      country ||= (original_starts_with_plus_or_double_zero? ? nil : Phonelib.default_country)
+      country ||= if !original_starts_with_plus_or_double_zero? || country_international_prefix?(Phonelib.default_country)
+                    Phonelib.default_country
+                  end
 
       if country.is_a?(Array)
         country.compact.map { |e| normalize_passed_country(e) }
       else
         [country && normalize_passed_country(country)]
+      end
+    end
+
+    # Keep the origin country long enough to strip its own IDD prefix.
+    # A leading plus is already international, not an origin-country IDD.
+    def country_international_prefix?(country)
+      return false if significant_original_s[0] == Core::PLUS_SIGN
+
+      Array(country).any? do |iso2|
+        data = Phonelib.phone_data[normalize_passed_country(iso2)]
+        prefix = data && data[Core::INTERNATIONAL_PREFIX]
+        prefix && !prefix.empty? && sanitized.match?(cr("^(?:#{prefix})"))
       end
     end
 
