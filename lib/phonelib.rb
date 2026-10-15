@@ -13,13 +13,13 @@ module Phonelib
   require 'phonelib/validation_result'
   require 'phonelib/phone_validation'
   require 'phonelib/phone'
+  require 'phonelib/locale'
 
   extend Core
 end
 
 autoload :PhoneValidator, 'validators/phone_validator'
 
-locale_files = Dir[File.expand_path('phonelib/locale/*.yml', __dir__)]
-I18n.load_path = locale_files | I18n.load_path if defined?(I18n)
+Phonelib::Locale.register if defined?(I18n)
 
 require 'phonelib/railtie' if defined?(Rails::Railtie)
