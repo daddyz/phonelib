@@ -67,10 +67,7 @@
 #   end
 #
 
-if defined?(I18n)
-  locale_files = Dir[File.expand_path('../phonelib/locale/*.yml', __dir__)]
-  I18n.load_path = locale_files | I18n.load_path
-end
+Phonelib::Locale.register if defined?(I18n)
 
 class PhoneValidator < ActiveModel::EachValidator
   E164_PATTERN = /\A\+[1-9][0-9]{1,14}\z/
