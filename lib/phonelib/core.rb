@@ -43,6 +43,14 @@ module Phonelib
       @@phone_regexp_cache
     end
 
+    # @private used to cache regular expressions matching a whole number
+    @@phone_anchored_regexp_cache = {}
+
+    # @private getter for anchored phone regexp cache (internal use only)
+    def phone_anchored_regexp_cache
+      @@phone_anchored_regexp_cache
+    end
+
     # @private variable for storing geo/carrier/timezone data
     @@phone_ext_data = nil
 
@@ -186,6 +194,7 @@ module Phonelib
       @@override_phone_data = file_path
       @@phone_data = @@data_by_country_codes = @@all_int_prefixes = nil
       @@phone_regexp_cache.clear
+      @@phone_anchored_regexp_cache.clear
     end
 
     def override_phone_data

@@ -9,6 +9,14 @@ module Phonelib
     # array of types not included for validation check in cycle
     NOT_FOR_CHECK = [:general_desc, :fixed_line, :mobile, :fixed_or_mobile]
 
+    # @private types checked for each number, keyed by whether the fixed line
+    # and mobile patterns are the same, precomputed to avoid allocations
+    TYPES_FOR_CHECK_WITH_SPECIAL = {
+      true => (Core::TYPES_DESC_KEYS - NOT_FOR_CHECK + Core::FIXED_OR_MOBILE_ARRAY).freeze,
+      false => (Core::TYPES_DESC_KEYS - NOT_FOR_CHECK + Core::FIXED_LINE_OR_MOBILE_ARRAY).freeze
+    }.freeze
+    TYPES_FOR_CHECK = TYPES_FOR_CHECK_WITH_SPECIAL.transform_values { |types| (types - Core::SHORT_CODES).freeze }.freeze
+
     # parses provided phone if it is valid for  country data and
     # returns result of analyze
     #

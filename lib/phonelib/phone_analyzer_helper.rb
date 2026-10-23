@@ -17,7 +17,9 @@ module Phonelib
     end
 
     def original_starts_with_plus_or_double_zero?
-      significant_original_s[0] == Core::PLUS_SIGN || significant_original_s[0..1] == '00' && significant_original_s[2..-1] =~ cr('[1-9]+')
+      return @original_starts_with_plus_or_double_zero if defined?(@original_starts_with_plus_or_double_zero)
+
+      @original_starts_with_plus_or_double_zero = significant_original_s[0] == Core::PLUS_SIGN || significant_original_s[0..1] == '00' && significant_original_s[2..-1] =~ cr('[1-9]+')
     end
 
     # converts symbols in phone to numbers
@@ -56,6 +58,11 @@ module Phonelib
     # caches regular expression, reusing it for later lookups
     def cr(regexp)
       Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(block_given? ? yield(regexp) : regexp).freeze
+    end
+
+    # caches regular expression matching the whole string against the pattern
+    def cr_anchored(regexp)
+      Phonelib.phone_anchored_regexp_cache[regexp] ||= Regexp.new("\\A(?:#{regexp})\\z").freeze
     end
 
     # defines whether country can have double country prefix in number
@@ -186,23 +193,9 @@ module Phonelib
     #
     # * +data+  - country data hash
     def types_for_check(data)
-      exclude_list = PhoneAnalyzer::NOT_FOR_CHECK
-      exclude_list += Phonelib::Core::SHORT_CODES unless Phonelib.parse_special
-      Core::TYPES_DESC_KEYS - exclude_list + fixed_and_mobile_keys(data)
-    end
-
-    # Checks if fixed line pattern and mobile pattern are the same and returns
-    # appropriate keys
-    #
-    # ==== Attributes
-    #
-    # * +data+  - country data
-    def fixed_and_mobile_keys(data)
-      if data[Core::FIXED_LINE] == data[Core::MOBILE]
-        Core::FIXED_OR_MOBILE_ARRAY
-      else
-        Core::FIXED_LINE_OR_MOBILE_ARRAY
-      end
+      fixed_or_mobile = data[Core::FIXED_LINE] == data[Core::MOBILE]
+      types = Phonelib.parse_special ? PhoneAnalyzer::TYPES_FOR_CHECK_WITH_SPECIAL : PhoneAnalyzer::TYPES_FOR_CHECK
+      types[fixed_or_mobile]
     end
 
     # Checks if passed number matches valid and possible patterns
@@ -229,8 +222,7 @@ module Phonelib
     # * +number+ - phone number for validation
     # * +regex+ - regex for perfoming a validation
     def number_match?(number, regex)
-      match = number.match(cr("^(?:#{regex})$"))
-      match && match.to_s.length == number.length
+      number.match?(cr_anchored(regex))
     end
 
     # normalization for passed country unless we are not talking about International XXX
