@@ -47,4 +47,38 @@ describe 'International dialling prefixes' do
   it 'retains the country for the all-zero national input from issue 363' do
     expect(Phonelib.parse('0000000000', 'US').possible?).to eq(true)
   end
+
+  context 'national numbers starting with 00' do
+    it 'parses a JP toll-free number with an explicit country' do
+      ["0037-012-345", "0066-812-345", "0078-512-345", "0037-6123-45678"].each do |input|
+        phone = Phonelib.parse(input, 'JP')
+        expect(phone.valid?).to eq(true)
+        expect(phone.country).to eq('JP')
+        expect(phone.type).to eq(:toll_free)
+        expect(phone.e164).to eq("+81#{input.gsub(/[^0-9]/, '')}")
+        expect(phone.national).to eq(input)
+      end
+    end
+
+    it 'parses a JP toll-free number with a default country' do
+      Phonelib.default_country = 'JP'
+      phone = Phonelib.parse('0066812345')
+      expect(phone.valid?).to eq(true)
+      expect(phone.country).to eq('JP')
+    end
+
+    it 'keeps the number invalid without a country' do
+      expect(Phonelib.parse('0066812345').valid?).to eq(false)
+    end
+
+    it 'keeps the number invalid when it is not national for the passed country' do
+      expect(Phonelib.parse('0066812345', 'US').valid?).to eq(false)
+    end
+
+    it 'prefers a valid international reading over the national one' do
+      phone = Phonelib.parse('00370 611 11 111', 'JP')
+      expect(phone.country).to eq('LT')
+      expect(phone.e164).to eq('+37061111111')
+    end
+  end
 end

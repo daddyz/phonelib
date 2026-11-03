@@ -35,6 +35,8 @@ module Phonelib
       else
         @passed_country = passed_country(country)
         @data = analyze(sanitized, @passed_country)
+        # must run before anything memoizes validity or country
+        national_double_zero_fallback(country) unless any_valid?(@data)
         # the national number must come from the country #country reports:
         # another entry can be a possible-only match, and mixing entries makes
         # e164 splice one country's code onto another's number (issue #355)
@@ -204,6 +206,30 @@ module Phonelib
     # national prefix) must be read through here so they cannot disagree.
     def country_data
       @data[country]
+    end
+
+    # @private checks whether analyze result has any valid country entry
+    def any_valid?(data)
+      data.values.any? { |d| d[:valid].any? }
+    end
+
+    # @private a leading 00 is read as an international prefix first; when
+    # that reading is not valid, retry it as national digits of the passed or
+    # default country
+    def national_double_zero_fallback(country)
+      return unless (country || Phonelib.default_country) &&
+                    significant_original_s.start_with?('00') &&
+                    original_starts_with_plus_or_double_zero?
+
+      @original_starts_with_plus_or_double_zero = false
+      national_country = passed_country(country)
+      national_data = analyze(sanitized, national_country)
+      if any_valid?(national_data)
+        @passed_country = national_country
+        @data = national_data
+      else
+        @original_starts_with_plus_or_double_zero = true
+      end
     end
 
     # @private extracts extension from passed phone number if provided
