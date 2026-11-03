@@ -92,7 +92,7 @@ class PhoneValidator < ActiveModel::EachValidator
 
     phone = parse(value, specified_country(record))
     if detailed_errors?
-      return validate_with_details(record, attribute, phone)
+      return validate_with_details(record, attribute, phone, value)
     end
 
     valid = phone_valid?(phone) && valid_types?(phone) && valid_country?(phone) &&
@@ -115,21 +115,23 @@ class PhoneValidator < ActiveModel::EachValidator
     options.reject { |key, _value| key == :detailed_errors }
   end
 
-  def validate_with_details(record, attribute, phone)
+  def validate_with_details(record, attribute, phone, value)
     result = phone.validation(
       possible: !!options[:possible],
       types: detailed_types,
       countries: detailed_countries,
       extensions: extensions_allowed?
     )
-    return if result.valid?
-
     result.errors.each do |error|
       record.errors.add(
         attribute,
         "phone_#{error.code}".to_sym,
         **detailed_error_options(error)
       )
+    end
+
+    unless valid_international_prefix?(phone) && valid_input_format?(value)
+      record.errors.add(attribute, :phone_invalid, **legacy_error_options)
     end
   end
 
