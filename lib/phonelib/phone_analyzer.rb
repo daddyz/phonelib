@@ -140,24 +140,40 @@ module Phonelib
     #
     # * +phone+ - phone number for parsing
     def detect_and_parse(phone, country)
-      countries_data = country_code_candidates_for(phone).flat_map { |code|
-        Phonelib.data_by_country_codes[code] || []
-      }
-      countries_data.each_with_object({}) do |data, result|
-        key = data[:id]
-        parsed = parse_single_country(phone, data)
-        unless parsed && parsed[key] && parsed[key][:valid].size > 0
-          replaced = with_replaced_national_prefix(phone, data)
-          # re-parsing an unchanged phone cannot change the result
-          replaced_parsed = parse_single_country(replaced, data) unless replaced == phone
-          parsed = replaced_parsed unless replaced_parsed.nil?
+      country_code_candidates_for(phone).each_with_object({}) do |code, result|
+        countries_data = Phonelib.data_by_country_codes[code] || []
+        main = countries_data.find { |data| data[Core::MAIN_COUNTRY_FOR_CODE] == 'true' }
+        main_parsed = main && detect_and_parse_country(phone, country, main)
+        # other countries sharing the code are only checked when the code's
+        # main country (e.g. US for 1) does not give a valid result
+        if main_parsed && main_parsed[main[:id]] && main_parsed[main[:id]][:valid].any?
+          result.merge!(main_parsed)
+          next
         end
-        if (!Phonelib.strict_double_prefix_check || key == country) && double_prefix_allowed?(data, phone, parsed && parsed[key])
-          parsed2 = parse_single_country(changed_dp_phone(key, phone), data)
-          parsed = parsed2 if parsed2 && parsed2[key] && parsed2[key][:valid].size > 0
+
+        countries_data.each do |data|
+          parsed = data.equal?(main) ? main_parsed : detect_and_parse_country(phone, country, data)
+          result.merge!(parsed) if parsed
         end
-        result.merge!(parsed) unless parsed.nil?
-      end.compact
+      end
+    end
+
+    # parses phone for single detected country, including national prefix
+    # replacement and double country prefix handling
+    def detect_and_parse_country(phone, country, data)
+      key = data[:id]
+      parsed = parse_single_country(phone, data)
+      unless parsed && parsed[key] && parsed[key][:valid].size > 0
+        replaced = with_replaced_national_prefix(phone, data)
+        # re-parsing an unchanged phone cannot change the result
+        replaced_parsed = parse_single_country(replaced, data) unless replaced == phone
+        parsed = replaced_parsed unless replaced_parsed.nil?
+      end
+      if (!Phonelib.strict_double_prefix_check || key == country) && double_prefix_allowed?(data, phone, parsed && parsed[key])
+        parsed2 = parse_single_country(changed_dp_phone(key, phone), data)
+        parsed = parsed2 if parsed2 && parsed2[key] && parsed2[key][:valid].size > 0
+      end
+      parsed
     end
 
     def country_code_candidates_for(phone)
