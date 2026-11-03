@@ -12,7 +12,7 @@ module Phonelib
 
       if format_match
         out = format_string.gsub(/\$\d/) { |el| format_match[el[1].to_i] }
-        formatted ? out : out.gsub(/[^0-9]/, '')
+        formatted ? out : out.delete('^0-9')
       else
         @national_number
       end
@@ -166,7 +166,7 @@ module Phonelib
       end
 
       @formatting_data =
-          [@national_number.match(/#{format[Core::PATTERN]}/), format_string]
+          [@national_number.match(cr(format[Core::PATTERN])), format_string]
     end
   end
 end

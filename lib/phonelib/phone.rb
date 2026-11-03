@@ -27,7 +27,7 @@ module Phonelib
     # @return [Phonelib::Phone] parsed phone instance
     def initialize(phone, country = nil)
       @original, @extension = separate_extension(phone.to_s)
-      @extension = @extension.gsub(/[^0-9]/, '') if @extension
+      @extension = @extension.delete('^0-9') if @extension
 
       if sanitized.empty?
         @data = {}
