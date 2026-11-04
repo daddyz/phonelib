@@ -49,7 +49,7 @@ describe 'International dialling prefixes' do
 
     # NC and AD numbers whose digits after 00 also form a valid FR national number
     { 'NC' => :mobile, 'AD' => :fixed_line }.each do |country, type|
-      it "reads the digits after 00 as #{country}'s country code, not as a #{Phonelib.default_country} number" do
+      it "reads the digits after 00 as #{country}'s country code, not as a FR number" do
         data = Phonelib.phone_data.fetch(country)
         international = data[:country_code] + data[:types][type][:example_number]
         phone = Phonelib.parse('00' + international)
@@ -70,6 +70,26 @@ describe 'International dialling prefixes' do
       phone = Phonelib.parse('00' + Phonelib.phone_data.fetch('FR')[:types][:mobile][:example_number])
       expect(phone.country).to eq('FR')
       expect(phone.valid?).to eq(true)
+    end
+
+    it 'reads the digits after 00 as an international number with the default country passed explicitly' do
+      data = Phonelib.phone_data.fetch('AD')
+      international = data[:country_code] + data[:types][:fixed_line][:example_number]
+      phone = Phonelib.parse('00' + international, 'FR')
+      expect(phone.country).to eq('AD')
+      expect(phone.e164).to eq('+' + international)
+    end
+  end
+
+  # TD dials out with 00 or 16, KP with 00 or 99
+  { 'TD' => 'TC', 'KP' => 'TJ' }.each do |default_country, country|
+    it "does not strip #{default_country}'s other international prefix from the digits after 00" do
+      Phonelib.default_country = default_country
+      data = Phonelib.phone_data.fetch(country)
+      international = data[:country_code] + data[:types][:mobile][:example_number]
+      phone = Phonelib.parse('00' + international)
+      expect(phone.country).to eq(country)
+      expect(phone.e164).to eq('+' + international)
     end
   end
 
