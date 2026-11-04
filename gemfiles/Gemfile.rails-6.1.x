@@ -26,4 +26,5 @@ gem 'benchmark-memory'
 # fixing CI tests
 gem 'rack-cache', '= 1.2'
 gem 'json', '= 2.3.1'
+gem 'ostruct' # json 2.3.1 requires it, no longer a default gem since Ruby 4.0
 gem 'concurrent-ruby', '1.3.4'
