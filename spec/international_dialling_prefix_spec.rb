@@ -44,6 +44,35 @@ describe 'International dialling prefixes' do
     expect(Phonelib.parse('+0011' + @destination, 'AU').valid?).to eq(false)
   end
 
+  context 'with a default country whose international prefix is 00' do
+    before { Phonelib.default_country = 'FR' }
+
+    # NC and AD numbers whose digits after 00 also form a valid FR national number
+    { 'NC' => :mobile, 'AD' => :fixed_line }.each do |country, type|
+      it "reads the digits after 00 as #{country}'s country code, not as a #{Phonelib.default_country} number" do
+        data = Phonelib.phone_data.fetch(country)
+        international = data[:country_code] + data[:types][type][:example_number]
+        phone = Phonelib.parse('00' + international)
+        expect(phone.country).to eq(country)
+        expect(phone.e164).to eq('+' + international)
+      end
+    end
+
+    it 'does not read an invalid international number as a national number of another country' do
+      # a DE mobile one digit short: invalid, but 0049… is also a valid DE national number
+      international = '49' + Phonelib.phone_data.fetch('DE')[:types][:mobile][:example_number][0..-2]
+      phone = Phonelib.parse('00' + international)
+      expect(phone.valid?).to eq(false)
+      expect(phone.e164).to eq('+' + international)
+    end
+
+    it 'still reads a mistyped national number with an extra leading 0 in the default country' do
+      phone = Phonelib.parse('00' + Phonelib.phone_data.fetch('FR')[:types][:mobile][:example_number])
+      expect(phone.country).to eq('FR')
+      expect(phone.valid?).to eq(true)
+    end
+  end
+
   it 'retains the country for the all-zero national input from issue 363' do
     expect(Phonelib.parse('0000000000', 'US').possible?).to eq(true)
   end
