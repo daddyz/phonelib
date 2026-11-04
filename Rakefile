@@ -15,7 +15,7 @@ begin
     rdoc.rdoc_files.include('README.rdoc')
     rdoc.rdoc_files.include('lib/**/*.rb')
   end
-rescue
+rescue StandardError, LoadError
   puts 'Running without rdoc tasks'
 end
 
