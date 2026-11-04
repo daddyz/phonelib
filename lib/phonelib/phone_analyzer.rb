@@ -26,7 +26,7 @@ module Phonelib
     # * +passed_country+ - Country provided for parsing. Must be ISO code of
     #   country (2 letters) like 'US', 'us' or :us for United States
     def analyze(phone, passed_country)
-      countries = country_or_default_country passed_country
+      countries = country_or_default_country passed_country, phone
       return analyze_single_country(phone, countries.first, passed_country) if countries.size == 1
 
       results = {}

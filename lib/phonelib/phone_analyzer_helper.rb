@@ -120,8 +120,12 @@ module Phonelib
     # ==== Attributes
     #
     # * +country+ - country passed for parsing
-    def country_or_default_country(country)
-      country ||= if !original_starts_with_plus_or_double_zero? || country_international_prefix?(Phonelib.default_country)
+    # * +phone+ - phone being analyzed: only the original number keeps the
+    #   default country for its IDD prefix, never the digits left once an IDD
+    #   is stripped, even when they start with another IDD alternative
+    def country_or_default_country(country, phone = sanitized)
+      country ||= if !original_starts_with_plus_or_double_zero? ||
+                     phone == sanitized && country_international_prefix?(Phonelib.default_country)
                     Phonelib.default_country
                   end
 
