@@ -120,8 +120,10 @@ module Phonelib
     # ==== Attributes
     #
     # * +country+ - country passed for parsing
-    def country_or_default_country(country)
-      country ||= if !original_starts_with_plus_or_double_zero? || country_international_prefix?(Phonelib.default_country)
+    # * +phone+ - phone being analyzed, whose own IDD prefix keeps the default
+    #   country; the digits left once an IDD is stripped never do
+    def country_or_default_country(country, phone = sanitized)
+      country ||= if !original_starts_with_plus_or_double_zero? || country_international_prefix?(Phonelib.default_country, phone)
                     Phonelib.default_country
                   end
 
@@ -134,13 +136,13 @@ module Phonelib
 
     # Keep the origin country long enough to strip its own IDD prefix.
     # A leading plus is already international, not an origin-country IDD.
-    def country_international_prefix?(country)
+    def country_international_prefix?(country, phone = sanitized)
       return false if significant_original_s[0] == Core::PLUS_SIGN
 
       Array(country).any? do |iso2|
         data = Phonelib.phone_data[normalize_passed_country(iso2)]
         prefix = data && data[Core::INTERNATIONAL_PREFIX]
-        prefix && !prefix.empty? && sanitized.match?(cr("^(?:#{prefix})"))
+        prefix && !prefix.empty? && phone.match?(cr("^(?:#{prefix})"))
       end
     end
 
