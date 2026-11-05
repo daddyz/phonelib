@@ -20,6 +20,8 @@ end
 
 autoload :PhoneValidator, 'validators/phone_validator'
 
-Phonelib::Locale.register if defined?(I18n)
-
-require 'phonelib/railtie' if defined?(Rails::Railtie)
+if defined?(Rails::Railtie)
+  require 'phonelib/railtie'
+elsif defined?(I18n)
+  Phonelib::Locale.register
+end

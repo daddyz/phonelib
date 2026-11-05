@@ -67,8 +67,6 @@
 #   end
 #
 
-Phonelib::Locale.register if defined?(I18n)
-
 class PhoneValidator < ActiveModel::EachValidator
   E164_PATTERN = /\A\+[1-9][0-9]{1,14}\z/
   SUPPORTED_FORMATS = [:e164, 'e164'].freeze
