@@ -2,9 +2,9 @@
 
 [![Built in integration with JetBrains RubyMine](https://github.com/daddyz/phonelib/blob/master/icon_RubyMine.png?raw=true)](https://www.jetbrains.com/ruby/)
 [![Gem Version](https://badge.fury.io/rb/phonelib.svg)](http://badge.fury.io/rb/phonelib)
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/daddyz/phonelib/tree/master.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/daddyz/phonelib/tree/master)
-[![](https://codeclimate.com/github/daddyz/phonelib/badges/coverage.svg)](https://codeclimate.com/github/daddyz/phonelib/coverage)
-[![](https://codeclimate.com/github/daddyz/phonelib/badges/gpa.svg)](https://codeclimate.com/github/daddyz/phonelib)
+[![CI](https://github.com/daddyz/phonelib/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/daddyz/phonelib/actions/workflows/ci.yml)
+[![Code Coverage](https://qlty.sh/gh/daddyz/projects/phonelib/coverage.svg)](https://qlty.sh/gh/daddyz/projects/phonelib)
+[![Maintainability](https://qlty.sh/gh/daddyz/projects/phonelib/maintainability.svg)](https://qlty.sh/gh/daddyz/projects/phonelib)
 [![Inline docs](http://inch-ci.org/github/daddyz/phonelib.svg?branch=master)](http://inch-ci.org/github/daddyz/phonelib)
 
 Phonelib is a gem allowing you to validate phone number. All validations are based on [Google libphonenumber](https://github.com/googlei18n/libphonenumber).
