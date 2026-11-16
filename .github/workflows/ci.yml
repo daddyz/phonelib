@@ -38,6 +38,10 @@ jobs:
       RUBYOPT: --enable-frozen-string-literal
     steps:
       - uses: actions/checkout@v7
+      - name: Install SQLite3 system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sqlite3 libsqlite3-dev
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
