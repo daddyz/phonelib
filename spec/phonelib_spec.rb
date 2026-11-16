@@ -1,8 +1,5 @@
 require 'phonelib'
 
-require 'simplecov'
-SimpleCov.start
-
 describe Phonelib do
   before(:all) do
     Phonelib.override_phone_data = "spec/dummy/lib/override_phone_data.dat"
