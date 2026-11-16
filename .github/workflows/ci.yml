@@ -35,8 +35,7 @@ jobs:
     env:
       RAILS_ENV: test
       BUNDLE_GEMFILE: gemfiles/Gemfile.rails-6.1.x
-      CFLAGS: -Wno-error=incompatible-pointer-types
-      BUNDLE_BUILD__SQLITE3: --enable-system-libraries
+      BUNDLE_BUILD__SQLITE3: "--enable-system-libraries --with-cflags='-Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion'"
       RUBYOPT: --enable-frozen-string-literal
     steps:
       - uses: actions/checkout@v7
