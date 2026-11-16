@@ -35,15 +35,14 @@ jobs:
     env:
       RAILS_ENV: test
       BUNDLE_GEMFILE: gemfiles/Gemfile.rails-6.1.x
+      BUNDLE_BUILD__SQLITE3: --enable-system-libraries
       RUBYOPT: --enable-frozen-string-literal
     steps:
       - uses: actions/checkout@v7
       - name: Install SQLite3 system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y sqlite3 libsqlite3-dev
-      - name: Configure Bundler for system SQLite3
-        run: bundle config build.sqlite3 --enable-system-libraries
+          sudo apt-get install -y sqlite3 libsqlite3-dev pkg-config
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
