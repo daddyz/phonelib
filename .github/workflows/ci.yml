@@ -35,6 +35,7 @@ jobs:
     env:
       RAILS_ENV: test
       BUNDLE_GEMFILE: gemfiles/Gemfile.rails-6.1.x
+      CFLAGS: -Wno-error=incompatible-pointer-types
       BUNDLE_BUILD__SQLITE3: --enable-system-libraries
       RUBYOPT: --enable-frozen-string-literal
     steps:
