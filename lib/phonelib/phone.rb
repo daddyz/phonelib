@@ -223,7 +223,10 @@ module Phonelib
 
       @original_starts_with_plus_or_double_zero = false
       national_country = passed_country(country)
-      national_data = analyze(sanitized, national_country)
+      # only the passed or default country: parsing strips its IDD again and
+      # would read the remaining digits as another country's national number
+      national_countries = country_or_default_country(national_country)
+      national_data = analyze(sanitized, national_countries).slice(*national_countries)
       if any_valid?(national_data)
         @passed_country = national_country
         @data = national_data
