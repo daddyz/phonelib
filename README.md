@@ -390,10 +390,11 @@ You can get E164 formatted number
 phone.e164 # returns number in E164 format
 ```
 
-You can get an RFC 3966 ```tel:``` URI to use as a link href. The extension, if any, becomes the ```ext``` parameter
+You can get a ```tel:``` (RFC 3966) or ```fax:``` URI to use as a link href. The extension, if any, becomes the ```ext``` parameter
 
 ``` ruby
 phone.tel_uri # returns "tel:+12125551234;ext=99" for "+1 212-555-1234;99"
+phone.fax_uri # returns "fax:+12125551234;ext=99" for "+1 212-555-1234;99"
 ```
 
 You can define prefix for ```international``` and ```e164``` related methods to get formatted number prefixed with anything you need.

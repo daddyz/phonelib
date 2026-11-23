@@ -98,11 +98,13 @@ module Phonelib
     # Returns the number as an RFC 3966 tel URI, for use as a link href
     # @return [String|nil] tel URI with extension, or nil when there is no number
     def tel_uri
-      number = e164
-      return nil unless number
+      uri_with_scheme('tel')
+    end
 
-      ext = @extension.nil? || @extension.empty? ? '' : ";ext=#{@extension}"
-      "tel:#{number}#{ext}"
+    # Returns the number as a fax URI (RFC 2806), for use as a link href
+    # @return [String|nil] fax URI with extension, or nil when there is no number
+    def fax_uri
+      uri_with_scheme('fax')
     end
 
     # returns area code of parsed number
@@ -145,6 +147,15 @@ module Phonelib
       # mobile && mexico, argentina, brazil
       return false if type == Core::MOBILE && !Core::AREA_CODE_MOBILE_COUNTRIES.include?(country)
       true
+    end
+
+    # @private returns the e164 number as a URI with the given scheme
+    def uri_with_scheme(scheme)
+      number = e164
+      return nil unless number
+
+      ext = @extension.nil? || @extension.empty? ? '' : ";ext=#{@extension}"
+      "#{scheme}:#{number}#{ext}"
     end
 
     # @private returns extension with separator defined
