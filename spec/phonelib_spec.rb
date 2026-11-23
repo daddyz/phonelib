@@ -648,6 +648,8 @@ describe Phonelib do
       expect(phone.valid?).to be true
       expect(phone.extension).to eq('')
       expect(phone.full_e164).to eq('+972542234567')
+      expect(phone.tel_uri).to eq('tel:+972542234567')
+      expect(phone.fax_uri).to eq('fax:+972542234567')
     end
 
     it 'should sanitize extension' do
@@ -1176,6 +1178,28 @@ describe Phonelib do
       expect(phone.e164_00).to eq('0012125551234')
       expect(phone.full_e164('00')).to eq('0012125551234;99')
       expect(phone.full_e164_00).to eq('0012125551234;99')
+    end
+
+    it 'should return a tel uri with the extension' do
+      phone = Phonelib.parse('+12125551234;99')
+      expect(phone.tel_uri).to eq('tel:+12125551234;ext=99')
+    end
+
+    it 'should return a fax uri with the extension' do
+      phone = Phonelib.parse('+12125551234;99')
+      expect(phone.fax_uri).to eq('fax:+12125551234;ext=99')
+    end
+
+    it 'should keep the tel uri extension parameter whatever the separator' do
+      Phonelib.extension_separator = '#'
+      phone = Phonelib.parse('+12125551234;99')
+      expect(phone.tel_uri).to eq('tel:+12125551234;ext=99')
+    end
+
+    it 'should return nil uris for a blank number' do
+      expect(Phonelib.parse('').tel_uri).to be_nil
+      expect(Phonelib.parse(nil).tel_uri).to be_nil
+      expect(Phonelib.parse('').fax_uri).to be_nil
     end
 
     it 'should raise error if bad method name passed' do

@@ -1,4 +1,5 @@
 ## Upcoming Changes (unreleased)
+- Add `Phone#tel_uri` and `Phone#fax_uri` to get a link href, with the extension as the RFC 3966 `ext` parameter
 
 ## 0.6.55 - 10 January 2022
 - updated data
