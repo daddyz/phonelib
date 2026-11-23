@@ -95,6 +95,16 @@ module Phonelib
       international && "#{prefix}#{international}"
     end
 
+    # Returns the number as an RFC 3966 tel URI, for use as a link href
+    # @return [String|nil] tel URI with extension, or nil when there is no number
+    def tel_uri
+      number = e164
+      return nil unless number
+
+      ext = @extension.nil? || @extension.empty? ? '' : ";ext=#{@extension}"
+      "tel:#{number}#{ext}"
+    end
+
     # returns area code of parsed number
     # @return [String|nil] parsed phone area code if available
     def area_code
