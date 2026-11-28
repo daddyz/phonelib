@@ -51,6 +51,15 @@ module Phonelib
       @@phone_anchored_regexp_cache
     end
 
+    # @private used to cache regular expressions built from a country data or
+    # format hash, by kind and then by the hash itself
+    @@phone_data_regexp_cache = {}
+
+    # @private getter for phone data regexp cache (internal use only)
+    def phone_data_regexp_cache
+      @@phone_data_regexp_cache
+    end
+
     # @private variable for storing geo/carrier/timezone data
     @@phone_ext_data = nil
 
@@ -195,6 +204,7 @@ module Phonelib
       @@phone_data = @@data_by_country_codes = @@all_int_prefixes = nil
       @@phone_regexp_cache.clear
       @@phone_anchored_regexp_cache.clear
+      @@phone_data_regexp_cache.clear
     end
 
     def override_phone_data
@@ -210,6 +220,7 @@ module Phonelib
       # even when no new regex is added (add_additional_regex does it too),
       # otherwise stale capture groups desync the national number offset
       @@phone_data = @@data_by_country_codes = nil
+      @@phone_data_regexp_cache.clear
       data.each do |row|
         next if row.size != 3
         add_additional_regex(*row)
@@ -220,6 +231,7 @@ module Phonelib
       return unless Phonelib::Core::TYPES_DESC.key?(type.to_sym)
       return unless national_regex.is_a?(String)
       @@phone_data = @@data_by_country_codes = nil
+      @@phone_data_regexp_cache.clear
       @@additional_regexes[country.to_s.upcase] ||= {}
       @@additional_regexes[country.to_s.upcase][type] ||= []
       @@additional_regexes[country.to_s.upcase][type] << national_regex
@@ -432,7 +444,6 @@ module Phonelib
     FIXED_LINE_OR_MOBILE_ARRAY = [Core::FIXED_LINE, Core::MOBILE].freeze
     POSSIBLE_VALID_ARRAY = [:possible, :valid].freeze
     VALID_POSSIBLE_ARRAY = [:valid, :possible].freeze
-    NIL_RESULT_ARRAY = [nil, nil].freeze
 
     # method for parsing phone number.
     # On first run fills @@phone_data with data present in yaml file
