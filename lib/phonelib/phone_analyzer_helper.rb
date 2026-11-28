@@ -3,6 +3,21 @@
 module Phonelib
   # @private helper methods for analyser
   module PhoneAnalyzerHelper
+    # @private cache kinds of full_regex_for_data, by parse_special, pattern
+    # type and country_optional
+    FULL_REGEX_KINDS = Hash[[true, false].map do |parse_special|
+      kinds_by_type = [Core::VALID_PATTERN, Core::POSSIBLE_PATTERN].map do |type|
+        kinds_by_optional = [true, false].map do |country_optional|
+          [country_optional, [:full_regex, parse_special, type, country_optional].freeze]
+        end
+        [type, Hash[kinds_by_optional].freeze]
+      end
+      [parse_special, Hash[kinds_by_type].freeze]
+    end].freeze
+
+    # @private cache kinds of the general possible pattern, by parse_special
+    GENERAL_POSSIBLE_KINDS = { true => :general_possible_with_special, false => :general_possible }.freeze
+
     private
 
     def decorate_analyze_result(result)
@@ -60,6 +75,19 @@ module Phonelib
       Phonelib.phone_regexp_cache[regexp] ||= Regexp.new(block_given? ? yield(regexp) : regexp).freeze
     end
 
+    # caches regular expression built from a country data or format hash,
+    # keyed by the hash itself so the source string is only built on a miss,
+    # sharing the regexp of cr for an equal source
+    def cr_for(kind, data)
+      cache = Phonelib.phone_data_regexp_cache[kind] ||= {}.compare_by_identity
+      cache[data] ||= cr(yield)
+    end
+
+    # regex matching the country code at the start of the number
+    def country_code_regex(data)
+      cr_for(:country_code, data) { "^#{data[Core::COUNTRY_CODE]}" }
+    end
+
     # caches regular expression matching the whole string against the pattern
     def cr_anchored(regexp)
       Phonelib.phone_anchored_regexp_cache[regexp] ||= Regexp.new("\\A(?:#{regexp})\\z").freeze
@@ -81,7 +109,7 @@ module Phonelib
       country_code = Phonelib.phone_data[country][Core::COUNTRY_CODE]
       if phone.start_with? country_code * 2
         # remove double prefix in case it is there
-        phone.gsub(cr("^#{country_code}"), '')
+        phone.gsub(country_code_regex(data), '')
       else
         "#{country_code}#{phone}"
       end
@@ -96,7 +124,7 @@ module Phonelib
     # * +parsed+ - parsed regex match for phone
     def double_prefix_allowed?(data, phone, parsed = {})
       data[Core::DOUBLE_COUNTRY_PREFIX_FLAG] &&
-        phone =~ cr("^#{data[Core::COUNTRY_CODE]}") &&
+        phone =~ country_code_regex(data) &&
         parsed && (parsed[:valid].nil? || parsed[:valid].empty?) &&
         !original_starts_with_plus_or_double_zero?
     end
@@ -152,15 +180,17 @@ module Phonelib
     # * +data+ - country data hash
     # * +country_optional+ - whether to put country code as optional group
     def full_regex_for_data(data, type, country_optional = true)
-      regex = +"^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
-      if data[Core::TYPES]
-        regex << "("
-        regex << type_regex(data[Core::TYPES][Core::GENERAL], type)
-        regex << ")"
+      special = Phonelib.parse_special ? true : false
+      kind = FULL_REGEX_KINDS[special][type][country_optional ? true : false]
+      cr_for(kind, data) do
+        regex = +"^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?(#{data[Core::COUNTRY_CODE]})#{country_optional ? '?' : ''}(#{data[Core::NATIONAL_PREFIX_FOR_PARSING] || data[Core::NATIONAL_PREFIX]})?"
+        if data[Core::TYPES]
+          regex << "("
+          regex << type_regex(data[Core::TYPES][Core::GENERAL], type, special)
+          regex << ")"
+        end
+        regex << "$"
       end
-      regex << "$"
-
-      cr(regex)
     end
 
     # Returns regex for type with special types if needed
@@ -169,8 +199,9 @@ module Phonelib
     #
     # * +data+ - country types data for single type
     # * +type+ - possible or valid regex type needed
-    def type_regex(data, type)
-      if Phonelib.parse_special && data[Core::SHORT] && data[Core::SHORT][type]
+    # * +special+ - whether to add special (short) numbers
+    def type_regex(data, type, special = Phonelib.parse_special)
+      if special && data[Core::SHORT] && data[Core::SHORT][type]
         "#{data[type]}|#{data[Core::SHORT][type]}"
       else
         data[type]
@@ -184,7 +215,7 @@ module Phonelib
     # * +phone+ - phone number for parsing
     # * +data+  - country data
     def phone_match_data?(phone, data, possible = false)
-      return unless phone.match?(cr("^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?#{data[Core::COUNTRY_CODE]}"))
+      return unless phone.match?(cr_for(:international_prefix_and_country_code, data) { "^0{2}?(#{data[Core::INTERNATIONAL_PREFIX]})?#{data[Core::COUNTRY_CODE]}" })
 
       type = possible ? Core::POSSIBLE_PATTERN : Core::VALID_PATTERN
       phone.match full_regex_for_data(data, type, false)
@@ -210,23 +241,6 @@ module Phonelib
       fixed_or_mobile = data[Core::FIXED_LINE] == data[Core::MOBILE]
       types = Phonelib.parse_special ? PhoneAnalyzer::TYPES_FOR_CHECK_WITH_SPECIAL : PhoneAnalyzer::TYPES_FOR_CHECK
       types[fixed_or_mobile]
-    end
-
-    # Checks if passed number matches valid and possible patterns
-    #
-    # ==== Attributes
-    #
-    # * +number+ - phone number for validation
-    # * +p_regex+ - possible regex pattern for validation
-    # * +v_regex+ - valid regex pattern for validation
-    # * +not_valid+ - specifies that number is not valid by general desc pattern
-    def number_valid_and_possible?(number, p_regex, v_regex, not_valid = false)
-      possible = number_match?(number, p_regex)
-
-      return [!not_valid && possible, possible] if p_regex == v_regex
-      valid = !not_valid && possible && number_match?(number, v_regex)
-
-      [valid && possible, possible]
     end
 
     # Checks number against regex and compares match length
